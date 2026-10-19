@@ -36,6 +36,11 @@ a.src{display:flex;align-items:center;min-height:48px;color:#9fd3ff;word-break:b
 .note{background:#5a3d10;border-radius:12px;padding:10px}
 ul.list{padding-left:1.1em}ul.list li{margin:.5em 0}
 input{width:100%;min-height:52px;font:inherit;padding:8px 12px;border-radius:12px;border:2px solid #3b5b74;background:#0c1924;color:#fff}
+.cimg{display:block;width:auto;max-width:100%;height:auto;max-height:26vh;margin:0 auto 10px;border-radius:10px;background:#fff;object-fit:contain}
+.picker details{border:2px solid #3b5b74;border-radius:14px;margin:8px 0;padding:4px 10px}
+.picker summary{min-height:48px;display:flex;align-items:center;gap:8px;font-weight:700;cursor:pointer;list-style-position:inside}
+.picker .decks{display:grid;grid-template-columns:1fr 1fr;gap:0 8px}
+.picker .decks button{min-height:52px;margin:5px 0;font-size:.95rem}
 @media (orientation:landscape) and (max-height:500px){
   html,body{font-size:16px}
   #app{max-width:none;padding:8px max(14px,env(safe-area-inset-left)) 12px max(14px,env(safe-area-inset-right))}
@@ -43,5 +48,8 @@ input{width:100%;min-height:52px;font:inherit;padding:8px 12px;border-radius:12p
   .play .card{margin:0}
   .play button{min-height:48px;margin:6px 0}
   .tiles{grid-template-columns:1fr 1fr 1fr 1fr}
+  .cimg{max-height:38vh}
+  .fix .cimg{float:right;max-width:40%;margin:0 0 8px 12px}
+  .picker .decks{grid-template-columns:1fr 1fr 1fr}
   h1{font-size:1.25rem}
 }

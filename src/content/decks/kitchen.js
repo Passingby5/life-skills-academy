@@ -134,7 +134,7 @@ LSA.deck({
       c: ['At the tall flames on top', 'Low, at the base of the fire', 'Up at the ceiling above it'],
       m: 'Aim at the flames.', f: 'Remember PASS: Pull, Aim low at the base, Squeeze, Sweep.', w: 'The base is where the fuel is.', src: 'usfa-ext' },
     { id: 'kf35', ages: 'both', topic: 'cooking', s: 'You are in a rush. Cook chicken straight from frozen?',
-      c: ['No, never cook meat that is frozen', 'Yes, it takes about 50% longer', 'The microwave, 2 minutes a pound'],
+      c: ['No, never cook meat that is frozen', 'Yes, it takes about 50% longer', 'No, thaw it on the counter first'],
       m: 'You must thaw meat before cooking.', f: 'It is safe to cook from frozen. Plan about 50% more time.', w: 'USDA says so for meat and poultry (not in a slow cooker).', src: 'usda-thaw' },
     // ---------- young adults ----------
     { id: 'kf50', ages: 'ya', topic: 'thawing', s: 'In a hurry, you set frozen chicken in a bowl of hot tap water. OK?',

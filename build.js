@@ -1,14 +1,23 @@
 // Build: checks decks, then concatenates src/ into site/index.html (PWA) with sw.js, version.json and manifest.
 const fs = require('fs'), path = require('path'), crypto = require('crypto'), { execSync } = require('child_process');
 const { ORDER, load } = require('./tests/load.js');
-const errs = load().checkAll();
+// LSA_EXTRA=<dir> adds <dir>/decks/*.js and <dir>/img/*.svg (used by tests); LSA_OUT=<dir> builds there instead of site/.
+const EXTRA = process.env.LSA_EXTRA ? path.resolve(process.env.LSA_EXTRA) : '';
+const extraDecks = EXTRA ? fs.readdirSync(path.join(EXTRA, 'decks')).filter(f => f.endsWith('.js')).sort().map(f => path.join(EXTRA, 'decks', f)) : [];
+const ALL = ORDER.concat(extraDecks);
+const LS = load(ALL), errs = LS.checkAll();
 if (errs.length) { console.error('Deck check failed:\n' + errs.join('\n')); process.exit(1); }
-const r = f => fs.readFileSync(path.join(__dirname, 'src', f), 'utf8');
-const scripts = ORDER.concat(['ui/ui.js']);
+const r = f => fs.readFileSync(path.isAbsolute(f) ? f : path.join(__dirname, 'src', f), 'utf8');
+const scripts = ALL.concat(['ui/ui.js']);
+// Card pictures: every img a card names must exist under src/img/ (or the extra dir's img/).
+const imgs = [...new Set(Object.values(LS.cardIndex).map(c => c.img).filter(Boolean))].sort();
+const imgFile = p => [path.join(__dirname, 'src', p), EXTRA && path.join(EXTRA, p)].find(f => f && fs.existsSync(f));
+const missing = imgs.filter(p => !imgFile(p));
+if (missing.length) { console.error('Missing card pictures:\n' + missing.join('\n')); process.exit(1); }
 let commit = process.env.COMMIT || '';
 if (!commit) { try { commit = execSync('git rev-parse HEAD', { cwd: __dirname, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); } catch (e) { commit = 'local'; } }
 commit = commit.slice(0, 7);
-const LABEL = 'v5 - Oct 19 - ' + commit;
+const LABEL = 'v6 - Oct 19 - ' + commit;
 const id = crypto.createHash('sha1').update(scripts.map(r).join('') + r('ui/style.css') + r('ui/body.html') + LABEL).digest('hex').slice(0, 8);
 const js = `<script>var LSA_BUILD = { label: ${JSON.stringify(LABEL)}, id: ${JSON.stringify(id)} };</script>\n` + scripts.map(f => `<script data-src="${f}">\n${r(f)}</script>`).join('\n');
 const reg = `
@@ -53,7 +62,13 @@ ${r('ui/body.html')}
 ${js}${reg}
 </body></html>
 `;
-const S = p => path.join(__dirname, 'site', p);
+const OUT = process.env.LSA_OUT ? path.resolve(process.env.LSA_OUT) : path.join(__dirname, 'site');
+const S = p => path.join(OUT, p);
+fs.mkdirSync(S('icons'), { recursive: true });
+if (OUT !== path.join(__dirname, 'site')) icons0().forEach(n => fs.copyFileSync(path.join(__dirname, 'site/icons', n + '.png'), S('icons/' + n + '.png')));
+fs.rmSync(S('img'), { recursive: true, force: true });
+if (imgs.length) { fs.mkdirSync(S('img'), { recursive: true }); imgs.forEach(p => fs.copyFileSync(imgFile(p), S(p))); }
+function icons0() { return ['icon-192', 'icon-512', 'maskable-192', 'maskable-512', 'apple-touch-icon']; }
 fs.writeFileSync(S('index.html'), page);
 fs.writeFileSync(S('.nojekyll'), '');
 fs.writeFileSync(S('manifest.webmanifest'), JSON.stringify({
@@ -62,12 +77,12 @@ fs.writeFileSync(S('manifest.webmanifest'), JSON.stringify({
   icons: [['icon-192', '192x192', 'any'], ['icon-512', '512x512', 'any'], ['maskable-192', '192x192', 'maskable'], ['maskable-512', '512x512', 'maskable']].map(([n, s, p]) => ({ src: 'icons/' + n + '.png', sizes: s, type: 'image/png', purpose: p }))
 }, null, 1));
 const icons = ['icon-192', 'icon-512', 'maskable-192', 'maskable-512', 'apple-touch-icon'];
-const assets = ['./', 'index.html', 'manifest.webmanifest'].concat(icons.map(n => 'icons/' + n + '.png'));
-const h = crypto.createHash('sha1'); h.update(page); icons.forEach(n => h.update(fs.readFileSync(S('icons/' + n + '.png'))));
+const assets = ['./', 'index.html', 'manifest.webmanifest'].concat(icons.map(n => 'icons/' + n + '.png'), imgs);
+const h = crypto.createHash('sha1'); h.update(page); icons.forEach(n => h.update(fs.readFileSync(S('icons/' + n + '.png')))); imgs.forEach(p => h.update(p).update(fs.readFileSync(S(p))));
 const cache = 'lsa-' + h.digest('hex').slice(0, 10);
 fs.writeFileSync(S('version.json'), JSON.stringify({ label: LABEL, id, cache }));
 fs.writeFileSync(S('sw.js'), `// Service worker (${LABEL}, build ${id}). The page and version.json are NETWORK-FIRST so a new version shows up
-// right away; the cached copy is used only when offline. Icons and the manifest are cache-first.
+// right away; the cached copy is used only when offline. Icons, card pictures and the manifest are cache-first.
 const CACHE = '${cache}';
 const ASSETS = ${JSON.stringify(assets)};
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS.map(u => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting())); });

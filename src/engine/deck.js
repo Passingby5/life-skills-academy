@@ -9,6 +9,16 @@ LSA.MAX_RIGHT_LONGEST = 0.4;
 LSA.WORD_MIN_USES = 10; LSA.WORD_RIGHT_LO = 0.2; LSA.WORD_RIGHT_HI = 0.5; LSA.MAX_STRATEGY = 0.45;
 LSA.firstWord = function (x) { return x.split(/[ ,;:]/)[0]; };
 // Answer tells. words: first word -> [uses, right]. strat: expected score of simple guessing rules (ties split evenly).
+// Deck sections, in picker order. A deck without a section is Everyday.
+LSA.SECTIONS = ['Everyday', 'Tactical Field Care', 'Field Survival', 'Country Living'];
+LSA.sectionsOf = function (ids) {
+  var names = LSA.SECTIONS.slice();
+  ids.forEach(function (id) { var s = LSA.decks[id].section; if (names.indexOf(s) < 0) names.push(s); });
+  return names.map(function (n) { return { name: n, ids: ids.filter(function (id) { return LSA.decks[id].section === n; }) }; }).filter(function (g) { return g.ids.length; });
+};
+// Optional card picture: img is a path to an SVG under img/. imgAlt is optional alt text.
+LSA.IMG_RX = /^img\/[a-z0-9][a-z0-9-]*\.svg$/;
+LSA.imgAlt = function (c) { return c.imgAlt || ('Picture for this card about ' + String(c.topic || 'this topic').replace(/-/g, ' ')); };
 LSA.RX_NEG = /\b(not|never|don't|no)\b/i;
 LSA.tellStats = function (cards) {
   var W = {}, st = { longest: 0, shortest: 0, middle: 0, startsNo: 0, noAvoidYesOnly: 0, negation: 0, number: 0, punct: 0 }, n = 0;
@@ -38,6 +48,7 @@ LSA.lengthStats = function (d) {
 };
 LSA.deck = function (d) {
   d.format = d.format || 'gutcheck';
+  d.section = d.section || 'Everyday';
   d.cards.forEach(function (c) { c.deck = d.id; LSA.cardIndex[c.id] = c; });
   if (!LSA.decks[d.id]) LSA.deckOrder.push(d.id);
   LSA.decks[d.id] = d;
@@ -69,6 +80,8 @@ LSA.checkDeck = function (d) {
     if (['both', 'ya', 'adult'].indexOf(c.ages) < 0) errs.push(p + 'bad ages');
     if (!Array.isArray(c.c) || c.c.length !== 3 || new Set(c.c).size !== 3) errs.push(p + 'needs 3 different choices');
     if (c.s && typeof c.s === 'object' && (!c.s.ya || !c.s.adult)) errs.push(p + 'two-line scenario needs ya and adult');
+    if (c.img !== undefined && !(typeof c.img === 'string' && LSA.IMG_RX.test(c.img))) errs.push(p + 'img must be a path like img/name.svg');
+    if (c.imgAlt !== undefined && !(typeof c.imgAlt === 'string' && c.imgAlt.trim())) errs.push(p + 'imgAlt must be text');
     if (c.src && !(d.sources && d.sources[c.src])) errs.push(p + 'unknown source ' + c.src);
   });
   // Length must give no clue: the right answer may not be much longer than the others, or the longest too often.

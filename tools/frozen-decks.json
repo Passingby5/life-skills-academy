@@ -1,0 +1,9 @@
+{
+ "note": "Content of these 4 decks is frozen as of v6 (Oct 19, 2026). A test fails if any card changes. To change a card on purpose, update this file in the same commit.",
+ "sha256": {
+  "firstaid": "8f18913b2cbe9c4cf79c769880bdd79ddf9605f8f712505a370015aaa7e2e1ba",
+  "kitchen": "5fcc0c4e42e822bbe9c8ed0cfe6d11d0731dc77e3c88007be5df59b80bb7a0df",
+  "money": "774787e9b00dece5ab5426a7e03dd420419f6bc71784ff4a5052211e8c0140fe",
+  "scams": "5ae7252104a2d779e46ce31db4ca3ae882c48eef8f3e96c7d0137c15fb98b4e4"
+ }
+}

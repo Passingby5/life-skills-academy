@@ -30,13 +30,27 @@
     U.screen = to; S.screen = to; save(); render(); window.scrollTo(0, 0);
   });
 
+  // Deck picker grouped by section. Each section folds open; Everyday and any section with a deck on start open.
+  function picker() {
+    var on = decks(), h = '<div class="picker" id="picker">';
+    LSA.sectionsOf(LSA.knowDecks()).forEach(function (g) {
+      var n = g.ids.filter(function (id) { return on.indexOf(id) >= 0; }).length, open = g.name === 'Everyday' || n > 0;
+      h += '<details class="sect"' + (open ? ' open' : '') + ' data-sect="' + esc(g.name) + '"><summary>' + esc(g.name) + ' <span class="muted">' + n + ' of ' + g.ids.length + ' on</span></summary><div class="decks">';
+      g.ids.forEach(function (id) { var d = LSA.decks[id], k = on.indexOf(id) >= 0; h += b('deck', d.icon + ' ' + esc(d.name) + (k ? ' ✓' : ''), k ? 'on' : 'ghost', ' data-id="' + id + '" aria-pressed="' + k + '"'); });
+      h += '</div></details>';
+    });
+    return h + '</div>';
+  }
+  function pic(c) { return c.img ? '<img class="cimg" src="' + esc(c.img) + '" alt="' + esc(LSA.imgAlt(c)) + '">' : ''; }
   var R = {};
   R.home = function () {
     var ids = Object.keys(S.profiles), h = '<h1>Life Skills Academy</h1><p>Know It: fast real life myths. Pick, say how sure you are, then see the fix.</p>';
     if (U.notice) h += '<p class="note">' + esc(U.notice) + '</p>';
     h += '<h2>Who is playing?</h2>';
     ids.forEach(function (id) { var p = S.profiles[id]; h += b('prof', '👤 ' + esc(p.name) + ' <span class="muted">' + (p.age === 'ya' ? '15 to 30' : '30+') + '</span>', '', ' data-id="' + id + '"'); });
-    h += b('newprof', '➕ Add a player', 'main') + b('about', 'About and sources', 'ghost');
+    h += b('newprof', '➕ Add a player', 'main');
+    if (ids.length) h += '<h2>Decks</h2>' + picker();
+    h += b('about', 'About and sources', 'ghost');
     return h + ver();
   };
   R.newprof = function () {
@@ -52,7 +66,7 @@
     h += b('play', live ? '▶ Resume round' : '▶ Play Gut Check', 'main');
     h += b('match', '🧩 Myth Match', 'alt', seen < 2 ? ' disabled' : '') + (seen < 2 ? '<p class="muted">Myth Match opens after you see a few cards.</p>' : '');
     h += '<h2>Decks</h2>' + (live ? '<p class="muted" id="decknote">Deck changes start with your next round. Your round in progress is kept.</p>' : '');
-    LSA.knowDecks().forEach(function (id) { var d = LSA.decks[id], on = decks().indexOf(id) >= 0; h += b('deck', d.icon + ' ' + esc(d.name) + (on ? ' ✓' : ''), on ? 'on' : 'ghost', ' data-id="' + id + '"'); });
+    h += picker();
     h += b('editage', 'Change age group', 'ghost') + b('about', 'About and sources', 'ghost') + b('home', 'Switch player', 'ghost') + b('delask', 'Delete this player', 'ghost danger');
     return h + ver();
   };
@@ -67,7 +81,7 @@
     var it = LSA.GC.cur(st), c = LSA.GC.card(st), pr = LSA.GC.progress(st);
     var top = '<div class="top"><span class="muted" id="prog">' + (pr.retry ? 'One more try (card ' + pr.n + ' of ' + pr.total + ')' : 'Card ' + pr.n + ' of ' + pr.total) + '</span>' + b('menu', 'Quit', 'ghost') + '</div>';
     if (st.stage === 'fix') return top + fix(c, it);
-    var h = '<div class="play"><div class="card"><div class="scene" id="scene">' + esc(LSA.scenario(c, p.age)) + '</div>';
+    var h = '<div class="play"><div class="card">' + pic(c) + '<div class="scene" id="scene">' + esc(LSA.scenario(c, p.age)) + '</div>';
     if (st.stage === 'conf') h += '<p class="muted">How sure are you?</p>';
     h += '</div><div>';
     if (st.stage === 'ask') it.order.forEach(function (ci, pos) { h += b('ans', esc(c.c[ci]), 'ans', ' data-p="' + pos + '"'); });
@@ -79,7 +93,7 @@
   };
   function fix(c, it) {
     var d = LSA.decks[c.deck], s = d.sources[c.src];
-    var h = '<div class="card fix" id="fix">';
+    var h = '<div class="card fix" id="fix">' + pic(c);
     if (it.wow) h += '<div class="wow" id="wow">😮 Wow!</div><p class="muted">You were sure, but it was a myth. Big surprises stick best.</p>';
     h += '<p class="' + (it.right ? 'ok' : 'wrong') + '">' + (it.right ? '✅ You got it.' : '❌ Not this time.') + '</p>';
     h += '<p><span class="lab">Many people think:</span> ' + esc(c.m) + '</p><p class="wrong">That is wrong.</p>';

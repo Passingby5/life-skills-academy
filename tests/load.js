@@ -5,7 +5,7 @@ const ENGINE = ['engine/rng.js', 'engine/deck.js', 'engine/srs.js', 'engine/save
 const ORDER = ENGINE.concat(['modes/gutcheck.js', 'modes/mythmatch.js', 'content/research.js'], DECKS);
 function load(files) {
   const ctx = vm.createContext({ console });
-  (files || ORDER).forEach(f => vm.runInContext(fs.readFileSync(path.join(__dirname, '../src', f), 'utf8'), ctx, { filename: f }));
+  (files || ORDER).forEach(f => vm.runInContext(fs.readFileSync((path.isAbsolute(f) ? f : path.join(__dirname, '../src', f)), 'utf8'), ctx, { filename: f }));
   return vm.runInContext('LSA', ctx);
 }
 module.exports = { ORDER, ENGINE, DECKS, load };

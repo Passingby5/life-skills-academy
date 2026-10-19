@@ -9,6 +9,8 @@ button,.btn{display:flex;align-items:center;justify-content:center;gap:8px;width
 button:active{filter:brightness(1.2)}
 button.main{background:#2f8f5b}
 button.alt{background:#3a3f6b}
+button.danger{background:#8a2d2d}
+button.ghost.danger{background:transparent;border:2px solid #8a2d2d;color:#ffb3a8}
 button.ghost{background:transparent;border:2px solid #3b5b74}
 button.on{outline:3px solid #ffd257}
 button:disabled{opacity:.45}

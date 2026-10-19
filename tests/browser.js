@@ -62,9 +62,9 @@ const results = {}; const pass = (k, m) => { results[k] = 'PASS'; console.log('o
         // 8: double tap on Next counts once
         const before = await page.evaluate(() => { const S = LSA.UI.S(); return S.profiles[S.active].round.i; });
         await page.evaluate(() => { const b = document.querySelector('[data-act=next]'); b.click(); });
-        await page.evaluate(() => { const b = document.querySelector('[data-act=ans]'); if (b) b.click(); });
+        await page.evaluate(() => { const b = document.querySelector('[data-act=next]'); if (b) b.click(); });
         const after = await page.evaluate(() => { const S = LSA.UI.S(), st = S.profiles[S.active].round; return { i: st.i, stage: st.stage }; });
-        assert.strictEqual(after.i, before + 1); assert.strictEqual(after.stage, 'ask', 'second tap ignored'); pass('8 double tap counts once'); await page.waitForTimeout(330); n++; continue;
+        assert.strictEqual(after.i, before + 1); assert.strictEqual(after.stage, 'ask'); pass('8 double tap on Next counts once'); await page.waitForTimeout(330); n++; continue;
       }
       if (n === 3) {
         // 24: reload mid-round, come back to the same card

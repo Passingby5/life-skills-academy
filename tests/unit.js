@@ -111,4 +111,93 @@ t('28 step-list stub deck loads through deck.js and stays out of Know It', () =>
   const d = L.decks['steps-stub']; assert.strictEqual(d.format, 'steps'); eq(L.checkDeck(d), []);
   assert(!L.knowDecks().includes('steps-stub')); assert(!L.cardsFor('ya').some(c => c.deck === 'steps-stub'));
 });
+
+// ---------- v2 regression tests (QA of v1 81ceab5) ----------
+const goodSave = () => { const s = L.newSave(), id = L.addProfile(s, 'Sam', 'ya'); s.profiles[id].round = L.GC.start(s.profiles[id], null, 0, 5); return s; };
+t('M1 deep save check: bad saves never throw, bad parts are reset, good parts kept', () => {
+  const cases = {
+    'round-badid': s => { s.profiles.p1.round.q[0].id = 'zz99'; },
+    'round-empty': s => { s.profiles.p1.round = {}; },
+    'decks-string': s => { s.decks = 'firstaid'; },
+    'boxes-null': s => { s.profiles.p1.boxes = null; },
+    'name-number': s => { s.profiles.p1.name = 42; },
+    'next-missing': s => { delete s.next; },
+    'stats-bad': s => { s.profiles.p1.stats = 'x'; },
+    'box-bad': s => { s.profiles.p1.boxes.fa01 = { b: 9, due: 'x' }; },
+    'order-bad': s => { s.profiles.p1.round.q[1].order = [0, 0, 1]; },
+    'stage-bad': s => { s.profiles.p1.round.stage = 'zzz'; },
+    'i-out': s => { s.profiles.p1.round.i = 99; },
+    'profile-null': s => { s.profiles.p1 = null; }
+  };
+  Object.keys(cases).forEach(k => {
+    const s = goodSave(); cases[k](s); const r = L.loadSave(JSON.stringify(s));
+    assert(!r.broken && r.repaired, k); const o = r.save;
+    Object.values(o.profiles).forEach(p => {
+      assert(typeof p.name === 'string' && typeof p.boxes === 'object' && p.boxes);
+      if (p.round) { assert(L.checkRound(p.round), k); L.GC.card(p.round); }
+    });
+    assert(o.decks === null || Array.isArray(o.decks), k); assert(Number.isInteger(o.next) && o.next >= 1, k);
+  });
+  ['null', '42', '"x"', '[]', '{"v":99,"profiles":{}}', '{"v":2}', '{bad'].forEach(x => { const r = L.loadSave(x); assert(r.broken, x); assert.strictEqual(r.save.v, 2); });
+  const ok = L.loadSave(JSON.stringify(goodSave())); assert(!ok.broken && !ok.repaired, 'good save not flagged');
+});
+t('M1 v1 save with no name still loads', () => { const r = L.loadSave('{"v":1,"age":"ya","boxes":{}}'); assert(!r.broken); assert.strictEqual(r.save.profiles[r.save.active].name, 'Player'); });
+t('M2 checker fails a deck where the right answer is long', () => {
+  const mk = (r, o) => ({ id: 'q' + Math.random(), deck: 'x', topic: 't', ages: 'both', s: 's', c: [o, r, o.slice(0, -1) + 'z'], m: 'm', f: 'f', w: 'w', src: 'a' });
+  const d = { id: 'x', format: 'gutcheck', sources: { a: ['A', 'u'] }, cards: [] };
+  for (let i = 0; i < 60; i++) d.cards.push(mk('right answer here', 'a wrong one here!!'));
+  assert(!/longest|next longest/.test(L.checkDeck(d).join('|')), 'equal lengths pass');
+  d.cards[0] = mk('a much much longer right answer', 'short one');
+  assert(/1\.\d\dx the next longest|[2-9]\.\d\dx/.test(L.checkDeck(d).join('|')), 'ratio rule');
+  d.cards.forEach((c, i) => { if (i < 30) c.c = ['short a', 'the right answer', 'short b']; });
+  assert(/longest on \d+% of cards/.test(L.checkDeck(d).join('|')), 'share rule');
+  L.knowDecks().forEach(id => assert(L.lengthStats(L.decks[id]).rightLongest <= 0.4, id));
+});
+t('m1 tap guard is per control: a different control right away still counts', () => {
+  const g = L.tapGuard(300); assert(g('tile:1', 1000)); assert(g('tile:4', 1150)); assert(!g('tile:4', 1300));
+});
+t('m2 no topic twice in a row across the whole round, retries included (3,000 seeds)', () => {
+  let bad = 0;
+  for (let seed = 1; seed <= 3000; seed++) {
+    const p = prof(seed % 2 ? 'ya' : 'adult'), r = L.rng(seed), all = L.cardsFor(p.age);
+    all.forEach(c => { if (r.next() < 0.1) p.boxes[c.id] = { b: 2, due: 0, n: 1 }; });
+    const st = L.GC.start(p, null, 0, seed);
+    while (st.stage !== 'done') { const it = L.GC.cur(st); L.GC.pick(st, r.next() < 0.5 ? it.order.indexOf(1) : wrongPos(it)); L.GC.confirm(st, p, r.int(3)); L.GC.next(st, p); }
+    const tp = st.q.map(x => L.cardIndex[x.id].topic);
+    for (let i = 1; i < tp.length; i++) if (tp[i] === tp[i - 1] && tp.slice(i).some(x => x !== tp[i])) { bad++; break; }
+  }
+  assert.strictEqual(bad, 0, bad + ' seeds had a repeat');
+  const p = prof('adult'); L.cardsFor('adult').forEach(c => { if (Math.abs(L.hashSeed(c.id)) % 9 === 0) p.boxes[c.id] = { b: 2, due: 0 }; });
+  const st = L.GC.start(p, null, 0, 119), tp = st.q.map(x => L.cardIndex[x.id].topic);
+  for (let i = 1; i < tp.length; i++) assert.notStrictEqual(tp[i], tp[i - 1], 'seed 119');
+});
+t('m3 a missed card answered right and Sure on its retry stays in box 1', () => {
+  const p = prof('ya'), st = L.GC.start(p, null, 0, 11), id = st.q[0].id;
+  L.GC.pick(st, wrongPos(st.q[0])); L.GC.confirm(st, p, 1); L.GC.next(st, p);
+  while (st.stage !== 'done') { const it = L.GC.cur(st); L.GC.pick(st, rightPos(it)); L.GC.confirm(st, p, 2); L.GC.next(st, p); }
+  assert.strictEqual(p.boxes[id].b, 1); assert.strictEqual(p.boxes[id].due, 0);
+  assert(Object.keys(p.boxes).filter(k => k !== id).every(k => p.boxes[k].b === 2));
+});
+t('p1 progress counts unique cards; retries shown apart', () => {
+  const p = prof('ya'), st = L.GC.start(p, null, 0, 3);
+  L.GC.pick(st, wrongPos(st.q[0])); L.GC.confirm(st, p, 0); L.GC.next(st, p);
+  eq(L.GC.progress(st), { n: 2, total: 10, retry: false });
+  while (!L.GC.cur(st).again) { L.GC.pick(st, rightPos(L.GC.cur(st))); L.GC.confirm(st, p, 1); L.GC.next(st, p); }
+  const pr = L.GC.progress(st); assert.strictEqual(pr.total, 10); assert(pr.retry);
+});
+t('p3 save with no profile counter gives a real id, not pNaN', () => {
+  const s = goodSave(); delete s.next; const o = L.loadSave(JSON.stringify(s)).save, id = L.addProfile(o, 'B', 'adult');
+  assert.strictEqual(id, 'p2'); const s2 = goodSave(); s2.next = 'x'; assert.strictEqual(L.addProfile(L.loadSave(JSON.stringify(s2)).save, 'C', 'ya'), 'p2');
+});
+t('p4 delete a profile; the other stays', () => {
+  const s = L.newSave(), a = L.addProfile(s, 'A', 'ya'), b = L.addProfile(s, 'B', 'adult');
+  L.deleteProfile(s, b); assert(!s.profiles[b] && s.profiles[a]); assert.strictEqual(s.active, null);
+});
+t('p4 no IRS Historical Content source; every source file is current', () => {
+  L.knowDecks().forEach(id => Object.keys(L.decks[id].sources).forEach(k => {
+    const f = path.join(__dirname, '../sources', k + '.txt');
+    if (fs.existsSync(f)) assert(!/Historical Content|FS-2017/.test(fs.readFileSync(f, 'utf8')), k);
+    assert(!/how-to-know-its-really-the-irs-calling/.test(L.decks[id].sources[k][1]), k);
+  }));
+});
 console.log(n + ' unit tests passed');

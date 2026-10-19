@@ -3,8 +3,12 @@
   var KEY = 'lsa_save', app = document.getElementById('app');
   var guard = LSA.tapGuard(300);
   var U = { screen: 'home', notice: '', mm: null, age: null, name: '' };
-  var ld = LSA.loadSave(localStorage.getItem(KEY));
-  if (ld.broken) { try { localStorage.setItem(KEY + '_broken', localStorage.getItem(KEY)); } catch (e) { } U.notice = 'Your saved game could not be read, so we started fresh.'; }
+  var FRESH = 'Your saved game could not be read, so we started fresh.';
+  var raw = null; try { raw = localStorage.getItem(KEY); } catch (e) { }
+  var ld = LSA.loadSave(raw);
+  function backup() { try { if (raw) localStorage.setItem(KEY + '_broken', raw); } catch (e) { } }
+  if (ld.broken) { backup(); U.notice = FRESH; }
+  else if (ld.repaired) { backup(); U.notice = 'Part of your saved game could not be read and was reset.'; }
   var S = ld.save;
   function save() { try { localStorage.setItem(KEY, LSA.dumpSave(S)); } catch (e) { } }
   function today() { var d = new Date(); return Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 86400000); }
@@ -14,7 +18,17 @@
   function b(act, label, cls, extra) { return '<button data-act="' + act + '"' + (cls ? ' class="' + cls + '"' : '') + (extra || '') + '>' + label + '</button>'; }
   function ver() { return '<div class="ver" id="ver">' + esc(LSA_BUILD.label) + '</div>'; }
   function ageName(a) { return a === 'ya' ? 'Young adults (15 to 30)' : 'Adults (30+)'; }
-  function go(s) { U.screen = s; S.screen = s; save(); render(); window.scrollTo(0, 0); }
+  // Back button support: screens past the menu push a history entry, so Back returns to the menu.
+  function go(s) {
+    var deep = ['about', 'match', 'newprof', 'play'].indexOf(s) >= 0;
+    try { if (deep && U.screen !== s) history.pushState({ s: s }, ''); else history.replaceState({ s: s }, ''); } catch (e) { }
+    U.screen = s; S.screen = s; save(); render(); window.scrollTo(0, 0);
+  }
+  window.addEventListener('popstate', function () {
+    var to = P() ? 'menu' : 'home';
+    if (U.screen === to) return;
+    U.screen = to; S.screen = to; save(); render(); window.scrollTo(0, 0);
+  });
 
   var R = {};
   R.home = function () {
@@ -34,19 +48,24 @@
   };
   R.menu = function () {
     var p = P(), live = p.round && p.round.stage !== 'done', seen = LSA.MM.seenCards(p, decks()).length;
-    var h = '<h1>Hi, ' + esc(p.name) + '</h1><p class="muted">' + ageName(p.age) + ' · ' + Object.keys(p.boxes).length + ' cards seen · ' + p.stats.rounds + ' rounds</p>';
+    var h = (U.notice ? '<p class="note">' + esc(U.notice) + '</p>' : '') + '<h1>Hi, ' + esc(p.name) + '</h1><p class="muted">' + ageName(p.age) + ' · ' + Object.keys(p.boxes).length + ' cards seen · ' + p.stats.rounds + ' rounds</p>';
     h += b('play', live ? '▶ Resume round' : '▶ Play Gut Check', 'main');
     h += b('match', '🧩 Myth Match', 'alt', seen < 2 ? ' disabled' : '') + (seen < 2 ? '<p class="muted">Myth Match opens after you see a few cards.</p>' : '');
-    h += '<h2>Decks</h2>';
+    h += '<h2>Decks</h2>' + (live ? '<p class="muted" id="decknote">Deck changes start with your next round. Your round in progress is kept.</p>' : '');
     LSA.knowDecks().forEach(function (id) { var d = LSA.decks[id], on = decks().indexOf(id) >= 0; h += b('deck', d.icon + ' ' + esc(d.name) + (on ? ' ✓' : ''), on ? 'on' : 'ghost', ' data-id="' + id + '"'); });
-    h += b('editage', 'Change age group', 'ghost') + b('about', 'About and sources', 'ghost') + b('home', 'Switch player', 'ghost');
+    h += b('editage', 'Change age group', 'ghost') + b('about', 'About and sources', 'ghost') + b('home', 'Switch player', 'ghost') + b('delask', 'Delete this player', 'ghost danger');
     return h + ver();
+  };
+  R.delask = function () {
+    var p = P();
+    return '<h1>Delete ' + esc(p.name) + '?</h1><p>This removes this player and all of their progress from this phone. It cannot be undone.</p>' +
+      b('delyes', 'Yes, delete ' + esc(p.name), 'danger') + b('menu', 'Cancel, keep this player', 'main');
   };
   R.play = function () {
     var p = P(), st = p.round;
     if (!st || st.stage === 'done') return R.recap();
-    var it = LSA.GC.cur(st), c = LSA.GC.card(st), base = st.q.filter(function (x) { return !x.again; }).length;
-    var top = '<div class="top"><span class="muted">Card ' + (st.i + 1) + ' of ' + st.q.length + (it.again ? ' · one more try' : '') + '</span>' + b('menu', 'Quit', 'ghost') + '</div>';
+    var it = LSA.GC.cur(st), c = LSA.GC.card(st), pr = LSA.GC.progress(st);
+    var top = '<div class="top"><span class="muted" id="prog">' + (pr.retry ? 'One more try (card ' + pr.n + ' of ' + pr.total + ')' : 'Card ' + pr.n + ' of ' + pr.total) + '</span>' + b('menu', 'Quit', 'ghost') + '</div>';
     if (st.stage === 'fix') return top + fix(c, it);
     var h = '<div class="play"><div class="card"><div class="scene" id="scene">' + esc(LSA.scenario(c, p.age)) + '</div>';
     if (st.stage === 'conf') h += '<p class="muted">How sure are you?</p>';
@@ -71,7 +90,8 @@
   R.recap = function () {
     var p = P(), st = p.round;
     if (!st) return R.menu();
-    var h = '<h1>Round done</h1><p>You got ' + st.right + ' of ' + st.q.length + ' right.</p><div class="card" id="recap"><h2>😮 Wow cards</h2>';
+    var tries = st.q.length - LSA.GC.progress(st).total;
+    var h = '<h1>Round done</h1><p>You got ' + st.right + ' of ' + st.q.length + ' answers right' + (tries ? ' (' + tries + ' were second tries)' : '') + '.</p><div class="card" id="recap"><h2>😮 Wow cards</h2>';
     if (!st.wows.length) h += '<p class="muted">No Wow cards this round. No sure-but-wrong answers.</p>';
     else h += '<ul class="list">' + st.wows.map(function (id) { var c = LSA.cardIndex[id]; return '<li><b>Myth:</b> ' + esc(c.m) + '<br><b>Fix:</b> ' + esc(c.f) + '</li>'; }).join('') + '</ul>';
     return h + '</div>' + b('play', 'Play another round', 'main') + b('match', '🧩 Myth Match', 'alt') + b('menu', 'Menu', 'ghost');
@@ -122,8 +142,10 @@
     deck: function (el) {
       var cur = decks(), id = el.dataset.id, i = cur.indexOf(id);
       if (i >= 0) { if (cur.length > 1) cur.splice(i, 1); } else cur.push(id);
-      S.decks = cur; P().round = null; save(); render();
+      S.decks = cur; save(); render();
     },
+    delask: function () { go('delask'); },
+    delyes: function () { LSA.deleteProfile(S, S.active); U.notice = ''; go('home'); },
     play: function () {
       var p = P();
       if (!p.round || p.round.stage === 'done') p.round = LSA.GC.start(p, decks(), today(), (Date.now() ^ (Math.random() * 1e9)) >>> 0);
@@ -141,13 +163,24 @@
   };
   app.addEventListener('click', function (e) {
     var el = e.target.closest('[data-act]'); if (!el || el.disabled) return;
-    var act = el.dataset.act;
-    // One guard for the whole screen: a double tap never counts twice, even when the screen changes under the finger.
-    if (!guard('tap', Date.now())) return;
-    if (A[act]) A[act](el);
+    var act = el.dataset.act, key = act + ':' + (el.dataset.i || el.dataset.p || el.dataset.k || el.dataset.id || el.dataset.a || '');
+    // Per control: two taps on the same control within 300 ms count as one. Other controls work right away.
+    if (!guard(key, Date.now())) return;
+    U.notice = '';
+    try { if (A[act]) A[act](el); }
+    catch (err) {
+      // Never leave a blank page: drop the round that broke and go back to the menu.
+      var p = P(); if (p) p.round = null; U.notice = 'Something went wrong, so that round was reset.'; U.screen = p ? 'menu' : 'home'; save(); render();
+    }
   });
   // Resume where we left off (also after an auto update reload).
-  if (P() && S.screen && ['menu', 'play', 'about'].indexOf(S.screen) >= 0) U.screen = S.screen;
+  if (P()) U.screen = ['play', 'about'].indexOf(S.screen) >= 0 ? S.screen : 'menu';
   LSA.UI = { save: save, S: function () { return S; }, U: U, render: render };
-  render();
+  // Any error at startup shows the fresh-start notice instead of a blank page.
+  try { try { history.replaceState({ s: U.screen }, ''); } catch (e) { } render(); }
+  catch (e) {
+    backup(); S = LSA.newSave(); U.screen = 'home'; U.notice = FRESH;
+    try { localStorage.setItem(KEY, LSA.dumpSave(S)); } catch (e2) { }
+    render();
+  }
 })();

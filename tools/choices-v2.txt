@@ -1,0 +1,306 @@
+fa01|Rub butter or cream on it right away|Cool running water for 20 minutes|Wrap it tight in a dry towel
+fa02|Pop it so it heals faster|Leave it alone|Peel the loose skin off
+fa03|Stick a plaster or bandage on it|Lay cling film loosely over it|Tape a wet towel on all day
+fa04|Tilt the head back and look up high|Lean forward, pinch the soft part|Lie flat on your back and rest
+fa05|Make them throw it up fast|Get help now; do not make them sick|Wait and see if they start to feel sick
+fa06|Yes, milk to coat the stomach|No food or drink at all|Yes, lots of water to flush it
+fa07|Suck or cut the venom out of the bite|Keep still, leave it alone, get help|Pour hot water over the bite
+fa08|Yes, to stop the venom spreading|No, do not tie anything tight|Yes, but only for one hour
+fa09|Rub them hard to get blood moving|Warm (not hot) water, no rubbing|Hold them close to a fire
+fa10|Yes, the hotter the better for them|No, warm water, not direct heat|Yes, and add a hot bath too
+fa11|Heat pack and a long hot bath|Wrapped ice, up to 20 minutes|Neither, just walk on it
+fa12|Yes, never let them fall asleep|No, they can rest with an adult near|Yes, and give them a cup of strong coffee
+fa13|Keep waiting, it will pass soon|Treat it as heatstroke, get help|Give them a hot drink and rest
+fa14|A baking soda paste spread on it|A cold pack for 20 minutes|Scratch it so it spreads out
+fa15|Pull it out fast and clean it|Leave it in, press around it|Push it in to stop the bleeding
+fa16|Take it off to look at the cut closely|Add another cloth, keep pressing|Rinse it under the tap first
+fa17|Put them in a hot bath right away|Dry blanket, cover head, warm drink|Rub their arms and legs hard to warm up
+fa18|Yes, it warms you up inside|No, never give alcohol|Only a small one is OK
+fa19|Pee on it|Seawater|Fresh water
+fa20|An ice pack held on it|Very warm water for 30 minutes|Nothing at all, just wait it out
+fa21|Yes, a spoon or a wallet to bite|No, never put anything in|Yes, put your fingers in
+fa22|Yes, hold them down firmly|No, do not hold them down|Yes, but only hold the legs
+fa23|Only if their lips turn blue|If it lasts over 5 minutes|Never, they always stop
+fa24|Nail polish or a hot match on it|Tweezers by the skin, steady pull|Wait for a doctor to do it
+fa25|Twist it out like a screw|Pull straight, steady pressure|Jerk it out fast in one quick go
+fa26|It went away, so just relax|Get help right now anyway|Have him nap and check later
+fa27|Only crushing chest pain counts as one|Feels like indigestion, or short of breath|Only pain in the left arm counts
+fa28|Yes, the open door is enough air|No, never in an attached garage|Yes, if it is only 10 minutes
+fa29|You would smell it right away|Only a CO alarm can tell you|Your eyes would start to sting
+fa30|Do nothing, CPR needs breaths|Call 911, push hard on the chest|Shake them, then wait for help to come
+fa31|Yes, gasping means they breathe|No, odd gasps are not breathing|Yes, so just wait and watch them
+fa32|You stop CPR and go get it yourself|Send your friend; you keep pushing|Nobody, wait for the ambulance
+fa33|Yes, they feel fine now|No, stay lying down|Yes, but walk slowly
+fa34|No, save it for when it gets bad|Yes, use it even if signs are mild|Take a nap first, then decide
+fa35|Cover it fast so no blood comes out at all|Wash with soap and warm water, let it bleed|Put butter on it and wrap it up tight
+fa36|Loud yelling and splashing|Fast and often silent|Waving both arms a long time
+fa37|Yes, eat to keep your strength up|No, you may need surgery|Only a small snack is OK
+fa50|Yes, it sobers them up fast|No, they could get too cold or fall|Yes, as ice cold as the water goes
+fa51|Yes, coffee sobers you up|No, skip coffee and caffeine|Yes, give them two strong cups
+fa52|Yes, food soaks up the alcohol|No food; they could choke|Yes, and lots of water too
+fa53|Yes, get it out of them now|No, never make them sick|Only if they ask you to
+fa54|Yes, you feel fine now|No contact sports for 3 weeks|Yes, if you wear a good helmet
+fa55|Yes, it is close to home|No, not until fully recovered|Yes, with the radio off
+fa56|Yes, with the flap open a bit|No, never inside a tent|Yes, if it is on low heat
+fa57|Yes, it helps you win every time|No, you can pass out and drown|Yes, but only three times
+fa58|No big deal out on a boat|Avoid alcohol around the water|Fine if you wear sunglasses
+fa59|Yes, sugar fixes it fast|Nothing by mouth; get help|Yes, and some water too
+fa60|Wrap it in a dry tissue and wait|Hold the top; put it back or in milk|Scrub the root clean with soap and water
+fa61|Let them sleep it off in the shade|It is heatstroke; get help, cool them|Give them an energy drink and rest
+fa62|Yes, heat will loosen it right up|No heat or massage for a few days|Yes, do both for a long time
+fa63|Yes, it feels fine now|Go easy for up to 8 weeks|Yes, run extra to catch up
+fa64|Yes, it is faster than waiting|Call 911; keep them lying down|Walk them to the bus stop
+fa65|Lie down flat to rest|Sit up straight|Bend over to your toes
+fa66|No need, it passed already|Yes, see a doctor within 2 days|Only if it happens five times or more
+fa67|Yes, ice right on the skin|No, cool shower or damp towel|Petroleum jelly on it instead
+fa68|Yes, sit them up fast|Lay them back, legs raised|Splash cold water on their face
+fa69|Rub it out hard with your hand|Run water over it for 20 minutes|Blink a lot and keep working
+fa70|Yes, aspirin is the best for it|No, it can make bruising worse|Yes, take a double dose
+fa71|Yes, ice straight on it|No, wrap it in a cloth first|Use a hot towel instead
+fa80|Yes, cool them down fast|No, do not sponge them|Yes, put them in a cold bath
+fa81|Yes, sweat it out under blankets|No, do not bundle them up|Yes, and add a warm hat
+fa82|Yes, always swap back and forth|Not unless a doctor or nurse says|Give both at the same time
+fa83|Yes, it is fine for that age|No aspirin for kids under 16|Yes, just give half a pill
+fa84|Hold them still until it ends|Guard the head, do not hold them|Put them in a cold bath to stop it
+fa85|Yes, drive there fast|No, call 911 instead|Wait an hour and see
+fa86|Reach in and grab it out|Let them keep coughing; stay close|Give them a big drink of cold water
+fa87|Yes, feel around for it|No, do not poke blindly|Yes, use two fingers
+fa88|Belly thrusts like for an adult|Back blows, then chest thrusts|Hold them upside down and shake
+fa89|Yes, push it back in fast and hold|No, never put a baby tooth back|Yes, and hold it with glue
+fa90|Yes, steam opens the airway|No, do not use steam|Yes, as hot as you can
+fa91|Yes, sugar gives them energy|No, it can make it worse|Yes, cola is the best one
+fa92|Yes, stop it fast with pills|No, not for kids under 12|Yes, give the adult dose
+fa93|Yes, water it down a bit|No, use normal strength|Switch to juice for now
+fa94|Yes, lift her up fast|Keep her warm; do not lift her|Pull her up by both arms right away
+fa95|Jump right up so you do not get stiff|Take a few minutes, check for injury|Never get up until help comes
+fa96|Yes, walk it off for a while|Call 911; sit and rest|Lie down in a hot bath
+fa97|Yes, rub them hard and fast|No rubbing; blanket and warm drink|Put a hot water bottle on her feet
+fa98|Yes, floaties will keep them safe|No, toys are not safety devices|Yes, if the water is shallow
+fa99|Yes, it is shallow water|No, an adult must watch always|Yes, if you leave the door open
+fa100|Yes, the open door is enough air|No, never in the home or garage|Yes, but only at night
+fa101|Yes, a small dose is fine for that|No, not under 2 months; call a doctor|Yes, plus a little aspirin too
+kf01|Yes, rinse off the germs|No, do not wash it|Yes, wash it with soap
+kf02|Throw water on it fast|Slide a lid on, turn it off|Carry the hot pan outside
+kf03|Right away, to check on it|Leave it on until the pan is cool|After about 10 seconds or so, to look
+kf04|Yes, the middle stays frozen anyway|No, thaw in fridge, cold water, microwave|Yes, as long as it is covered up
+kf05|Yes, brown means it is done|Only a thermometer: 160 F|Yes, if the juice runs clear
+kf06|No, pink means it is still raw|Yes, cooked ground beef can be pink|Only if you cook it 10 more minutes
+kf07|No, pink poultry is always raw|Yes, if all parts reach 165 F|Only the dark meat is safe
+kf08|Yes, hot food hurts the fridge|No, hot food can go right in|Yes, cool it overnight first
+kf09|Put the whole pot in the fridge|Split into small, shallow containers|Leave it on the stove overnight to cool
+kf10|About a week|3 to 4 days|About a month
+kf11|As long as it looks fine|No more than 2 hours|Up to about 6 hours
+kf12|Yes, it was cooked|No, throw it out|Yes, if you reheat it
+kf13|Yes, just cut off the spot|No, toss the bread|Yes, toast it first
+kf14|Yes, eat all of it, it is fine|Cut 1 inch around and below|No, just scrape off the top
+kf15|Yes, your nose can tell|No, do not sniff mold|Only sniff with one nostril
+kf16|Yes, it is unsafe now|No, it is about quality|Yes, it is the law
+kf17|Do not eat it after that day|How long the store shows it|The day it was made
+kf18|Yes, a color change means spoiled|Not by color; check smell or slime|Yes, toss it out right now
+kf19|Yes, it is unsafe now|Safe, just dry; trim it|Only safe to eat raw
+kf20|Yes, freezer food goes bad|Safe; it may taste worse|Only if it is beef
+kf21|160 F or more, or it is unsafe|145 F, then rest 3 minutes|120 F is fine for pork
+kf22|The tray in the door|Main shelf, in carton|Up in the freezer
+kf23|Yes, it kills more germs|Plain soap and water|Hand lotion works too
+kf24|A quick rinse is fine|At least 20 seconds|Just 2 or 3 seconds
+kf25|Yes, just wipe it off|No, use a new board|Yes, flip it over
+kf26|Yes, wash again|No, not needed|Yes, with soap
+kf27|Soap or a veggie wash|Plain running water|Do not wash it at all
+kf28|No, you do not eat skin|Yes, wash it first|Only if it looks dirty
+kf29|Yes, if it smells fine|No, toss swollen cans|Yes, if you boil it
+kf30|Right up against the bone|Thickest part, off bone and fat|Just under the skin on top of it
+kf31|Yes, it is done right away|Let it stand a few minutes|Only if it beeps two times
+kf32|Forever, if they beep|Every 10 years|Every 30 years or so
+kf33|10 minutes or so|Maybe under 2 minutes|About an hour or so
+kf34|At the tall flames on top|Low, at the base of the fire|Up at the ceiling above it
+kf35|No, never cook meat that is frozen|Yes, it takes about 50% longer|Only safe in the microwave
+kf50|Yes, faster is better|No, cold water changed every 30 minutes|Yes, boiling water would be even better
+kf51|Just warm is fine|165 F and steaming|About 100 F is OK
+kf52|2 hours like always|1 hour at most|All day in the shade
+kf53|Yes, the rest is fine|No, throw it out|Yes, then microwave it
+kf54|Yes, pick out the moldy bits|No, toss the bag|Yes, then melt it
+kf55|About a week|1 to 2 days|Two weeks
+kf56|5 to 7 days|1 to 2 days|3 weeks
+kf57|A month or so|About 1 week|Forever, they are cured
+kf58|About 2 weeks|3 to 4 days|It does not spoil
+kf59|Yes, oil keeps it safe|Fridge; toss after 4 days|Yes, for a month or more
+kf60|Sure, just keep an eye on it|No, skip it when sleepy or drinking|Yes, turn it on high to be quick
+kf61|One is plenty|Two cold sources|None are needed
+kf62|Yes, it saves money|No, toss used bags|Yes, if you flip it
+kf63|Yes, everything needs some ice|No, PB and J is fine without it|Yes, it needs two ice packs
+kf64|When the outside turns golden brown|When it is not see-through and flakes|After about 2 minutes in the pan per side
+kf65|Yes, one is enough|Check each piece|Only check the biggest
+kf66|Yes, grill marks mean done|No, check for 160 F|Yes, if it sizzles loud
+kf67|Just wipe them on your jeans|Sanitizer, at least 60% alcohol|Rinse them off with some soda pop
+kf68|No, frozen leftovers are unsafe|Yes, 3 to 4 months for best taste|Only if you eat them tomorrow
+kf69|Yes, runny is fine|Yolk and white firm|Only if it is brown
+kf70|Yes, always thaw it first|No, reheating frozen is safe|Yes, thaw it on the counter all day
+kf80|The night before, on the counter|About 4 days before (1 day per 5 pounds)|The morning of the big dinner
+kf81|Yes, it cooks all day long|No, thaw the meat first|Yes, set it on low
+kf82|Yes, it is perfect for that|No, use the stove or microwave to 165 F|Yes, on warm for a few hours until hot
+kf83|Yes, it looks cooked|No, throw it away|Yes, after a stir
+kf84|Yes, they were boiled|No, do not eat them|Yes, if you rinse them
+kf85|Yes, any eggs will do|Use pasteurized eggs|Yes, if they are fresh
+kf86|About 1 week|3 to 5 weeks|About 6 months
+kf87|Yes, just like that|No, beat them first|Yes, in a cup of water
+kf88|3 weeks|1 week|1 day
+kf89|Yes, everyone should|No, kids should get out|Yes, on grease fires
+kf90|Once a year|Every month|When you move in
+kf91|In the garage with the door up|Outside, 20 feet from the house|On the porch close to an open window
+kf92|A case of small bottles|1 gallon per person per day|Half a gallon for everyone
+kf93|Yes, sip a little each day|No, drink what you need, find more|Stop drinking until help comes to you
+kf94|Yes, any drink works just fine|No, caffeine and alcohol dry you|Yes, soda is even better
+kf95|Yes, any bleach will do|No, plain unscented only|Yes, the extra strong kind
+kf96|Just until it starts to steam|Rolling boil for 1 minute|At least 20 minutes
+kf97|140 F|165 F|120 F
+kf98|Leave it out, it is fine|Set it in a bowl of ice|Cover it with some foil
+kf99|No, they have preservatives|Yes, keep them cold|Only in the summer
+kf100|About a month|About 1 week|Just 1 day
+kf101|Yes, a week is fine|No, 1 to 2 days or freeze|Yes, if it is sealed tight
+mn01|Yes, the minimum is all that counts|It could take years and cost a lot|Yes, and the interest stops growing
+mn02|Yes, every check drops it|No, it has no effect|Only if you check twice
+mn03|Never, you have to pay|Once a week online|Once every 10 years
+mn04|Yes, free means free, so sign up|Some bill you later; use AnnualCreditReport.com|Yes, if the site has a bank logo on it
+mn05|Yes, each one hurts your score|Usually one, if within 14 to 45 days|Yes, and it locks your credit for a year
+mn06|Yes, so a raise can lose money|No, only the part in the new bracket|Yes, and you pay a big penalty on top
+mn07|Yes, it is the same thing|No, debit losses can grow|Debit has more protection
+mn08|Yes, no need to call yet|Report it now|Wait about a week
+mn09|Yes, for the right price they can|No one can remove true info|Only if you pay big fees
+mn10|Yes, it stays on there forever|Most bad info drops off in 7 years|It is all gone after a month
+mn11|Just one score|Many; they vary|None until age 30
+mn12|Yes, a monthly fee|No, it is free|Only the first time
+mn13|No, it is locked to you too|Yes, you can still see it|Only if you ask by mail
+mn14|Yes, only 15% for the whole year|No, that is almost 400% a year|No, the loan is free
+mn15|Right, it is free|Most charge late fees|It pays you back with points
+mn16|Yes, it costs extra|No, it is automatic|Only for savings
+mn17|Yes, all of it is covered|Not all products are|Only the stocks are
+mn18|Yes, pay in October|No, pay by April|You never have to pay
+mn19|Yes, at any time of the day or night|Not before 8 AM or after 9 PM|Only on the weekends
+mn20|No, they can call you anywhere at all|Yes, say you cannot get calls at work|Only if you hire a lawyer first
+mn21|Wait and hope they forget|Call creditors now to make a plan|Close your bank account so they can't
+mn22|Yes, ignore every call|Talk once to learn more|Pay it now to make it stop
+mn23|Your income|Paying on time|How many cards you own
+mn24|Yes, high use looks good|No, keep it under about 30%|Yes, max it out every month
+mn25|Yes, fewer cards is always better|Not always; it can lower it|Yes, by about 100 points
+mn26|Yes, always|Usually no|Yes, double
+mn27|Yes, it is the same|No, interest starts right away|Cash advances are free if paid on time
+mn28|Yes, more is better|No, many apps fast can hurt|Yes, apply for at least 10 at once
+mn29|Yes, a lower payment is cheaper|No, you pay more interest|It is the same total cost
+mn30|No big deal, you can catch up later|It matters; later means saving more|Starting later is better for you
+mn31|Right, cards always work|Keep some small bills home|Keep only a few $100 bills at home
+mn32|You earn only on what you put in it|You earn interest on your interest|The bank keeps all the interest
+mn50|Yes, always, on every charge|Not unless you opted in|Only on Fridays
+mn51|No, it is just declined|Yes, checks and auto pay can|Only for cash
+mn52|Right, it waits until you graduate|For most loans, interest adds up|Interest is never charged
+mn53|It gets forgiven|It is added to the loan|The school pays all of it
+mn54|Yes, only for loans|No, landlords and insurers too|Only when you buy a new car
+mn55|No, that is never allowed|Yes, some employers do|Only the military can
+mn56|Yes, they must|Usually not|Yes, with your boss
+mn57|No, just a payment option|Yes, it is a loan|It is a gift card
+mn58|No form, no tax due|Yes, report it anyway|Only if it is over $50,000
+mn59|Right, cash is invisible|Cash income counts too|Only checks count
+mn60|About the same either way|About $127 vs $441 a month|Starting at 35 is cheaper overall
+mn61|About $365|About $1,577|About $10 total
+mn62|72 years|About 8 years|About 9 months
+mn63|No, nothing changes at all|You may lose the grace period|Your card is canceled right away
+mn64|Yes, the lowest payment wins|Risky; longer loans cost more|Yes, always pick the longest loan
+mn65|$0, same as a credit card|Up to $500 or more|Just $5 at most
+mn66|Yes, it lowers this year's tax|No, but later withdrawals can be tax free|It saves on tax both now and later on
+mn67|No, it is taxed the same as pay|Yes, it is left out of taxable income|Only if you are over 50
+mn68|No, just forget it|Still check statements|Cut it up and stop paying it
+mn69|Yes, it is gone instantly|No, it stays and fades|Yes, if you call and ask nicely
+mn80|Just a few dollars a month|About 30% less, for life|No cut at all
+mn81|No, it is the max already|Yes, it grows each month to 70|It goes down if you wait longer
+mn82|Yes, wait to sign up for both|Sign up for Medicare at 65|Medicare does not start until 70
+mn83|No, benefits stop for good|Yes, but some may be held back|Only for 10 hours a week
+mn84|No, never, it is fixed|Yes, if it is a top year|Only if you move to a new state
+mn85|Yes, Medicare covers it all|No, not most long-term care|Only on weekends
+mn86|You, if you miss|The lender|Your house from fire
+mn87|Always, on every home loan|With less than 20% down|Only on condos
+mn88|Yes, preapproved is better|No, lenders use them differently|Prequalified means you got the loan
+mn89|Barely at all, if any|Yes, rates vary by score|Only for second homes
+mn90|No, you are too old for it|Yes, it is allowed after 70 1/2|Only half as much
+mn91|Yes, at age 70|No, leave it in for life|Yes, at age 59 and a half
+mn92|Yes, file early, get it early|No, by law it waits to mid-February|It always comes in June or July
+mn93|Yes, never touch your winners|Rebalance back to your plan|Sell everything now
+mn94|Yes, $250,000 total|No, it is per depositor, per category|There is no limit at all on it
+mn95|Yes, it has happened lots of times|No one has lost insured funds since 1933|Only once, back in 2008
+mn96|Yes, just wait and see|Call your lender right away|Stop all your payments now
+mn97|Right, it is just a reference|No, you must pay if they miss|You will own half the car
+mn98|Never, they always want it all|They might take less|Only if you sue
+mn99|Yes, it is too late|Never too late; invest more|Only lottery tickets now, sadly
+mn100|Never, not one bit|They can be, by the rules|Always, every single one
+sc01|Maybe, some places take them|No, only scammers ask for that|Yes, if they know your name
+sc02|Yes, you still have the card|No, the numbers are the money|Yes, just do not read the PIN
+sc03|Yes, it is just a mistake|No, it is a fake check scam|Yes, send it by gift card
+sc04|Yes, it is real now|Not always; it can take weeks|Yes, after just one day it is safe
+sc05|Could be, the IRS calls sometimes|No, the IRS does not do that|Yes, if the number looks real
+sc06|Yes, the IRS can do that|No, that is a scam sign|Only for very big debts
+sc07|Yes, I know that voice well|Maybe not; call him back|Yes, send it fast
+sc08|Tap the link fast to fix it|Use the bank's real site or number|Reply STOP to the text and wait
+sc09|Yes, they do it all the time|No, real companies won't do that|Only the really big companies
+sc10|Yes, caller ID is proof|No, numbers can be faked|Yes, if it is a local number
+sc11|Yes, press 1 to stop it|No, just hang up|Press 9 instead
+sc12|Yes, they are harmless|No, just hang up|Only say yes
+sc13|Yes, stay on the line|Hang up and check yourself|Put them on hold for an hour
+sc14|Yes, they are helping you|No, that is always a scam|Only if they give a badge number
+sc15|No, that is normal now|Yes, never pay them|Only for big amounts
+sc16|Keep it secret like they say|Talk to someone you trust|Pay half to see what happens
+sc17|Yes, it looks real|Go to the site yourself|Forward it to friends to check
+sc18|Yes, prizes have fees|No, paying means scam|Only for cars
+sc19|Sure, better odds|No, that is illegal|Only pay $10 at most
+sc20|Yes, only you won|Many people got it|Yes, it has your name
+sc21|Yes, call them fast|No, it is a scam|Click OK to fix it
+sc22|Yes, they are experts at this|No, do not give access|Yes, for five minutes
+sc23|Yes, just dispute it with the bank|Usually no, it is not reversible|Yes, within 30 days of paying
+sc24|Yes, by the FDIC, like banks|No, it is not insured|Only up to $1,000
+sc25|Yes, guaranteed means it is safe|No, only scammers guarantee that|Yes, if a friend put money in
+sc26|Yes, it is their account|Talk to them first|Send half of it
+sc27|Yes, I am expecting one|No, go to USPS.com|Reply with your address
+sc28|Yes, a password is enough|Turn on MFA too|Use one password everywhere
+sc29|Your pet's name plus 1|4 to 7 random words|Your birthday and initials
+sc30|Yes, just that one|Change it everywhere|No need to change any of them
+sc31|Yes, that is handy|No, that is a scam|Only on weekdays
+sc32|Yes, deals expire fast|No, honest ones give time|Yes, just say yes now to be safe
+sc33|Gift card|Credit card|Wire transfer
+sc34|Sure, it is free|No, those are not real|Give only your bank info
+sc50|Yes, they will pay you back soon|Never; you have not met in person|Send half now, the rest later
+sc51|No, they are just busy|Yes, a common scam sign|Only if they are rude
+sc52|Sure, easy money from home|No, reshipping is never a job|Yes, if they pay you weekly
+sc53|Great find, apply today|Almost surely a scam|Only if it is on a big site
+sc54|Yes, a normal errand|No, it is a fake check scam|Yes, just keep the receipt for them
+sc55|Yes, that is normal|A big red flag|Only if it is $99
+sc56|Yes, that is the job|No, a fake check scam|Yes, but keep a tip
+sc57|Yes, it is free money|No, it is a fake check scam|Only for newer cars with no dents
+sc58|Yes, grab it fast|No, scammers copy listings|Yes, pay by app so it is quick
+sc59|Yes, a normal credit check|No, may be a paid monitoring trick|Only the first time they ask
+sc60|Yes, start recruiting now|Walk away; it is a warning sign|Only recruit your family and friends
+sc61|Yes, learn from the winners now|No, scams often start this way|Yes, if they post screenshots
+sc62|Fine, it is modern now|Only scammers demand that|Fine for small items
+sc63|Yes, it is a great deal|Never buy from them|Yes, pay by gift card only
+sc64|Yes, no harm done|Tell your bank anyway|Delete your phone apps
+sc65|Yes, call them now|No, fake invoices are a scam|Reply with your card number
+sc66|Yes, it is support|Never give your login|Give just the password
+sc67|Yes, a file is fine|Use a password manager|Use one password for all
+sc68|Yes, proven means safe|Be wary; scams claim that|Yes, if it has a money back promise
+sc69|Yes, it is a small fee|Do not pay for a prize|Pay with a gift card instead
+sc80|Yes, a lawyer called, so it is real|Maybe a scam; they pose as lawyers|Yes, pay now before it gets worse
+sc81|Yes, they knew details|No, scammers find details online|Yes, they know far too much to be fake
+sc82|Yes, emergencies move fast|That is how these scams ask|Yes, but get a receipt
+sc83|Yes, the name is real, so trust it|Not proof; scammers do that|Yes, IDs cannot be faked
+sc84|Yes, it is for safety|No, the FTC never does that|Only the gold, not the cash, is safe
+sc85|Yes, the government is helping|No, that is part of the scam|Yes, if they give a badge number
+sc86|Fine, a nice friend|A warning sign of a scam|Fine if it is small amounts
+sc87|No, it is one or the other|Yes, you can add one too|Only after one full year
+sc88|Yes, always give it|Ask why first|Yes, send it by text
+sc89|Yes, trash is fine|Shred them first|Recycle them as is
+sc90|Yes, any time they want|They need written OK|Only after 9 PM
+sc91|Yes, it is gone|Report it; ask for a refund|Buy more cards to win it back
+sc92|No, wires are final|Yes, ask to reverse it|Only after next month
+sc93|Yes, it is official|No, scammers fake those|Yes, taxes up front are normal
+sc94|Yes, they are well known|No real one asks for that|Only the routing number
+sc95|Yes, pay them fast|No, utilities don't do that|Yes, pay by gift card to be quick
+sc96|Yes, with good coaching|No, that is a scam claim|Yes, if prices keep rising
+sc97|Yes, respect their wish|No, check with family|Pay first, then tell
+sc98|No, it is gone for good|Contact FedEx right away|Mail more cash to get it back
+sc99|Yes, the IRS uses DMs now|No, a DM is never the IRS|Only if it has an IRS logo

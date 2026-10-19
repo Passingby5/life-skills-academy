@@ -20,21 +20,30 @@ LSA.pickRound = function (cards, boxes, today, r, n) {
   });
   due.sort(function (a, b) { return boxes[a.id].due - boxes[b.id].due; });
   var nd = Math.min(n, due.length);
-  return LSA.interleave(due.slice(0, nd)).concat(LSA.interleave(fresh.slice(0, n - nd)));
+  return LSA.interleave(due.slice(0, nd).concat(fresh.slice(0, n - nd)));
 };
-LSA.interleave = function (list) {
+LSA.interleave = function (list, prevTopic) {
+  // Keep the given order where we can (due cards first), but never put the same topic twice in a row
+  // unless only that topic is left. If one topic would run out of room, place it now.
   var rest = list.slice(), out = [];
   while (rest.length) {
-    var prev = out.length ? out[out.length - 1].topic : null, k = 0;
-    // Look ahead: pick the first card whose topic differs, preferring the topic with the most left.
-    var counts = {}; rest.forEach(function (c) { counts[c.topic] = (counts[c.topic] || 0) + 1; });
-    var best = -1;
-    for (var i = 0; i < rest.length; i++) {
-      if (rest[i].topic === prev) continue;
-      if (best < 0 || counts[rest[i].topic] > counts[rest[best].topic]) best = i;
-    }
-    k = best < 0 ? 0 : best;
+    var prev = out.length ? out[out.length - 1].topic : (prevTopic || null), counts = {}, top = null;
+    rest.forEach(function (c) { counts[c.topic] = (counts[c.topic] || 0) + 1; if (top === null || counts[c.topic] > counts[top]) top = c.topic; });
+    var k = -1;
+    if (top !== prev && counts[top] * 2 >= rest.length + 1) k = rest.findIndex(function (c) { return c.topic === top; });
+    if (k < 0) k = rest.findIndex(function (c) { return c.topic !== prev; });
+    if (k < 0) k = 0;
     out.push(rest.splice(k, 1)[0]);
   }
   return out;
+};
+// Where to put a retry card: a few cards later, at a spot where its neighbors have other topics if we can.
+LSA.retrySpot = function (q, i, topicOf, id) {
+  var t = topicOf(id);
+  for (var at = Math.min(q.length, i + 3); at <= q.length; at++) {
+    var before = q[at - 1] ? topicOf(q[at - 1].id) : null, after = q[at] ? topicOf(q[at].id) : null;
+    if (at > i + 1 && before !== t && after !== t) return at;
+  }
+  for (at = i + 2; at <= q.length; at++) { before = topicOf(q[at - 1].id); after = q[at] ? topicOf(q[at].id) : null; if (before !== t && after !== t) return at; }
+  return q.length;
 };

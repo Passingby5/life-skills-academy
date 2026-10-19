@@ -4,6 +4,14 @@ LSA.decks = LSA.decks || {};
 LSA.deckOrder = LSA.deckOrder || [];
 LSA.cardIndex = LSA.cardIndex || {};
 LSA.MIN_CARDS = 50;
+LSA.MAX_RIGHT_RATIO = 1.3;
+LSA.MAX_RIGHT_LONGEST = 0.4;
+// Share of cards where the right answer is the longest choice (ties count as longest).
+LSA.lengthStats = function (d) {
+  var n = 0, l = 0;
+  d.cards.forEach(function (c) { if (Array.isArray(c.c) && c.c.length === 3) { n++; if (c.c[1].length >= Math.max(c.c[0].length, c.c[2].length)) l++; } });
+  return { cards: n, rightLongest: n ? l / n : 0 };
+};
 LSA.deck = function (d) {
   d.format = d.format || 'gutcheck';
   d.cards.forEach(function (c) { c.deck = d.id; LSA.cardIndex[c.id] = c; });
@@ -39,6 +47,14 @@ LSA.checkDeck = function (d) {
     if (c.s && typeof c.s === 'object' && (!c.s.ya || !c.s.adult)) errs.push(p + 'two-line scenario needs ya and adult');
     if (c.src && !(d.sources && d.sources[c.src])) errs.push(p + 'unknown source ' + c.src);
   });
+  // Length must give no clue: the right answer may not be much longer than the others, or the longest too often.
+  d.cards.forEach(function (c) {
+    if (!Array.isArray(c.c) || c.c.length !== 3) return;
+    var r = c.c[1].length, o = Math.max(c.c[0].length, c.c[2].length);
+    if (r > LSA.MAX_RIGHT_RATIO * o) errs.push(d.id + '/' + c.id + ': right answer is ' + (r / o).toFixed(2) + 'x the next longest');
+  });
+  var ls = LSA.lengthStats(d);
+  if (ls.rightLongest > LSA.MAX_RIGHT_LONGEST) errs.push(d.id + ': right answer is the longest on ' + Math.round(ls.rightLongest * 100) + '% of cards');
   ['ya', 'adult'].forEach(function (a) {
     var n = d.cards.filter(function (c) { return LSA.visible(c, a); }).length;
     if (n < LSA.MIN_CARDS) errs.push(d.id + ': only ' + n + ' cards for ' + a);

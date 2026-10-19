@@ -10,7 +10,7 @@ function playRound(p, today, seed, skill, r) {
   const inRound = st.q.map(x => x.id), hasNew = inRound.some(id => !before[id]);
   if (hasNew && due.some(id => !inRound.includes(id))) dueBad++;
   // no same topic twice in a row inside the due block unless only that topic was left
-  const dueBlock = inRound.filter(id => before[id]);
+  const dueBlock = inRound; // whole round, due and new together
   for (let i = 1; i < dueBlock.length; i++) {
     const tp = L.cardIndex[dueBlock[i - 1]].topic;
     if (L.cardIndex[dueBlock[i]].topic === tp && dueBlock.slice(i).some(id => L.cardIndex[id].topic !== tp)) topicBad++;

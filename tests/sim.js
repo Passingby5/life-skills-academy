@@ -1,7 +1,7 @@
 // Headless sim: 1,000 seeded players x 60 days. Run: node tests/sim.js
 const assert = require('assert');
 const L = require('./load.js').load();
-let rounds = 0, cards = 0, cross = 0, topicBad = 0, dueBad = 0;
+let backToBack = 0, rounds = 0, cards = 0, cross = 0, topicBad = 0, dueBad = 0;
 function playRound(p, today, seed, skill, r) {
   const before = JSON.parse(JSON.stringify(p.boxes));
   const st = L.GC.start(p, null, today, seed); if (!st.q.length) return false;
@@ -22,6 +22,7 @@ function playRound(p, today, seed, skill, r) {
     L.GC.pick(st, right ? it.order.indexOf(1) : [0, 1, 2].find(x => it.order[x] !== 1));
     L.GC.confirm(st, p, skill === 1 ? 2 : r.int(3)); L.GC.next(st, p); cards++;
   }
+  const ids = st.q.map(x => x.id); ids.forEach((id, i) => { const j = ids.indexOf(id, i + 1); if (j > 0 && j - i < 3) backToBack++; });
   rounds++; return true;
 }
 const t0 = Date.now();
@@ -32,7 +33,8 @@ for (let i = 0; i < 1000; i++) {
 }
 console.log(`players 1000, days 60, rounds ${rounds}, cards ${cards}, ${Date.now() - t0} ms`);
 assert.strictEqual(cross, 0, 'cross-age cards'); assert.strictEqual(topicBad, 0, 'topic repeats'); assert.strictEqual(dueBad, 0, 'due not first');
-console.log('ok 10 no cross-age cards; ok 21 due first and interleaved');
+assert.strictEqual(backToBack, 0, 'retry too close to its card');
+console.log('ok 10 no cross-age cards; ok 21 due first and interleaved; ok v3-2 zero same-card-back-to-back over ' + rounds + ' rounds');
 ['ya', 'adult'].forEach(age => {
   const p = L.newProfile('Perfect', age), r = L.rng(age === 'ya' ? 1 : 2);
   for (let day = 0; day < 60; day++) { let g = 0; while (playRound(p, day, r.int(1e9), 1, r) && g++ < 200) { const due = L.cardsFor(age).some(c => !p.boxes[c.id] || p.boxes[c.id].due <= day); if (!due) break; } }

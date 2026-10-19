@@ -6,6 +6,24 @@ LSA.cardIndex = LSA.cardIndex || {};
 LSA.MIN_CARDS = 50;
 LSA.MAX_RIGHT_RATIO = 1.3;
 LSA.MAX_RIGHT_LONGEST = 0.4;
+LSA.WORD_MIN_USES = 10; LSA.WORD_RIGHT_LO = 0.2; LSA.WORD_RIGHT_HI = 0.5; LSA.MAX_STRATEGY = 0.45;
+LSA.firstWord = function (x) { return x.split(/[ ,;:]/)[0]; };
+// Answer tells. words: first word -> [uses, right]. strat: expected score of simple guessing rules (ties split evenly).
+LSA.tellStats = function (cards) {
+  var W = {}, st = { longest: 0, shortest: 0, startsNo: 0, noAvoidYesOnly: 0 }, n = 0;
+  function share(f) { var idx = [0, 1, 2].filter(f); return idx.length ? (idx.indexOf(1) >= 0 ? 1 / idx.length : 0) : 1 / 3; }
+  cards.forEach(function (c) {
+    if (!Array.isArray(c.c) || c.c.length !== 3) return; n++;
+    var v = c.c, l = v.map(function (x) { return x.length; }), mx = Math.max.apply(null, l), mn = Math.min.apply(null, l);
+    v.forEach(function (x, k) { var w = LSA.firstWord(x); W[w] = W[w] || [0, 0]; W[w][0]++; if (k === 1) W[w][1]++; });
+    var isNo = function (k) { return /^No\b/.test(v[k]); }, notYO = function (k) { return !/^(Yes|Only)\b/.test(v[k]); };
+    st.longest += share(function (k) { return l[k] === mx; }); st.shortest += share(function (k) { return l[k] === mn; });
+    st.startsNo += share(isNo);
+    st.noAvoidYesOnly += [0, 1, 2].some(isNo) ? share(isNo) : share(notYO);
+  });
+  Object.keys(st).forEach(function (k) { st[k] = n ? st[k] / n : 0; });
+  return { words: W, strat: st };
+};
 // Share of cards where the right answer is the longest choice (ties count as longest).
 LSA.lengthStats = function (d) {
   var n = 0, l = 0;
@@ -62,7 +80,17 @@ LSA.checkDeck = function (d) {
   return errs;
 };
 LSA.checkAll = function () {
-  var errs = [], ids = {};
+  var errs = [], ids = {}, all = [];
+  LSA.knowDecks().forEach(function (id) {
+    all = all.concat(LSA.decks[id].cards);
+    var t = LSA.tellStats(LSA.decks[id].cards).strat;
+    Object.keys(t).forEach(function (k) { if (t[k] > LSA.MAX_STRATEGY) errs.push(id + ': strategy "' + k + '" scores ' + Math.round(t[k] * 100) + '%'); });
+  });
+  var W = LSA.tellStats(all).words;
+  Object.keys(W).forEach(function (w) {
+    var u = W[w][0], r = W[w][1] / u;
+    if (u >= LSA.WORD_MIN_USES && (r < LSA.WORD_RIGHT_LO || r > LSA.WORD_RIGHT_HI)) errs.push('first word "' + w + '" is right on ' + W[w][1] + ' of ' + u + ' choices');
+  });
   LSA.deckOrder.forEach(function (id) {
     errs = errs.concat(LSA.checkDeck(LSA.decks[id]));
     LSA.decks[id].cards.forEach(function (c) { if (ids[c.id] && ids[c.id] !== id) errs.push('id ' + c.id + ' used in ' + ids[c.id] + ' and ' + id); ids[c.id] = id; });

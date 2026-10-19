@@ -91,9 +91,10 @@
     var p = P(), st = p.round;
     if (!st) return R.menu();
     var tries = st.q.length - LSA.GC.progress(st).total;
-    var h = '<h1>Round done</h1><p>You got ' + st.right + ' of ' + st.q.length + ' answers right' + (tries ? ' (' + tries + ' were second tries)' : '') + '.</p><div class="card" id="recap"><h2>😮 Wow cards</h2>';
+    var h = '<h1>Round done</h1><p>You got ' + st.right + ' of ' + st.q.length + ' answers right' + (tries === 1 ? ' (1 was a second try)' : tries ? ' (' + tries + ' were second tries)' : '') + '.</p><div class="card" id="recap"><h2>😮 Wow cards</h2>';
     if (!st.wows.length) h += '<p class="muted">No Wow cards this round. No sure-but-wrong answers.</p>';
     else h += '<ul class="list">' + st.wows.map(function (id) { var c = LSA.cardIndex[id]; return '<li><b>Myth:</b> ' + esc(c.m) + '<br><b>Fix:</b> ' + esc(c.f) + '</li>'; }).join('') + '</ul>';
+    if (st.carried && st.carried.length) h += '<p class="muted" id="carry">' + (st.carried.length === 1 ? '1 card you missed at the end comes back first next round.' : st.carried.length + ' cards you missed at the end come back first next round.') + '</p>';
     return h + '</div>' + b('play', 'Play another round', 'main') + b('match', '🧩 Myth Match', 'alt') + b('menu', 'Menu', 'ghost');
   };
   R.match = function () {
@@ -123,7 +124,20 @@
     return h + ver();
   };
 
-  function render() { app.innerHTML = (R[U.screen] || R.home)(); }
+  // After any screen change, ignore all taps for 350 ms, so a double tap never lands on the next screen's button.
+  var LOCK_MS = 350, lockUntil = 0, lastKey = null;
+  function screenKey() {
+    var p = P(), st = p && p.round;
+    if (U.screen === 'play' && st) return 'play:' + st.i + ':' + st.stage;
+    if (U.screen === 'match') return 'match:' + !!(U.mm && U.mm.done);
+    return U.screen;
+  }
+  function render() {
+    app.innerHTML = (R[U.screen] || R.home)();
+    var k = screenKey();
+    if (lastKey !== null && k !== lastKey) lockUntil = Date.now() + LOCK_MS;
+    lastKey = k;
+  }
 
   var A = {
     home: function () { U.notice = ''; S.active = null; go('home'); },
@@ -165,6 +179,7 @@
     var el = e.target.closest('[data-act]'); if (!el || el.disabled) return;
     var act = el.dataset.act, key = act + ':' + (el.dataset.i || el.dataset.p || el.dataset.k || el.dataset.id || el.dataset.a || '');
     // Per control: two taps on the same control within 300 ms count as one. Other controls work right away.
+    if (Date.now() < lockUntil) return;
     if (!guard(key, Date.now())) return;
     U.notice = '';
     try { if (A[act]) A[act](el); }

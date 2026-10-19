@@ -3,7 +3,11 @@ var LSA = typeof LSA !== 'undefined' ? LSA : {};
 LSA.GC = {
   start: function (profile, deckIds, today, seed) {
     var r = LSA.rng(seed), cards = LSA.cardsFor(profile.age, deckIds);
-    var picked = LSA.pickRound(cards, profile.boxes, today, r, 10);
+    // Cards missed at the very end of the last round come first.
+    var carry = (profile.carry || []).map(function (id) { return LSA.cardIndex[id]; }).filter(function (c) { return c && cards.indexOf(c) >= 0; }).slice(0, 10);
+    profile.carry = [];
+    var picked = carry.concat(LSA.pickRound(cards.filter(function (c) { return carry.indexOf(c) < 0; }), profile.boxes, today, r, 10 - carry.length));
+    picked = LSA.interleave(picked);
     var q = picked.map(function (c) { return { id: c.id, order: LSA.shuffle([0, 1, 2], r), pick: null, conf: null }; });
     return { rs: r.s, today: today, q: q, i: 0, stage: 'ask', again: {}, wows: [], right: 0 };
   },
@@ -29,15 +33,16 @@ LSA.GC = {
     it.wow = LSA.isWow(right, conf);
     if (it.wow && st.wows.indexOf(it.id) < 0) { st.wows.push(it.id); profile.stats.wows++; }
     if (!right && !st.again[it.id]) {
-      // Ask it once more, a few cards later in this round.
+      // Ask it once more later, with at least 2 other cards in between and no topic twice in a row.
+      // If the round is too close to its end, it opens the next round instead.
       st.again[it.id] = 1;
-      var r = LSA.rng(st.rs), at = LSA.retrySpot(st.q, st.i, function (id) { return LSA.cardIndex[id].topic; }, it.id);
-      st.q.splice(at, 0, { id: it.id, order: LSA.shuffle([0, 1, 2], r), pick: null, conf: null, again: true });
-      // Re-check the rest of the round so no topic shows twice in a row.
-      var tp = function (x) { return { topic: LSA.cardIndex[x.id].topic, x: x }; };
-      var rest = LSA.interleave(st.q.slice(st.i + 1).map(tp), LSA.cardIndex[it.id].topic).map(function (y) { return y.x; });
-      st.q = st.q.slice(0, st.i + 1).concat(rest);
-      st.rs = r.s;
+      var at = LSA.retrySpot(st.q, st.i, function (id) { return LSA.cardIndex[id].topic; }, it.id);
+      if (at < 0) { profile.carry = (profile.carry || []).filter(function (x) { return x !== it.id; }).concat(it.id); st.carried = (st.carried || []).concat(it.id); }
+      else {
+        var r = LSA.rng(st.rs);
+        st.q.splice(at, 0, { id: it.id, order: LSA.shuffle([0, 1, 2], r), pick: null, conf: null, again: true });
+        st.rs = r.s;
+      }
     }
     st.stage = 'fix';
   },

@@ -13,8 +13,8 @@ const server = http.createServer((q, r) => { let p = q.url.split('?')[0]; if (p.
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 } }), page = await ctx.newPage();
   await page.goto(base); await page.evaluate(() => navigator.serviceWorker.ready); await page.waitForFunction(() => !!navigator.serviceWorker.controller);
   assert((await page.textContent('#ver')).endsWith('aaaaaaa'));
-  await page.click('[data-act=newprof]'); await page.waitForTimeout(330); await page.click('[data-act="age"][data-a="ya"]'); await page.waitForTimeout(330); await page.click('[data-act=saveprof]'); await page.waitForTimeout(330);
-  await page.click('[data-act=play]'); await page.waitForTimeout(330); await page.click('[data-act=ans][data-p="1"]'); await page.waitForTimeout(330);
+  await page.click('[data-act=newprof]'); await page.waitForTimeout(400); await page.click('[data-act="age"][data-a="ya"]'); await page.waitForTimeout(400); await page.click('[data-act=saveprof]'); await page.waitForTimeout(400);
+  await page.click('[data-act=play]'); await page.waitForTimeout(400); await page.click('[data-act=ans][data-p="1"]'); await page.waitForTimeout(400);
   const before = await page.evaluate(() => localStorage.lsa_save);
   execSync('COMMIT=bbbbbbb node build.js', { cwd: root }); copy();
   // Coming back to the foreground triggers the check.

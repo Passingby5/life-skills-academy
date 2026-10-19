@@ -10,7 +10,7 @@ const ok = m => console.log('ok', m);
   const ctx = await b.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true });
   const page = await ctx.newPage(), errors = [];
   page.on('pageerror', e => errors.push(e.message)); page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') errors.push(m.text()); });
-  const tap = async sel => { await page.click(sel); await page.waitForTimeout(330); };
+  const tap = async sel => { await page.click(sel); await page.waitForTimeout(400); };
   await page.goto(base);
   // Make a real save with a round in progress to corrupt.
   await tap('[data-act=newprof]'); await page.fill('#nm', 'Sam'); await tap('[data-act=age][data-a=ya]'); await tap('[data-act=saveprof]');
@@ -52,7 +52,7 @@ const ok = m => console.log('ok', m);
   // 8 per control: two taps on the same deck toggle in 300 ms count once
   const d0 = await page.evaluate(() => LSA.UI.S().decks.length);
   await page.evaluate(() => { document.querySelector('[data-act=deck][data-id=money]').click(); document.querySelector('[data-act=deck][data-id=money]').click(); });
-  assert.strictEqual(await page.evaluate(() => LSA.UI.S().decks.length), d0 + 1); await page.waitForTimeout(330); ok('8 same control double tap counts once');
+  assert.strictEqual(await page.evaluate(() => LSA.UI.S().decks.length), d0 + 1); await page.waitForTimeout(400); ok('8 same control double tap counts once');
   // m5: Back from About returns to the menu and stays in the app
   await tap('[data-act=about]'); assert(await page.$('#research'));
   await page.goBack(); await page.waitForTimeout(200);
@@ -73,6 +73,14 @@ const ok = m => console.log('ok', m);
   await tap('[data-act=delask]'); await tap('[data-act=delyes]');
   const names = await page.evaluate(() => Object.values(LSA.UI.S().profiles).map(p => p.name));
   assert.deepStrictEqual(names, ['Ana']); ok('p4 delete player asks first; cancel keeps; yes deletes only that player');
+  // v3-5: recap plural
+  for (const [extra, want] of [[1, '(1 was a second try)'], [2, '(2 were second tries)']]) {
+    await page.evaluate(n => { const S = LSA.UI.S(); S.active = Object.keys(S.profiles)[0]; const p = S.profiles[S.active]; const st = LSA.GC.start(p, null, 0, 9);
+      for (let k = 0; k < n; k++) st.q.push(Object.assign({}, st.q[k], { again: true }));
+      st.i = st.q.length; st.stage = 'done'; p.round = st; LSA.UI.U.screen = 'play'; LSA.UI.render(); }, extra);
+    assert((await page.textContent('#app')).includes(want), want);
+  }
+  ok('v3-5 recap says "1 was a second try" and "2 were second tries"');
   assert.deepStrictEqual(errors, [], errors.join(' | ')); ok('no console errors or warnings');
   await b.close(); server.close();
 })().catch(e => { console.error('FAIL', e.message); server.close(); process.exit(1); });

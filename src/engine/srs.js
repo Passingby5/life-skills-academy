@@ -37,13 +37,13 @@ LSA.interleave = function (list, prevTopic) {
   }
   return out;
 };
-// Where to put a retry card: a few cards later, at a spot where its neighbors have other topics if we can.
+// Where to put a retry card: at least 2 other cards after the current one, at a spot where neither neighbor
+// has the same topic. Returns -1 when there is no such spot (the round is about to end).
 LSA.retrySpot = function (q, i, topicOf, id) {
   var t = topicOf(id);
-  for (var at = Math.min(q.length, i + 3); at <= q.length; at++) {
-    var before = q[at - 1] ? topicOf(q[at - 1].id) : null, after = q[at] ? topicOf(q[at].id) : null;
-    if (at > i + 1 && before !== t && after !== t) return at;
+  for (var at = i + 3; at <= q.length; at++) {
+    var before = topicOf(q[at - 1].id), after = q[at] ? topicOf(q[at].id) : null;
+    if (before !== t && after !== t) return at;
   }
-  for (at = i + 2; at <= q.length; at++) { before = topicOf(q[at - 1].id); after = q[at] ? topicOf(q[at].id) : null; if (before !== t && after !== t) return at; }
-  return q.length;
+  return -1;
 };

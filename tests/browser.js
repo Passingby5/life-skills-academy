@@ -20,7 +20,7 @@ const results = {}; const pass = (k, m) => { results[k] = 'PASS'; console.log('o
     const page = await ctx.newPage(), errors = [];
     page.on('console', m => { if (m.type() === 'error' || m.type() === 'warning') errors.push(m.type() + ': ' + m.text()); });
     page.on('pageerror', e => errors.push('pageerror: ' + e.message));
-    const tap = async sel => { await page.click(sel); await page.waitForTimeout(330); };
+    const tap = async sel => { await page.click(sel); await page.waitForTimeout(400); };
     const checkLayout = async where => {
       const r = await page.evaluate(() => {
         const over = document.documentElement.scrollWidth > window.innerWidth + 1;
@@ -64,7 +64,7 @@ const results = {}; const pass = (k, m) => { results[k] = 'PASS'; console.log('o
         await page.evaluate(() => { const b = document.querySelector('[data-act=next]'); b.click(); });
         await page.evaluate(() => { const b = document.querySelector('[data-act=next]'); if (b) b.click(); });
         const after = await page.evaluate(() => { const S = LSA.UI.S(), st = S.profiles[S.active].round; return { i: st.i, stage: st.stage }; });
-        assert.strictEqual(after.i, before + 1); assert.strictEqual(after.stage, 'ask'); pass('8 double tap on Next counts once'); await page.waitForTimeout(330); n++; continue;
+        assert.strictEqual(after.i, before + 1); assert.strictEqual(after.stage, 'ask'); pass('8 double tap on Next counts once'); await page.waitForTimeout(400); n++; continue;
       }
       if (n === 3) {
         // 24: reload mid-round, come back to the same card

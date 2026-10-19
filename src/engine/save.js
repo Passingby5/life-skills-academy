@@ -4,7 +4,7 @@ var LSA = typeof LSA !== 'undefined' ? LSA : {};
 LSA.SAVE_V = 2;
 LSA.SCREENS = ['home', 'menu', 'play', 'about', 'match', 'newprof'];
 LSA.newStats = function () { return { rounds: 0, right: 0, seen: 0, wows: 0 }; };
-LSA.newProfile = function (name, age) { return { name: String(name || 'Player').slice(0, 20), age: age === 'ya' ? 'ya' : 'adult', boxes: {}, round: null, stats: LSA.newStats() }; };
+LSA.newProfile = function (name, age) { return { name: String(name || 'Player').slice(0, 20), age: age === 'ya' ? 'ya' : 'adult', boxes: {}, round: null, carry: [], stats: LSA.newStats() }; };
 LSA.newSave = function () { return { v: LSA.SAVE_V, active: null, next: 1, profiles: {}, decks: null }; };
 LSA.addProfile = function (s, name, age) {
   var id; do { id = 'p' + (s.next++); } while (s.profiles[id]);
@@ -53,6 +53,7 @@ LSA.loadSave = function (text) {
         else fixed = true;
       }); else fixed = true;
       if (p.round !== null && p.round !== undefined) { if (LSA.checkRound(p.round)) q.round = p.round; else fixed = true; }
+      if (Array.isArray(p.carry)) q.carry = p.carry.filter(known).slice(0, 10); else if (p.carry !== undefined) fixed = true;
       if (isObj(p.stats)) Object.keys(q.stats).forEach(function (st) { if (isInt(p.stats[st], 0, 1e9)) q.stats[st] = p.stats[st]; });
       else fixed = true;
       s.profiles[k] = q;

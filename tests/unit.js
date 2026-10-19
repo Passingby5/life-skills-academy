@@ -200,4 +200,50 @@ t('p4 no IRS Historical Content source; every source file is current', () => {
     assert(!/how-to-know-its-really-the-irs-calling/.test(L.decks[id].sources[k][1]), k);
   }));
 });
+
+// ---------- v3 regression tests (QA of v2 eb10a8a) ----------
+t('v3-2 a retry never follows its own card: 2+ other cards between, over 3,000 rounds', () => {
+  let rounds = 0, back = 0, close = 0, carried = 0;
+  for (let seed = 1; seed <= 3000; seed++) {
+    const p = prof(seed % 2 ? 'ya' : 'adult'), r = L.rng(seed);
+    const st = L.GC.start(p, null, 0, seed); rounds++;
+    while (st.stage !== 'done') { const it = L.GC.cur(st); L.GC.pick(st, r.next() < 0.5 ? rightPos(it) : wrongPos(it)); L.GC.confirm(st, p, r.int(3)); L.GC.next(st, p); }
+    const ids = st.q.map(x => x.id);
+    ids.forEach((id, i) => { if (ids[i + 1] === id) back++; const j = ids.indexOf(id, i + 1); if (j > 0 && j - i < 3) close++; });
+    carried += (st.carried || []).length;
+  }
+  assert.strictEqual(back, 0, 'same card back to back'); assert.strictEqual(close, 0, 'fewer than 2 cards between');
+  assert(carried > 0, 'some end-of-round misses were carried'); console.log('   rounds', rounds, 'carried to next round', carried);
+});
+t('v3-2 a card missed in slot 10 opens the next round', () => {
+  const p = prof('ya'), st = L.GC.start(p, null, 0, 21);
+  for (let k = 0; k < 9; k++) { L.GC.pick(st, rightPos(L.GC.cur(st))); L.GC.confirm(st, p, 1); L.GC.next(st, p); }
+  const last = L.GC.cur(st).id; L.GC.pick(st, wrongPos(L.GC.cur(st))); L.GC.confirm(st, p, 2); L.GC.next(st, p);
+  assert.strictEqual(st.stage, 'done'); assert.strictEqual(st.q.length, 10); eq(st.carried, [last]);
+  const s = L.newSave(); s.profiles.p1 = p; s.next = 2; const back = L.loadSave(JSON.stringify(s)).save.profiles.p1; eq(back.carry, [last]);
+  const st2 = L.GC.start(back, null, 0, 22); assert(st2.q.slice(0, 3).some(x => x.id === last)); eq(back.carry, []);
+});
+t('v3-3 first words give no clue; simple strategies score 45% or less', () => {
+  const all = L.knowDecks().flatMap(id => L.decks[id].cards), W = L.tellStats(all).words;
+  Object.keys(W).forEach(w => { if (W[w][0] >= 10) { const r = W[w][1] / W[w][0]; assert(r >= 0.2 && r <= 0.5, w + ' ' + W[w]); } });
+  L.knowDecks().forEach(id => Object.entries(L.tellStats(L.decks[id].cards).strat).forEach(([k, v]) => assert(v <= 0.45, id + ' ' + k + ' ' + v)));
+  // checker catches a deck where "No" is always right
+  const save = L.decks.firstaid.cards.map(c => c.c.slice());
+  L.decks.firstaid.cards.forEach(c => { c.c = ['Yes, ' + c.c[0], 'No, ' + c.c[1], c.c[2]]; });
+  const e = L.checkAll().join('|'); L.decks.firstaid.cards.forEach((c, i) => { c.c = save[i]; });
+  assert(/first word "No"/.test(e) && /strategy "startsNo"/.test(e), e.slice(0, 200)); eq(L.checkAll(), []);
+});
+t('v3-4 kf14 fits its question and myth; no half-right decoy', () => {
+  const c = L.cardIndex.kf14;
+  assert(/Toss the whole thing/.test(c.s) && /toss/i.test(c.m) && /^Yes/.test(c.c[0]) && /toss/.test(c.c[0]), 'myth choice matches myth');
+  assert(/1 inch around and below/.test(c.c[1]) && /^No/.test(c.c[1]));
+  assert(!/^No|cut|trim|scrape/i.test(c.c[2]), 'decoy is plainly wrong');
+  assert(/at least 1 inch around and below/.test(c.f));
+});
+t('v3-6 mn65 matches the FTC rule', () => {
+  const c = L.cardIndex.mn65, src = fs.readFileSync(path.join(__dirname, '../sources/ftc-lostcard.txt'), 'utf8');
+  assert(/within 60 days of your statement/.test(c.s) && /after 3 business days/.test(c.s));
+  assert.strictEqual(c.c[1], 'Up to $500'); assert(/up to \$500/.test(c.f) && /more/.test(c.f));
+  assert(/more than 2 business days after you learn about the loss or theft, but within 60 calendar days after your statement/.test(src) && /\$500/.test(src));
+});
 console.log(n + ' unit tests passed');

@@ -1,0 +1,45 @@
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#10202e;color:#f2f5f7;font:18px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+body{min-height:100vh;overflow-x:hidden}
+#app{max-width:720px;margin:0 auto;padding:max(12px,env(safe-area-inset-top)) 14px 24px}
+h1{font-size:1.5rem;margin:.2em 0 .4em}
+h2{font-size:1.2rem;margin:.6em 0 .3em}
+p{margin:.4em 0}
+button,.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;min-width:48px;margin:8px 0;padding:10px 14px;border:0;border-radius:14px;background:#24435c;color:#fff;font:inherit;font-weight:600;text-align:center;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;text-decoration:none;word-break:break-word}
+button:active{filter:brightness(1.2)}
+button.main{background:#2f8f5b}
+button.alt{background:#3a3f6b}
+button.ghost{background:transparent;border:2px solid #3b5b74}
+button.on{outline:3px solid #ffd257}
+button:disabled{opacity:.45}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.ver{font-size:.8rem;opacity:.75;text-align:center;margin-top:16px}
+.card{background:#183247;border-radius:16px;padding:14px;margin:10px 0}
+.scene{font-size:1.2rem;font-weight:600}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.top button{width:auto;margin:0}
+.muted{opacity:.75;font-size:.9rem}
+.pick{background:#7a5a12}
+.fix .lab{font-weight:700;color:#ffd257}
+.fix .wrong{font-weight:800;color:#ff8a7a}
+.fix .ok{font-weight:800;color:#7be0a3}
+a.src{display:flex;align-items:center;min-height:48px;color:#9fd3ff;word-break:break-word}
+.wow{display:inline-block;background:#ffd257;color:#2a1d00;font-weight:900;font-size:1.3rem;padding:8px 16px;border-radius:999px;margin:4px 0}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tile{min-height:72px;margin:0;font-size:.85rem;font-weight:500;background:#24435c}
+.tile.f{background:#2e4d3c}
+.tile.sel{outline:3px solid #ffd257}
+.tile.gone{visibility:hidden}
+.tile.miss{background:#7a2d2d}
+.note{background:#5a3d10;border-radius:12px;padding:10px}
+ul.list{padding-left:1.1em}ul.list li{margin:.5em 0}
+input{width:100%;min-height:52px;font:inherit;padding:8px 12px;border-radius:12px;border:2px solid #3b5b74;background:#0c1924;color:#fff}
+@media (orientation:landscape) and (max-height:500px){
+  html,body{font-size:16px}
+  #app{max-width:none;padding:8px max(14px,env(safe-area-inset-left)) 12px max(14px,env(safe-area-inset-right))}
+  .play{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .play .card{margin:0}
+  .play button{min-height:48px;margin:6px 0}
+  .tiles{grid-template-columns:1fr 1fr 1fr 1fr}
+  h1{font-size:1.25rem}
+}

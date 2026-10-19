@@ -31,17 +31,20 @@
   });
 
   // Deck picker grouped by section. Each section folds open; Everyday and any section with a deck on start open.
+  // A section the player opened or closed stays that way while the app is open (U.open), even after its last deck is turned off.
   function picker() {
     var on = decks(), h = '<div class="picker" id="picker">';
     LSA.sectionsOf(LSA.knowDecks()).forEach(function (g) {
-      var n = g.ids.filter(function (id) { return on.indexOf(id) >= 0; }).length, open = g.name === 'Everyday' || n > 0;
+      var n = g.ids.filter(function (id) { return on.indexOf(id) >= 0; }).length, k = U.open && U.open[g.name], open = k !== undefined ? k : (g.name === 'Everyday' || n > 0);
       h += '<details class="sect"' + (open ? ' open' : '') + ' data-sect="' + esc(g.name) + '"><summary>' + esc(g.name) + ' <span class="muted">' + n + ' of ' + g.ids.length + ' on</span></summary><div class="decks">';
       g.ids.forEach(function (id) { var d = LSA.decks[id], k = on.indexOf(id) >= 0; h += b('deck', d.icon + ' ' + esc(d.name) + (k ? ' ✓' : ''), k ? 'on' : 'ghost', ' data-id="' + id + '" aria-pressed="' + k + '"'); });
       h += '</div></details>';
     });
     return h + '</div>';
   }
-  function pic(c) { return c.img ? '<img class="cimg" src="' + esc(c.img) + '" alt="' + esc(LSA.imgAlt(c)) + '">' : ''; }
+  // Card pictures show on the fix screen. They show on the question screen only when a card sets imgAsk (a neutral
+  // picture that gives no answer away; the unit test checks its text against the right answer).
+  function pic(c) { return c.img ? '<img class="cimg" src="' + esc((LSA.IMG_DATA && LSA.IMG_DATA[c.img]) || c.img) + '" alt="' + esc(LSA.imgAlt(c)) + '">' : ''; }
   var R = {};
   R.home = function () {
     var ids = Object.keys(S.profiles), h = '<h1>Life Skills Academy</h1><p>Know It: fast real life myths. Pick, say how sure you are, then see the fix.</p>';
@@ -81,7 +84,7 @@
     var it = LSA.GC.cur(st), c = LSA.GC.card(st), pr = LSA.GC.progress(st);
     var top = '<div class="top"><span class="muted" id="prog">' + (pr.retry ? 'One more try (card ' + pr.n + ' of ' + pr.total + ')' : 'Card ' + pr.n + ' of ' + pr.total) + '</span>' + b('menu', 'Quit', 'ghost') + '</div>';
     if (st.stage === 'fix') return top + fix(c, it);
-    var h = '<div class="play"><div class="card">' + pic(c) + '<div class="scene" id="scene">' + esc(LSA.scenario(c, p.age)) + '</div>';
+    var h = '<div class="play"><div class="card">' + (c.imgAsk ? pic(c) : '') + '<div class="scene" id="scene">' + esc(LSA.scenario(c, p.age)) + '</div>';
     if (st.stage === 'conf') h += '<p class="muted">How sure are you?</p>';
     h += '</div><div>';
     if (st.stage === 'ask') it.order.forEach(function (ci, pos) { h += b('ans', esc(c.c[ci]), 'ans', ' data-p="' + pos + '"'); });
@@ -169,6 +172,7 @@
     },
     deck: function (el) {
       var cur = decks(), id = el.dataset.id, i = cur.indexOf(id);
+      U.open = U.open || {}; U.open[LSA.decks[id].section] = true;
       if (i >= 0) { if (cur.length > 1) cur.splice(i, 1); } else cur.push(id);
       S.decks = cur; save(); render();
     },
@@ -189,6 +193,9 @@
       if (res === 'miss') setTimeout(function () { U.miss = null; if (U.screen === 'match') render(); }, 600);
     }
   };
+  app.addEventListener('toggle', function (e) {
+    var d = e.target; if (d && d.classList && d.classList.contains('sect')) { U.open = U.open || {}; U.open[d.dataset.sect] = d.open; }
+  }, true);
   app.addEventListener('click', function (e) {
     var el = e.target.closest('[data-act]'); if (!el || el.disabled) return;
     var act = el.dataset.act, key = act + ':' + (el.dataset.i || el.dataset.p || el.dataset.k || el.dataset.id || el.dataset.a || '');

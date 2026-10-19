@@ -226,7 +226,7 @@ t('v3-2 a card missed in slot 10 opens the next round', () => {
 t('v3-3 first words give no clue; simple strategies score 45% or less', () => {
   const all = L.knowDecks().flatMap(id => L.decks[id].cards), W = L.tellStats(all).words;
   Object.keys(W).forEach(w => { if (W[w][0] >= 10) { const r = W[w][1] / W[w][0]; assert(r >= 0.2 && r <= 0.5, w + ' ' + W[w]); } });
-  L.knowDecks().forEach(id => Object.entries(L.tellStats(L.decks[id].cards).strat).forEach(([k, v]) => assert(v <= 0.45, id + ' ' + k + ' ' + v)));
+  L.knowDecks().forEach(id => Object.entries(L.tellStats(L.decks[id].cards).strat).forEach(([k, v]) => assert(v <= L.tellLimit(id, k), id + ' ' + k + ' ' + v)));
   // checker catches a deck where "No" is always right
   const save = L.decks.firstaid.cards.map(c => c.c.slice());
   L.decks.firstaid.cards.forEach(c => { c.c = ['Yes, ' + c.c[0], 'No, ' + c.c[1], c.c[2]]; });
@@ -241,7 +241,7 @@ t('v3-4 kf14 fits its question and myth; no half-right decoy', () => {
   assert(/at least 1 inch around and below/.test(c.f));
 });
 t('v3-6 mn65 matches the FTC rule', () => {
-  const c = L.cardIndex.mn65, src = fs.readFileSync(path.join(__dirname, '../sources/ftc-lostcard.txt'), 'utf8');
+  const c = L.cardIndex.mn65, src = fs.readFileSync(path.join(__dirname, 'fixtures/ftc-lostcard-excerpt.txt'), 'utf8');
   assert(/within 60 days of your statement/.test(c.s) && /after 3 business days/.test(c.s));
   assert.strictEqual(c.c[1], 'Up to $500'); assert(/up to \$500/.test(c.f) && /more/.test(c.f));
   assert(/more than 2 business days after you learn about the loss or theft, but within 60 calendar days after your statement/.test(src) && /\$500/.test(src));
@@ -249,7 +249,7 @@ t('v3-6 mn65 matches the FTC rule', () => {
 
 // ---------- v4 regression tests ----------
 t('v4-1 middle-length and all simple strategies stay at 45% or less on every deck; checker has the middle rule', () => {
-  L.knowDecks().forEach(id => { const t = L.tellStats(L.decks[id].cards).strat; assert('middle' in t); Object.entries(t).forEach(([k, v]) => assert(v <= 0.45, id + ' ' + k + ' ' + v)); });
+  L.knowDecks().forEach(id => { const t = L.tellStats(L.decks[id].cards).strat; assert('middle' in t); Object.entries(t).forEach(([k, v]) => assert(v <= L.tellLimit(id, k), id + ' ' + k + ' ' + v)); });
   const save = L.decks.scams.cards.map(c => c.c.slice());
   L.decks.scams.cards.forEach(c => { c.c = ['aa ' + 'x'.repeat(5), 'bb ' + 'x'.repeat(10), 'cc ' + 'x'.repeat(15)]; });
   const e = L.checkAll().join('|'); L.decks.scams.cards.forEach((c, i) => { c.c = save[i]; });
@@ -276,15 +276,17 @@ t('v4-5 a carried retry is kept while its deck is off and comes back when it is 
 
 // ---------- v5 regression tests ----------
 t('v5-1 negation, number, and comma/semicolon strategies exist and stay at 45% or less on every deck', () => {
-  L.knowDecks().forEach(id => { const t = L.tellStats(L.decks[id].cards).strat; ['negation', 'number', 'punct'].forEach(k => { assert(k in t); assert(t[k] <= 0.45, id + ' ' + k + ' ' + t[k]); }); });
+  L.knowDecks().forEach(id => { const t = L.tellStats(L.decks[id].cards).strat; ['negation', 'number', 'punct'].forEach(k => { assert(k in t); assert(t[k] <= L.tellLimit(id, k), id + ' ' + k + ' ' + t[k]); }); });
   const c = { c: ['Pick this one', 'No, not this one', 'Or this one'] }; eq(L.tellStats([c]).strat.negation, 1);
   eq(L.tellStats([{ c: ['a b c', 'Wait 20 minutes', 'x y z'] }]).strat.number, 1);
   eq(L.tellStats([{ c: ['a b c', 'Call; then wait', 'x y z'] }]).strat.punct, 1);
 });
-t('v5-1/v6 a surface-feature classifier stays near chance on held-out cards (pooled 47% or less, each deck 52% or less)', () => {
-  const M = require('../tools/tellmodel.js'), all = [].concat(...L.knowDecks().map(id => L.decks[id].cards));
-  const pooled = M.heldOut(all, L, 10); assert(pooled <= 0.47, 'pooled ' + pooled);
-  L.knowDecks().forEach(id => { const a = M.heldOut(L.decks[id].cards, L, 5); assert(a <= 0.52, id + ' ' + a); });
+t('v5-1/v8 surface-feature classifier: 45% or less held-out on every deck and on the new decks pooled (all decks pooled 47% or less); only frozen decks have a documented exception', () => {
+  const M = require('../tools/tellmodel.js'), G = require('../tools/tellgate.js'), all = [].concat(...L.knowDecks().map(id => L.decks[id].cards));
+  const sc = G.scores(L); eq(G.check(L, sc), []);
+  assert(sc._pooledNew <= 0.45, 'pooled new ' + sc._pooledNew); assert(sc._pooled <= 0.47, 'pooled all ' + sc._pooled);
+  L.knowDecks().forEach(id => assert(sc[id] <= L.tellLimit(id, 'classifier'), id + ' ' + sc[id]));
+  L.knowDecks().filter(id => L.FROZEN_DECKS.indexOf(id) < 0).forEach(id => assert(sc[id] <= 0.45, id + ' ' + sc[id]));
   // Sanity: the model does catch an obvious tell (right answer always has a number).
   const fake = all.slice(0, 120).map(c => ({ c: [c.c[0].replace(/\d/g, ''), 'Wait 5 min ' + c.id, c.c[2].replace(/\d/g, '')] }));
   assert(M.heldOut(fake, L, 5) > 0.9);
@@ -311,7 +313,101 @@ t('v6-5 img field: checker accepts img/name.svg, rejects others; alt text defaul
   ['img/a.png', '../x.svg', 'http://x/y.svg', 5].forEach(v => { c.img = v; assert(L.checkAll().some(e => /fa01: img must be/.test(e)), String(v)); });
   c.img = keep; delete c.img;
   assert(/burns/.test(L.imgAlt(c))); eq(L.imgAlt({ imgAlt: 'A leg with a band', topic: 'x' }), 'A leg with a band');
-  eq(L.sectionsOf(L.knowDecks()).map(g => g.name), ['Everyday', 'Tactical Field Care', 'Field Survival', 'Country Living']); eq(L.sectionsOf(L.knowDecks())[0].ids, ['firstaid', 'kitchen', 'money', 'scams']);
+  eq(L.sectionsOf(L.knowDecks()).map(g => g.name), ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living']); eq(L.sectionsOf(L.knowDecks())[0].ids, ['firstaid', 'kitchen', 'money', 'scams']);
   eq(L.defaultDecks(), ['firstaid', 'kitchen', 'money', 'scams']); eq(L.knowDecks().length, 12);
+});
+
+// ---------- v8 tests ----------
+t('v8 tell exceptions: only the 4 frozen decks, each at its frozen score (within 0.5 points), never loosening any other deck', () => {
+  const G = require('../tools/tellgate.js'), sc = G.scores(L), fz = Object.keys(require('../tools/frozen-decks.json').sha256).sort();
+  eq(L.FROZEN_DECKS.slice().sort(), fz);
+  Object.keys(L.TELL_EXCEPTIONS).forEach(id => {
+    assert(fz.indexOf(id) >= 0, id + ' is not frozen');
+    Object.entries(L.TELL_EXCEPTIONS[id]).forEach(([k, v]) => {
+      const now = k === 'classifier' ? sc[id] : L.tellStats(L.decks[id].cards).strat[k];
+      assert(now <= v && v - now < 0.005, id + ' ' + k + ' exception ' + v + ' vs score ' + now);
+    });
+  });
+  // A non-frozen deck can not borrow an exception, and an over-limit new deck fails the checker.
+  assert.strictEqual(L.tellLimit('fieldcare', 'classifier'), 0.45); assert.strictEqual(L.tellLimit('fieldcare', 'negation'), 0.45);
+  const save = L.decks.fieldcare.cards.map(c => c.c.slice());
+  L.decks.fieldcare.cards.forEach(c => { c.c = [c.c[0], 'No, ' + c.c[1], c.c[2]]; });
+  const e = L.checkAll().join('|'); L.decks.fieldcare.cards.forEach((c, i) => { c.c = save[i]; });
+  assert(/fieldcare: strategy "(startsNo|negation)"/.test(e), e.slice(0, 200));
+  L.TELL_EXCEPTIONS.fieldcare = { classifier: 0.9 }; const e2 = G.check(L, sc).join('|'); delete L.TELL_EXCEPTIONS.fieldcare;
+  assert(/fieldcare: tell exception is only allowed for frozen decks/.test(e2));
+  eq(L.checkAll(), []);
+});
+t('v8 QA guessers exist: word counts, hedge words, scenario overlap, odd first word', () => {
+  const s = L.tellStats(L.decks.firstaid.cards).strat;
+  ['mostWords', 'fewestWords', 'middleWords', 'avoidHedge', 'mostOverlap', 'leastOverlap', 'oddFirstWord'].forEach(k => assert(k in s, k));
+  eq(L.tellStats([{ s: 'x', c: ['a b c d', 'a', 'a b'] }]).strat.fewestWords, 1);
+  eq(L.tellStats([{ s: 'x', c: ['Yes it is', 'Maybe not', 'Yes it was'] }]).strat.oddFirstWord, 1);
+  eq(L.tellStats([{ s: 'dog bite', c: ['cat', 'dog bite', 'fish'] }]).strat.mostOverlap, 1);
+});
+t('v8 no myth is used twice across decks', () => {
+  const seen = {}, n = x => x.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
+  L.knowDecks().forEach(id => L.decks[id].cards.forEach(c => { const k = n(c.m); assert(!seen[k], c.id + ' repeats the myth of ' + seen[k] + ': ' + c.m); seen[k] = c.id; }));
+});
+t('v8 safety cuts and rewrites', () => {
+  const ids = Object.keys(L.cardIndex);
+  ['tr33', 'tr34', 'tr11', 'sv25', 'sv26', 'fc58', 'fc43', 'hm63'].forEach(id => assert(ids.indexOf(id) < 0, id + ' should be cut'));
+  for (let n = 55; n <= 65; n++) assert(ids.indexOf('sv' + n) < 0, 'sv' + n + ' (Virginia trapping) should be cut');
+  const all = L.knowDecks().flatMap(id => L.decks[id].cards);
+  all.forEach(c => { const txt = [L.scenario(c, 'ya'), L.scenario(c, 'adult'), c.c[1], c.f, c.w].join(' ');
+    assert(!/virginia/i.test(txt), c.id + ' mentions Virginia');
+    assert(!/(push|pull|knock|move)[^.]*(off|from)[^.]*(wire|line)/i.test(c.c[1] + ' ' + c.f), c.id + ' says to move a person off a live line');
+    assert(!/always edible|generally safe/i.test(txt), c.id + ' says wild food is safe'); });
+  const fc33 = L.cardIndex.fc33; assert(/do not touch/i.test(fc33.f) && /911/.test(fc33.f) && /back/i.test(fc33.f) && fc33.src === 'esfi-lines');
+  const fc63 = L.cardIndex.fc63; assert(!/catch|kill/i.test(fc63.c[1] + fc63.f) && /soap and water/.test(fc63.f) && /animal control/.test(fc63.f) && fc63.src === 'cdc-rabies');
+  assert(/exactly as prescribed/.test(L.cardIndex.md13.c[1]) && L.cardIndex.md13.src === 'cdc-antibiotics');
+  assert(/grapefruit/i.test(L.cardIndex.md23.s) && L.cardIndex.md23.src === 'fda-grapefruit');
+  ['hm40', 'hm41', 'hm42'].forEach(id => { const c = L.cardIndex[id]; assert.strictEqual(c.src, 'nhs-fever'); assert(!/uncover|fresh breeze|keep cooling/i.test(c.c[1] + c.f), id); });
+  assert(/sponge/.test(L.cardIndex.hm41.f) && /fluids/.test(L.cardIndex.hm41.f));
+  const svg = fs.readFileSync(path.join(__dirname, '../src/img/fever-signs.svg'), 'utf8');
+  assert(!/uncover|fresh air/i.test(svg) && /fluids/i.test(svg) && /sponge/i.test(svg), 'fever-signs.svg matches NHS');
+  const tr = L.decks.triage.cards.find(c => /30 times a minute/.test(c.f)); assert(tr && tr.src === 'remm-start', 'START breathing-rate card');
+  const berry = L.decks.survive.cards.find(c => /wild berries/.test(c.f) && /adult/.test(c.f)); assert(berry, 'berry ID card');
+  const traps = L.decks.survive.cards.filter(c => c.topic === 'traps'); assert(traps.length <= 2 && traps.every(c => c.src === 'cdfw-trap' && /CDFW|wildlife agency/.test(c.f + c.w)), 'California trapping cards');
+});
+t('v8 Health and Safety section holds foodsafe and medsafe; fieldcare and triage stay in Tactical Field Care', () => {
+  assert(L.SECTIONS.indexOf('Health and Safety') >= 0);
+  eq(L.decks.foodsafe.section, 'Health and Safety'); eq(L.decks.medsafe.section, 'Health and Safety');
+  eq(L.decks.fieldcare.section, 'Tactical Field Care'); eq(L.decks.triage.section, 'Tactical Field Care');
+  assert(!/^Field Care/.test(L.decks.foodsafe.name) && !/^Field Care/.test(L.decks.medsafe.name));
+});
+t('v8 rounds are shared evenly across the decks that are on', () => {
+  const ids = L.knowDecks();
+  for (let s = 1; s <= 40; s++) {
+    const p = prof(s % 2 ? 'ya' : 'adult'), st = L.GC.start(p, ids, 0, s), per = {};
+    st.q.forEach(x => { const d = L.cardIndex[x.id].deck; per[d] = (per[d] || 0) + 1; });
+    assert(Object.values(per).every(v => v === 1), 'seed ' + s + ' ' + JSON.stringify(per)); eq(st.q.length, 10);
+  }
+  const two = ['money', 'survive'];
+  for (let s = 1; s <= 20; s++) { const st = L.GC.start(prof('adult'), two, 0, s), per = {}; st.q.forEach(x => { const d = L.cardIndex[x.id].deck; per[d] = (per[d] || 0) + 1; }); eq([per.money, per.survive], [5, 5]); }
+  eq(L.balance([{ deck: 'a' }, { deck: 'a' }, { deck: 'a' }, { deck: 'b' }], 3).map(c => c.deck), ['a', 'b', 'a']);
+});
+t('v8 question screen: no picture unless imgAsk, and an imgAsk picture holds no right-answer words', () => {
+  const ui = fs.readFileSync(path.join(__dirname, '../src/ui/ui.js'), 'utf8');
+  assert(/\(c\.imgAsk \? pic\(c\) : ''\)/.test(ui), 'question screen shows a picture only for imgAsk');
+  const stop = new Set('a an the and or of to in on it is be at for with by not no do if your you as up off out than more less one this that can may get keep'.split(' '));
+  const words = s => s.toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').split(' ').filter(w => w.length > 2 && !stop.has(w));
+  const check = c => {
+    const svg = fs.readFileSync(path.join(__dirname, '../src', c.img), 'utf8').replace(/<[^>]+>/g, ' ');
+    const pictext = new Set(words(svg + ' ' + L.imgAlt(c))), hit = words(c.c[1]).filter(w => pictext.has(w));
+    const wrongHit = words(c.c[0] + ' ' + c.c[2]).filter(w => pictext.has(w));
+    return hit.length && hit.length >= wrongHit.length ? hit : [];
+  };
+  L.knowDecks().forEach(id => L.decks[id].cards.forEach(c => { if (c.imgAsk) eq(check(c), [], c.id + ' question picture gives the answer'); }));
+  // The check does catch a picture that gives the answer away (fc02's tourniquet picture names "2 to 3 inches above the cut").
+  assert(check(L.cardIndex.fc02).length > 0);
+});
+t('v8 every new-deck card has a source quote in tools/quotes-new.json', () => {
+  const Q = require('../tools/quotes-new.json');
+  L.knowDecks().filter(id => L.FROZEN_DECKS.indexOf(id) < 0).forEach(id => L.decks[id].cards.forEach(c => assert(Q[c.id] && Q[c.id].length > 10, c.id)));
+});
+t('v8 mn65 test uses the vendored excerpt, not the gitignored sources folder', () => {
+  const u = fs.readFileSync(__filename, 'utf8'); assert(!u.includes("'../sources/" + "ftc-lostcard.txt'"));
+  assert(fs.existsSync(path.join(__dirname, 'fixtures/ftc-lostcard-excerpt.txt')));
 });
 console.log(n + ' unit tests passed');

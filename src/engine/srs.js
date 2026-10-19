@@ -10,7 +10,7 @@ LSA.grade = function (entry, right, conf, today) {
   return { b: b, due: today + LSA.GAPS[b - 1], n: ((entry && entry.n) || 0) + 1 };
 };
 LSA.isWow = function (right, conf) { return !right && conf === 2; };
-// Pick up to n cards: due first, then new. Then order so no two in a row share a topic when it can be helped.
+// Pick up to n cards: due first, then new, shared evenly across the decks that are on. Then order so no two in a row share a topic when it can be helped.
 LSA.pickRound = function (cards, boxes, today, r, n) {
   n = n || 10;
   var due = [], fresh = [];
@@ -19,8 +19,19 @@ LSA.pickRound = function (cards, boxes, today, r, n) {
     if (!e) fresh.push(c); else if (e.due <= today) due.push(c);
   });
   due.sort(function (a, b) { return boxes[a.id].due - boxes[b.id].due; });
-  var nd = Math.min(n, due.length);
-  return LSA.interleave(due.slice(0, nd).concat(fresh.slice(0, n - nd)));
+  var a = LSA.balance(due, n);
+  return LSA.interleave(a.concat(LSA.balance(fresh, n - a.length)));
+};
+// Take up to n cards from list, one deck at a time in turn, so every deck that is on gets a fair share.
+// Keeps each deck's own order (due cards stay soonest-due first). Deck turn order follows the list.
+LSA.balance = function (list, n) {
+  var by = {}, order = [], out = [];
+  list.forEach(function (c) { var d = c.deck || ''; if (!by[d]) { by[d] = []; order.push(d); } by[d].push(c); });
+  while (out.length < n && order.length) {
+    order = order.filter(function (d) { return by[d].length; });
+    order.forEach(function (d) { if (out.length < n && by[d].length) out.push(by[d].shift()); });
+  }
+  return out;
 };
 LSA.interleave = function (list, prevTopic) {
   // Keep the given order where we can (due cards first), but never put the same topic twice in a row

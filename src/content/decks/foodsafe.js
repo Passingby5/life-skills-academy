@@ -1,10 +1,10 @@
-// Field Care: Food Safety and Inspection deck (STAGING, not in src yet). Data only. c = [myth choice, right choice, decoy]; the engine shuffles them.
+// Food Safety and Inspection deck (STAGING, not in src yet). Data only. c = [myth choice, right choice, decoy]; the engine shuffles them.
 // Built from staging-decks/data/1c-food.txt by build.py. Every card quote is in REVIEW-NEW.md.
 // Based on TB MED 530 (Army/Navy/Air Force food code, public), CDC food safety and norovirus pages, and FoodSafety.gov temperature chart. CDC and FoodSafety.gov pages were read with WebFetch; verbatim excerpts are saved in sources-new/verbatim.
 LSA.deck({
-  id: 'foodsafe', name: 'Field Care: Food Safety and Inspection', icon: '🍲', section: 'Tactical Field Care',
+  id: 'foodsafe', name: 'Food Safety and Inspection', icon: '🍲', section: 'Health and Safety',
   sources: {
-    'tbmed-530': ['TB MED 530 / NAVMED P-5010-1: Tri-Service Food Code', 'https://armypubs.army.mil/epubs/DR_pubs/DR_a/ARN32832-TB_MED_530-000-WEB-1.pdf'],
+    'tbmed-530': ['TB MED 530 / NAVMED P-5010-1: Tri-Service Food Code', 'https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN15052_TB_MED_530_FINAL.pdf'],
     'fsgov-temps': ['FoodSafety.gov: Safe Minimum Internal Temperatures', 'https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures'],
     'cdc-foodsafety': ['CDC: Four Steps to Food Safety', 'https://www.cdc.gov/food-safety/prevention/index.html'],
     'cdc-noro': ['CDC: Preventing Norovirus', 'https://www.cdc.gov/norovirus/prevention/index.html']
@@ -77,7 +77,7 @@ LSA.deck({
       c: ['About 10 seconds', 'About 2 minutes', 'About 20 minutes'],
       m: 'Serve it right out of the microwave.', f: 'Stir or turn it, cover it, and let it stand covered for 2 minutes after reaching 165°F.', w: 'Heat spreads to cold spots.', src: 'tbmed-530' },
     { id: 'fd23', ages: 'both', topic: 'cooking', s: 'How do you know clams and mussels are cooked?',
-      c: ['When they sink down', 'When the shells open', 'Once steamed 1 minute'],
+      c: ['When they sink down', 'When the shells open', 'After 1 minute of steam'],
       m: 'Clams are done after a quick steam.', f: 'Cook clams, oysters and mussels until the shells open.', w: 'Throw out ones that stay shut.', src: 'fsgov-temps' },
     { id: 'fd24', ages: 'adult', topic: 'cooking', s: 'When is a fried egg cooked safe?',
       c: ['When the white is set', 'Yolk and white both firm', 'When the edges go brown'],
@@ -90,7 +90,7 @@ LSA.deck({
       m: 'A quick wipe makes the board clean.', f: 'Use one board for raw meat and a separate one for foods that won\'t be cooked.', w: 'Germs from raw meat can get on the bread.', src: 'cdc-foodsafety' },
     { id: 'fd27', ages: 'both', topic: 'prep', s: 'How long should you scrub your hands with soap at home?',
       c: ['About 5 seconds', 'At least 20 seconds', 'About 2 minutes, hard'],
-      m: 'A quick rinse is enough.', f: 'Wash for at least 20 seconds with soap and warm or cold water.', w: 'Scrubbing is what removes germs.', src: 'cdc-foodsafety' },
+      m: 'Rinsing a few seconds gets hands clean.', f: 'Wash for at least 20 seconds with soap and warm or cold water.', w: 'Scrubbing is what removes germs.', src: 'cdc-foodsafety' },
     { id: 'fd28', ages: 'ya', topic: 'prep', s: 'Is it safe to eat raw cookie dough?',
       c: ['Fine; only eggs are risky', 'Risky; raw flour can sicken', 'Eggless dough is fine raw'],
       m: 'Eggless cookie dough is safe raw.', f: 'Raw dough or batter made with uncooked flour is risky.', w: 'Flour is a raw food and can carry germs.', src: 'cdc-foodsafety' },
@@ -173,10 +173,10 @@ LSA.deck({
       c: ['Down on the floor mat', 'In the food, handle up', 'In a cup of water'],
       m: 'Anywhere is fine for a few minutes.', f: 'Store in-use utensils in the food with handles above the food and container.', w: 'Handles stay clean and out of the food.', src: 'tbmed-530' },
     { id: 'fd55', ages: 'both', topic: 'noro', s: 'Does hand sanitizer work well against norovirus, the stomach bug?',
-      c: ['Yes; it kills all germs', 'Soap and water work better', 'Yes, if you use lots'],
+      c: ['Yes; it kills all germs', 'Soap and water work better', 'Only if you use lots'],
       m: 'Sanitizer kills every germ.', f: 'Wash hands with soap and water. Sanitizer alone does not work well on norovirus.', w: 'Scrubbing and rinsing removes the virus.', src: 'cdc-noro' },
     { id: 'fd56', ages: 'both', topic: 'noro', s: 'You had the stomach bug. How long should you wait to cook for others after you feel better?',
-      c: ['Right away, once you feel OK', 'At least 2 days', 'Only a few hours'],
+      c: ['Right away, once you feel OK', 'At least 2 days', 'Only 2 hours or so'],
       m: 'Once you feel better, you are safe.', f: 'Wait at least 2 days (48 hours) after symptoms stop.', w: 'The virus stays in your body after you feel well.', src: 'cdc-noro' },
     { id: 'fd57', ages: 'adult', topic: 'noro', s: 'The virus can still be in your poop how long after you feel better?',
       c: ['A day at most', '2 weeks or more', 'Only a few hours'],
@@ -189,7 +189,7 @@ LSA.deck({
       m: 'A quick steam makes shellfish safe.', f: 'Quick steaming does not heat food enough. Cook shellfish to at least 145°F.', w: 'Norovirus can survive up to 145°F.', src: 'cdc-noro' },
     { id: 'fd60', ages: 'ya', topic: 'noro', s: 'Food with norovirus on it: can you tell by smell or taste?',
       c: ['It smells sour', 'It can seem normal', 'It looks slimy'],
-      m: 'Bad food always smells bad.', f: 'Food with norovirus may look, smell and taste normal.', w: 'You can\'t trust your senses.', src: 'cdc-noro' },
+      m: 'Norovirus makes food look or smell off.', f: 'Food with norovirus may look, smell and taste normal.', w: 'You can\'t trust your senses.', src: 'cdc-noro' },
     { id: 'fd61', ages: 'adult', topic: 'noro', s: 'You clean up after a sick child. How long should bleach cleaner sit on the spot?',
       c: ['Wipe it off right away', 'At least 5 minutes', 'About 30 seconds'],
       m: 'Wipe bleach right off.', f: 'Leave bleach cleaner on the area for at least 5 minutes.', w: 'It needs time to kill the virus.', src: 'cdc-noro' },
@@ -218,7 +218,7 @@ LSA.deck({
       c: ['Clean them on your shirt', 'Clean your hands first', 'Nothing; dogs are clean'],
       m: 'Pets are clean enough.', f: 'Wash hands after handling animals, including service animals.', w: 'Animals can carry germs.', src: 'tbmed-530' },
     { id: 'fd70', ages: 'ya', topic: 'storage', s: 'Frozen food was thawed in a food code kitchen. Can it be refrozen?',
-      c: ['Yes, as many times as needed', 'It may not be refrozen', 'Yes, if it still feels cold'],
+      c: ['Yes, as many times as needed', 'It may not be refrozen', 'No problem, if still cold'],
       m: 'Refreezing is always fine.', f: 'Packaged frozen food that a kitchen thaws may not be refrozen.', w: 'Each thaw gives germs a chance to grow.', src: 'tbmed-530' }
   ]
 });

@@ -7,10 +7,24 @@ LSA.MIN_CARDS = 50;
 LSA.MAX_RIGHT_RATIO = 1.3;
 LSA.MAX_RIGHT_LONGEST = 0.4;
 LSA.WORD_MIN_USES = 10; LSA.WORD_RIGHT_LO = 0.2; LSA.WORD_RIGHT_HI = 0.5; LSA.MAX_STRATEGY = 0.45;
+// Tell limits. Every deck must keep each guessing rule and the surface classifier (tools/tellgate.js) at or under 45%.
+// The only exceptions are the 4 decks frozen in v6 (content hash-locked in tools/frozen-decks.json). Each exception is
+// that deck's score at the freeze, so it can not get worse, and a frozen deck still fails on any other rule.
+// No other deck may be listed here; the unit test enforces that.
+LSA.FROZEN_DECKS = ['firstaid', 'kitchen', 'money', 'scams'];
+LSA.TELL_EXCEPTIONS = {
+  firstaid: { classifier: 0.482 },
+  kitchen: { classifier: 0.462 },
+  money: { leastOverlap: 0.453 },
+  scams: { classifier: 0.494, negation: 0.453 }
+};
+// All decks pooled, frozen ones included. The non-frozen decks pooled must stay at 45%.
+LSA.TELL_POOLED_ALL = 0.47;
+LSA.tellLimit = function (id, k) { var e = LSA.FROZEN_DECKS.indexOf(id) >= 0 && LSA.TELL_EXCEPTIONS[id]; return e && e[k] !== undefined ? Math.max(LSA.MAX_STRATEGY, e[k]) : LSA.MAX_STRATEGY; };
 LSA.firstWord = function (x) { return x.split(/[ ,;:]/)[0]; };
 // Answer tells. words: first word -> [uses, right]. strat: expected score of simple guessing rules (ties split evenly).
 // Deck sections, in picker order. A deck without a section is Everyday.
-LSA.SECTIONS = ['Everyday', 'Tactical Field Care', 'Field Survival', 'Country Living'];
+LSA.SECTIONS = ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living'];
 LSA.sectionsOf = function (ids) {
   var names = LSA.SECTIONS.slice();
   ids.forEach(function (id) { var s = LSA.decks[id].section; if (names.indexOf(s) < 0) names.push(s); });
@@ -19,9 +33,10 @@ LSA.sectionsOf = function (ids) {
 // Optional card picture: img is a path to an SVG under img/. imgAlt is optional alt text.
 LSA.IMG_RX = /^img\/[a-z0-9][a-z0-9-]*\.svg$/;
 LSA.imgAlt = function (c) { return c.imgAlt || ('Picture for this card about ' + String(c.topic || 'this topic').replace(/-/g, ' ')); };
-LSA.RX_NEG = /\b(not|never|don't|no)\b/i;
+LSA.RX_NEG = /\b(not|never|no|don't|do not|isn't|can't|won't|none)\b/i;
+LSA.RX_HEDGE = /\b(usually|always|only|never|all|every|just|maybe|might|can)\b/i;
 LSA.tellStats = function (cards) {
-  var W = {}, st = { longest: 0, shortest: 0, middle: 0, startsNo: 0, noAvoidYesOnly: 0, negation: 0, number: 0, punct: 0 }, n = 0;
+  var W = {}, st = { longest: 0, shortest: 0, middle: 0, startsNo: 0, noAvoidYesOnly: 0, negation: 0, number: 0, punct: 0, mostWords: 0, fewestWords: 0, middleWords: 0, avoidHedge: 0, mostOverlap: 0, leastOverlap: 0, oddFirstWord: 0 }, n = 0;
   function share(f) { var idx = [0, 1, 2].filter(f); return idx.length ? (idx.indexOf(1) >= 0 ? 1 / idx.length : 0) : 1 / 3; }
   cards.forEach(function (c) {
     if (!Array.isArray(c.c) || c.c.length !== 3) return; n++;
@@ -36,6 +51,17 @@ LSA.tellStats = function (cards) {
     st.number += share(function (k) { return /\d/.test(v[k]); });
     st.punct += share(function (k) { return /[,;]/.test(v[k]); });
     st.noAvoidYesOnly += [0, 1, 2].some(isNo) ? share(isNo) : share(notYO);
+    // Word-count, hedge-word, scenario-overlap and odd-first-word guessers (from the QA script).
+    var wc = v.map(function (x) { return x.split(/\s+/).length; }), ws = wc.slice().sort(function (a, b) { return a - b; });
+    st.mostWords += share(function (k) { return wc[k] === ws[2]; }); st.fewestWords += share(function (k) { return wc[k] === ws[0]; });
+    st.middleWords += share(function (k) { return wc[k] === ws[1]; });
+    st.avoidHedge += share(function (k) { return !LSA.RX_HEDGE.test(v[k]); });
+    var sw = {}; (typeof c.s === 'string' ? c.s : (c.s && (c.s.adult || c.s.ya)) || '').toLowerCase().replace(/[^a-z0-9' ]+/g, ' ').split(' ').forEach(function (x) { if (x) sw[x] = 1; });
+    var ov = v.map(function (x) { var seen = {}, n = 0; x.toLowerCase().replace(/[^a-z0-9' ]+/g, ' ').split(' ').forEach(function (y) { if (y && sw[y] && !seen[y]) { seen[y] = 1; n++; } }); return n; });
+    var omx = Math.max.apply(null, ov), omn = Math.min.apply(null, ov);
+    st.mostOverlap += share(function (k) { return ov[k] === omx; }); st.leastOverlap += share(function (k) { return ov[k] === omn; });
+    var fw = v.map(function (x) { return LSA.firstWord(x).toLowerCase(); });
+    st.oddFirstWord += share(function (k) { return fw.filter(function (y) { return y === fw[k]; }).length === 1 && fw[0] + fw[1] + fw[2] && new Set(fw).size === 2; });
   });
   Object.keys(st).forEach(function (k) { st[k] = n ? st[k] / n : 0; });
   return { words: W, strat: st };
@@ -105,7 +131,7 @@ LSA.checkAll = function () {
   LSA.knowDecks().forEach(function (id) {
     all = all.concat(LSA.decks[id].cards);
     var t = LSA.tellStats(LSA.decks[id].cards).strat;
-    Object.keys(t).forEach(function (k) { if (t[k] > LSA.MAX_STRATEGY) errs.push(id + ': strategy "' + k + '" scores ' + Math.round(t[k] * 100) + '%'); });
+    Object.keys(t).forEach(function (k) { if (t[k] > LSA.tellLimit(id, k)) errs.push(id + ': strategy "' + k + '" scores ' + Math.round(t[k] * 100) + '%'); });
   });
   var W = LSA.tellStats(all).words;
   Object.keys(W).forEach(function (w) {

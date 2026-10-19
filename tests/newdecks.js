@@ -1,4 +1,4 @@
-// v7: play one full round in each of the 8 new decks (portrait and landscape), with only that deck on.
+// v7/v8: play one full round in each of the 8 new decks (portrait and landscape), with only that deck on.
 // Checks every card comes from that deck, pictures load with alt text, and there are zero console errors.
 // SHOTS=dir saves 4 portrait screenshots: the grouped picker, a field care question with a picture,
 // a knot fix screen, and a homestead card with a picture.
@@ -35,26 +35,22 @@ const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.sp
       while (await page.$('[data-act=ans], [data-act=conf], [data-act=next]')) {
         const st = await page.evaluate(() => { const s = JSON.parse(localStorage.lsa_save).profiles.p1.round; const it = s.q[s.i]; return { deck: LSA.cardIndex[it.id].deck, id: it.id, img: LSA.cardIndex[it.id].img || '', stage: s.stage }; });
         assert.strictEqual(st.deck, id, 'card from ' + st.deck + ' in ' + id + ' round');
-        if (st.img) {
+        const shown = await page.evaluate(() => document.querySelectorAll('img.cimg').length);
+        if (st.stage !== 'fix') assert.strictEqual(shown, 0, id + ' question screen shows no picture: ' + st.id);
+        if (st.img && st.stage === 'fix') {
           const m = await page.evaluate(() => { const i = document.querySelector('img.cimg'); return i && i.complete ? { w: i.naturalWidth, alt: i.alt } : null; });
           assert(m && m.w > 0 && m.alt.length > 10, id + ' picture loads with alt: ' + st.id);
-          if (st.stage === 'ask') pics++;
-          if (st.stage === 'ask' && id === 'fieldcare' && !done.has('fc')) { done.add('fc'); await shot('2-fieldcare-question-picture.jpg'); }
-          if (st.stage === 'ask' && id === 'homestead' && !done.has('hm')) { done.add('hm'); await shot('4-homestead-card-picture.jpg'); }
-          if (st.stage === 'fix' && /knot|bowline|hitch/.test(st.img) && !done.has('knot')) { done.add('knot'); await shot('3-knot-fix-screen.jpg'); }
+          pics++;
+          if (id === 'fieldcare' && !done.has('fc')) { done.add('fc'); await shot('2-fieldcare-fix-picture.jpg'); }
+          if (id === 'homestead' && !done.has('hm')) { done.add('hm'); await shot('3-homestead-fix-picture.jpg'); }
         }
         if (await page.$('[data-act=ans]')) { await tap('[data-act=ans][data-p="' + (n % 3) + '"]'); n++; }
         else if (await page.$('[data-act=conf]')) await tap('[data-act=conf][data-k="1"]');
         else await tap('[data-act=next]');
       }
       assert(await page.$('#recap'), id + ' round reached the recap');
-      console.log('ok ' + vp.name + ' played a round in ' + id + ' (' + n + ' answers, ' + pics + ' with pictures)');
+      console.log('ok ' + vp.name + ' played a round in ' + id + ' (' + n + ' answers, ' + pics + ' fix screens with pictures)');
       await tap('[data-act=menu]');
-    }
-    // Make sure a knot fix screen was captured: play navgear/survive knot cards if the rounds missed them.
-    if (shots && vp.name === 'portrait' && !done.has('knot')) {
-      const kid = await page.evaluate(() => Object.values(LSA.cardIndex).find(c => c.img && /knot|bowline|hitch/.test(c.img)).id);
-      await page.evaluate(k => { const s = JSON.parse(localStorage.lsa_save); const p = s.profiles.p1; p.round = LSA.GC.start(p, [LSA.cardIndex[k].deck], 0, 1); p.round.q.unshift({ id: k, order: [0, 1, 2], tries: 0 }); }, kid).catch(() => {});
     }
     assert.deepStrictEqual(errs, [], 'console errors: ' + errs.join(' | '));
     console.log('ok ' + vp.name + ' zero console errors across 8 new-deck rounds');

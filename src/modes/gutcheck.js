@@ -5,7 +5,8 @@ LSA.GC = {
     var r = LSA.rng(seed), cards = LSA.cardsFor(profile.age, deckIds);
     // Cards missed at the very end of the last round come first.
     var carry = (profile.carry || []).map(function (id) { return LSA.cardIndex[id]; }).filter(function (c) { return c && cards.indexOf(c) >= 0; }).slice(0, 10);
-    profile.carry = [];
+    // Keep carried cards whose deck is off right now; they come back when the deck is on again.
+    profile.carry = (profile.carry || []).filter(function (id) { return !carry.some(function (c) { return c.id === id; }); });
     var picked = carry.concat(LSA.pickRound(cards.filter(function (c) { return carry.indexOf(c) < 0; }), profile.boxes, today, r, 10 - carry.length));
     picked = LSA.interleave(picked);
     var q = picked.map(function (c) { return { id: c.id, order: LSA.shuffle([0, 1, 2], r), pick: null, conf: null }; });

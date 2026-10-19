@@ -229,7 +229,7 @@ LSA.deck({
       c: ['3 weeks', '1 week', '1 day'],
       m: 'Boiled eggs keep as long as raw.', f: 'Hard-cooked eggs: 1 week in the fridge.', w: 'FoodSafety.gov chart.', src: 'fs-cold' },
     { id: 'kf89', ages: 'adult', topic: 'fire', s: 'Teach your 8 year old to use the fire extinguisher if there is a fire?',
-      c: ['Everyone should', 'Kids should get out', 'Use it on grease fires'],
+      c: ['Yes, every kid should learn', 'Kids should get out', 'Teach them for small fires'],
       m: 'Kids should use fire extinguishers.', f: 'Young children and older adults should not use them. Get out and call 911.', w: 'US Fire Administration advice.', src: 'usfa-ext' },
     { id: 'kf90', ages: 'adult', topic: 'fire', s: 'How often should you test smoke alarms?',
       c: ['Once a year', 'Every month', 'When you move in'],

@@ -246,4 +246,31 @@ t('v3-6 mn65 matches the FTC rule', () => {
   assert.strictEqual(c.c[1], 'Up to $500'); assert(/up to \$500/.test(c.f) && /more/.test(c.f));
   assert(/more than 2 business days after you learn about the loss or theft, but within 60 calendar days after your statement/.test(src) && /\$500/.test(src));
 });
+
+// ---------- v4 regression tests ----------
+t('v4-1 middle-length and all simple strategies stay at 45% or less on every deck; checker has the middle rule', () => {
+  L.knowDecks().forEach(id => { const t = L.tellStats(L.decks[id].cards).strat; assert('middle' in t); Object.entries(t).forEach(([k, v]) => assert(v <= 0.45, id + ' ' + k + ' ' + v)); });
+  const save = L.decks.scams.cards.map(c => c.c.slice());
+  L.decks.scams.cards.forEach(c => { c.c = ['aa ' + 'x'.repeat(5), 'bb ' + 'x'.repeat(10), 'cc ' + 'x'.repeat(15)]; });
+  const e = L.checkAll().join('|'); L.decks.scams.cards.forEach((c, i) => { c.c = save[i]; });
+  assert(/scams: strategy "middle"/.test(e), e.slice(0, 200)); eq(L.checkAll(), []);
+});
+t('v4-2/3/4 mn56, kf89, sc34 choices answer their questions', () => {
+  const g = id => L.cardIndex[id].c;
+  assert(!g('mn56').some(x => /boss/.test(x)) && g('mn56').every(x => x.split(' ').length >= 3));
+  assert(!g('kf89').some(x => /grease/.test(x)) && g('kf89').every(x => x.split(' ').length >= 3));
+  assert(!g('sc34').includes('It is free'));
+});
+t('v4-4 no very terse choices except short direct answers to which/how-long/how-much questions', () => {
+  const ok = new Set(['fa19', 'kf55', 'kf56', 'kf88', 'kf90', 'kf97', 'mn61', 'mn62', 'mn86', 'sc33']);
+  L.knowDecks().forEach(id => L.decks[id].cards.forEach(c => { if (c.c.some(x => x.split(' ').length < 3)) assert(ok.has(c.id), c.id + ' ' + c.c.join(' | ')); }));
+});
+t('v4-5 a carried retry is kept while its deck is off and comes back when it is on', () => {
+  const p = prof('adult'), id = L.cardsFor('adult', ['firstaid'])[0].id; p.carry = [id];
+  const s1 = L.GC.start(p, ['money', 'kitchen'], 0, 1);
+  assert(!s1.q.some(x => x.id === id)); eq(p.carry, [id]);
+  const sv = L.newSave(); sv.profiles.p1 = p; sv.next = 2; const back = L.loadSave(JSON.stringify(sv)).save.profiles.p1; eq(back.carry, [id]);
+  const s2 = L.GC.start(back, ['money', 'firstaid'], 0, 2);
+  assert(s2.q.slice(0, 3).some(x => x.id === id)); eq(back.carry, []);
+});
 console.log(n + ' unit tests passed');

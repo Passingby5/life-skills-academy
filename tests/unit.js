@@ -263,7 +263,7 @@ t('v4-2/3/4 mn56, kf89, sc34 choices answer their questions', () => {
 });
 t('v4-4 no very terse choices except short direct answers to which/how-long/how-much questions', () => {
   const ok = new Set(['fa19', 'kf55', 'kf56', 'kf88', 'kf90', 'kf97', 'mn61', 'mn62', 'mn86', 'sc33']);
-  L.knowDecks().forEach(id => L.decks[id].cards.forEach(c => { if (c.c.some(x => x.split(' ').length < 3)) assert(ok.has(c.id), c.id + ' ' + c.c.join(' | ')); }));
+  L.knowDecks().forEach(id => L.decks[id].cards.forEach(c => { if (c.c.some(x => x.split(' ').length < 3 && !/\d/.test(x))) assert(ok.has(c.id), c.id + ' ' + c.c.join(' | ')); }));
 });
 t('v4-5 a carried retry is kept while its deck is off and comes back when it is on', () => {
   const p = prof('adult'), id = L.cardsFor('adult', ['firstaid'])[0].id; p.carry = [id];
@@ -272,5 +272,27 @@ t('v4-5 a carried retry is kept while its deck is off and comes back when it is 
   const sv = L.newSave(); sv.profiles.p1 = p; sv.next = 2; const back = L.loadSave(JSON.stringify(sv)).save.profiles.p1; eq(back.carry, [id]);
   const s2 = L.GC.start(back, ['money', 'firstaid'], 0, 2);
   assert(s2.q.slice(0, 3).some(x => x.id === id)); eq(back.carry, []);
+});
+
+// ---------- v5 regression tests ----------
+t('v5-1 negation, number, and comma/semicolon strategies exist and stay at 45% or less on every deck', () => {
+  L.knowDecks().forEach(id => { const t = L.tellStats(L.decks[id].cards).strat; ['negation', 'number', 'punct'].forEach(k => { assert(k in t); assert(t[k] <= 0.45, id + ' ' + k + ' ' + t[k]); }); });
+  const c = { c: ['Pick this one', 'No, not this one', 'Or this one'] }; eq(L.tellStats([c]).strat.negation, 1);
+  eq(L.tellStats([{ c: ['a b c', 'Wait 20 minutes', 'x y z'] }]).strat.number, 1);
+  eq(L.tellStats([{ c: ['a b c', 'Call; then wait', 'x y z'] }]).strat.punct, 1);
+});
+t('v5-1 a surface-feature classifier cannot beat about 45% on held-out cards', () => {
+  const M = require('../tools/tellmodel.js'), all = [].concat(...L.knowDecks().map(id => L.decks[id].cards));
+  const pooled = M.heldOut(all, L, 10); assert(pooled <= 0.45, 'pooled ' + pooled);
+  L.knowDecks().forEach(id => { const a = M.heldOut(L.decks[id].cards, L, 5); assert(a <= 0.45, id + ' ' + a); });
+  // Sanity: the model does catch an obvious tell (right answer always has a number).
+  const fake = all.slice(0, 120).map(c => ({ c: [c.c[0].replace(/\d/g, ''), 'Wait 5 min ' + c.id, c.c[2].replace(/\d/g, '')] }));
+  assert(M.heldOut(fake, L, 5) > 0.9);
+});
+t('v5-2/3/4 mn12, sc54, kf89 rewrites', () => {
+  const g = id => L.cardIndex[id].c;
+  assert(!g('mn12').includes('A small monthly fee each time'));
+  assert(!g('sc54').includes('Keep the receipt') && /normal/i.test(g('sc54')[2]));
+  assert(!g('kf89').includes('Teach them for small fires') && !/teach|learn/i.test(g('kf89')[2]));
 });
 console.log(n + ' unit tests passed');

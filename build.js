@@ -8,7 +8,7 @@ const scripts = ORDER.concat(['ui/ui.js']);
 let commit = process.env.COMMIT || '';
 if (!commit) { try { commit = execSync('git rev-parse HEAD', { cwd: __dirname, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); } catch (e) { commit = 'local'; } }
 commit = commit.slice(0, 7);
-const LABEL = 'v4 - Oct 19 - ' + commit;
+const LABEL = 'v5 - Oct 19 - ' + commit;
 const id = crypto.createHash('sha1').update(scripts.map(r).join('') + r('ui/style.css') + r('ui/body.html') + LABEL).digest('hex').slice(0, 8);
 const js = `<script>var LSA_BUILD = { label: ${JSON.stringify(LABEL)}, id: ${JSON.stringify(id)} };</script>\n` + scripts.map(f => `<script data-src="${f}">\n${r(f)}</script>`).join('\n');
 const reg = `

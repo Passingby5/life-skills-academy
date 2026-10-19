@@ -1,7 +1,7 @@
 // Playwright phone click-through. Run: node tests/browser.js [url]   (default: serves ./site locally)
 const { chromium } = require('playwright-core'), http = require('http'), fs = require('fs'), path = require('path'), assert = require('assert');
 const SITE = path.join(__dirname, '../site');
-const TYPES = { html: 'text/html', js: 'text/javascript', json: 'application/json', png: 'image/png', webmanifest: 'application/manifest+json' };
+const TYPES = { html: 'text/html', js: 'text/javascript', json: 'application/json', png: 'image/png', svg: 'image/svg+xml', webmanifest: 'application/manifest+json' };
 function serve() {
   return new Promise(res => { const s = http.createServer((q, r) => {
     let p = decodeURIComponent(q.url.split('?')[0]); if (p.endsWith('/')) p += 'index.html';

@@ -6,4 +6,6 @@ L.knowDecks().forEach(id => {
   out += `\n## ${d.name} (${d.cards.length} cards)\n\nReviewed by: ________  Date: ________\n\n`;
   d.cards.forEach(c => { out += `- [ ] **${c.id}** (${c.ages}) Myth: ${c.m} Fix: ${c.f} Source: [${d.sources[c.src][0]}](${d.sources[c.src][1]})\n`; });
 });
+const extra = require('path').join(__dirname, '../docs/REVIEW-NEW.md');
+if (fs.existsSync(extra)) out += '\n\n# Appendix: source quotes for the new decks\n\n' + fs.readFileSync(extra, 'utf8').replace(/^# /gm, '## ');
 fs.writeFileSync(require('path').join(__dirname, '../REVIEW.md'), out); console.log('REVIEW.md written');

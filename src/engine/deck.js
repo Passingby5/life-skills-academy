@@ -54,6 +54,8 @@ LSA.deck = function (d) {
   LSA.decks[d.id] = d;
   return d;
 };
+// Decks that are on for a new save: the Everyday section. Every player can turn the others on in the picker.
+LSA.defaultDecks = function () { return LSA.knowDecks().filter(function (id) { return LSA.decks[id].section === 'Everyday'; }); };
 LSA.knowDecks = function () { return LSA.deckOrder.filter(function (id) { return LSA.decks[id].format === 'gutcheck'; }); };
 LSA.visible = function (c, age) { return c.ages === 'both' || c.ages === age; };
 LSA.cardsFor = function (age, deckIds) {

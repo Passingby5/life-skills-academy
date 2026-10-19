@@ -2,7 +2,7 @@
 // Real mouse double taps (two clicks 60 ms apart at the same spot) in portrait and landscape. Run: node tests/dbltap.js
 const { chromium } = require('playwright-core'), http = require('http'), fs = require('fs'), path = require('path'), assert = require('assert');
 const SITE = path.join(__dirname, '../site');
-const T = { html: 'text/html', js: 'text/javascript', json: 'application/json', png: 'image/png', webmanifest: 'application/manifest+json' };
+const T = { html: 'text/html', js: 'text/javascript', json: 'application/json', png: 'image/png', svg: 'image/svg+xml', webmanifest: 'application/manifest+json' };
 const server = http.createServer((q, r) => { let p = q.url.split('?')[0]; if (p.endsWith('/')) p += 'index.html'; const f = path.join(SITE, p); if (!f.startsWith(SITE) || !fs.existsSync(f)) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'Content-Type': T[f.split('.').pop()] }); r.end(fs.readFileSync(f)); });
 (async () => {
   await new Promise(r => server.listen(0, r)); const base = 'http://127.0.0.1:' + server.address().port + '/';
@@ -24,7 +24,7 @@ const server = http.createServer((q, r) => { let p = q.url.split('?')[0]; if (p.
     console.log('ok', vp.name, 'double tap Next: next card not answered');
     // Myth Match quick pair still works (no screen change between taps)
     await tap('[data-act=menu]');
-    await page.evaluate(() => { const S = LSA.UI.S(), p = S.profiles[S.active]; LSA.cardsFor(p.age).slice(0, 6).forEach(c => { p.boxes[c.id] = p.boxes[c.id] || { b: 1, due: 0, n: 1 }; }); LSA.UI.save(); LSA.UI.render(); });
+    await page.evaluate(() => { const S = LSA.UI.S(), p = S.profiles[S.active]; LSA.cardsFor(p.age, LSA.defaultDecks()).slice(0, 6).forEach(c => { p.boxes[c.id] = p.boxes[c.id] || { b: 1, due: 0, n: 1 }; }); LSA.UI.save(); LSA.UI.render(); });
     await page.waitForTimeout(400); await tap('[data-act=match]');
     const pair = await page.evaluate(() => { const t = LSA.UI.U.mm.tiles, a = t.findIndex(x => x.k === 'm'); return [a, t.findIndex(x => x.id === t[a].id && x.k === 'f')]; });
     await page.click(`[data-act=tile][data-i="${pair[0]}"]`); await page.waitForTimeout(100); await page.click(`[data-act=tile][data-i="${pair[1]}"]`); await page.waitForTimeout(100);

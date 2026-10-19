@@ -1,4 +1,4 @@
-// v6: card pictures (img) and the 12-deck sectioned picker. Builds a test copy with a stub fixture
+// v6/v7: card pictures (img) and the sectioned picker with 20 decks (12 real + 8 stubs). Builds a test copy with a stub fixture
 // (tests/fixtures/img-stub: 8 stub decks, every card has img) into a temp dir, never into site/.
 const { chromium } = require('playwright-core'), http = require('http'), fs = require('fs'), path = require('path'), os = require('os'), assert = require('assert'), { execSync } = require('child_process');
 const root = path.join(__dirname, '..'), dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lsa-img-'));
@@ -7,7 +7,7 @@ const sw = fs.readFileSync(path.join(dir, 'sw.js'), 'utf8');
 assert(/"img\/stub-test\.svg"/.test(sw), 'picture is in the service worker cache list'); console.log('ok img in service worker ASSETS');
 // The real build has no pictures yet, and its checker rejects a bad img path.
 const L = require('./load.js').load(); L.cardIndex.fa01.img = 'pics/x.png'; assert(L.checkAll().some(e => /fa01: img must be/.test(e))); console.log('ok checker rejects a bad img path');
-const T = { html: 'text/html', js: 'text/javascript', json: 'application/json', png: 'image/png', svg: 'image/svg+xml', webmanifest: 'application/manifest+json' };
+const T = { html: 'text/html', js: 'text/javascript', json: 'application/json', png: 'image/png', svg: 'image/svg+xml', svg: 'image/svg+xml', webmanifest: 'application/manifest+json' };
 const server = http.createServer((q, r) => { let p = q.url.split('?')[0]; if (p.endsWith('/')) p += 'index.html'; const f = path.join(dir, p); if (!fs.existsSync(f)) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'Content-Type': T[f.split('.').pop()] }); r.end(fs.readFileSync(f)); });
 const wait = p => p.waitForTimeout(400);
 async function imgOk(page, vp, where) {
@@ -29,11 +29,13 @@ async function imgOk(page, vp, where) {
     await page.click('[data-act=newprof]'); await wait(page); await page.fill('#nm', 'Pic'); await page.click('[data-act="age"][data-a="ya"]'); await wait(page); await page.click('[data-act=saveprof]'); await wait(page);
     // Picker: 12 decks in 4 sections, in order, all reachable and none wider than the screen.
     const pk = await page.evaluate(() => ({ sects: [...document.querySelectorAll('#picker details')].map(d => d.dataset.sect), n: document.querySelectorAll('#picker [data-act=deck]').length, sw: document.documentElement.scrollWidth }));
-    assert.deepStrictEqual(pk.sects, ['Everyday', 'Tactical Field Care', 'Field Survival', 'Country Living']); assert.strictEqual(pk.n, 12); assert(pk.sw <= vp.width, 'picker fits width');
+    assert.deepStrictEqual(pk.sects, ['Everyday', 'Tactical Field Care', 'Field Survival', 'Country Living']); assert.strictEqual(pk.n, 20); assert(pk.sw <= vp.width, 'picker fits width');
     // Turn the 4 Everyday decks off so the round is all stub cards with pictures.
+    const stubs = await page.evaluate(() => LSA.knowDecks().filter(id => /^stub/.test(id)));
+    for (const id of stubs) { await page.evaluate(() => document.querySelectorAll('#picker details').forEach(d => d.open = true)); await page.click(`#picker [data-act=deck][data-id=${id}]`); await wait(page); }
     for (const id of ['firstaid', 'kitchen', 'money', 'scams']) { await page.click(`#picker [data-act=deck][data-id=${id}]`); await wait(page); }
     const st = await page.evaluate(() => ({ on: JSON.parse(localStorage.lsa_save).decks, txt: [...document.querySelectorAll('#picker summary')].map(s => s.textContent), h: Math.min(...[...document.querySelectorAll('#picker [data-act=deck]')].map(e => e.getBoundingClientRect().height).filter(Boolean)) }));
-    assert.strictEqual(st.on.length, 8); assert(/0 of 4 on/.test(st.txt[0]) && /3 of 3 on/.test(st.txt[1])); assert(st.h >= 48, 'deck buttons are big enough to tap');
+    assert.strictEqual(st.on.length, 8); assert(/0 of 4 on/.test(st.txt[0]) && /3 of 7 on/.test(st.txt[1]), st.txt.join('|')); assert(st.h >= 48, 'deck buttons are big enough to tap');
     await page.click('[data-act=play]'); await wait(page);
     await imgOk(page, vp, tag + ' question');
     // The first answer button is on screen with the picture (no scrolling needed to start).

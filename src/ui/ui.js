@@ -13,7 +13,7 @@
   function save() { try { localStorage.setItem(KEY, LSA.dumpSave(S)); } catch (e) { } }
   function today() { var d = new Date(); return Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 86400000); }
   function P() { return S.active ? S.profiles[S.active] : null; }
-  function decks() { var all = LSA.knowDecks(); return (S.decks || all).filter(function (d) { return all.indexOf(d) >= 0; }); }
+  function decks() { var all = LSA.knowDecks(); return (S.decks || LSA.defaultDecks()).filter(function (d) { return all.indexOf(d) >= 0; }); }
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function b(act, label, cls, extra) { return '<button data-act="' + act + '"' + (cls ? ' class="' + cls + '"' : '') + (extra || '') + '>' + label + '</button>'; }
   function ver() { return '<div class="ver" id="ver">' + esc(LSA_BUILD.label) + '</div>'; }

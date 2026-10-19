@@ -4,7 +4,7 @@ const css = fs.readFileSync(path.join(__dirname, '../src/ui/style.css'), 'utf8')
 assert(!/:hover/.test(css) && !/mouseover|mouseenter|title=/.test(ui)); console.log('ok 7 no hover-only features');
 const root = path.join(__dirname, '..'), dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lsa-'));
 const copy = () => execSync(`cp -r ${root}/site/. ${dir}/`);
-const T = { html: 'text/html', js: 'text/javascript', json: 'application/json', png: 'image/png', webmanifest: 'application/manifest+json' };
+const T = { html: 'text/html', js: 'text/javascript', json: 'application/json', png: 'image/png', svg: 'image/svg+xml', webmanifest: 'application/manifest+json' };
 const server = http.createServer((q, r) => { let p = q.url.split('?')[0]; if (p.endsWith('/')) p += 'index.html'; const f = path.join(dir, p); if (!fs.existsSync(f)) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'Content-Type': T[f.split('.').pop()] }); r.end(fs.readFileSync(f)); });
 (async () => {
   execSync('COMMIT=aaaaaaa node build.js', { cwd: root }); copy();

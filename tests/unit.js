@@ -311,6 +311,7 @@ t('v6-5 img field: checker accepts img/name.svg, rejects others; alt text defaul
   ['img/a.png', '../x.svg', 'http://x/y.svg', 5].forEach(v => { c.img = v; assert(L.checkAll().some(e => /fa01: img must be/.test(e)), String(v)); });
   c.img = keep; delete c.img;
   assert(/burns/.test(L.imgAlt(c))); eq(L.imgAlt({ imgAlt: 'A leg with a band', topic: 'x' }), 'A leg with a band');
-  eq(L.sectionsOf(L.knowDecks()).map(g => g.name), ['Everyday']); eq(L.sectionsOf(L.knowDecks())[0].ids, ['firstaid', 'kitchen', 'money', 'scams']);
+  eq(L.sectionsOf(L.knowDecks()).map(g => g.name), ['Everyday', 'Tactical Field Care', 'Field Survival', 'Country Living']); eq(L.sectionsOf(L.knowDecks())[0].ids, ['firstaid', 'kitchen', 'money', 'scams']);
+  eq(L.defaultDecks(), ['firstaid', 'kitchen', 'money', 'scams']); eq(L.knowDecks().length, 12);
 });
 console.log(n + ' unit tests passed');

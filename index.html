@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#10202e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Life Skills">
+<meta name="description" content="Life Skills Academy: Know It. Quick real life myth checks for families. Works offline.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<title>Life Skills Academy</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#10202e;color:#f2f5f7;font:18px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+body{min-height:100vh;overflow-x:hidden}
+#app{max-width:720px;margin:0 auto;padding:max(12px,env(safe-area-inset-top)) 14px 24px}
+h1{font-size:1.5rem;margin:.2em 0 .4em}
+h2{font-size:1.2rem;margin:.6em 0 .3em}
+p{margin:.4em 0}
+button,.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:52px;min-width:48px;margin:8px 0;padding:10px 14px;border:0;border-radius:14px;background:#24435c;color:#fff;font:inherit;font-weight:600;text-align:center;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;text-decoration:none;word-break:break-word}
+button:active{filter:brightness(1.2)}
+button.main{background:#2f8f5b}
+button.alt{background:#3a3f6b}
+button.ghost{background:transparent;border:2px solid #3b5b74}
+button.on{outline:3px solid #ffd257}
+button:disabled{opacity:.45}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.ver{font-size:.8rem;opacity:.75;text-align:center;margin-top:16px}
+.card{background:#183247;border-radius:16px;padding:14px;margin:10px 0}
+.scene{font-size:1.2rem;font-weight:600}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.top button{width:auto;margin:0}
+.muted{opacity:.75;font-size:.9rem}
+.pick{background:#7a5a12}
+.fix .lab{font-weight:700;color:#ffd257}
+.fix .wrong{font-weight:800;color:#ff8a7a}
+.fix .ok{font-weight:800;color:#7be0a3}
+a.src{display:flex;align-items:center;min-height:48px;color:#9fd3ff;word-break:break-word}
+.wow{display:inline-block;background:#ffd257;color:#2a1d00;font-weight:900;font-size:1.3rem;padding:8px 16px;border-radius:999px;margin:4px 0}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.tile{min-height:72px;margin:0;font-size:.85rem;font-weight:500;background:#24435c}
+.tile.f{background:#2e4d3c}
+.tile.sel{outline:3px solid #ffd257}
+.tile.gone{visibility:hidden}
+.tile.miss{background:#7a2d2d}
+.note{background:#5a3d10;border-radius:12px;padding:10px}
+ul.list{padding-left:1.1em}ul.list li{margin:.5em 0}
+input{width:100%;min-height:52px;font:inherit;padding:8px 12px;border-radius:12px;border:2px solid #3b5b74;background:#0c1924;color:#fff}
+@media (orientation:landscape) and (max-height:500px){
+  html,body{font-size:16px}
+  #app{max-width:none;padding:8px max(14px,env(safe-area-inset-left)) 12px max(14px,env(safe-area-inset-right))}
+  .play{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+  .play .card{margin:0}
+  .play button{min-height:48px;margin:6px 0}
+  .tiles{grid-template-columns:1fr 1fr 1fr 1fr}
+  h1{font-size:1.25rem}
+}
+</style></head>
+<body>
+<main id="app" aria-live="polite"></main>
+
+<script>var LSA_BUILD = { label: "v1 - Oct 19 - 81ceab5", id: "c8fbc8c2" };</script>
+<script data-src="engine/rng.js">
+// Seeded RNG (mulberry32). State is one number, so it can be saved and resumed. No DOM.
+var LSA = typeof LSA !== 'undefined' ? LSA : {};
+LSA.rng = function (seed) {
+  var r = { s: (seed >>> 0) || 1 };
+  r.next = function () {
+    var t = (r.s = (r.s + 0x6D2B79F5) >>> 0);
+    t = Math.imul(t ^ (t >>> 15), t | 1);
+    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  r.int = function (n) { return Math.floor(r.next() * n); };
+  return r;
+};
+LSA.shuffle = function (arr, r) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) { var j = r.int(i + 1), t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+};
+LSA.hashSeed = function (str) {
+  var h = 2166136261 >>> 0;
+  for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+  return h || 1;
+};
+// Tap guard: two taps on the same control within 300 ms count as one.
+LSA.tapGuard = function (ms) {
+  var last = {}; ms = ms || 300;
+  return function (key, now) {
+    if (last[key] !== undefined && now - last[key] < ms) return false;
+    last[key] = now; return true;
+  };
+};
+</script>
+<script data-src="engine/deck.js">
+// Deck registry, checker and age filter. No DOM.
+var LSA = typeof LSA !== 'undefined' ? LSA : {};
+LSA.decks = LSA.decks || {};
+LSA.deckOrder = LSA.deckOrder || [];
+LSA.cardIndex = LSA.cardIndex || {};
+LSA.MIN_CARDS = 50;
+LSA.deck = function (d) {
+  d.format = d.format || 'gutcheck';
+  d.cards.forEach(function (c) { c.deck = d.id; LSA.cardIndex[c.id] = c; });
+  if (!LSA.decks[d.id]) LSA.deckOrder.push(d.id);
+  LSA.decks[d.id] = d;
+  return d;
+};
+LSA.knowDecks = function () { return LSA.deckOrder.filter(function (id) { return LSA.decks[id].format === 'gutcheck'; }); };
+LSA.visible = function (c, age) { return c.ages === 'both' || c.ages === age; };
+LSA.cardsFor = function (age, deckIds) {
+  var out = [];
+  (deckIds || LSA.knowDecks()).forEach(function (id) {
+    var d = LSA.decks[id]; if (!d || d.format !== 'gutcheck') return;
+    d.cards.forEach(function (c) { if (LSA.visible(c, age)) out.push(c); });
+  });
+  return out;
+};
+LSA.scenario = function (c, age) { return typeof c.s === 'string' ? c.s : (c.s[age] || c.s.adult || c.s.ya); };
+LSA.answerIndex = 1; // c[1] is always the right choice in the data; the engine shuffles the order shown.
+// Returns a list of problems. Empty list means the deck is good.
+LSA.checkDeck = function (d) {
+  var errs = [], seen = {};
+  if (d.format === 'steps') {
+    d.cards.forEach(function (c) { if (!c.id || !c.title || !Array.isArray(c.steps) || !c.steps.length) errs.push(d.id + ': bad step card ' + c.id); });
+    return errs;
+  }
+  d.cards.forEach(function (c) {
+    var p = d.id + '/' + c.id + ': ';
+    ['id', 'deck', 'topic', 'ages', 's', 'c', 'm', 'f', 'w', 'src'].forEach(function (k) { if (!c[k]) errs.push(p + 'missing ' + k); });
+    if (seen[c.id]) errs.push(p + 'duplicate id'); seen[c.id] = 1;
+    if (['both', 'ya', 'adult'].indexOf(c.ages) < 0) errs.push(p + 'bad ages');
+    if (!Array.isArray(c.c) || c.c.length !== 3 || new Set(c.c).size !== 3) errs.push(p + 'needs 3 different choices');
+    if (c.s && typeof c.s === 'object' && (!c.s.ya || !c.s.adult)) errs.push(p + 'two-line scenario needs ya and adult');
+    if (c.src && !(d.sources && d.sources[c.src])) errs.push(p + 'unknown source ' + c.src);
+  });
+  ['ya', 'adult'].forEach(function (a) {
+    var n = d.cards.filter(function (c) { return LSA.visible(c, a); }).length;
+    if (n < LSA.MIN_CARDS) errs.push(d.id + ': only ' + n + ' cards for ' + a);
+  });
+  return errs;
+};
+LSA.checkAll = function () {
+  var errs = [], ids = {};
+  LSA.deckOrder.forEach(function (id) {
+    errs = errs.concat(LSA.checkDeck(LSA.decks[id]));
+    LSA.decks[id].cards.forEach(function (c) { if (ids[c.id] && ids[c.id] !== id) errs.push('id ' + c.id + ' used in ' + ids[c.id] + ' and ' + id); ids[c.id] = id; });
+  });
+  return errs;
+};
+</script>
+<script data-src="engine/srs.js">
+// Leitner boxes. 5 boxes, gaps 0/1/3/7/14 days. No DOM.
+var LSA = typeof LSA !== 'undefined' ? LSA : {};
+LSA.GAPS = [0, 1, 3, 7, 14];
+LSA.CONF = ['Guess', 'Pretty sure', 'Sure'];
+// conf: 0 Guess, 1 Pretty sure, 2 Sure. Returns the new entry.
+LSA.grade = function (entry, right, conf, today) {
+  var b = entry ? entry.b : 1;
+  if (!right) b = 1;
+  else if (conf >= 1) b = Math.min(5, b + 1);
+  return { b: b, due: today + LSA.GAPS[b - 1], n: ((entry && entry.n) || 0) + 1 };
+};
+LSA.isWow = function (right, conf) { return !right && conf === 2; };
+// Pick up to n cards: due first, then new. Then order so no two in a row share a topic when it can be helped.
+LSA.pickRound = function (cards, boxes, today, r, n) {
+  n = n || 10;
+  var due = [], fresh = [];
+  LSA.shuffle(cards, r).forEach(function (c) {
+    var e = boxes[c.id];
+    if (!e) fresh.push(c); else if (e.due <= today) due.push(c);
+  });
+  due.sort(function (a, b) { return boxes[a.id].due - boxes[b.id].due; });
+  var nd = Math.min(n, due.length);
+  return LSA.interleave(due.slice(0, nd)).concat(LSA.interleave(fresh.slice(0, n - nd)));
+};
+LSA.interleave = function (list) {
+  var rest = list.slice(), out = [];
+  while (rest.length) {
+    var prev = out.length ? out[out.length - 1].topic : null, k = 0;
+    // Look ahead: pick the first card whose topic differs, preferring the topic with the most left.
+    var counts = {}; rest.forEach(function (c) { counts[c.topic] = (counts[c.topic] || 0) + 1; });
+    var best = -1;
+    for (var i = 0; i < rest.length; i++) {
+      if (rest[i].topic === prev) continue;
+      if (best < 0 || counts[rest[i].topic] > counts[rest[best].topic]) best = i;
+    }
+    k = best < 0 ? 0 : best;
+    out.push(rest.splice(k, 1)[0]);
+  }
+  return out;
+};
+</script>
+<script data-src="engine/save.js">
+// Versioned save. Text in, text out; the UI decides where it is stored. No DOM.
+var LSA = typeof LSA !== 'undefined' ? LSA : {};
+LSA.SAVE_V = 2;
+LSA.newProfile = function (name, age) { return { name: name || 'Player', age: age === 'ya' ? 'ya' : 'adult', boxes: {}, round: null, stats: { rounds: 0, right: 0, seen: 0, wows: 0 } }; };
+LSA.newSave = function () { return { v: LSA.SAVE_V, active: null, next: 1, profiles: {}, decks: null }; };
+LSA.addProfile = function (s, name, age) { var id = 'p' + (s.next++); s.profiles[id] = LSA.newProfile(name, age); s.active = id; return id; };
+// v1 was one player: { v:1, name, age, boxes, round }
+LSA.upgrade = function (o) {
+  if (o.v === 1) {
+    var s = LSA.newSave(), id = LSA.addProfile(s, o.name, o.age);
+    var p = s.profiles[id]; p.boxes = o.boxes || {}; p.round = o.round || null; if (o.stats) p.stats = o.stats;
+    o = s;
+  }
+  return o;
+};
+// Returns { save, broken } and never throws.
+LSA.loadSave = function (text) {
+  if (!text) return { save: LSA.newSave(), broken: false };
+  try {
+    var o = LSA.upgrade(JSON.parse(text));
+    if (!o || o.v !== LSA.SAVE_V || typeof o.profiles !== 'object' || !o.profiles) throw new Error('bad save');
+    Object.keys(o.profiles).forEach(function (k) {
+      var p = o.profiles[k]; if (!p || typeof p.boxes !== 'object') throw new Error('bad profile');
+      if (p.age !== 'ya' && p.age !== 'adult') p.age = 'adult';
+      p.stats = p.stats || { rounds: 0, right: 0, seen: 0, wows: 0 };
+    });
+    if (o.active && !o.profiles[o.active]) o.active = null;
+    return { save: o, broken: false };
+  } catch (e) { return { save: LSA.newSave(), broken: true }; }
+};
+LSA.dumpSave = function (s) { return JSON.stringify(s); };
+</script>
+<script data-src="modes/gutcheck.js">
+// Gut Check round. Plain data state, so a round can be saved and resumed. No DOM.
+var LSA = typeof LSA !== 'undefined' ? LSA : {};
+LSA.GC = {
+  start: function (profile, deckIds, today, seed) {
+    var r = LSA.rng(seed), cards = LSA.cardsFor(profile.age, deckIds);
+    var picked = LSA.pickRound(cards, profile.boxes, today, r, 10);
+    var q = picked.map(function (c) { return { id: c.id, order: LSA.shuffle([0, 1, 2], r), pick: null, conf: null }; });
+    return { rs: r.s, today: today, q: q, i: 0, stage: 'ask', again: {}, wows: [], right: 0 };
+  },
+  cur: function (st) { return st.q[st.i]; },
+  card: function (st) { return LSA.cardIndex[st.q[st.i].id]; },
+  // choice: index into order (position on screen)
+  pick: function (st, pos) { if (st.stage !== 'ask') return; st.q[st.i].pick = pos; st.stage = 'conf'; },
+  isRight: function (it) { return it.order[it.pick] === LSA.answerIndex; },
+  confirm: function (st, profile, conf) {
+    if (st.stage !== 'conf') return;
+    var it = st.q[st.i], right = LSA.GC.isRight(it); it.conf = conf; it.right = right;
+    profile.boxes[it.id] = LSA.grade(profile.boxes[it.id], right, conf, st.today);
+    profile.stats.seen++;
+    if (right) { st.right++; profile.stats.right++; }
+    it.wow = LSA.isWow(right, conf);
+    if (it.wow && st.wows.indexOf(it.id) < 0) { st.wows.push(it.id); profile.stats.wows++; }
+    if (!right && !st.again[it.id]) {
+      // Ask it once more, a few cards later in this round.
+      st.again[it.id] = 1;
+      var r = LSA.rng(st.rs), at = Math.min(st.q.length, st.i + 3);
+      st.q.splice(at, 0, { id: it.id, order: LSA.shuffle([0, 1, 2], r), pick: null, conf: null, again: true });
+      st.rs = r.s;
+    }
+    st.stage = 'fix';
+  },
+  next: function (st, profile) {
+    if (st.stage !== 'fix') return;
+    st.i++;
+    if (st.i >= st.q.length) { st.stage = 'done'; profile.stats.rounds++; } else st.stage = 'ask';
+  }
+};
+</script>
+<script data-src="modes/mythmatch.js">
+// Myth Match: pair each myth tile with its fix tile. Only cards the player has seen. No DOM.
+var LSA = typeof LSA !== 'undefined' ? LSA : {};
+LSA.MM = {
+  seenCards: function (profile, deckIds) {
+    return LSA.cardsFor(profile.age, deckIds).filter(function (c) { return profile.boxes[c.id]; });
+  },
+  start: function (profile, deckIds, seed, pairs) {
+    var r = LSA.rng(seed), seen = LSA.shuffle(LSA.MM.seenCards(profile, deckIds), r).slice(0, pairs || 4);
+    if (seen.length < 2) return null;
+    var tiles = [];
+    seen.forEach(function (c) { tiles.push({ id: c.id, k: 'm' }); tiles.push({ id: c.id, k: 'f' }); });
+    return { tiles: LSA.shuffle(tiles, r), cleared: {}, sel: null, tries: 0, done: false };
+  },
+  // Returns 'select', 'match', 'miss', or null.
+  tap: function (st, i) {
+    if (st.done || st.cleared[i]) return null;
+    if (st.sel === null) { st.sel = i; return 'select'; }
+    if (st.sel === i) { st.sel = null; return null; }
+    var a = st.tiles[st.sel], b = st.tiles[i], j = st.sel; st.sel = null; st.tries++;
+    if (a.id === b.id && a.k !== b.k) {
+      st.cleared[j] = st.cleared[i] = true;
+      st.done = Object.keys(st.cleared).length === st.tiles.length;
+      return 'match';
+    }
+    return 'miss';
+  }
+};
+</script>
+<script data-src="content/research.js">
+// Research behind the training style. Authors checked on Crossref (api.crossref.org) on Oct 19, 2026.
+var LSA = typeof LSA !== 'undefined' ? LSA : {};
+LSA.RESEARCH = [
+  ['Testing yourself and spacing reviews are the top rated study methods.', 'Dunlosky, Rawson, Marsh, Nathan, Willingham (2013). Improving Students\' Learning With Effective Learning Techniques. Psychological Science in the Public Interest, 14(1), 4-58.', 'https://doi.org/10.1177/1529100612453266'],
+  ['Recalling now builds memory better than extra study time.', 'Roediger, Karpicke (2006). Test-Enhanced Learning. Psychological Science.', 'https://doi.org/10.1111/j.1467-9280.2006.01693.x'],
+  ['Practice tests help across many settings.', 'Adesope, Trevisan, Sundararajan (2017). Rethinking the Use of Tests: A Meta-Analysis of Practice Testing. Review of Educational Research.', 'https://doi.org/10.3102/0034654316689306'],
+  ['Spread reviews out over days.', 'Cepeda, Pashler, Vul, Wixted, Rohrer (2006). Distributed practice in verbal recall tasks: A review and quantitative synthesis. Psychological Bulletin, 132(3), 354-380.', 'https://doi.org/10.1037/0033-2909.132.3.354'],
+  ['Mix topics instead of one block at a time.', 'Rohrer, Taylor (2007). The shuffling of mathematics problems improves learning. Instructional Science.', 'https://doi.org/10.1007/s11251-007-9015-8'],
+  ['Feedback right after multiple choice stops you learning the wrong answer.', 'Butler, Roediger (2008). Feedback enhances the positive effects and reduces the negative effects of multiple-choice testing. Memory and Cognition.', 'https://doi.org/10.3758/MC.36.3.604'],
+  ['Mistakes made when you felt sure get fixed best.', 'Butterfield, Metcalfe (2001). Errors committed with high confidence are hypercorrected. Journal of Experimental Psychology: Learning, Memory, and Cognition.', 'https://doi.org/10.1037/0278-7393.27.6.1491'],
+  ['Making and fixing errors helps learning.', 'Metcalfe (2017). Learning from Errors. Annual Review of Psychology.', 'https://doi.org/10.1146/annurev-psych-010416-044022'],
+  ['Name the myth, say it is wrong, give the fix.', 'Tippett (2010). Refutation Text in Science Education: A Review of Two Decades of Research. International Journal of Science and Mathematics Education.', 'https://doi.org/10.1007/s10763-010-9203-x'],
+  ['How a fix replaces a wrong idea.', 'Kendeou, Walsh, Smith, O\'Brien (2014). Knowledge Revision Processes in Refutation Texts. Discourse Processes.', 'https://doi.org/10.1080/0163853X.2014.913961'],
+  ['A fix must be clear and give a reason.', 'Lewandowsky, Ecker, Seifert, Schwarz, Cook (2012). Misinformation and Its Correction. Psychological Science in the Public Interest, 13(3), 106-131.', 'https://doi.org/10.1177/1529100612451018']
+];
+</script>
+<script data-src="content/decks/firstaid.js">
+// First Aid Myths deck. Data only. c = [myth choice, right choice, decoy]; the engine shuffles them.
+// NHS pages are UK advice; we say "call for help (911)" where they say 999.
+LSA.deck({
+  id: 'firstaid', name: 'First Aid Myths', icon: '🩹',
+  sources: {
+    'nhs-burns': ['NHS: Burns and scalds', 'https://www.nhs.uk/conditions/burns-and-scalds/'],
+    'nhs-nose': ['NHS: Nosebleed', 'https://www.nhs.uk/conditions/nosebleed/'],
+    'nhs-poison': ['NHS: Poisoning', 'https://www.nhs.uk/conditions/poisoning/'],
+    'nhs-snake': ['NHS: Snake bites', 'https://www.nhs.uk/conditions/snake-bites/'],
+    'nhs-frost': ['NHS: Frostbite', 'https://www.nhs.uk/conditions/frostbite/'],
+    'nhs-sprain': ['NHS: Sprains and strains', 'https://www.nhs.uk/conditions/sprains-and-strains/'],
+    'nhs-head': ['NHS: Head injury and concussion', 'https://www.nhs.uk/conditions/head-injury-and-concussion/'],
+    'nhs-heat': ['NHS: Heat exhaustion and heatstroke', 'https://www.nhs.uk/conditions/heat-exhaustion-heatstroke/'],
+    'nhs-stings': ['NHS: Insect bites and stings', 'https://www.nhs.uk/conditions/insect-bites-and-stings/'],
+    'nhs-cuts': ['NHS: Cuts and grazes', 'https://www.nhs.uk/conditions/cuts-and-grazes/'],
+    'nhs-hypo': ['NHS: Hypothermia', 'https://www.nhs.uk/conditions/hypothermia/'],
+    'nhs-jelly': ['NHS: Jellyfish and sea creature stings', 'https://www.nhs.uk/conditions/jellyfish-and-other-sea-creature-stings/'],
+    'nhs-faint': ['NHS: Fainting', 'https://www.nhs.uk/conditions/fainting/'],
+    'nhs-bites': ['NHS: Animal and human bites', 'https://www.nhs.uk/conditions/animal-and-human-bites/'],
+    'nhs-sunburn': ['NHS: Sunburn', 'https://www.nhs.uk/conditions/sunburn/'],
+    'nhs-fever': ['NHS: Fever in children', 'https://www.nhs.uk/conditions/fever-in-children/'],
+    'nhs-febrile': ['NHS: Febrile seizures', 'https://www.nhs.uk/conditions/febrile-seizures/'],
+    'nhs-stroke': ['NHS: Stroke symptoms', 'https://www.nhs.uk/conditions/stroke/symptoms/'],
+    'nhs-heart': ['NHS: Heart attack symptoms', 'https://www.nhs.uk/conditions/heart-attack/symptoms/'],
+    'nhs-alcpois': ['NHS: Alcohol poisoning', 'https://www.nhs.uk/conditions/alcohol-poisoning/'],
+    'nhs-broken': ['NHS: Broken arm or wrist', 'https://www.nhs.uk/conditions/broken-arm-or-wrist/'],
+    'nhs-co': ['NHS: Carbon monoxide poisoning', 'https://www.nhs.uk/conditions/carbon-monoxide-poisoning/'],
+    'nhs-eye': ['NHS: Black eye', 'https://www.nhs.uk/conditions/black-eye/'],
+    'nhs-chokebaby': ['NHS: How to stop a child from choking', 'https://www.nhs.uk/baby/first-aid-and-safety/first-aid/how-to-stop-a-child-from-choking/'],
+    'nhs-cpr': ['NHS: CPR', 'https://www.nhs.uk/conditions/first-aid/cpr/'],
+    'nhs-dehyd': ['NHS: Dehydration', 'https://www.nhs.uk/conditions/dehydration/'],
+    'nhs-foodpois': ['NHS: Food poisoning', 'https://www.nhs.uk/conditions/food-poisoning/'],
+    'nhs-tooth': ['NHS: Knocked out tooth', 'https://www.nhs.uk/conditions/knocked-out-tooth/'],
+    'nhs-chemeye': ['NHS: Eye injuries', 'https://www.nhs.uk/conditions/eye-injuries/'],
+    'nhs-falls': ['NHS: Falls', 'https://www.nhs.uk/conditions/falls/'],
+    'nhs-anaph': ['NHS: Anaphylaxis', 'https://www.nhs.uk/conditions/anaphylaxis/'],
+    'nhs-asthma': ['NHS: Asthma attack', 'https://www.nhs.uk/conditions/asthma/asthma-attack/'],
+    'nhs-croup': ['NHS: Croup', 'https://www.nhs.uk/conditions/croup/'],
+    'nhs-diabetes': ['NHS: Low blood sugar', 'https://www.nhs.uk/conditions/low-blood-sugar-hypoglycaemia/'],
+    'cdc-seizure': ['CDC: First Aid for Seizures', 'https://www.cdc.gov/epilepsy/first-aid-for-seizures/index.html'],
+    'cdc-tick': ['CDC: What to Do After a Tick Bite', 'https://www.cdc.gov/ticks/after-a-tick-bite/index.html'],
+    'cdc-drowning': ['CDC: Preventing Drowning', 'https://www.cdc.gov/drowning/prevention/index.html'],
+    'cdc-co': ['CDC: Carbon Monoxide Poisoning Basics', 'https://www.cdc.gov/carbon-monoxide/about/index.html']
+  },
+  cards: [
+    // ---------- shared core (both age groups) ----------
+    { id: 'fa01', ages: 'both', topic: 'burns', s: { ya: 'You grab a hot pan handle in your new apartment. Your palm burns. First thing?', adult: 'Your kid touches the hot stove and burns a hand. First thing?' },
+      c: ['Rub butter or cream on it', 'Hold it under cool running water for 20 minutes', 'Wrap it tight in a dry towel'],
+      m: 'Butter or cream soothes a burn.', f: 'Cool it under running water for 20 minutes, as soon as you can.', w: 'Butter and creams do not cool the burn. The NHS says never put them on.', src: 'nhs-burns' },
+    { id: 'fa02', ages: 'both', topic: 'burns', s: 'A burn has a big blister on it. What should you do with the blister?',
+      c: ['Pop it so it heals faster', 'Leave it alone', 'Peel the skin off'],
+      m: 'Popping a burn blister helps it heal.', f: 'Do not burst burn blisters.', w: 'The blister protects the skin under it. Popping it opens the wound.', src: 'nhs-burns' },
+    { id: 'fa03', ages: 'both', topic: 'burns', s: 'The burn is cooled. How do you cover it?',
+      c: ['Stick a plaster or sticky bandage on it', 'Lay cling film loosely over it', 'Leave a wet towel taped on all day'],
+      m: 'A sticky bandage is best for a burn.', f: 'Lay cling film over it. Do not wrap it around, and skip sticky dressings.', w: 'Sticky dressings can pull at the burned skin.', src: 'nhs-burns' },
+    { id: 'fa04', ages: 'both', topic: 'nosebleed', s: { ya: 'Your nose starts bleeding at work. What do you do?', adult: 'Your child gets a nosebleed at dinner. What do you tell them?' },
+      c: ['Tilt the head back', 'Sit, lean forward, pinch the soft part of the nose', 'Lie flat on your back'],
+      m: 'Tilt your head back to stop a nosebleed.', f: 'Sit, lean forward, and pinch just above the nostrils for 10 to 15 minutes.', w: 'Leaning forward keeps blood from running down your throat.', src: 'nhs-nose' },
+    { id: 'fa05', ages: 'both', topic: 'poison', s: { ya: 'Your roommate swallowed some cleaning liquid by mistake. What now?', adult: 'Your toddler got into the cleaning cupboard and swallowed something. What now?' },
+      c: ['Make them throw up', 'Get help now and do not make them sick', 'Wait and see if they feel sick'],
+      m: 'Make someone throw up if they swallow poison.', f: 'Get medical help right away. Do not try to make them sick.', w: 'Vomiting can make them choke and stop breathing.', src: 'nhs-poison' },
+    { id: 'fa06', ages: 'both', topic: 'poison', s: 'Help is on the way after someone swallowed something harmful. Should you give them a drink?',
+      c: ['Yes, milk to coat the stomach', 'No food or drink at all', 'Yes, lots of water to flush it'],
+      m: 'Milk or water helps after poisoning.', f: 'Do not give them anything to eat or drink.', w: 'The NHS says no food or drink while you wait for help.', src: 'nhs-poison' },
+    { id: 'fa07', ages: 'both', topic: 'bites', s: 'A snake bites your friend on a trail. What do you do about the venom?',
+      c: ['Suck or cut the venom out', 'Leave the bite alone, keep still, get help', 'Pour hot water on it'],
+      m: 'Sucking out the venom helps.', f: 'Never suck or cut the bite. Keep still and get help.', w: 'It does not remove venom and can make the wound worse.', src: 'nhs-snake' },
+    { id: 'fa08', ages: 'both', topic: 'bites', s: 'After a snake bite, should you tie a tight band above it?',
+      c: ['Yes, to stop the venom spreading', 'No, do not tie anything tight', 'Yes, but only for an hour'],
+      m: 'A tight band stops snake venom.', f: 'Do not tie anything tightly around the bite. Loosen clothes instead.', w: 'The area may swell. Tight bands make it worse.', src: 'nhs-snake' },
+    { id: 'fa09', ages: 'both', topic: 'cold', s: 'Fingers are white and numb after time in the snow. How do you warm them?',
+      c: ['Rub them hard', 'Warm (not hot) water, no rubbing', 'Hold them near a fire'],
+      m: 'Rub frostbite to warm it up.', f: 'Use warm, not hot, water or body heat. Do not rub.', w: 'Rubbing frozen skin damages it more.', src: 'nhs-frost' },
+    { id: 'fa10', ages: 'both', topic: 'cold', s: 'Someone has frostbite on their toes. Is a hot water bottle a good idea?',
+      c: ['Yes, the hotter the better', 'No, use warm water, not direct heat', 'Yes, plus a hot bath'],
+      m: 'Direct heat is best for frostbite.', f: 'Do not use a fire, heater, hot water bottle, or hot bath.', w: 'Numb skin cannot feel heat and burns easily.', src: 'nhs-frost' },
+    { id: 'fa11', ages: 'both', topic: 'sprains', s: { ya: 'You twist your ankle playing ball. Tonight, heat pack or ice pack?', adult: 'You twist your ankle on the stairs. Tonight, heat pack or ice pack?' },
+      c: ['Heat pack and a hot bath', 'Ice pack, wrapped, up to 20 minutes', 'Neither, just walk on it'],
+      m: 'Heat helps a fresh sprain.', f: 'Use ice and avoid heat for the first couple of days.', w: 'Heat can add to the swelling early on.', src: 'nhs-sprain' },
+    { id: 'fa12', ages: 'both', topic: 'head', s: 'After a minor head bump, the person is tired. Must you keep them awake all night?',
+      c: ['Yes, never let them sleep', 'No, they can rest if tired, with an adult nearby', 'Yes, with coffee'],
+      m: 'Never let someone sleep after a head bump.', f: 'For a minor head injury they can rest. An adult should stay with them for 24 hours.', w: 'The NHS says you do not need to stay awake if tired. Get help for warning signs.', src: 'nhs-head' },
+    { id: 'fa13', ages: 'both', topic: 'heat', s: 'Someone is hot and dizzy after yard work. They cooled down but still feel bad after 30 minutes. Now?',
+      c: ['Keep waiting, it will pass', 'Treat it as heatstroke and get help', 'Give them a hot drink'],
+      m: 'Heat illness always passes with rest.', f: 'If they are not better after 30 minutes of cooling, it may be heatstroke. Get help.', w: 'Heatstroke is an emergency.', src: 'nhs-heat' },
+    { id: 'fa14', ages: 'both', topic: 'bites', s: 'A wasp sting is swelling up. Which helps?',
+      c: ['A baking soda paste', 'A cold pack for at least 20 minutes', 'Scratching to spread it out'],
+      m: 'Baking soda is a good sting remedy.', f: 'Wash it, then use a cold pack. Skip home remedies like baking soda.', w: 'The NHS says not to use home remedies such as bicarbonate of soda.', src: 'nhs-stings' },
+    { id: 'fa15', ages: 'both', topic: 'cuts', s: 'A piece of glass is stuck in a deep cut. What do you do?',
+      c: ['Pull it out fast', 'Leave it in and press around it', 'Push it in deeper to stop bleeding'],
+      m: 'Pull out anything stuck in a wound.', f: 'Leave it in. Press on both sides of it and get help.', w: 'Pulling it out can cause more bleeding.', src: 'nhs-cuts' },
+    { id: 'fa16', ages: 'both', topic: 'cuts', s: 'Blood soaks through the cloth you are pressing on a cut. Now?',
+      c: ['Take it off to look', 'Put another cloth on top and keep pressing', 'Rinse it under the tap'],
+      m: 'Swap a soaked bandage for a fresh one.', f: 'Add another cloth on top and keep the pressure on.', w: 'Lifting the first one breaks the pressure.', src: 'nhs-cuts' },
+    { id: 'fa17', ages: 'both', topic: 'cold', s: { ya: 'A friend is shivering and confused after a cold night out. Best way to warm them?', adult: 'Your elderly neighbor is very cold and confused in a cold house. Best way to warm them?' },
+      c: ['A hot bath', 'Dry blanket, head covered, warm drink if awake', 'Rub their arms and legs hard'],
+      m: 'A hot bath fixes hypothermia.', f: 'Wrap them in a dry blanket with the head covered. Warm drink if fully awake. Get help.', w: 'Hot baths and rubbing can make it worse.', src: 'nhs-hypo' },
+    { id: 'fa18', ages: 'both', topic: 'cold', s: 'Does a drink of alcohol help someone who is too cold?',
+      c: ['Yes, it warms you up', 'No, never give alcohol', 'Only a small one'],
+      m: 'Alcohol warms you up.', f: 'Do not give alcohol. Give a warm non-alcohol drink if they are awake.', w: 'The NHS lists alcohol as a do not for hypothermia.', src: 'nhs-hypo' },
+    { id: 'fa19', ages: 'both', topic: 'bites', s: 'A jellyfish stings a leg at the beach. What do you rinse with?',
+      c: ['Pee on it', 'Seawater', 'Fresh water from a bottle'],
+      m: 'Pee helps a jellyfish sting.', f: 'Rinse with seawater, then soak in very warm water.', w: 'The NHS says do not pee on it, and do not use fresh water.', src: 'nhs-jelly' },
+    { id: 'fa20', ages: 'both', topic: 'bites', s: 'After a jellyfish sting, hot or cold?',
+      c: ['Ice pack', 'Very warm water for 30 minutes', 'Nothing at all'],
+      m: 'Ice is best for a jellyfish sting.', f: 'Soak in very warm water, as hot as can be put up with, for 30 minutes.', w: 'The NHS says do not use ice or a cold pack here.', src: 'nhs-jelly' },
+    { id: 'fa21', ages: 'both', topic: 'seizure', s: 'Someone is having a seizure. Should you put something in their mouth so they do not bite their tongue?',
+      c: ['Yes, a spoon or wallet', 'No, never put anything in their mouth', 'Yes, your fingers'],
+      m: 'Put something in the mouth during a seizure.', f: 'Never put anything in their mouth. Clear space and turn them on their side.', w: 'It can hurt their teeth or jaw.', src: 'cdc-seizure' },
+    { id: 'fa22', ages: 'both', topic: 'seizure', s: 'During a seizure, should you hold the person still?',
+      c: ['Yes, hold them down', 'No, do not hold them down', 'Yes, but only the legs'],
+      m: 'Hold someone still during a seizure.', f: 'Do not hold them down. Keep things away and time it.', w: 'Holding them down can hurt you or them.', src: 'cdc-seizure' },
+    { id: 'fa23', ages: 'both', topic: 'seizure', s: 'A seizure is still going. When should you call 911?',
+      c: ['Only if they turn blue', 'If it lasts more than 5 minutes', 'Never, they always stop'],
+      m: 'Seizures never need 911.', f: 'Call 911 if it lasts more than 5 minutes, or it is their first seizure.', w: 'CDC: time it, and call if it goes past 5 minutes.', src: 'cdc-seizure' },
+    { id: 'fa24', ages: 'both', topic: 'bites', s: { ya: 'After a hike you find a tick stuck on your leg. How do you get it off?', adult: 'You find a tick on your child after a hike. How do you get it off?' },
+      c: ['Nail polish or a hot match', 'Tweezers close to the skin, steady pull', 'Wait for a doctor to do it'],
+      m: 'Burn or smother a tick so it lets go.', f: 'Grab it close to the skin with tweezers and pull with steady pressure.', w: 'Heat and polish can push germs into the skin. Do not wait.', src: 'cdc-tick' },
+    { id: 'fa25', ages: 'both', topic: 'bites', s: 'Pulling a tick out with tweezers. Twist it or pull straight?',
+      c: ['Twist it like a screw', 'Pull straight with steady pressure', 'Jerk it out fast'],
+      m: 'Twist a tick to get it out.', f: 'Pull steady and even. Do not twist or jerk.', w: 'Twisting can leave mouthparts in the skin.', src: 'cdc-tick' },
+    { id: 'fa26', ages: 'both', topic: 'stroke', s: { ya: 'Your friend\'s face droops and words slur, then it clears up. Now?', adult: 'Your dad\'s face droops and his words slur, then it clears up. Now?' },
+      c: ['It went away, so relax', 'Get help right now anyway', 'Have them nap and check later'],
+      m: 'If stroke signs go away, it is fine.', f: 'Get medical help right away, even if signs stop.', w: 'Signs can stop for a while. It is still an emergency.', src: 'nhs-stroke' },
+    { id: 'fa27', ages: 'both', topic: 'heart', s: 'Which of these can be a heart attack sign?',
+      c: ['Only crushing chest pain counts', 'Feeling like bad indigestion, sick, or short of breath', 'Only pain in the left arm'],
+      m: 'A heart attack is always crushing chest pain.', f: 'It can feel like indigestion, with feeling sick or short of breath.', w: 'The NHS lists these as heart attack signs too.', src: 'nhs-heart' },
+    { id: 'fa28', ages: 'both', topic: 'gas', s: 'Is it safe to warm up a car in an attached garage with the big door open?',
+      c: ['Yes, the open door is enough', 'No, never in an attached garage', 'Yes, for 10 minutes'],
+      m: 'An open garage door makes it safe.', f: 'Never run a car in a garage attached to the house, even with the door open.', w: 'Carbon monoxide can build up and get into the house.', src: 'cdc-co' },
+    { id: 'fa29', ages: 'both', topic: 'gas', s: 'How would you know if carbon monoxide is in your home?',
+      c: ['You would smell it', 'Only a CO alarm can tell you', 'Your eyes would sting'],
+      m: 'You can smell carbon monoxide.', f: 'It has no color or smell. Use a CO alarm.', w: 'You cannot tell it is there without an alarm.', src: 'nhs-co' },
+    { id: 'fa30', ages: 'both', topic: 'cpr', s: 'An adult falls and is not breathing. You do not know how to do rescue breaths. Now?',
+      c: ['Do nothing, CPR needs breaths', 'Call 911 and push hard on the chest nonstop', 'Shake them and wait'],
+      m: 'CPR does not work without rescue breaths.', f: 'Call for help and give nonstop chest compressions.', w: 'The NHS says if you cannot do breaths, keep doing compressions.', src: 'nhs-cpr' },
+    { id: 'fa31', ages: 'both', topic: 'cpr', s: 'Someone collapsed and is making odd gasps now and then. Are they breathing OK?',
+      c: ['Yes, gasping means breathing', 'No, odd gasps are not normal breathing; start CPR', 'Yes, just wait'],
+      m: 'Gasping means they are breathing fine.', f: 'Ignore odd gasps. If not breathing normally, call for help and start CPR.', w: 'Gasps are common early in cardiac arrest.', src: 'nhs-cpr' },
+    { id: 'fa32', ages: 'both', topic: 'cpr', s: 'You are giving CPR and a friend is with you. Who goes for the AED?',
+      c: ['You stop and go get it', 'Send your friend; you keep pushing', 'Nobody, wait for the ambulance'],
+      m: 'Stop CPR to fetch the AED yourself.', f: 'Keep going and send someone else for it.', w: 'The NHS says do not leave the person to look for one yourself.', src: 'nhs-cpr' },
+    { id: 'fa33', ages: 'both', topic: 'allergy', s: 'Someone used their EpiPen and feels better. Should they walk to the car?',
+      c: ['Yes, they feel fine now', 'No, stay lying down, do not stand or walk', 'Yes, but slowly'],
+      m: 'Once you feel better you can get up.', f: 'Stay lying down. Do not stand or walk, even if feeling better.', w: 'The NHS warns against standing at any time during anaphylaxis.', src: 'nhs-anaph' },
+    { id: 'fa34', ages: 'both', topic: 'allergy', s: 'Signs of a bad allergy start but seem mild. Use the auto-injector?',
+      c: ['No, save it for when it gets bad', 'Yes, use it even if signs are mild', 'Take a nap first'],
+      m: 'Wait until it is bad to use an EpiPen.', f: 'Use the auto-injector if you think it is anaphylaxis, even if mild.', w: 'The NHS says use it even when symptoms seem mild.', src: 'nhs-anaph' },
+    { id: 'fa35', ages: 'both', topic: 'bites', s: 'A dog bite broke the skin and is barely bleeding. What first?',
+      c: ['Cover it fast so no blood comes out', 'Wash with soap and warm water, let it bleed a little', 'Put butter on it'],
+      m: 'Stop all bleeding from a bite at once.', f: 'Clean with soap and warm water. Gently squeeze so it bleeds a little.', w: 'A little bleeding can help lower the chance of infection.', src: 'nhs-bites' },
+    { id: 'fa36', ages: 'both', topic: 'water', s: { ya: 'A friend goes under at the lake. What does drowning look like?', adult: 'Kids are in the pool. What does drowning look like?' },
+      c: ['Loud yelling and splashing', 'Fast and often silent', 'Waving both arms for a long time'],
+      m: 'Drowning is loud and easy to spot.', f: 'Drowning happens in seconds and is often silent.', w: 'That is why someone must watch closely all the time.', src: 'cdc-drowning' },
+    { id: 'fa37', ages: 'both', topic: 'cuts', s: 'You think an arm is broken. Should you eat or drink on the way to the hospital?',
+      c: ['Yes, eat to keep strength up', 'No, you may need surgery', 'Only a big meal'],
+      m: 'Eat before going in with a broken bone.', f: 'Do not eat or drink in case you need surgery.', w: 'The NHS gives this advice for a broken arm or wrist.', src: 'nhs-broken' },
+    // ---------- young adults ----------
+    { id: 'fa50', ages: 'ya', topic: 'alcohol', s: 'At a party, a friend drank way too much and is barely awake. Put them in a cold shower?',
+      c: ['Yes, it sobers them up', 'No, it can make them too cold or fall', 'Yes, ice cold'],
+      m: 'A cold shower sobers someone up.', f: 'Do not use a cold shower or bath. Get help and stay with them.', w: 'They could get too cold, fall, or pass out in the water.', src: 'nhs-alcpois' },
+    { id: 'fa51', ages: 'ya', topic: 'alcohol', s: 'Your friend has had way too much to drink. Give them coffee?',
+      c: ['Yes, coffee sobers you up', 'No, skip coffee and caffeine', 'Yes, two cups'],
+      m: 'Coffee sobers you up.', f: 'Do not give coffee or caffeine drinks.', w: 'Caffeine can dry out someone with alcohol poisoning.', src: 'nhs-alcpois' },
+    { id: 'fa52', ages: 'ya', topic: 'alcohol', s: 'A very drunk friend is sleepy. Should they eat bread to soak it up?',
+      c: ['Yes, food soaks up alcohol', 'No, do not give food, they could choke', 'Yes, lots of water too'],
+      m: 'Bread soaks up the alcohol.', f: 'Do not give food. They could choke.', w: 'The NHS lists food as a do not for alcohol poisoning.', src: 'nhs-alcpois' },
+    { id: 'fa53', ages: 'ya', topic: 'alcohol', s: 'Should you make a very drunk friend throw up to get it out?',
+      c: ['Yes, get it out', 'No, never try to make them sick', 'Only if they ask'],
+      m: 'Making them throw up helps.', f: 'Do not make them sick. Get help.', w: 'The NHS says do not try to make them sick.', src: 'nhs-alcpois' },
+    { id: 'fa54', ages: 'ya', topic: 'head', s: 'You got a concussion in a game. You feel OK by next weekend. Play again?',
+      c: ['Yes, you feel fine', 'No, no contact sports for at least 3 weeks', 'Yes, with a helmet'],
+      m: 'Feeling fine means you can play again.', f: 'No contact sports for at least 3 weeks.', w: 'The brain needs time to heal after a head injury.', src: 'nhs-head' },
+    { id: 'fa55', ages: 'ya', topic: 'head', s: 'You hit your head and feel a bit off. Drive yourself home?',
+      c: ['Yes, it is close', 'No, do not drive until fully recovered', 'Yes, with the radio off'],
+      m: 'A small head bump is fine for driving.', f: 'Do not drive until you feel fully recovered.', w: 'The NHS says do not drive after a head injury until better.', src: 'nhs-head' },
+    { id: 'fa56', ages: 'ya', topic: 'gas', s: 'Camping on a cold night. Bring the camp stove into the tent for heat?',
+      c: ['Yes, with the flap open a bit', 'No, never inside a tent', 'Yes, on low'],
+      m: 'A stove in a tent is fine if it is cracked open.', f: 'Never use a camp stove or grill inside a tent.', w: 'It makes carbon monoxide you cannot see or smell.', src: 'nhs-co' },
+    { id: 'fa57', ages: 'ya', topic: 'water', s: 'Friends do a breath-hold contest in the pool. Breathe fast first to last longer?',
+      c: ['Yes, it helps you win', 'No, it can make you pass out and drown', 'Yes, but only 3 times'],
+      m: 'Fast breathing first helps you hold your breath safely.', f: 'Do not hyperventilate or hold your breath for long underwater.', w: 'It can cause shallow water blackout.', src: 'cdc-drowning' },
+    { id: 'fa58', ages: 'ya', topic: 'water', s: 'A few drinks before going out on the boat. No big deal?',
+      c: ['No big deal', 'Avoid alcohol around swimming and boating', 'Fine if you wear sunglasses'],
+      m: 'A few drinks on the water is no big deal.', f: 'Avoid alcohol before or during swimming and boating.', w: 'Alcohol hurts balance and judgment.', src: 'cdc-drowning' },
+    { id: 'fa59', ages: 'ya', topic: 'diabetes', s: 'A roommate with diabetes passes out. Pour juice in their mouth?',
+      c: ['Yes, sugar fixes it', 'No, give nothing by mouth; get help', 'Yes, with water'],
+      m: 'Pour juice into someone passed out from low sugar.', f: 'If they are not awake, do not give food or drink. Use glucagon if you can, and call for help.', w: 'They cannot swallow safely.', src: 'nhs-diabetes' },
+    { id: 'fa60', ages: 'ya', topic: 'teeth', s: 'A ball knocks out your friend\'s adult front tooth. What do you do with it?',
+      c: ['Wrap it in a dry tissue', 'Hold it by the top, put it back or in milk', 'Scrub the root clean'],
+      m: 'Wrap a knocked-out tooth in a tissue.', f: 'Hold it by the white part. Put it back in, or keep it in milk or spit. See a dentist fast.', w: 'Do not touch the root. Milk keeps it alive.', src: 'nhs-tooth' },
+    { id: 'fa61', ages: 'ya', topic: 'heat', s: 'At a hot outdoor show, a friend is confused with hot skin and no sweat. Now?',
+      c: ['Let them sleep it off', 'This is heatstroke; call for help and cool them', 'Give them an energy drink'],
+      m: 'No sweat means they are fine.', f: 'Hot skin without sweat plus confusion can be heatstroke. Call for help and cool them.', w: 'Heatstroke is an emergency.', src: 'nhs-heat' },
+    { id: 'fa62', ages: 'ya', topic: 'sprains', s: 'Sore twisted ankle after the gym. Hot tub and a massage tonight?',
+      c: ['Yes, loosen it up', 'No, avoid heat and massage for a couple of days', 'Yes, both'],
+      m: 'Heat and massage help a new sprain.', f: 'Avoid heat, alcohol, and massage for the first couple of days.', w: 'They can add to swelling.', src: 'nhs-sprain' },
+    { id: 'fa63', ages: 'ya', topic: 'sprains', s: 'Your sprain feels better after 2 weeks. Back to long runs?',
+      c: ['Yes, it feels fine', 'Go easy; avoid hard exercise for up to 8 weeks', 'Yes, run extra to catch up'],
+      m: 'Once it feels better, it is healed.', f: 'Avoid hard exercise like running for up to 8 weeks.', w: 'There is a risk of hurting it again.', src: 'nhs-sprain' },
+    { id: 'fa64', ages: 'ya', topic: 'allergy', s: 'Friend used their EpiPen at a cafe. Drive them to the ER yourself?',
+      c: ['Yes, faster than waiting', 'Call 911; keep them lying down', 'Walk them to the bus'],
+      m: 'Driving them is faster and fine.', f: 'Call for help. Keep them lying down; do not have them stand or walk.', w: 'Standing up can be dangerous in anaphylaxis.', src: 'nhs-anaph' },
+    { id: 'fa65', ages: 'ya', topic: 'breathing', s: 'Your friend is having an asthma attack. Best position?',
+      c: ['Lie down flat to rest', 'Sit up straight', 'Bend over and touch toes'],
+      m: 'Lie down during an asthma attack.', f: 'Sit up straight, stay calm, and use the reliever inhaler.', w: 'Sitting up helps breathing.', src: 'nhs-asthma' },
+    { id: 'fa66', ages: 'ya', topic: 'breathing', s: 'You had an asthma attack but feel fine now. See a doctor?',
+      c: ['No need, it passed', 'Yes, see a doctor within 2 days', 'Only if it happens 5 times'],
+      m: 'If an asthma attack passes, no doctor needed.', f: 'See a doctor within 2 days, even if you feel better.', w: 'They can help stop the next one.', src: 'nhs-asthma' },
+    { id: 'fa67', ages: 'ya', topic: 'burns', s: 'Bad sunburn after the beach. Ice packs on it?',
+      c: ['Yes, ice right on it', 'No, cool shower or damp towel', 'Petroleum jelly instead'],
+      m: 'Ice is best for sunburn.', f: 'Cool shower or damp towel, then aftersun. No ice, no petroleum jelly.', w: 'The NHS lists both as do nots.', src: 'nhs-sunburn' },
+    { id: 'fa68', ages: 'ya', topic: 'faint', s: 'A friend faints at a party and comes to. Sit them up right away?',
+      c: ['Yes, sit them up fast', 'Lay them on their back with legs raised', 'Splash cold water on their face'],
+      m: 'Sit someone up right after they faint.', f: 'If breathing normally, lay them on their back and raise their legs.', w: 'This helps blood get back to the brain.', src: 'nhs-faint' },
+    { id: 'fa69', ages: 'ya', topic: 'eyes', s: 'Cleaner splashes in your eye at work. Now?',
+      c: ['Rub it out', 'Run lots of water over it for 20 minutes', 'Blink and keep working'],
+      m: 'Rub a chemical out of your eye.', f: 'Run lots of water over the eye for at least 20 minutes. Do not rub.', w: 'Rubbing spreads it and hurts the eye.', src: 'nhs-chemeye' },
+    { id: 'fa70', ages: 'ya', topic: 'eyes', s: 'You got a black eye in a pickup game. Take aspirin for it?',
+      c: ['Yes, aspirin is best', 'No, aspirin can make bruising worse', 'Yes, double dose'],
+      m: 'Aspirin is good for a black eye.', f: 'Skip aspirin unless a doctor says so. Use a wrapped ice pack.', w: 'Aspirin can make the bruise worse.', src: 'nhs-eye' },
+    { id: 'fa71', ages: 'ya', topic: 'eyes', s: 'Black eye. Ice straight on the skin?',
+      c: ['Yes, straight on', 'No, wrap it in a cloth first', 'Use a hot towel'],
+      m: 'Put ice right on the skin.', f: 'Wrap the ice in a cloth, 10 to 20 minutes at a time.', w: 'The NHS says do not put ice directly on skin.', src: 'nhs-eye' },
+    // ---------- adults ----------
+    { id: 'fa80', ages: 'adult', topic: 'kids', s: 'Your child has a fever. Should you sponge them with cold water?',
+      c: ['Yes, cool them fast', 'No, do not undress or sponge them', 'Yes, cold bath'],
+      m: 'Sponge a feverish child with cold water.', f: 'Do not undress or sponge them down. Fever is a normal response to infection.', w: 'The NHS advises against sponging a child to cool them.', src: 'nhs-fever' },
+    { id: 'fa81', ages: 'adult', topic: 'kids', s: 'Your child has a fever. Pile on blankets to sweat it out?',
+      c: ['Yes, sweat it out', 'No, do not bundle them up', 'Yes, plus a hat'],
+      m: 'Sweat out a fever under blankets.', f: 'Do not cover them in too many clothes or bedclothes.', w: 'It can keep them too hot.', src: 'nhs-fever' },
+    { id: 'fa82', ages: 'adult', topic: 'kids', s: 'Should you swap back and forth between ibuprofen and paracetamol for a child\'s fever?',
+      c: ['Yes, always alternate', 'Not unless a doctor or nurse says to', 'Give both at once'],
+      m: 'Always alternate the two medicines.', f: 'Do not alternate them unless a health professional tells you to.', w: 'This is NHS fever advice.', src: 'nhs-fever' },
+    { id: 'fa83', ages: 'adult', topic: 'kids', s: 'Your 10 year old has a headache. Give aspirin?',
+      c: ['Yes, it is fine', 'No, no aspirin for kids under 16', 'Yes, half a pill'],
+      m: 'Aspirin is fine for kids.', f: 'Do not give aspirin to children under 16.', w: 'The NHS warns against aspirin under 16.', src: 'nhs-fever' },
+    { id: 'fa84', ages: 'adult', topic: 'kids', s: 'Your feverish toddler has a seizure. What do you do?',
+      c: ['Hold them still', 'Protect the head, do not hold them, nothing in the mouth', 'Put them in a cold bath'],
+      m: 'Hold a child still during a fever seizure.', f: 'Protect their head. Do not hold them or put anything in their mouth.', w: 'This is NHS febrile seizure advice.', src: 'nhs-febrile' },
+    { id: 'fa85', ages: 'adult', topic: 'kids', s: 'Your child is still having a seizure. Drive them to the ER?',
+      c: ['Yes, drive fast', 'No, call 911 instead', 'Wait an hour'],
+      m: 'Drive a seizing child to the ER yourself.', f: 'Do not drive them while they are still seizing. Call 911.', w: 'The NHS says call an ambulance instead.', src: 'nhs-febrile' },
+    { id: 'fa86', ages: 'adult', topic: 'kids', s: 'Your child is choking but coughing loudly. What do you do?',
+      c: ['Reach in and grab it', 'Encourage them to keep coughing and stay close', 'Give them water'],
+      m: 'Always reach in to pull out what they choke on.', f: 'If they cough loudly, let them keep coughing and stay with them.', w: 'A strong cough can clear it. Act if the cough goes silent.', src: 'nhs-chokebaby' },
+    { id: 'fa87', ages: 'adult', topic: 'kids', s: 'You cannot see what your child is choking on. Sweep a finger in their mouth?',
+      c: ['Yes, feel around for it', 'No, do not poke blindly', 'Yes, two fingers'],
+      m: 'Do a blind finger sweep for choking.', f: 'Only remove it if you can see it. Do not poke blindly.', w: 'You could push it further in.', src: 'nhs-chokebaby' },
+    { id: 'fa88', ages: 'adult', topic: 'kids', s: 'A baby under 1 is choking and cannot cough. What do you use?',
+      c: ['Belly thrusts like an adult', 'Back blows, then chest thrusts', 'Hang them upside down and shake'],
+      m: 'Use belly thrusts on a baby.', f: 'For babies under 1: up to 5 back blows, then up to 5 chest thrusts.', w: 'Belly (abdominal) thrusts are for children over 1.', src: 'nhs-chokebaby' },
+    { id: 'fa89', ages: 'adult', topic: 'kids', s: 'Your 5 year old knocks out a baby tooth. Push it back in?',
+      c: ['Yes, right away', 'No, never put a baby tooth back', 'Yes, with glue'],
+      m: 'Put any knocked-out tooth back in.', f: 'Never put a baby tooth back in.', w: 'It could damage the adult tooth growing under it.', src: 'nhs-tooth' },
+    { id: 'fa90', ages: 'adult', topic: 'kids', s: 'Your child has croup with a barking cough. Steamy bathroom?',
+      c: ['Yes, steam opens the airway', 'No, do not use steam', 'Yes, as hot as possible'],
+      m: 'Steam helps croup.', f: 'Do not put your child in a steamy room or have them breathe steam.', w: 'The NHS advises against steam for croup.', src: 'nhs-croup' },
+    { id: 'fa91', ages: 'adult', topic: 'kids', s: 'Your child has a tummy bug. Give fruit juice or soda to keep fluids up?',
+      c: ['Yes, sugar gives energy', 'No, it can make diarrhea worse', 'Yes, cola is best'],
+      m: 'Juice or soda helps a tummy bug.', f: 'Do not give young children fruit juice or fizzy drinks.', w: 'They can make diarrhea or vomiting worse.', src: 'nhs-dehyd' },
+    { id: 'fa92', ages: 'adult', topic: 'kids', s: 'Your 8 year old has food poisoning. Give anti-diarrhea medicine?',
+      c: ['Yes, stop it fast', 'No, not for kids under 12', 'Yes, adult dose'],
+      m: 'Anti-diarrhea medicine is fine for kids.', f: 'Do not give children under 12 medicine to stop diarrhea.', w: 'This is NHS food poisoning advice.', src: 'nhs-foodpois' },
+    { id: 'fa93', ages: 'adult', topic: 'kids', s: 'Baby has a tummy bug. Make the formula weaker so it is easier?',
+      c: ['Yes, water it down', 'No, use it at normal strength', 'Switch to juice'],
+      m: 'Weaker formula is gentler when sick.', f: 'Do not make formula weaker. Use usual strength.', w: 'The NHS says keep formula at its usual strength.', src: 'nhs-foodpois' },
+    { id: 'fa94', ages: 'adult', topic: 'parents', s: 'Your mom falls at home and is on the floor. Lift her up yourself right away?',
+      c: ['Yes, lift her fast', 'Keep her warm; help her up only if she can, do not lift her', 'Pull her up by the arms'],
+      m: 'Lift a fallen person up right away.', f: 'Keep them warm and comfy. Help them up if they can, but do not lift them yourself.', w: 'You could hurt them or yourself.', src: 'nhs-falls' },
+    { id: 'fa95', ages: 'adult', topic: 'parents', s: 'After a fall, how fast should an older person get up?',
+      c: ['Jump right up', 'Take a few minutes, check for injury, go slow', 'Never get up'],
+      m: 'Get up fast after a fall.', f: 'Stay calm, check for pain, and do not get up too quickly.', w: 'The NHS says take your time.', src: 'nhs-falls' },
+    { id: 'fa96', ages: 'adult', topic: 'parents', s: 'Your dad has chest pain that feels like squeezing. Walk around to see if it passes?',
+      c: ['Yes, walk it off', 'Call 911; sit and rest on the floor', 'Lie in a hot bath'],
+      m: 'Walk around to see if chest pain passes.', f: 'Call for help. Sit and rest with knees bent and back supported.', w: 'The NHS gives this advice while waiting for help.', src: 'nhs-heart' },
+    { id: 'fa97', ages: 'adult', topic: 'parents', s: 'Grandma is very cold. Rub her hands and feet to warm them?',
+      c: ['Yes, rub hard', 'No, do not rub; blanket and warm drink', 'Hot water bottle on her feet'],
+      m: 'Rub cold hands and feet to warm them.', f: 'Do not rub arms, legs, hands, or feet. Use a blanket and a warm drink.', w: 'Rubbing can make hypothermia worse.', src: 'nhs-hypo' },
+    { id: 'fa98', ages: 'adult', topic: 'water', s: 'Your kids have floaties and a foam noodle. Are they safe in the pool?',
+      c: ['Yes, floaties keep them safe', 'No, toys are not safety devices; watch them', 'Yes, if the water is shallow'],
+      m: 'Floaties keep kids safe.', f: 'Air or foam toys are not safety devices. Use life jackets and watch closely.', w: 'CDC says do not rely on them.', src: 'cdc-drowning' },
+    { id: 'fa99', ages: 'adult', topic: 'water', s: 'Your toddler is in the bath. Step out for a quick text?',
+      c: ['Yes, it is shallow', 'No, an adult must watch closely all the time', 'Yes, leave the door open'],
+      m: 'Shallow bath water is safe for a minute.', f: 'Watch closely and all the time, bathtubs too.', w: 'Drowning happens in seconds and is often silent.', src: 'cdc-drowning' },
+    { id: 'fa100', ages: 'adult', topic: 'gas', s: 'Power is out. Run the generator in the garage with the door open?',
+      c: ['Yes, the open door is enough', 'No, never inside the home or garage', 'Yes, at night only'],
+      m: 'A generator is fine in an open garage.', f: 'Never use a generator in your home or garage, even with doors open.', w: 'CO can build up and kill.', src: 'cdc-co' },
+    { id: 'fa101', ages: 'adult', topic: 'kids', s: 'Your baby is 6 weeks old and has a fever. Give paracetamol?',
+      c: ['Yes, a small dose', 'No, not under 2 months; call a doctor', 'Yes, plus aspirin'],
+      m: 'A small dose of paracetamol is fine for any baby.', f: 'Do not give paracetamol to a child under 2 months.', w: 'This is NHS fever advice.', src: 'nhs-fever' }
+  ]
+});
+</script>
+<script data-src="content/decks/kitchen.js">
+// Kitchen, Food and Home Safety Myths deck. Data only. c = [myth choice, right choice, decoy].
+LSA.deck({
+  id: 'kitchen', name: 'Kitchen and Food Myths', icon: '🍳',
+  sources: {
+    'cdc-chicken': ['CDC: Chicken and Food Poisoning', 'https://www.cdc.gov/food-safety/foods/chicken.html'],
+    'cdc-prevent': ['CDC: Four Steps to Food Safety', 'https://www.cdc.gov/food-safety/prevention/index.html'],
+    'cdc-botulism': ['CDC: Preventing Botulism', 'https://www.cdc.gov/botulism/prevention/index.html'],
+    'cdc-handwash': ['CDC: About Handwashing', 'https://www.cdc.gov/clean-hands/about/index.html'],
+    'nfpa-cook': ['NFPA: Cooking safety', 'https://www.nfpa.org/education-and-research/home-fire-safety/cooking'],
+    'usda-thaw': ['USDA FSIS: The Big Thaw', 'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/big-thaw-safe-defrosting-methods'],
+    'usda-color': ['USDA FSIS: The Color of Meat and Poultry', 'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/color-meat-and-poultry'],
+    'usda-left': ['USDA FSIS: Leftovers and Food Safety', 'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/leftovers-and-food-safety'],
+    'usda-mold': ['USDA FSIS: Molds on Food', 'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/molds-food-are-they-dangerous'],
+    'usda-danger': ['USDA FSIS: Danger Zone 40 F to 140 F', 'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/danger-zone-40f-140f'],
+    'usda-dates': ['USDA FSIS: Food Product Dating', 'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/food-product-dating'],
+    'usda-slow': ['USDA FSIS: Slow Cookers and Food Safety', 'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/slow-cookers-and-food-safety'],
+    'usda-thermo': ['USDA FSIS: Kitchen Thermometers', 'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/kitchen-thermometers'],
+    'usda-temps': ['USDA FSIS: How Temperatures Affect Food', 'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/how-temperatures-affect-food'],
+    'usda-freeze': ['USDA FSIS: Freezing and Food Safety', 'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/freezing-and-food-safety'],
+    'usda-lunch': ['USDA FSIS: Keeping Bag Lunches Safe', 'https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/keeping-bag-lunches-safe'],
+    'fs-temps': ['FoodSafety.gov: Safe Minimum Internal Temperatures', 'https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures'],
+    'fs-cold': ['FoodSafety.gov: Cold Food Storage Chart', 'https://www.foodsafety.gov/food-safety-charts/cold-food-storage-charts'],
+    'fs-4steps': ['FoodSafety.gov: 4 Steps to Food Safety', 'https://www.foodsafety.gov/keep-food-safe/4-steps-to-food-safety'],
+    'fda-eggs': ['FDA: What You Need to Know About Egg Safety', 'https://www.fda.gov/food/buy-store-serve-safe-food/what-you-need-know-about-egg-safety'],
+    'fda-raw': ['FDA: Selecting and Serving Produce Safely', 'https://www.fda.gov/food/buy-store-serve-safe-food/selecting-and-serving-produce-safely'],
+    'usfa-ext': ['US Fire Administration: Fire extinguishers', 'https://www.usfa.fema.gov/prevention/home-fires/prepare-for-fire/fire-extinguishers/'],
+    'usfa-smoke': ['US Fire Administration: Smoke alarms', 'https://www.usfa.fema.gov/prevention/home-fires/prepare-for-fire/smoke-alarms/'],
+    'cpsc-co': ['CPSC: Carbon Monoxide Information Center', 'https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/Carbon-Monoxide-Information-Center'],
+    'ready-water': ['Ready.gov: Water', 'https://www.ready.gov/water'],
+    'ready-kit': ['Ready.gov: Build a Kit', 'https://www.ready.gov/kit']
+  },
+  cards: [
+    // ---------- shared core ----------
+    { id: 'kf01', ages: 'both', topic: 'raw meat', s: { ya: 'Making chicken in your first apartment. Rinse it in the sink first?', adult: 'Making chicken for the family. Rinse it in the sink first?' },
+      c: ['Yes, rinse off the germs', 'No, it does not need washing', 'Yes, with soap'],
+      m: 'Rinsing raw chicken makes it cleaner.', f: 'Raw chicken is ready to cook. Do not wash it.', w: 'Rinsing splashes germs around the sink. Cooking to 165 F kills them.', src: 'cdc-chicken' },
+    { id: 'kf02', ages: 'both', topic: 'fire', s: 'Oil in your frying pan catches fire. What do you do?',
+      c: ['Throw water on it', 'Slide a lid over it and turn off the burner', 'Carry the pan outside'],
+      m: 'Water puts out a grease fire.', f: 'Slide a lid over the pan and turn off the burner. Never use water.', w: 'Water makes burning oil spatter and spread.', src: 'nfpa-cook' },
+    { id: 'kf03', ages: 'both', topic: 'fire', s: 'You put a lid on a pan fire. When can you peek?',
+      c: ['Right away to check', 'Leave it on until the pan is fully cool', 'After 10 seconds'],
+      m: 'Lift the lid soon to check the fire.', f: 'Do not remove the lid. Let the pan cool for a long time.', w: 'The fire can start again when air gets in.', src: 'nfpa-cook' },
+    { id: 'kf04', ages: 'both', topic: 'thawing', s: 'You forgot to thaw the meat. Leave it on the counter all day?',
+      c: ['Yes, the middle stays frozen', 'No, thaw in the fridge, cold water, or microwave', 'Yes, if it is covered'],
+      m: 'Thawing on the counter is fine.', f: 'Use the fridge, cold water, or the microwave. Never the counter.', w: 'The outside warms into the danger zone while the middle is still frozen.', src: 'usda-thaw' },
+    { id: 'kf05', ages: 'both', topic: 'cooking', s: 'Is a burger done when it is brown all the way through?',
+      c: ['Yes, brown means done', 'Only a thermometer can tell: 160 F', 'Yes, if the juice is clear'],
+      m: 'Brown inside means a burger is done.', f: 'Use a food thermometer. Ground beef needs 160 F.', w: 'Color is not a safe sign of doneness.', src: 'usda-thermo' },
+    { id: 'kf06', ages: 'both', topic: 'cooking', s: 'Your thermometer says the burger hit 160 F, but it is still a bit pink inside. Safe?',
+      c: ['No, pink means raw', 'Yes, cooked ground beef can still be pink', 'Only if you cook it 10 more minutes'],
+      m: 'Pink burger is always undercooked.', f: 'At 160 F it is safe, even if pink.', w: 'Heat and some veggies can keep meat pink.', src: 'usda-color' },
+    { id: 'kf07', ages: 'both', topic: 'cooking', s: 'Smoked turkey reached 165 F everywhere but has a pink ring. Safe?',
+      c: ['No, pink poultry is raw', 'Yes, if all parts hit 165 F', 'Only the dark meat'],
+      m: 'Pink poultry is never safe.', f: 'All the meat is safe once every part reaches 165 F.', w: 'Smoke and oven gases can turn cooked poultry pink.', src: 'usda-color' },
+    { id: 'kf08', ages: 'both', topic: 'leftovers', s: 'A pot of chili just finished cooking. Let it cool on the counter before the fridge?',
+      c: ['Yes, hot food hurts the fridge', 'No, hot food can go right in the fridge', 'Yes, overnight'],
+      m: 'Cool hot food on the counter first.', f: 'Hot food can go right in the fridge, or an ice bath first.', w: 'Slow cooling on the counter lets germs grow.', src: 'usda-left' },
+    { id: 'kf09', ages: 'both', topic: 'leftovers', s: 'Big pot of soup to save. Best way to chill it?',
+      c: ['Put the whole pot in the fridge', 'Split it into small shallow containers', 'Leave it on the stove'],
+      m: 'Just put the whole pot in the fridge.', f: 'Divide it into small, shallow containers so it cools fast.', w: 'A big pot takes a long time to cool.', src: 'usda-left' },
+    { id: 'kf10', ages: 'both', topic: 'leftovers', s: 'How long are leftovers good in the fridge?',
+      c: ['About a week', '3 to 4 days', 'A month'],
+      m: 'Leftovers last a week.', f: 'Eat them within 3 to 4 days, or freeze them.', w: 'This is the USDA guide.', src: 'usda-left' },
+    { id: 'kf11', ages: 'both', topic: 'leftovers', s: 'How long can cooked food sit out at room temp?',
+      c: ['As long as it looks fine', 'No more than 2 hours', 'Up to 6 hours'],
+      m: 'Food is fine out if it looks OK.', f: 'Never more than 2 hours, or 1 hour above 90 F.', w: 'Germs grow fast between 40 F and 140 F.', src: 'usda-danger' },
+    { id: 'kf12', ages: 'both', topic: 'leftovers', s: 'You left cooked roast on the counter overnight, then put it in the fridge. Safe since it was cooked?',
+      c: ['Yes, it was cooked', 'No, throw it out', 'Yes, if you reheat it'],
+      m: 'Cooked food left out overnight is fine.', f: 'Throw it out.', w: 'Germs can come back after cooking and grow when left out.', src: 'usda-temps' },
+    { id: 'kf13', ages: 'both', topic: 'mold', s: 'One slice of bread has a fuzzy spot. Cut it off and eat the rest?',
+      c: ['Yes, cut off the spot', 'No, toss the bread', 'Yes, toast it first'],
+      m: 'Cut the moldy spot off bread.', f: 'Throw out moldy bread.', w: 'Mold roots can spread below the surface of soft foods.', src: 'usda-mold' },
+    { id: 'kf14', ages: 'both', topic: 'mold', s: 'A block of cheddar has a small mold spot. Toss the whole thing?',
+      c: ['Yes, all of it', 'No, cut off 1 inch around and below the spot', 'No, just scrape the top'],
+      m: 'Any mold means toss hard cheese.', f: 'For hard cheese, cut off at least 1 inch around and below the spot.', w: 'Mold cannot get deep into hard cheese.', src: 'usda-mold' },
+    { id: 'kf15', ages: 'both', topic: 'mold', s: 'Is it smart to sniff food to check if mold is bad?',
+      c: ['Yes, smell tells you', 'No, do not sniff moldy food', 'Only with one nostril'],
+      m: 'Sniff moldy food to check it.', f: 'Do not sniff moldy food.', w: 'It can cause breathing trouble.', src: 'usda-mold' },
+    { id: 'kf16', ages: 'both', topic: 'dates', s: { ya: 'The yogurt is one day past its "Best if Used By" date. Must you toss it?', adult: 'Pantry crackers are past the "Best if Used By" date. Must you toss them?' },
+      c: ['Yes, it is unsafe now', 'No, it is a quality date, not a safety date', 'Yes, by law'],
+      m: 'Past the date means unsafe.', f: '"Best if Used By" is about best flavor, not safety. Check for spoilage.', w: 'Except baby formula, dates are not safety dates.', src: 'usda-dates' },
+    { id: 'kf17', ages: 'both', topic: 'dates', s: 'What does a "Sell-By" date mean?',
+      c: ['Do not eat after it', 'It tells the store how long to show it', 'It is when it was made'],
+      m: 'Sell-by means eat by.', f: 'Sell-By is for the store. It is not a safety date.', w: 'USDA says it is for inventory.', src: 'usda-dates' },
+    { id: 'kf18', ages: 'both', topic: 'storage', s: 'Steak in the fridge turned darker. Spoiled?',
+      c: ['Yes, color change means spoiled', 'Not by color alone; check for smell or slime', 'Yes, toss it now'],
+      m: 'A color change means meat is bad.', f: 'Color change alone does not mean spoiled. Look for off smell, sticky or slimy feel.', w: 'Air changes meat color normally.', src: 'usda-color' },
+    { id: 'kf19', ages: 'both', topic: 'storage', s: 'Frozen chicken has white dry patches (freezer burn). Unsafe?',
+      c: ['Yes, unsafe', 'Safe, just dry; trim it if you like', 'Only safe raw'],
+      m: 'Freezer burn makes food unsafe.', f: 'It is safe. Those spots are just dry and tasteless.', w: 'USDA says the product stays safe.', src: 'usda-color' },
+    { id: 'kf20', ages: 'both', topic: 'storage', s: 'Meat has been in the freezer for 2 years. Is it unsafe now?',
+      c: ['Yes, freezer food goes bad', 'Safe; it may just taste worse', 'Only if it is beef'],
+      m: 'Frozen food goes bad after a while.', f: 'Food kept frozen stays safe. Time only hurts quality.', w: 'USDA: frozen foods remain safe indefinitely.', src: 'usda-freeze' },
+    { id: 'kf21', ages: 'both', topic: 'cooking', s: 'Cooking pork chops. How hot inside?',
+      c: ['160 F or more, or it is unsafe', '145 F, then rest 3 minutes', '120 F is fine'],
+      m: 'Pork must be cooked to well done.', f: 'Pork chops are safe at 145 F with a 3 minute rest.', w: 'This is the federal safe temp chart.', src: 'fs-temps' },
+    { id: 'kf22', ages: 'both', topic: 'storage', s: 'Where should eggs go in the fridge?',
+      c: ['The door egg tray', 'Main shelf, in the carton', 'The freezer'],
+      m: 'Eggs belong in the fridge door.', f: 'Keep them in the carton on a main shelf, not the door.', w: 'FoodSafety.gov advice.', src: 'fs-4steps' },
+    { id: 'kf23', ages: 'both', topic: 'cleaning', s: 'Is antibacterial soap better for washing hands while cooking?',
+      c: ['Yes, it kills more germs', 'Plain soap and water is the advice', 'Hand lotion works too'],
+      m: 'You need antibacterial soap.', f: 'Use plain soap and water. Scrub for 20 seconds.', w: 'FoodSafety.gov says skip antibacterial soap.', src: 'fs-4steps' },
+    { id: 'kf24', ages: 'both', topic: 'cleaning', s: 'How long should you scrub your hands?',
+      c: ['A quick rinse is fine', 'At least 20 seconds', '2 seconds'],
+      m: 'A quick rinse is enough.', f: 'Scrub at least 20 seconds. Hum "Happy Birthday" twice.', w: 'CDC handwashing steps.', src: 'cdc-handwash' },
+    { id: 'kf25', ages: 'both', topic: 'cleaning', s: 'You cut raw chicken. Use the same board for salad veggies?',
+      c: ['Yes, just wipe it', 'No, use a separate board', 'Yes, if you flip it over'],
+      m: 'Wiping a board is enough.', f: 'Use one board for raw meat and another for food you will not cook.', w: 'Raw meat juice can spread germs.', src: 'fs-4steps' },
+    { id: 'kf26', ages: 'both', topic: 'produce', s: 'Bagged salad says "pre-washed." Wash it again?',
+      c: ['Yes, always wash again', 'Not needed', 'Yes, with soap'],
+      m: 'Always rewash bagged salad.', f: 'Produce labeled pre-washed does not need washing again.', w: 'FoodSafety.gov says so.', src: 'fs-4steps' },
+    { id: 'kf27', ages: 'both', topic: 'produce', s: 'Best way to wash apples?',
+      c: ['Soap or veggie wash', 'Plain running water', 'Do not wash at all'],
+      m: 'Wash fruit with soap.', f: 'Wash under running water. Soap and produce washes are not advised.', w: 'FDA advice.', src: 'fda-raw' },
+    { id: 'kf28', ages: 'both', topic: 'produce', s: 'You will peel the melon. Still wash it first?',
+      c: ['No, you will not eat the skin', 'Yes, wash it first', 'Only if it looks dirty'],
+      m: 'No need to wash produce you peel.', f: 'Wash it anyway.', w: 'Cutting moves germs from the skin to the inside.', src: 'fda-raw' },
+    { id: 'kf29', ages: 'both', topic: 'cans', s: 'A can of beans is swollen. It smells fine. Eat it?',
+      c: ['Yes, smell says fine', 'No, throw out swollen cans', 'Yes, if you boil it'],
+      m: 'If it smells fine, it is safe.', f: 'Throw out swollen, rusted, or badly dented cans.', w: 'USDA says discard cans that are dented, rusted, or swollen.', src: 'usda-dates' },
+    { id: 'kf30', ages: 'both', topic: 'cooking', s: 'Where do you put the meat thermometer?',
+      c: ['Touching the bone', 'Thickest part, not touching bone or fat', 'Just under the skin'],
+      m: 'Touching the bone gives the best reading.', f: 'Put it in the thickest part, away from bone, fat, or gristle.', w: 'Bone and fat give a false reading.', src: 'fs-4steps' },
+    { id: 'kf31', ages: 'both', topic: 'cooking', s: 'Microwave says done. Eat right away?',
+      c: ['Yes, it is done', 'Let it stand a few minutes first', 'Only if it beeps twice'],
+      m: 'Microwave food is done when it beeps.', f: 'Let it sit a few minutes so cold spots heat up.', w: 'CDC advice on standing time.', src: 'cdc-prevent' },
+    { id: 'kf32', ages: 'both', topic: 'fire', s: 'Smoke alarms. How long do they last?',
+      c: ['Forever if they beep when tested', 'Replace them every 10 years', '30 years'],
+      m: 'Smoke alarms last forever.', f: 'Get new smoke alarms every 10 years.', w: 'US Fire Administration advice.', src: 'usfa-smoke' },
+    { id: 'kf33', ages: 'both', topic: 'fire', s: 'The smoke alarm goes off at night. How long do you have to get out?',
+      c: ['10 minutes or so', 'Maybe less than 2 minutes', 'An hour'],
+      m: 'You have plenty of time to get out.', f: 'You may have less than 2 minutes to get everyone out.', w: 'Fires spread fast.', src: 'usfa-smoke' },
+    { id: 'kf34', ages: 'both', topic: 'fire', s: 'Using a fire extinguisher on a small trash can fire. Where do you aim?',
+      c: ['At the tall flames', 'Low, at the base of the fire', 'At the ceiling'],
+      m: 'Aim at the flames.', f: 'Remember PASS: Pull, Aim low at the base, Squeeze, Sweep.', w: 'The base is where the fuel is.', src: 'usfa-ext' },
+    { id: 'kf35', ages: 'both', topic: 'cooking', s: 'You are in a rush. Cook chicken straight from frozen?',
+      c: ['No, never cook frozen meat', 'Yes, it is safe; it takes about 50% longer', 'Only in the microwave'],
+      m: 'You must thaw meat before cooking.', f: 'It is safe to cook from frozen. Plan about 50% more time.', w: 'USDA says so for meat and poultry (not in a slow cooker).', src: 'usda-thaw' },
+    // ---------- young adults ----------
+    { id: 'kf50', ages: 'ya', topic: 'thawing', s: 'In a hurry, you set frozen chicken in a bowl of hot tap water. OK?',
+      c: ['Yes, faster is better', 'No, use cold water changed every 30 minutes', 'Yes, boiling water is even better'],
+      m: 'Hot water is a fine way to thaw meat.', f: 'Use cold water in a sealed bag. Change it every 30 minutes.', w: 'Hot water warms the outside into the danger zone.', src: 'usda-thaw' },
+    { id: 'kf51', ages: 'ya', topic: 'leftovers', s: 'Reheating takeout in the microwave. How hot should it get?',
+      c: ['Just warm is fine', '165 F, hot and steaming', '100 F'],
+      m: 'Warm leftovers are safe enough.', f: 'Reheat leftovers to 165 F.', w: 'That kills germs that grew in the fridge.', src: 'usda-left' },
+    { id: 'kf52', ages: 'ya', topic: 'leftovers', s: 'Hot day at the beach, 95 F. How long can the sandwiches sit out?',
+      c: ['2 hours like always', '1 hour max', 'All day in the shade'],
+      m: 'The 2 hour rule always applies.', f: 'Above 90 F, only 1 hour.', w: 'Germs grow faster in heat.', src: 'usda-danger' },
+    { id: 'kf53', ages: 'ya', topic: 'mold', s: 'Jam in your fridge has a little mold on top. Scoop it off?',
+      c: ['Yes, the rest is fine', 'No, throw it out', 'Yes, then microwave it'],
+      m: 'Scoop the mold off jam.', f: 'Throw out moldy jam and jelly.', w: 'The mold could be making a toxin.', src: 'usda-mold' },
+    { id: 'kf54', ages: 'ya', topic: 'mold', s: 'Moldy spot on shredded cheese. Pick it out?',
+      c: ['Yes, pick out the moldy bits', 'No, toss the bag', 'Yes, then melt it'],
+      m: 'Pick mold out of shredded cheese.', f: 'Throw out moldy shredded, sliced, or crumbled cheese.', w: 'The cutting tool can spread mold through it.', src: 'usda-mold' },
+    { id: 'kf55', ages: 'ya', topic: 'storage', s: 'Raw ground beef from the store. How long in the fridge before you cook it?',
+      c: ['A week', '1 to 2 days', 'Two weeks'],
+      m: 'Raw ground beef keeps a week.', f: 'Cook or freeze raw ground meat within 1 to 2 days.', w: 'FoodSafety.gov chart.', src: 'fs-cold' },
+    { id: 'kf56', ages: 'ya', topic: 'storage', s: 'Raw chicken breasts in the fridge. How long are they good?',
+      c: ['5 to 7 days', '1 to 2 days', '3 weeks'],
+      m: 'Raw chicken keeps most of a week.', f: 'Raw chicken pieces: 1 to 2 days in the fridge.', w: 'FoodSafety.gov chart.', src: 'fs-cold' },
+    { id: 'kf57', ages: 'ya', topic: 'storage', s: 'An opened pack of hot dogs. How long in the fridge?',
+      c: ['A month', '1 week', 'Forever, they are cured'],
+      m: 'Hot dogs keep for a month.', f: 'Opened hot dogs: about 1 week.', w: 'FoodSafety.gov chart.', src: 'fs-cold' },
+    { id: 'kf58', ages: 'ya', topic: 'storage', s: 'Tuna salad you made. How long is it good?',
+      c: ['2 weeks', '3 to 4 days', 'It does not spoil'],
+      m: 'Mayo salads keep for weeks.', f: 'Tuna, egg, or chicken salad: 3 to 4 days.', w: 'FoodSafety.gov chart.', src: 'fs-cold' },
+    { id: 'kf59', ages: 'ya', topic: 'cans', s: 'You made garlic in oil for dips. Keep it in the cupboard?',
+      c: ['Yes, oil keeps it safe', 'Fridge it and toss after 4 days', 'Yes, for a month'],
+      m: 'Garlic in oil keeps on the shelf.', f: 'Refrigerate homemade garlic or herb oil. Throw it out after 4 days.', w: 'It can grow the germ that causes botulism.', src: 'cdc-botulism' },
+    { id: 'kf60', ages: 'ya', topic: 'fire', s: 'You got home late, tired, after a couple drinks. Fry some eggs?',
+      c: ['Sure, just watch it', 'No, skip the stove when sleepy or drinking', 'Yes, on high to be quick'],
+      m: 'Cooking tired or after drinks is fine.', f: 'If you are sleepy or have had alcohol, do not use the stove.', w: 'NFPA says stay alert when cooking.', src: 'nfpa-cook' },
+    { id: 'kf61', ages: 'ya', topic: 'lunch', s: 'Packing a turkey sandwich for work with no fridge. One ice pack enough?',
+      c: ['One is plenty', 'Use at least two cold sources', 'None needed'],
+      m: 'One ice pack keeps lunch cold.', f: 'Use at least two cold sources, like two gel packs or a pack plus a frozen water bottle.', w: 'USDA bag lunch advice.', src: 'usda-lunch' },
+    { id: 'kf62', ages: 'ya', topic: 'lunch', s: 'Your lunch bag got squished. Reuse the paper bag tomorrow?',
+      c: ['Yes, save money', 'No, toss used bags and packaging', 'Yes, if you flip it'],
+      m: 'Reusing paper lunch bags is fine.', f: 'Throw out used food packaging and paper bags.', w: 'They can carry germs to the next lunch.', src: 'usda-lunch' },
+    { id: 'kf63', ages: 'ya', topic: 'lunch', s: 'Peanut butter and jelly sandwich for a hike. Needs ice?',
+      c: ['Yes, everything needs ice', 'No, PB and J is fine without a cold source', 'Yes, two packs'],
+      m: 'Every packed lunch needs ice.', f: 'Peanut butter, jelly, bread, whole fruit, and hard cheese are fine without ice.', w: 'USDA lists these as safe without a cold source.', src: 'usda-lunch' },
+    { id: 'kf64', ages: 'ya', topic: 'cooking', s: 'Cooking salmon with no thermometer. When is it done?',
+      c: ['When the outside is brown', 'When it is no longer see-through and flakes with a fork', 'After 2 minutes'],
+      m: 'Fish is done when the outside browns.', f: 'Fish is done at 145 F, or when it is not see-through and flakes with a fork.', w: 'Seafood is the one case where looks can tell you.', src: 'cdc-prevent' },
+    { id: 'kf65', ages: 'ya', topic: 'cooking', s: 'You checked one chicken wing with the thermometer. Are the rest done?',
+      c: ['Yes, one is enough', 'Check each piece', 'Only check the biggest'],
+      m: 'Checking one piece is enough.', f: 'Check each piece. They cook at different speeds.', w: 'USDA thermometer advice.', src: 'usda-thermo' },
+    { id: 'kf66', ages: 'ya', topic: 'cooking', s: 'Grill marks on the burger. Done?',
+      c: ['Yes, grill marks mean done', 'No, check for 160 F', 'Yes, if it sizzles'],
+      m: 'Grill marks show a burger is cooked.', f: 'Grill marks are not a sign of safety. Use a thermometer.', w: 'In a USDA study, 21% of people used looks alone.', src: 'usda-thermo' },
+    { id: 'kf67', ages: 'ya', topic: 'cleaning', s: 'No soap at the campsite. What is the backup for clean hands?',
+      c: ['Just wipe on your jeans', 'Hand sanitizer with at least 60% alcohol', 'Rinse with soda'],
+      m: 'Wiping hands is good enough.', f: 'If no soap and water, use sanitizer with at least 60% alcohol.', w: 'CDC handwashing advice.', src: 'cdc-handwash' },
+    { id: 'kf68', ages: 'ya', topic: 'leftovers', s: 'Leftover rice and stir fry from a party. Freeze the extra?',
+      c: ['No, frozen leftovers are unsafe', 'Yes, frozen leftovers keep 3 to 4 months for best taste', 'Only if eaten tomorrow'],
+      m: 'You cannot freeze leftovers.', f: 'Freeze leftovers. Best quality for 3 to 4 months.', w: 'USDA leftover guide.', src: 'usda-left' },
+    { id: 'kf69', ages: 'ya', topic: 'eggs', s: 'Runny yolk eggs every morning. Safe for everyone?',
+      c: ['Yes, runny is fine', 'Cook until yolk and white are firm', 'Only if the egg is brown'],
+      m: 'Runny eggs are always safe.', f: 'FDA says cook eggs until both yolk and white are firm.', w: 'Even clean, uncracked eggs can carry Salmonella.', src: 'fda-eggs' },
+    { id: 'kf70', ages: 'ya', topic: 'leftovers', s: 'Frozen leftover chili for dinner. Must you thaw it first?',
+      c: ['Yes, always thaw first', 'No, reheating from frozen is safe', 'Yes, on the counter'],
+      m: 'Frozen leftovers must thaw first.', f: 'It is safe to reheat frozen leftovers without thawing.', w: 'It just takes longer.', src: 'usda-left' },
+    // ---------- adults ----------
+    { id: 'kf80', ages: 'adult', topic: 'thawing', s: 'Thanksgiving turkey is 20 pounds. When do you move it to the fridge to thaw?',
+      c: ['The night before', 'About 4 days before (1 day per 5 pounds)', 'The morning of'],
+      m: 'A turkey thaws overnight in the fridge.', f: 'Allow at least 1 day for every 5 pounds.', w: 'USDA thawing guide.', src: 'usda-thaw' },
+    { id: 'kf81', ages: 'adult', topic: 'slow cooker', s: 'Toss frozen chicken straight into the slow cooker before work?',
+      c: ['Yes, it cooks all day', 'No, thaw meat first for a slow cooker', 'Yes, on low'],
+      m: 'Frozen meat in a slow cooker is fine.', f: 'Always thaw meat or poultry before it goes in a slow cooker.', w: 'It may sit too long at unsafe temps.', src: 'usda-slow' },
+    { id: 'kf82', ages: 'adult', topic: 'slow cooker', s: 'Reheat yesterday\'s stew in the slow cooker?',
+      c: ['Yes, it is perfect for that', 'No, reheat on the stove or microwave to 165 F', 'Yes, on warm'],
+      m: 'Slow cookers are great for reheating.', f: 'Reheating leftovers in a slow cooker is not advised. Use the stove, oven, or microwave.', w: 'It heats too slowly.', src: 'usda-slow' },
+    { id: 'kf83', ages: 'adult', topic: 'slow cooker', s: 'Power went out while you were at work. The slow cooker stew looks done. Eat it?',
+      c: ['Yes, it looks cooked', 'No, throw it away', 'Yes, after a stir'],
+      m: 'If it looks done, it is safe.', f: 'If you were away when the power went out, throw it away.', w: 'You cannot know how long it sat in the danger zone.', src: 'usda-slow' },
+    { id: 'kf84', ages: 'adult', topic: 'eggs', s: 'Kids want to eat the dyed eggs after the egg hunt. OK?',
+      c: ['Yes, they were boiled', 'No, do not eat eggs after hiding them', 'Yes, if you rinse them'],
+      m: 'Hunted Easter eggs are fine to eat.', f: 'Do not eat eggs after hiding or playing with them.', w: 'Germs on the shell can get to the egg.', src: 'fda-eggs' },
+    { id: 'kf85', ages: 'adult', topic: 'eggs', s: 'Making homemade ice cream with raw eggs for the kids. Regular eggs OK?',
+      c: ['Yes, any eggs', 'Use pasteurized eggs or egg products', 'Yes, if very fresh'],
+      m: 'Fresh eggs are safe raw.', f: 'For raw egg recipes, use pasteurized eggs.', w: 'FDA egg advice.', src: 'fda-eggs' },
+    { id: 'kf86', ages: 'adult', topic: 'eggs', s: 'How long do raw eggs in the shell keep in the fridge?',
+      c: ['About 1 week', '3 to 5 weeks', '6 months'],
+      m: 'Eggs only last a week.', f: 'Raw eggs in the shell: 3 to 5 weeks in the fridge.', w: 'FoodSafety.gov chart.', src: 'fs-cold' },
+    { id: 'kf87', ages: 'adult', topic: 'eggs', s: 'Extra eggs before vacation. Freeze them in the shell?',
+      c: ['Yes, just like that', 'No, beat them first, then freeze', 'Yes, in water'],
+      m: 'You can freeze eggs in the shell.', f: 'Do not freeze eggs in the shell. Beat yolks and whites together first.', w: 'FDA egg advice.', src: 'fda-eggs' },
+    { id: 'kf88', ages: 'adult', topic: 'storage', s: 'Hard-boiled eggs for lunches. How long are they good?',
+      c: ['3 weeks', '1 week', '1 day'],
+      m: 'Boiled eggs keep as long as raw.', f: 'Hard-cooked eggs: 1 week in the fridge.', w: 'FoodSafety.gov chart.', src: 'fs-cold' },
+    { id: 'kf89', ages: 'adult', topic: 'fire', s: 'Teach your 8 year old to use the fire extinguisher if there is a fire?',
+      c: ['Yes, everyone should', 'No, young kids should get out instead', 'Yes, on grease fires'],
+      m: 'Kids should use fire extinguishers.', f: 'Young children and older adults should not use them. Get out and call 911.', w: 'US Fire Administration advice.', src: 'usfa-ext' },
+    { id: 'kf90', ages: 'adult', topic: 'fire', s: 'How often should you test smoke alarms?',
+      c: ['Once a year', 'Every month', 'Only when moving in'],
+      m: 'Test smoke alarms once a year.', f: 'Test every month. Change 9-volt batteries at least once a year.', w: 'US Fire Administration advice.', src: 'usfa-smoke' },
+    { id: 'kf91', ages: 'adult', topic: 'gas', s: 'Storm knocked the power out. Where can the generator go?',
+      c: ['In the garage with the door up', 'Outside, at least 20 feet from the house', 'On the porch by the window'],
+      m: 'A generator in an open garage is fine.', f: 'Use it outside only, at least 20 feet away, exhaust pointed away.', w: 'CO is a colorless, odorless killer.', src: 'cpsc-co' },
+    { id: 'kf92', ages: 'adult', topic: 'water', s: 'Building an emergency kit for a family of 4. How much water?',
+      c: ['A case of small bottles', '1 gallon per person per day, for several days', 'Half a gallon total'],
+      m: 'A few bottles is enough water.', f: 'Store 1 gallon per person per day, for several days.', w: 'Ready.gov kit list.', src: 'ready-kit' },
+    { id: 'kf93', ages: 'adult', topic: 'water', s: 'In a disaster your water is running low. Ration it?',
+      c: ['Yes, sip a little each day', 'No, drink what you need today and look for more', 'Stop drinking'],
+      m: 'Ration water in an emergency.', f: 'Do not ration unless told to. Drink what you need and find more.', w: 'Ready.gov water advice.', src: 'ready-water' },
+    { id: 'kf94', ages: 'adult', topic: 'water', s: 'Out of water in an emergency, but you have soda and coffee. Same thing?',
+      c: ['Yes, any drink works', 'No, caffeine and alcohol dry you out', 'Yes, soda is better'],
+      m: 'Soda or coffee can replace water.', f: 'Do not use caffeinated or fizzy drinks instead of water.', w: 'They raise your need for water.', src: 'ready-water' },
+    { id: 'kf95', ages: 'adult', topic: 'water', s: 'Treating water with bleach after a storm. Lemon scented bleach OK?',
+      c: ['Yes, any bleach', 'No, only plain unscented bleach', 'Yes, extra strong'],
+      m: 'Any bleach can treat water.', f: 'Use only regular unscented bleach. No scented or color-safe kinds.', w: 'Ready.gov water advice.', src: 'ready-water' },
+    { id: 'kf96', ages: 'adult', topic: 'water', s: 'Boiling water to make it safe. How long?',
+      c: ['Just until it steams', 'A rolling boil for 1 full minute', '20 minutes'],
+      m: 'Warm water is safe enough.', f: 'Bring to a rolling boil for 1 full minute, then cool.', w: 'Ready.gov water advice.', src: 'ready-water' },
+    { id: 'kf97', ages: 'adult', topic: 'cooking', s: 'Family casserole with chicken. Safe internal temp?',
+      c: ['140 F', '165 F', '120 F'],
+      m: 'Warm all the way through is enough.', f: 'Casseroles should reach 165 F.', w: 'Federal safe temp chart.', src: 'fs-temps' },
+    { id: 'kf98', ages: 'adult', topic: 'leftovers', s: 'Party buffet. How do you keep the cold dip safe?',
+      c: ['Leave it out, it is fine', 'Nest it in a bowl of ice and swap it often', 'Cover it with foil'],
+      m: 'Cold dips are fine sitting out.', f: 'Keep cold food on ice and swap in small trays often.', w: 'Cold food must stay at 40 F or below.', src: 'usda-left' },
+    { id: 'kf99', ages: 'adult', topic: 'lunch', s: 'Packing a school lunch with deli meat. Prepackaged lunch combos need cold too?',
+      c: ['No, they have preservatives', 'Yes, keep them cold', 'Only in summer'],
+      m: 'Packaged lunch kits are fine warm.', f: 'Combos with meat, cheese, or cut fruit must stay cold.', w: 'Even with preservatives.', src: 'usda-lunch' },
+    { id: 'kf100', ages: 'adult', topic: 'storage', s: 'Opened bacon in the fridge. How long?',
+      c: ['A month', 'About 1 week', '1 day'],
+      m: 'Bacon keeps for a month.', f: 'Bacon: about 1 week in the fridge.', w: 'FoodSafety.gov chart.', src: 'fs-cold' },
+    { id: 'kf101', ages: 'adult', topic: 'storage', s: 'Whole raw chicken for Sunday dinner, bought Tuesday. Still fine in the fridge?',
+      c: ['Yes, a week is fine', 'No, 1 to 2 days, or freeze it', 'Yes, if sealed'],
+      m: 'Raw chicken keeps a week.', f: 'Raw whole chicken: 1 to 2 days in the fridge. Freeze it if longer.', w: 'FoodSafety.gov chart.', src: 'fs-cold' }
+  ]
+});
+</script>
+<script data-src="content/decks/money.js">
+// Money Myths deck. Data only. c = [myth choice, right choice, decoy]. Dollar figures are from the cited page on Oct 19, 2026.
+LSA.deck({
+  id: 'money', name: 'Money Myths', icon: '💵',
+  sources: {
+    'cfpb-min': ['CFPB: Minimum payment box on my credit card bill', 'https://www.consumerfinance.gov/ask-cfpb/a-box-on-my-credit-card-bill-says-that-i-will-pay-off-the-balance-in-three-years-if-i-pay-a-certain-amount-what-does-that-mean-do-i-have-to-pay-that-much-if-i-pay-that-much-and-make-new-purchases-will-i-still-owe-nothing-after-three-years-en-36/'],
+    'cfpb-check': ['CFPB: Does requesting my credit report hurt my score?', 'https://www.consumerfinance.gov/ask-cfpb/does-requesting-my-credit-report-hurt-my-credit-score-en-1229/'],
+    'cfpb-free': ['CFPB: How do I get a free copy of my credit reports?', 'https://www.consumerfinance.gov/ask-cfpb/how-do-i-get-a-free-copy-of-my-credit-reports-en-5/'],
+    'cfpb-inq': ['CFPB: What kind of credit inquiry has no effect on my score?', 'https://www.consumerfinance.gov/ask-cfpb/what-kind-of-credit-inquiry-has-no-effect-on-my-credit-score-en-321/'],
+    'cfpb-score': ['CFPB: What is a credit score?', 'https://www.consumerfinance.gov/ask-cfpb/what-is-a-credit-score-en-315/'],
+    'cfpb-understand': ['CFPB: Understand your credit score', 'https://www.consumerfinance.gov/consumer-tools/credit-reports-and-scores/understand-your-credit-score/'],
+    'cfpb-close': ['CFPB: Does it hurt my credit to close a credit card?', 'https://www.consumerfinance.gov/ask-cfpb/does-it-hurt-my-credit-to-close-a-credit-card-en-1231/'],
+    'cfpb-freeze': ['CFPB: What is a credit freeze?', 'https://www.consumerfinance.gov/ask-cfpb/what-is-a-credit-freeze-or-security-freeze-on-my-credit-report-en-1341/'],
+    'cfpb-negative': ['CFPB: How long does information stay on my credit report?', 'https://www.consumerfinance.gov/ask-cfpb/how-long-does-negative-information-remain-on-my-credit-report-en-323/'],
+    'cfpb-payday': ['CFPB: What is a payday loan?', 'https://www.consumerfinance.gov/ask-cfpb/what-is-a-payday-loan-en-1567/'],
+    'cfpb-bnpl': ['CFPB: What is a Buy Now, Pay Later loan?', 'https://www.consumerfinance.gov/ask-cfpb/what-is-a-buy-now-pay-later-bnpl-loan-en-2119/'],
+    'cfpb-grace': ['CFPB: What is a grace period for a credit card?', 'https://www.consumerfinance.gov/ask-cfpb/what-is-a-grace-period-for-a-credit-card-en-47/'],
+    'cfpb-overdraft': ['CFPB: Bank charged me an overdraft fee', 'https://www.consumerfinance.gov/ask-cfpb/what-can-i-do-if-my-bank-charged-me-a-fee-for-overdrawing-my-account-en-1037/'],
+    'cfpb-autoloan': ['CFPB: How do I compare auto loan offers?', 'https://www.consumerfinance.gov/ask-cfpb/how-do-i-compare-auto-loan-offers-what-should-i-look-at-besides-the-monthly-payment-en-753/'],
+    'cfpb-school': ['CFPB: How does interest accrue while I am in school?', 'https://www.consumerfinance.gov/ask-cfpb/how-does-interest-accrue-while-i-am-in-school-en-593/'],
+    'cfpb-pmi': ['CFPB: What is private mortgage insurance?', 'https://www.consumerfinance.gov/ask-cfpb/what-is-private-mortgage-insurance-en-122/'],
+    'cfpb-preapp': ['CFPB: Prequalification vs preapproval letter', 'https://www.consumerfinance.gov/ask-cfpb/whats-the-difference-between-a-prequalification-letter-and-a-preapproval-letter-en-127/'],
+    'cfpb-home': ['CFPB: Get your money situation in order', 'https://www.consumerfinance.gov/owning-a-home/prepare/get-your-money-situation-in-order/'],
+    'irs-brackets': ['IRS: Federal income tax rates and brackets', 'https://www.irs.gov/filing/federal-income-tax-rates-and-brackets'],
+    'irs-ext': ['IRS: Get an extension to file your tax return', 'https://www.irs.gov/filing/get-an-extension-to-file-your-tax-return'],
+    'irs-gig': ['IRS: Gig economy tax center', 'https://www.irs.gov/businesses/gig-economy-tax-center'],
+    'irs-ira': ['IRS: Individual retirement arrangements (IRAs)', 'https://www.irs.gov/retirement-plans/individual-retirement-arrangements-iras'],
+    'irs-roth': ['IRS: Roth IRAs', 'https://www.irs.gov/retirement-plans/roth-iras'],
+    'irs-401k': ['IRS: 401(k) plans', 'https://www.irs.gov/retirement-plans/401k-plans'],
+    'irs-eitc': ['IRS: Earned Income Tax Credit', 'https://www.irs.gov/credits-deductions/individuals/earned-income-tax-credit-eitc'],
+    'ssa-early': ['SSA: Starting your retirement benefits early', 'https://www.ssa.gov/benefits/retirement/planner/agereduction.html'],
+    'ssa-delay': ['SSA: Delayed retirement credits', 'https://www.ssa.gov/benefits/retirement/planner/delayret.html'],
+    'ssa-work': ['SSA: Receiving benefits while working', 'https://www.ssa.gov/benefits/retirement/planner/whileworking.html'],
+    'medicare-ltc': ['Medicare.gov: Long-term care', 'https://www.medicare.gov/coverage/long-term-care'],
+    'fdic-ins': ['FDIC: Understanding deposit insurance', 'https://www.fdic.gov/resources/deposit-insurance/understanding-deposit-insurance'],
+    'fdic-what': ['FDIC: Financial products that are insured', 'https://www.fdic.gov/resources/deposit-insurance/financial-products-insured'],
+    'inv-intro': ['Investor.gov: Introduction to Investing', 'https://www.investor.gov/introduction-investing'],
+    'inv-youth': ['Investor.gov: What is compound interest?', 'https://www.investor.gov/additional-resources/information/youth/teachers-classroom-resources/what-compound-interest'],
+    'inv-small': ['Investor.gov: Small Savings Add Up to Big Money', 'https://www.investor.gov/introduction-investing/investing-basics/save-and-invest/small-savings-add-big-money'],
+    'inv-diversify': ['Investor.gov: Asset allocation', 'https://www.investor.gov/introduction-investing/getting-started/asset-allocation'],
+    'ftc-lostcard': ['FTC: Lost or stolen credit, ATM, and debit cards', 'https://consumer.ftc.gov/articles/lost-or-stolen-credit-atm-and-debit-cards'],
+    'ftc-repair': ['FTC: Fixing your credit FAQs', 'https://consumer.ftc.gov/articles/fixing-your-credit-faqs'],
+    'ftc-cosign': ['FTC: Cosigning a loan FAQs', 'https://consumer.ftc.gov/articles/cosigning-loan-faqs'],
+    'ftc-debtcol': ['FTC: Debt collection FAQs', 'https://consumer.ftc.gov/articles/debt-collection-faqs'],
+    'ftc-debtrelief': ['FTC: How to get out of debt', 'https://consumer.ftc.gov/articles/how-get-out-debt'],
+    'ready-fin': ['Ready.gov: Financial preparedness', 'https://www.ready.gov/financial-preparedness']
+  },
+  cards: [
+    // ---------- shared core ----------
+    { id: 'mn01', ages: 'both', topic: 'credit cards', s: { ya: 'Your first credit card bill is $900. Paying the minimum each month keeps you in good shape?', adult: 'The family card has a $4,000 balance. Paying the minimum each month keeps you in good shape?' },
+      c: ['Yes, the minimum is all that matters', 'It could take years and cost lots of interest', 'Yes, and the interest stops'],
+      m: 'Paying the minimum keeps you fine.', f: 'Only paying the minimum can take years to pay off. Pay more when you can.', w: 'The more you pay each month, the less interest you pay.', src: 'cfpb-min' },
+    { id: 'mn02', ages: 'both', topic: 'credit score', s: 'Does checking your own credit report hurt your score?',
+      c: ['Yes, every check drops it', 'No, it has no effect', 'Only if you check twice'],
+      m: 'Checking your own credit hurts your score.', f: 'Checking your own report does not hurt your score.', w: 'It is not a request for new credit.', src: 'cfpb-check' },
+    { id: 'mn03', ages: 'both', topic: 'credit score', s: 'How often can you see your credit reports for free?',
+      c: ['Never, you must pay', 'Once a week online', 'Once every 10 years'],
+      m: 'Credit reports cost money.', f: 'You can see each of the three reports free once a week at AnnualCreditReport.com.', w: 'CFPB guidance.', src: 'cfpb-free' },
+    { id: 'mn04', ages: 'both', topic: 'credit score', s: 'An ad says "free credit report, just enter your card." Safe bet?',
+      c: ['Yes, free is free', 'Be careful; some bill you later. Use AnnualCreditReport.com', 'Yes, if it has a logo'],
+      m: 'Any site saying free is free.', f: 'Some sites charge you later. Use AnnualCreditReport.com.', w: 'CFPB warns about these sites.', src: 'cfpb-free' },
+    { id: 'mn05', ages: 'both', topic: 'credit score', s: { ya: 'You apply with 3 lenders for a car loan in one week to compare rates. Is that 3 hits to your score?', adult: 'You apply with 3 lenders for a mortgage in one week to compare. Is that 3 hits to your score?' },
+      c: ['Yes, each one hurts', 'Usually counts as one if within 14 to 45 days', 'Yes, and it locks your credit'],
+      m: 'Every lender check hurts your score.', f: 'Checks for the same loan type within 14 to 45 days usually count as one.', w: 'Scoring models allow rate shopping.', src: 'cfpb-inq' },
+    { id: 'mn06', ages: 'both', topic: 'taxes', s: { ya: 'A raise bumps you into the next tax bracket. Will all your pay be taxed at the higher rate?', adult: 'A promotion moves you into a higher bracket. Will all your pay be taxed at the higher rate?' },
+      c: ['Yes, so the raise could lose money', 'No, only the part in the new bracket', 'Yes, plus a penalty'],
+      m: 'A higher bracket taxes all your income more.', f: 'You pay the higher rate only on the part in the new bracket.', w: 'Taxes come in layers.', src: 'irs-brackets' },
+    { id: 'mn07', ages: 'both', topic: 'cards', s: 'Your debit card and credit card both have the same fraud protection, right?',
+      c: ['Yes, same thing', 'No, debit losses can grow if you report late', 'Debit has more'],
+      m: 'Debit and credit cards protect you the same.', f: 'Credit card loss is capped at $50. Debit card loss can grow the longer you wait to report.', w: 'Federal rules differ by card type.', src: 'ftc-lostcard' },
+    { id: 'mn08', ages: 'both', topic: 'cards', s: 'Your wallet is gone. Wait to see if anyone uses the cards?',
+      c: ['Yes, no need to call yet', 'Report it now', 'Wait a week'],
+      m: 'Wait to see if a lost card gets used.', f: 'Report it right away. If you report before it is used, you owe nothing.', w: 'Waiting can cost you money.', src: 'ftc-lostcard' },
+    { id: 'mn09', ages: 'both', topic: 'credit score', s: 'A company says it can erase late payments from your report for a fee. True?',
+      c: ['Yes, for the right price', 'No, no one can remove accurate info', 'Only for big fees'],
+      m: 'Credit repair firms can erase true late payments.', f: 'No one can legally remove accurate, current info.', w: 'Don\'t pay fees to "repair" credit.', src: 'ftc-repair' },
+    { id: 'mn10', ages: 'both', topic: 'credit score', s: 'Does a late payment stay on your credit report forever?',
+      c: ['Yes, forever', 'Most bad info drops off after 7 years', 'It is gone in a month'],
+      m: 'Bad marks last forever.', f: 'Most negative info stays 7 years. Bankruptcy stays 10.', w: 'FTC credit FAQ.', src: 'ftc-repair' },
+    { id: 'mn11', ages: 'both', topic: 'credit score', s: 'How many credit scores do you have?',
+      c: ['Just one', 'Many; they vary by model and lender', 'None until 30'],
+      m: 'You have one credit score.', f: 'You have many. Scores differ by model and by loan type.', w: 'CFPB credit score guide.', src: 'cfpb-score' },
+    { id: 'mn12', ages: 'both', topic: 'identity', s: 'Freezing your credit to stop thieves costs money?',
+      c: ['Yes, a monthly fee', 'No, it is free at all three bureaus', 'Only the first time'],
+      m: 'A credit freeze costs money.', f: 'You can freeze and unfreeze for free at Equifax, Experian, and TransUnion.', w: 'CFPB guidance.', src: 'cfpb-freeze' },
+    { id: 'mn13', ages: 'both', topic: 'identity', s: 'With a credit freeze on, can you still see your own credit report?',
+      c: ['No, it is locked to you too', 'Yes, you can still see it', 'Only by mail'],
+      m: 'A freeze locks you out too.', f: 'You can still request and review your reports.', w: 'It mainly blocks new lenders.', src: 'cfpb-freeze' },
+    { id: 'mn14', ages: 'both', topic: 'loans', s: 'A payday loan charges $15 per $100 for 2 weeks. Cheap?',
+      c: ['Yes, only 15%', 'No, that is almost 400% a year', 'It is free'],
+      m: 'A payday loan fee is small.', f: 'A typical 2-week $15 per $100 fee is close to 400% APR.', w: 'CFPB payday loan guide.', src: 'cfpb-payday' },
+    { id: 'mn15', ages: 'both', topic: 'loans', s: 'Buy Now, Pay Later says no interest. No way to lose money then?',
+      c: ['Right, it is free', 'Most charge late fees if you miss', 'It pays you back'],
+      m: 'No interest means no cost.', f: 'Many BNPL loans have no interest, but most charge late fees.', w: 'CFPB BNPL guide.', src: 'cfpb-bnpl' },
+    { id: 'mn16', ages: 'both', topic: 'banking', s: 'Do you have to sign up for FDIC insurance on your bank account?',
+      c: ['Yes, it is extra', 'No, it is automatic at insured banks', 'Only for savings'],
+      m: 'You must apply for FDIC coverage.', f: 'Coverage is automatic when you open a deposit account at an FDIC-insured bank.', w: 'FDIC guidance.', src: 'fdic-what' },
+    { id: 'mn17', ages: 'both', topic: 'banking', s: 'Is everything a bank sells covered by FDIC?',
+      c: ['Yes, all of it', 'No, not all bank products are covered', 'Only stocks'],
+      m: 'Everything at a bank is FDIC insured.', f: 'FDIC covers deposit accounts. Not every product a bank offers is covered.', w: 'FDIC guidance.', src: 'fdic-what' },
+    { id: 'mn18', ages: 'both', topic: 'taxes', s: 'You need more time to file taxes. Does an extension give you more time to pay too?',
+      c: ['Yes, pay in October', 'No, pay by the April date', 'You never have to pay'],
+      m: 'An extension delays the payment too.', f: 'An extension gives time to file, but you must pay by the April due date.', w: 'IRS guidance.', src: 'irs-ext' },
+    { id: 'mn19', ages: 'both', topic: 'debt', s: 'Can debt collectors call you at 10 PM?',
+      c: ['Yes, any time', 'No, not before 8 AM or after 9 PM unless you agree', 'Only on weekends'],
+      m: 'Debt collectors can call any time.', f: 'They cannot contact you before 8 AM or after 9 PM unless you agree.', w: 'Federal debt collection law.', src: 'ftc-debtcol' },
+    { id: 'mn20', ages: 'both', topic: 'debt', s: 'A debt collector keeps calling you at work. Can you stop that?',
+      c: ['No, they can call anywhere', 'Yes, tell them you cannot get calls at work', 'Only with a lawyer'],
+      m: 'You cannot stop calls at work.', f: 'They cannot call you at work if you tell them you are not allowed calls there.', w: 'FTC debt collection FAQ.', src: 'ftc-debtcol' },
+    { id: 'mn21', ages: 'both', topic: 'debt', s: 'You will miss some bills. Best move?',
+      c: ['Wait and hope they forget', 'Call your creditors now to work out a plan', 'Close your bank account'],
+      m: 'Wait it out when you fall behind.', f: 'Call creditors early, before a collector gets involved. They may lower payments.', w: 'FTC advice.', src: 'ftc-debtrelief' },
+    { id: 'mn22', ages: 'both', topic: 'debt', s: 'A collector calls about a debt you do not think is yours. Ignore it?',
+      c: ['Yes, ignore all calls', 'Talk once to learn more and confirm if it is yours', 'Pay it to make it stop'],
+      m: 'Ignore collectors and they go away.', f: 'Talk at least once to find out more. Do not share personal financial info.', w: 'FTC advice.', src: 'ftc-debtrelief' },
+    { id: 'mn23', ages: 'both', topic: 'credit score', s: 'What has the biggest impact on your credit score?',
+      c: ['Your income', 'Paying bills on time, every time', 'How many cards you own'],
+      m: 'Income drives your credit score.', f: 'Paying on time, every time has the greatest impact.', w: 'CFPB credit score guide.', src: 'cfpb-understand' },
+    { id: 'mn24', ages: 'both', topic: 'credit score', s: 'You have a $1,000 limit. Using $900 of it shows you use credit well?',
+      c: ['Yes, high use looks good', 'No, keep it under about 30% of your limit', 'Yes, max it out'],
+      m: 'Using most of your limit helps your score.', f: 'Keep balances low. Experts advise using no more than 30% of your limit.', w: 'Scores look at how close you are to maxed out.', src: 'cfpb-understand' },
+    { id: 'mn25', ages: 'both', topic: 'credit score', s: 'Closing an old credit card will raise your score?',
+      c: ['Yes, fewer cards is better', 'Not always; it can lower your score', 'Yes, by 100 points'],
+      m: 'Closing old cards raises your score.', f: 'Do not assume it helps. Closing a card can lower your score.', w: 'Old accounts with good history can help.', src: 'cfpb-close' },
+    { id: 'mn26', ages: 'both', topic: 'credit cards', s: 'You pay your card in full by the due date each month. Do you pay interest on purchases?',
+      c: ['Yes, always', 'Usually no, thanks to the grace period', 'Yes, double'],
+      m: 'Credit cards always charge interest.', f: 'With a grace period, paying in full on time means no interest on purchases.', w: 'CFPB grace period guide.', src: 'cfpb-grace' },
+    { id: 'mn27', ages: 'both', topic: 'credit cards', s: 'You take a cash advance on your credit card. Same grace period as purchases?',
+      c: ['Yes, same', 'No, interest usually starts right away', 'Cash advances are free'],
+      m: 'Cash advances get a grace period.', f: 'Interest on a cash advance usually starts on day one.', w: 'Grace periods usually apply only to purchases.', src: 'cfpb-grace' },
+    { id: 'mn28', ages: 'both', topic: 'credit score', s: 'Apply for lots of cards in one month to build credit faster?',
+      c: ['Yes, more is better', 'No, many apps in a short time can hurt', 'Yes, at least 10'],
+      m: 'More applications build credit faster.', f: 'Only apply for credit you need. Many apps at once can look like money trouble.', w: 'CFPB credit score guide.', src: 'cfpb-understand' },
+    { id: 'mn29', ages: 'both', topic: 'loans', s: 'Car loan: 72 months has a lower payment than 36. So it costs less?',
+      c: ['Yes, lower payment means cheaper', 'No, you pay more interest overall', 'Same total'],
+      m: 'A lower monthly payment means a cheaper loan.', f: 'Longer loans cost more interest. In CFPB\'s example, 72 months cost more than twice the interest of 36.', w: 'Look at total cost, not just the payment.', src: 'cfpb-autoloan' },
+    { id: 'mn30', ages: 'both', topic: 'saving', s: 'You will invest $100 a month. Starting 10 years later is no big deal?',
+      c: ['No big deal', 'It matters a lot; starting later means saving much more', 'Starting later is better'],
+      m: 'Waiting a few years to invest does not matter.', f: 'The earlier you start, the more compounding helps. Starting later means you must invest more.', w: 'Investor.gov compound growth example.', src: 'inv-intro' },
+    { id: 'mn31', ages: 'both', topic: 'emergency', s: 'Disaster hits. Your cards will work, so skip cash?',
+      c: ['Right, cards always work', 'Keep some small bills at home', 'Keep only $100 bills'],
+      m: 'You never need cash anymore.', f: 'Keep a small amount of cash in small bills. ATMs and cards may not work.', w: 'Ready.gov financial prep.', src: 'ready-fin' },
+    { id: 'mn32', ages: 'both', topic: 'saving', s: 'How does compound interest work?',
+      c: ['You earn only on what you put in', 'You earn interest on your interest too', 'The bank keeps the interest'],
+      m: 'Interest only grows on what you put in.', f: 'You earn interest on the interest too, so it snowballs.', w: '$100 at 5% grows to about $340 in 25 years with nothing added.', src: 'inv-youth' },
+    // ---------- young adults ----------
+    { id: 'mn50', ages: 'ya', topic: 'banking', s: 'You have $20 in checking and swipe your debit card for $30. Bank can charge an overdraft fee no matter what?',
+      c: ['Yes, always', 'Not for debit or ATM unless you opted in', 'Only on Fridays'],
+      m: 'Banks can always charge debit overdraft fees.', f: 'For one-time debit and ATM use, banks cannot charge an overdraft fee unless you opted in.', w: 'CFPB overdraft guide.', src: 'cfpb-overdraft' },
+    { id: 'mn51', ages: 'ya', topic: 'banking', s: 'You said no to overdraft. Can a monthly auto-payment still cause a fee?',
+      c: ['No, never', 'Yes, checks and recurring payments can still cost a fee', 'Only cash'],
+      m: 'Saying no to overdraft stops all fees.', f: 'Banks can still charge for checks and recurring electronic payments.', w: 'CFPB overdraft guide.', src: 'cfpb-overdraft' },
+    { id: 'mn52', ages: 'ya', topic: 'school', s: 'Student loans: no interest until you graduate, right?',
+      c: ['Right, it waits', 'For most loans, interest adds up while in school', 'Interest is never charged'],
+      m: 'Student loan interest waits until graduation.', f: 'Except subsidized federal loans, interest keeps adding up while in school.', w: 'You can owe more than you borrowed by the time you leave.', src: 'cfpb-school' },
+    { id: 'mn53', ages: 'ya', topic: 'school', s: 'Unpaid school interest gets "capitalized." What does that mean?',
+      c: ['It gets forgiven', 'It is added to your loan, so you pay interest on interest', 'It is paid by the school'],
+      m: 'Capitalized interest is forgiven.', f: 'It is added to your balance, so you pay interest on interest.', w: 'CFPB example: $5,000 grows to $5,750 before repayment.', src: 'cfpb-school' },
+    { id: 'mn54', ages: 'ya', topic: 'credit score', s: 'Your credit score only matters for loans?',
+      c: ['Yes, only loans', 'No, landlords and insurers use it too', 'Only for cars'],
+      m: 'Credit scores only matter for loans.', f: 'Companies also use them for renting and insurance decisions.', w: 'CFPB credit score guide.', src: 'cfpb-score' },
+    { id: 'mn55', ages: 'ya', topic: 'credit score', s: 'Could a job ever check your credit report?',
+      c: ['No, that is never allowed', 'Yes, some employers use credit reports', 'Only the military'],
+      m: 'Employers never look at credit.', f: 'Some employers use credit reports when hiring.', w: 'FTC credit FAQ.', src: 'ftc-repair' },
+    { id: 'mn56', ages: 'ya', topic: 'loans', s: 'A payday lender approves you fast. They checked you can afford it?',
+      c: ['Yes, they must', 'Usually not; they rarely check if you can repay', 'Yes, with your boss'],
+      m: 'Payday lenders make sure you can repay.', f: 'Payday lenders generally do not check your ability to repay.', w: 'CFPB payday loan guide.', src: 'cfpb-payday' },
+    { id: 'mn57', ages: 'ya', topic: 'loans', s: 'Is a Buy Now, Pay Later plan a loan?',
+      c: ['No, just a payment option', 'Yes, it is an installment loan', 'It is a gift card'],
+      m: 'BNPL is not really a loan.', f: 'BNPL is a type of installment loan.', w: 'Treat it like any debt.', src: 'cfpb-bnpl' },
+    { id: 'mn58', ages: 'ya', topic: 'taxes', s: 'You earn cash from a delivery app and got no tax form. Do you report it?',
+      c: ['No form, no tax', 'Yes, report it anyway', 'Only over $50,000'],
+      m: 'No tax form means no need to report.', f: 'You must report gig income even without a 1099 or W-2.', w: 'IRS gig economy rules.', src: 'irs-gig' },
+    { id: 'mn59', ages: 'ya', topic: 'taxes', s: 'You got paid in cash for side jobs. Cash is not taxed?',
+      c: ['Right, cash is invisible', 'Cash income must be reported too', 'Only checks count'],
+      m: 'Cash income is tax free.', f: 'Gig income paid in any form, including cash, must be reported.', w: 'IRS gig economy rules.', src: 'irs-gig' },
+    { id: 'mn60', ages: 'ya', topic: 'saving', s: 'To reach $500,000 by 65 at 7%, how much a month starting at 18 vs 35?',
+      c: ['About the same', 'About $127 vs $441 a month', 'Starting at 35 is cheaper'],
+      m: 'Starting age does not change much.', f: 'Investor.gov shows about $127 a month from 18, but $441 from 35.', w: 'Time does the heavy lifting.', src: 'inv-intro' },
+    { id: 'mn61', ages: 'ya', topic: 'saving', s: 'Skip a $1 candy bar a day and invest it at 5%. After 30 years?',
+      c: ['About $365', 'About $1,577 from the first year\'s savings', '$10'],
+      m: 'Small savings do not add up.', f: 'Investor.gov: one year of $1 a day ($365) grows to about $1,577 in 30 years at 5%.', w: 'Compounding makes small amounts grow.', src: 'inv-small' },
+    { id: 'mn62', ages: 'ya', topic: 'saving', s: 'Rule of 72: at 9% a year, your money doubles in about...',
+      c: ['72 years', 'About 8 years', '9 months'],
+      m: 'Money takes forever to double.', f: '72 divided by 9 is 8, so about 8 years.', w: 'Investor.gov Rule of 72.', src: 'inv-youth' },
+    { id: 'mn63', ages: 'ya', topic: 'credit cards', s: 'You pay in full most months but skip one. Lose anything?',
+      c: ['No, nothing changes', 'You may lose the grace period for that month and the next', 'Your card is canceled'],
+      m: 'Missing one full payment costs nothing extra.', f: 'You may lose the grace period that month and the month after.', w: 'CFPB grace period tip.', src: 'cfpb-grace' },
+    { id: 'mn64', ages: 'ya', topic: 'loans', s: 'First car: the dealer offers a 7 year loan to lower your payment. Smart?',
+      c: ['Yes, lowest payment wins', 'Risky; longer loans cost more and you can owe more than the car is worth', 'Yes, always'],
+      m: 'Longest loan is the smart choice.', f: 'Some experts say 5 years or less. Longer loans risk owing more than the car is worth.', w: 'CFPB auto loan guide.', src: 'cfpb-autoloan' },
+    { id: 'mn65', ages: 'ya', topic: 'cards', s: 'Someone used your stolen debit card. You wait 3 weeks to report. Max loss?',
+      c: ['$0, same as credit', 'Up to $500, or more if you wait longer', '$5'],
+      m: 'Debit card fraud never costs you.', f: 'Report within 2 business days: $50 max. Later, up to $500. After 60 days: maybe everything.', w: 'FTC lost card rules.', src: 'ftc-lostcard' },
+    { id: 'mn66', ages: 'ya', topic: 'retirement', s: 'Roth IRA: do you get a tax break now?',
+      c: ['Yes, it lowers this year\'s tax', 'No, but qualified withdrawals later can be tax free', 'Both now and later'],
+      m: 'A Roth gives a tax break now.', f: 'Roth contributions are not deductible, but qualified withdrawals may be tax free.', w: 'IRS IRA guide.', src: 'irs-ira' },
+    { id: 'mn67', ages: 'ya', topic: 'retirement', s: 'Does putting money into a regular 401(k) lower your taxable pay this year?',
+      c: ['No, it is taxed the same', 'Yes, traditional contributions are left out of taxable income', 'Only if over 50'],
+      m: '401(k) money is taxed the same now.', f: 'Traditional 401(k) deferrals are excluded from taxable income now. You pay tax when you take it out.', w: 'IRS 401(k) page.', src: 'irs-401k' },
+    { id: 'mn68', ages: 'ya', topic: 'credit cards', s: 'You keep an old card open but never use it. Anything to watch?',
+      c: ['No, just forget it', 'Still check statements for fraud and fees', 'Cut it up and stop paying'],
+      m: 'An unused card needs no attention.', f: 'Keep watching statements for identity theft and surprise fees.', w: 'CFPB advice.', src: 'cfpb-close' },
+    { id: 'mn69', ages: 'ya', topic: 'credit score', s: 'Your late payment from last year. Will paying it off erase it from your report?',
+      c: ['Yes, instantly', 'No, accurate history stays; it fades over time', 'Yes, if you ask'],
+      m: 'Paying off a late bill erases it.', f: 'Accurate negative info can stay for up to 7 years. Paying helps going forward.', w: 'CFPB credit report guide.', src: 'cfpb-negative' },
+    // ---------- adults ----------
+    { id: 'mn80', ages: 'adult', topic: 'retirement', s: 'Born after 1960. Claim Social Security at 62 instead of 67. Small cut?',
+      c: ['Just a few dollars', 'About 30% less, for life', 'No cut at all'],
+      m: 'Claiming at 62 pays about the same.', f: 'For those born 1960 or later, claiming at 62 cuts benefits about 30%.', w: 'SSA reduction chart.', src: 'ssa-early' },
+    { id: 'mn81', ages: 'adult', topic: 'retirement', s: 'Is there any gain to waiting past full retirement age to claim Social Security?',
+      c: ['No, it is the max already', 'Yes, it grows each month you wait, up to 70', 'It goes down'],
+      m: 'Full retirement age is the max benefit.', f: 'Benefits go up for each month you delay past full retirement age, up to 70.', w: 'SSA delayed retirement credits.', src: 'ssa-delay' },
+    { id: 'mn82', ages: 'adult', topic: 'retirement', s: 'You will delay Social Security until 70. Wait on Medicare too?',
+      c: ['Yes, wait for both', 'Sign up for Medicare at 65 anyway', 'Medicare starts at 70'],
+      m: 'Medicare waits until you claim Social Security.', f: 'Sign up for Medicare at 65 even if you delay Social Security.', w: 'Waiting can delay coverage and cost more.', src: 'ssa-delay' },
+    { id: 'mn83', ages: 'adult', topic: 'retirement', s: 'On Social Security at 63. Can you still work?',
+      c: ['No, benefits stop', 'Yes, but over a set limit some benefits are held back', 'Only 10 hours'],
+      m: 'You cannot work once you claim.', f: 'You can work. Under full retirement age, SSA holds back $1 for every $2 over the yearly limit.', w: 'For 2026 that limit is $24,480.', src: 'ssa-work' },
+    { id: 'mn84', ages: 'adult', topic: 'retirement', s: 'Working while getting Social Security can raise your benefit?',
+      c: ['No, never', 'Yes, if it is one of your top earning years', 'Only in a new state'],
+      m: 'Work after claiming never helps.', f: 'If it is one of your highest earning years, SSA recalculates and may pay more.', w: 'SSA working while retired page.', src: 'ssa-work' },
+    { id: 'mn85', ages: 'adult', topic: 'parents', s: 'Mom needs help bathing and dressing at home for years. Medicare will pay?',
+      c: ['Yes, Medicare covers it', 'No, Medicare does not cover most long-term care', 'Only on weekends'],
+      m: 'Medicare pays for long-term care.', f: 'Medicare and most health insurance, including Medigap, do not pay for most long-term care.', w: 'Medicaid or private long-term care insurance may help.', src: 'medicare-ltc' },
+    { id: 'mn86', ages: 'adult', topic: 'home', s: 'You put 10% down and pay PMI. Who does PMI protect?',
+      c: ['You, if you miss payments', 'The lender', 'Your house from fire'],
+      m: 'PMI protects you.', f: 'PMI protects the lender, not you.', w: 'You can still lose the home if you fall behind.', src: 'cfpb-pmi' },
+    { id: 'mn87', ages: 'adult', topic: 'home', s: 'When is PMI usually required on a regular mortgage?',
+      c: ['Always', 'With less than 20% down', 'Only on condos'],
+      m: 'Every mortgage has PMI.', f: 'Usually with a conventional loan and less than 20% down.', w: 'CFPB PMI guide.', src: 'cfpb-pmi' },
+    { id: 'mn88', ages: 'adult', topic: 'home', s: '"Prequalified" vs "preapproved." Is one always stronger?',
+      c: ['Yes, preapproved is always better', 'No, lenders use the words differently', 'Prequalified means you got the loan'],
+      m: 'Preapproval always beats prequalification.', f: 'Lenders use the terms differently. The word alone tells you little.', w: 'CFPB mortgage guide.', src: 'cfpb-preapp' },
+    { id: 'mn89', ages: 'adult', topic: 'home', s: 'Does your credit score change your mortgage rate much?',
+      c: ['Barely', 'Yes, rates can vary quite a bit by score', 'Only for second homes'],
+      m: 'Credit score barely affects mortgage rates.', f: 'The rate you are offered can vary quite a bit with your score.', w: 'Best rates go to scores in the mid to high 700s.', src: 'cfpb-home' },
+    { id: 'mn90', ages: 'adult', topic: 'retirement', s: 'You are 72 and still working. Can you add to a Roth IRA?',
+      c: ['No, too old', 'Yes, Roth contributions are allowed after 70 1/2', 'Only half'],
+      m: 'You cannot add to a Roth after 70.', f: 'You can contribute to a Roth IRA after 70 1/2.', w: 'IRS Roth IRA rules.', src: 'irs-roth' },
+    { id: 'mn91', ages: 'adult', topic: 'retirement', s: 'Must you start pulling money out of your own Roth IRA at a certain age?',
+      c: ['Yes, at 70', 'No, you can leave it in as long as you live', 'Yes, at 59'],
+      m: 'You must empty a Roth by a set age.', f: 'You can leave money in your Roth IRA as long as you live.', w: 'IRS Roth IRA rules.', src: 'irs-roth' },
+    { id: 'mn92', ages: 'adult', topic: 'taxes', s: 'You claim the Earned Income Tax Credit and file in January. Refund in a week?',
+      c: ['Yes, file early, get it early', 'No, by law refunds wait until mid-February', 'It comes in June'],
+      m: 'File early, get your EITC refund early.', f: 'By law, EITC refunds are held until mid-February.', w: 'IRS EITC page.', src: 'irs-eitc' },
+    { id: 'mn93', ages: 'adult', topic: 'investing', s: 'Your stocks grew from 60% to 80% of your savings. Let the winners ride?',
+      c: ['Yes, never touch winners', 'Consider rebalancing back to your plan', 'Sell everything'],
+      m: 'Never trim your winners.', f: 'Rebalance to bring your mix back to your plan, even though it feels odd.', w: 'Investor.gov asset allocation.', src: 'inv-diversify' },
+    { id: 'mn94', ages: 'adult', topic: 'banking', s: 'Is $250,000 the most FDIC covers for you at one bank, no matter what?',
+      c: ['Yes, $250,000 total', 'No, it is per depositor, per ownership category', 'There is no limit'],
+      m: 'FDIC caps you at $250,000 per bank total.', f: 'Coverage is at least $250,000 per depositor, per ownership category, at each bank.', w: 'Joint and single accounts are different categories.', src: 'fdic-ins' },
+    { id: 'mn95', ages: 'adult', topic: 'banking', s: 'Has anyone lost FDIC-insured money in a bank failure?',
+      c: ['Yes, often', 'No depositor has lost a penny of insured funds since 1933', 'Only in 2008'],
+      m: 'Insured bank money gets lost in failures.', f: 'Since 1933, no depositor has lost a penny of FDIC-insured funds.', w: 'FDIC.', src: 'fdic-ins' },
+    { id: 'mn96', ages: 'adult', topic: 'home', s: 'You will miss a mortgage payment. Wait to see what the bank does?',
+      c: ['Yes, wait', 'Call your lender right away', 'Stop all payments'],
+      m: 'Wait to hear from the bank.', f: 'Contact your lender right away. Most will work with you.', w: 'Waiting can lead to foreclosure.', src: 'ftc-debtrelief' },
+    { id: 'mn97', ages: 'adult', topic: 'kids', s: 'Your grown kid asks you to cosign a car loan. You are just a reference, right?',
+      c: ['Right, just a reference', 'No, you must pay if they miss', 'You will own half the car'],
+      m: 'Cosigning is just vouching.', f: 'A cosigner must make the payments if the borrower misses.', w: 'FTC cosigning FAQ.', src: 'ftc-cosign' },
+    { id: 'mn98', ages: 'adult', topic: 'debt', s: 'A creditor will never take less than the full amount owed?',
+      c: ['Never', 'They might agree to take less', 'Only if you sue'],
+      m: 'Creditors never settle for less.', f: 'A creditor might negotiate and even accept less than you owe.', w: 'FTC debt advice.', src: 'ftc-debtrelief' },
+    { id: 'mn99', ages: 'adult', topic: 'investing', s: 'You are 45 with no savings. Too late to bother investing?',
+      c: ['Yes, too late', 'Never too late, but you will need to invest more', 'Only lottery tickets now'],
+      m: 'It is too late to start at 45.', f: 'It is never too late, but starting later means investing more each month.', w: 'Investor.gov.', src: 'inv-intro' },
+    { id: 'mn100', ages: 'adult', topic: 'banking', s: 'Are prepaid cards ever FDIC insured?',
+      c: ['Never', 'They can be, if certain rules are met', 'Always'],
+      m: 'Prepaid cards are never insured.', f: 'Prepaid cards can be FDIC insured if certain requirements are met.', w: 'FDIC insured products list.', src: 'fdic-what' }
+  ]
+});
+</script>
+<script data-src="content/decks/scams.js">
+// Scam Defense Myths deck. Data only. c = [myth choice, right choice, decoy].
+LSA.deck({
+  id: 'scams', name: 'Scam Defense Myths', icon: '🛡️',
+  sources: {
+    'ftc-gift': ['FTC: Avoiding and Reporting Gift Card Scams', 'https://consumer.ftc.gov/articles/avoiding-and-reporting-gift-card-scams'],
+    'ftc-check': ['FTC: How To Spot, Avoid, and Report Fake Check Scams', 'https://consumer.ftc.gov/articles/how-spot-avoid-and-report-fake-check-scams'],
+    'ftc-phish': ['FTC: How To Recognize and Avoid Phishing Scams', 'https://consumer.ftc.gov/articles/how-recognize-and-avoid-phishing-scams'],
+    'ftc-romance': ['FTC: What To Know About Romance Scams', 'https://consumer.ftc.gov/articles/what-know-about-romance-scams'],
+    'ftc-family': ['FTC: Scammers Use Fake Emergencies', 'https://consumer.ftc.gov/articles/scammers-use-fake-emergencies-steal-your-money'],
+    'ftc-tech': ['FTC: Tech Support Scams', 'https://consumer.ftc.gov/articles/how-spot-avoid-and-report-tech-support-scams'],
+    'ftc-job': ['FTC: Job Scams', 'https://consumer.ftc.gov/articles/job-scams'],
+    'ftc-crypto': ['FTC: What To Know About Cryptocurrency and Scams', 'https://consumer.ftc.gov/articles/what-know-about-cryptocurrency-and-scams'],
+    'ftc-prize': ['FTC: Fake Prize, Sweepstakes, and Lottery Scams', 'https://consumer.ftc.gov/articles/fake-prize-sweepstakes-and-lottery-scams'],
+    'ftc-text': ['FTC: How To Recognize and Report Spam Text Messages', 'https://consumer.ftc.gov/articles/how-recognize-and-report-spam-text-messages'],
+    'ftc-calls': ['FTC: Phone Scams', 'https://consumer.ftc.gov/articles/phone-scams'],
+    'ftc-online': ['FTC: Online Shopping', 'https://consumer.ftc.gov/articles/online-shopping'],
+    'ftc-p2p': ['FTC: Mobile Payment Apps', 'https://consumer.ftc.gov/articles/mobile-payment-apps-how-avoid-scam-when-you-use-one'],
+    'ftc-idtheft': ['FTC: What To Know About Identity Theft', 'https://consumer.ftc.gov/articles/what-know-about-identity-theft'],
+    'ftc-signs': ['FTC: How To Avoid a Scam', 'https://consumer.ftc.gov/articles/how-avoid-scam'],
+    'ftc-scammed': ['FTC: What To Do if You Were Scammed', 'https://consumer.ftc.gov/articles/what-do-if-you-were-scammed'],
+    'ftc-invest': ['FTC: Investment Scams', 'https://consumer.ftc.gov/articles/investment-scams'],
+    'ftc-mlm': ['FTC: Multi-Level Marketing Businesses and Pyramid Schemes', 'https://consumer.ftc.gov/articles/multi-level-marketing-businesses-and-pyramid-schemes'],
+    'ftc-apartment': ['FTC: Rental Listing Scams', 'https://consumer.ftc.gov/articles/rental-listing-scams'],
+    'irs-call': ['IRS: How to know it is really the IRS calling', 'https://www.irs.gov/newsroom/how-to-know-its-really-the-irs-calling-or-knocking-on-your-door'],
+    'ssa-scam': ['SSA OIG: Protect Yourself from Scams', 'https://www.ssa.gov/scam/'],
+    'fcc-spoof': ['FCC: Caller ID Spoofing', 'https://www.fcc.gov/consumers/guides/spoofing'],
+    'cisa-mfa': ['CISA: Turn On MFA', 'https://www.cisa.gov/secure-our-world/turn-mfa'],
+    'cisa-pass': ['CISA: Use Strong Passwords', 'https://www.cisa.gov/secure-our-world/use-strong-passwords'],
+    'usps-smish': ['USPIS: Smishing', 'https://www.uspis.gov/news/scam-article/smishing']
+  },
+  cards: [
+    // ---------- shared core ----------
+    { id: 'sc01', ages: 'both', topic: 'payments', s: { ya: 'A caller says you owe a fine and must pay with Apple gift cards. Could it be real?', adult: 'A caller says your power will be cut today unless you pay with gift cards. Could it be real?' },
+      c: ['Maybe, some places take them', 'No, only scammers ask for gift cards', 'Yes, if they know your name'],
+      m: 'A real business or agency might take gift cards.', f: 'Only scammers ask you to pay with gift cards. Hang up.', w: 'No real business or agency will tell you to buy a gift card to pay them.', src: 'ftc-gift' },
+    { id: 'sc02', ages: 'both', topic: 'payments', s: 'You still have the gift card in your hand. Is it safe to read them the numbers on the back?',
+      c: ['Yes, you still have the card', 'No, the numbers are the money', 'Yes, but not the PIN'],
+      m: 'If you hold the card, the money is safe.', f: 'The card number and PIN let them take the money, even if you keep the card.', w: 'FTC gift card scam guide.', src: 'ftc-gift' },
+    { id: 'sc03', ages: 'both', topic: 'checks', s: { ya: 'A buyer for your old bike sends a check for $300 too much and asks you to send back the extra. OK?', adult: 'A buyer for your couch sends a check for $500 too much and asks you to send back the extra. OK?' },
+      c: ['Yes, it is just a mistake', 'No, it is a fake check scam', 'Yes, by gift card'],
+      m: 'An overpaying buyer is honest.', f: 'Do not accept a check for more than the price. It is a scam.', w: 'The check bounces later and you lose what you sent.', src: 'ftc-check' },
+    { id: 'sc04', ages: 'both', topic: 'checks', s: 'The money from a deposited check shows in your account. So it cleared and is real?',
+      c: ['Yes, it is real now', 'Not always; fakes can take weeks to catch', 'Yes, after one day'],
+      m: 'If the money shows up, the check is good.', f: 'Banks must make funds show fast. A fake check can take weeks to discover.', w: 'Then you owe the bank the money.', src: 'ftc-check' },
+    { id: 'sc05', ages: 'both', topic: 'imposters', s: 'Caller says "IRS, pay now by gift card or wire, or else." Real?',
+      c: ['Could be, the IRS calls sometimes', 'No, the IRS does not demand pay like that', 'Yes, if the number looks real'],
+      m: 'The IRS calls to demand payment.', f: 'The IRS mails a bill first and never demands gift cards or wires.', w: 'IRS guidance.', src: 'irs-call' },
+    { id: 'sc06', ages: 'both', topic: 'imposters', s: 'Caller says the IRS will have police arrest you or take your license today. Real?',
+      c: ['Yes, they can do that', 'No, that is a scam tactic', 'Only for big debts'],
+      m: 'The IRS threatens arrest by phone.', f: 'The IRS does not threaten arrest or license loss by phone.', w: 'Threats like these are common scam tactics.', src: 'irs-call' },
+    { id: 'sc07', ages: 'both', topic: 'family', s: { ya: 'Your little brother calls crying, needs money now, says do not tell Mom. It sounds just like him. Real?', adult: 'Your grandson calls crying, needs bail money now. It sounds just like him. Real?' },
+      c: ['Yes, I know that voice', 'Maybe not; hang up and call him back', 'Yes, send it fast'],
+      m: 'If it sounds like them, it is them.', f: 'Scammers can clone voices. Hang up and call your loved one on a number you know.', w: 'FTC warns about voice cloning.', src: 'ftc-gift' },
+    { id: 'sc08', ages: 'both', topic: 'texts', s: 'A text says "Suspicious login. Tap here to secure your bank account." Best move?',
+      c: ['Tap the link fast', 'Go to your bank\'s real site or number yourself', 'Reply STOP'],
+      m: 'Click the alert link to fix your account.', f: 'Do not tap. Contact your bank using a number or site you know is real.', w: 'Links can steal info or install malware.', src: 'ftc-phish' },
+    { id: 'sc09', ages: 'both', topic: 'email', s: 'An email from a store you use says your payment failed, click to update it. Real companies do that?',
+      c: ['Yes, all the time', 'No, real companies won\'t send a link to update payment', 'Only big companies'],
+      m: 'Real companies email links to update payment.', f: 'Legit companies will not email or text a link to update your payment info.', w: 'FTC phishing guide.', src: 'ftc-phish' },
+    { id: 'sc10', ages: 'both', topic: 'calls', s: 'Caller ID shows your local police number. So it must be the police?',
+      c: ['Yes, caller ID is proof', 'No, numbers can be faked', 'Yes, if it is local'],
+      m: 'Caller ID can be trusted.', f: 'Scammers can fake caller ID, even official or local numbers.', w: 'This is called spoofing.', src: 'fcc-spoof' },
+    { id: 'sc11', ages: 'both', topic: 'calls', s: 'A robocall says "press 1 to stop getting these calls." Should you?',
+      c: ['Yes, press 1', 'No, just hang up', 'Press 9 instead'],
+      m: 'Pressing a button stops the calls.', f: 'Just hang up. Pressing tells scammers you are a target.', w: 'FCC advice.', src: 'fcc-spoof' },
+    { id: 'sc12', ages: 'both', topic: 'calls', s: 'A stranger on the phone asks yes or no questions. Safe to answer?',
+      c: ['Yes, they are harmless', 'Do not answer; hang up', 'Only say yes'],
+      m: 'Yes or no answers are harmless.', f: 'Do not respond to questions, especially yes or no ones. Hang up.', w: 'FCC advice.', src: 'fcc-spoof' },
+    { id: 'sc13', ages: 'both', topic: 'pressure', s: 'The caller says "Do not hang up or you will lose everything." Stay on?',
+      c: ['Yes, stay on', 'Hang up and check it yourself', 'Put them on hold for an hour'],
+      m: 'If they say stay on, it must be urgent.', f: 'Scammers want you to act before you think. Hang up and check.', w: 'FTC scam signs.', src: 'ftc-signs' },
+    { id: 'sc14', ages: 'both', topic: 'imposters', s: 'A "federal agent" says to move your savings to a safe account to protect it. Real?',
+      c: ['Yes, they are helping', 'No, that is always a scam', 'Only if they give a badge number'],
+      m: 'Officials may tell you to move money to protect it.', f: 'No government worker will tell you to move money to protect it.', w: 'FTC warning.', src: 'ftc-signs' },
+    { id: 'sc15', ages: 'both', topic: 'payments', s: 'Someone insists you can only pay by wire, crypto, or a payment app. Red flag?',
+      c: ['No, that is normal now', 'Yes, never pay someone who insists on that', 'Only for big amounts'],
+      m: 'Insisting on wire or crypto is normal.', f: 'Never pay someone who insists on crypto, wire, a payment app, or gift card.', w: 'Those are hard to get back.', src: 'ftc-signs' },
+    { id: 'sc16', ages: 'both', topic: 'pressure', s: 'Something feels off, but they said keep it secret. What now?',
+      c: ['Keep it secret', 'Stop and talk to someone you trust', 'Pay half'],
+      m: 'Keep it secret like they ask.', f: 'Stop and tell someone you trust. It can help you see the scam.', w: 'FTC advice.', src: 'ftc-signs' },
+    { id: 'sc17', ages: 'both', topic: 'texts', s: 'A text from a company you use looks real. Click the link?',
+      c: ['Yes, it looks real', 'Better to go to the site yourself', 'Forward it to friends'],
+      m: 'If it looks real, the link is safe.', f: 'Even if it seems real, contact them with a site or number you know.', w: 'FTC advice.', src: 'ftc-signs' },
+    { id: 'sc18', ages: 'both', topic: 'prizes', s: 'You "won" a car, but must pay a $199 processing fee. Normal?',
+      c: ['Yes, prizes have fees', 'No, if you pay for a prize it is a scam', 'Only for cars'],
+      m: 'Paying a fee to claim a prize is normal.', f: 'Real prizes are free. Paying a fee means scam.', w: 'FTC prize guide.', src: 'ftc-prize' },
+    { id: 'sc19', ages: 'both', topic: 'prizes', s: 'Pay $20 to boost your odds in a sweepstakes?',
+      c: ['Sure, better odds', 'No, that is illegal and a scam', 'Only $10'],
+      m: 'You can pay to raise your odds.', f: 'Real sweepstakes are free. Asking you to pay to raise odds is illegal.', w: 'FTC prize guide.', src: 'ftc-prize' },
+    { id: 'sc20', ages: 'both', topic: 'prizes', s: 'A message says you are the only winner. Special?',
+      c: ['Yes, only you won', 'The same message went to lots of people', 'Yes, it has your name'],
+      m: 'You were picked as the only winner.', f: 'The same text or letter went to many people.', w: 'FTC prize guide.', src: 'ftc-prize' },
+    { id: 'sc21', ages: 'both', topic: 'tech', s: 'A pop-up says your computer has a virus. Call this number now. Do it?',
+      c: ['Yes, call fast', 'No, it is a tech support scam', 'Click OK'],
+      m: 'Virus pop-ups with a phone number are real.', f: 'That pop-up is fake. Do not call.', w: 'Scammers want your money or remote access.', src: 'ftc-tech' },
+    { id: 'sc22', ages: 'both', topic: 'tech', s: '"Microsoft" calls and wants remote access to fix your computer. Allow it?',
+      c: ['Yes, they are experts', 'No, do not give access', 'Yes, for 5 minutes'],
+      m: 'Tech companies call to fix your computer.', f: 'Do not give them access. It is a scam.', w: 'FTC gift card guide covers this trick.', src: 'ftc-gift' },
+    { id: 'sc23', ages: 'both', topic: 'crypto', s: 'You paid someone in crypto and it was a scam. Can you get a refund like a card?',
+      c: ['Yes, just dispute it', 'Usually no, crypto payments are not reversible', 'Yes, within 30 days'],
+      m: 'Crypto payments can be disputed like cards.', f: 'Crypto payments usually cannot be reversed and lack card protections.', w: 'FTC crypto guide.', src: 'ftc-crypto' },
+    { id: 'sc24', ages: 'both', topic: 'crypto', s: 'Is money in a crypto account insured like a bank account?',
+      c: ['Yes, by the FDIC', 'No, it is not government insured', 'Only up to $1,000'],
+      m: 'Crypto accounts are insured like banks.', f: 'Crypto is not insured by the government like FDIC bank deposits.', w: 'FTC crypto guide.', src: 'ftc-crypto' },
+    { id: 'sc25', ages: 'both', topic: 'investing', s: 'An investment promises guaranteed big returns, low risk. Good deal?',
+      c: ['Yes, guaranteed is safe', 'No, only scammers guarantee big returns', 'Yes, if a friend invested'],
+      m: 'A guaranteed return is a safe bet.', f: 'Only scammers guarantee profits or big returns.', w: 'FTC investment scam guide.', src: 'ftc-invest' },
+    { id: 'sc26', ages: 'both', topic: 'payments', s: 'A friend asks for money on a payment app out of the blue. Send it?',
+      c: ['Yes, it is their account', 'Talk to them first to be sure it is them', 'Send half'],
+      m: 'If it is their account, it is them.', f: 'Talk with them to confirm. Their account may be hacked.', w: 'FTC payment app guide.', src: 'ftc-p2p' },
+    { id: 'sc27', ages: 'both', topic: 'texts', s: 'A text says USPS cannot deliver your package, tap to fix. You are expecting one. Tap it?',
+      c: ['Yes, I am expecting one', 'No, go to USPS.com yourself', 'Reply with your address'],
+      m: 'If you are expecting a package, the link is fine.', f: 'Do not click. Track at USPS.com yourself.', w: 'USPS does not text you unless you signed up.', src: 'usps-smish' },
+    { id: 'sc28', ages: 'both', topic: 'accounts', s: 'Is a strong password enough, so skip the extra code step (MFA)?',
+      c: ['Yes, password is enough', 'Turn on MFA too', 'Use the same password everywhere'],
+      m: 'A good password is all you need.', f: 'Turn on MFA, especially for email, social media, and bank accounts.', w: 'It makes it much harder for scammers to get in.', src: 'cisa-mfa' },
+    { id: 'sc29', ages: 'both', topic: 'accounts', s: 'Which is a stronger password?',
+      c: ['Your pet\'s name plus 1', 'A phrase of 4 to 7 random words', 'Your birthday'],
+      m: 'Pet names and birthdays make good passwords.', f: 'Use a passphrase of 4 to 7 unrelated words, or a password manager.', w: 'CISA advice.', src: 'cisa-pass' },
+    { id: 'sc30', ages: 'both', topic: 'accounts', s: 'One account got hacked. You use that password on other sites too. Change just the one?',
+      c: ['Yes, just that one', 'Change it everywhere you used it', 'No need to change'],
+      m: 'Only the hacked account needs a new password.', f: 'Change it on every account that used the same password.', w: 'FTC advice after a scam.', src: 'ftc-scammed' },
+    { id: 'sc31', ages: 'both', topic: 'imposters', s: 'Your bank rep offers to transfer your call straight to Social Security. Real?',
+      c: ['Yes, handy', 'No, that is a scam', 'Only on weekdays'],
+      m: 'Companies can transfer you to SSA.', f: 'Companies and other agencies cannot transfer calls directly to SSA. It is a scam.', w: 'SSA OIG warning.', src: 'ssa-scam' },
+    { id: 'sc32', ages: 'both', topic: 'pressure', s: 'A phone deal is only good if you say yes right now. Honest?',
+      c: ['Yes, deals expire', 'Honest businesses give you time to think', 'Yes, say yes'],
+      m: 'Good deals need an answer right now.', f: 'Most honest businesses give you time and written info. Don\'t be pushed.', w: 'FTC phone scam guide.', src: 'ftc-calls' },
+    { id: 'sc33', ages: 'both', topic: 'shopping', s: 'Buying online. Which way to pay gives you the most protection if it goes wrong?',
+      c: ['Gift card', 'Credit card', 'Wire transfer'],
+      m: 'Gift cards or wires are as safe as a card.', f: 'Credit cards let you dispute charges for items you never got.', w: 'FTC online shopping guide.', src: 'ftc-online' },
+    { id: 'sc34', ages: 'both', topic: 'texts', s: 'A text says you won a free gift card. Just give your info to claim it. OK?',
+      c: ['Sure, it is free', 'No, those prizes are not real', 'Give only your bank info'],
+      m: 'Free gift card texts are real.', f: 'Texts promising free prizes or gift cards are not real.', w: 'FTC spam text guide.', src: 'ftc-text' },
+    // ---------- young adults ----------
+    { id: 'sc50', ages: 'ya', topic: 'romance', s: 'You met someone great on a dating app. They need money for a plane ticket to visit. Send it?',
+      c: ['Yes, they will pay you back', 'Never send money to someone you have not met in person', 'Send half'],
+      m: 'Sending money to a new online love is fine.', f: 'Never send money or gifts to someone you have not met in person.', w: 'FTC romance scam guide.', src: 'ftc-romance' },
+    { id: 'sc51', ages: 'ya', topic: 'romance', s: 'Your online match always has a reason not to video chat or meet, like working on an oil rig. Red flag?',
+      c: ['No, just busy', 'Yes, that is a common scam sign', 'Only if they are rude'],
+      m: 'A love who can never meet is just busy.', f: 'Saying they can\'t meet in person is a classic romance scam sign.', w: 'FTC romance scam guide.', src: 'ftc-romance' },
+    { id: 'sc52', ages: 'ya', topic: 'jobs', s: 'Online job: receive packages and reship them overseas. Real job?',
+      c: ['Sure, easy money', 'No, reshipping is never a real job', 'Yes, if they pay weekly'],
+      m: 'Reshipping is a real work-from-home job.', f: 'Reshipping is never a real job. It is part of a scam.', w: 'Goods are often bought with stolen cards.', src: 'ftc-job' },
+    { id: 'sc53', ages: 'ya', topic: 'jobs', s: 'A job ad says "make thousands a month from home with little work." Good find?',
+      c: ['Great find', 'Almost certainly a scam', 'Only if it is on a big site'],
+      m: 'Big pay for little work exists.', f: 'Lots of money fast with little work is almost certainly a scam.', w: 'FTC job scam guide.', src: 'ftc-job' },
+    { id: 'sc54', ages: 'ya', topic: 'jobs', s: 'A new "boss" sends you a check and says buy gift cards for the office. Normal?',
+      c: ['Yes, normal errand', 'No, that is a fake check scam', 'Yes, keep the receipt'],
+      m: 'A new boss might have you buy gift cards.', f: 'It is a scam. The check is fake and you lose the gift card money.', w: 'FTC fake check guide.', src: 'ftc-check' },
+    { id: 'sc55', ages: 'ya', topic: 'jobs', s: 'A job wants you to pay for a starter kit and training before you start. Normal?',
+      c: ['Yes, normal', 'Big red flag', 'Only $99'],
+      m: 'Paying to start a job is normal.', f: 'Scam jobs make you pay for kits or training that are useless.', w: 'FTC job scam guide.', src: 'ftc-job' },
+    { id: 'sc56', ages: 'ya', topic: 'jobs', s: 'You are hired as a mystery shopper. First job: deposit a check, wire part of it on. OK?',
+      c: ['Yes, that is the job', 'No, it is a fake check scam', 'Yes, but keep a tip'],
+      m: 'Mystery shopping jobs work like this.', f: 'This is a fake check scam. The money is gone once you wire it.', w: 'FTC fake check guide.', src: 'ftc-check' },
+    { id: 'sc57', ages: 'ya', topic: 'jobs', s: 'A company will pay you to wrap your car in ads. They send a check and you pay the "installer." Legit?',
+      c: ['Yes, free money', 'No, it is a fake check scam', 'Only for new cars'],
+      m: 'Car wrap ad deals are free money.', f: 'Car wrap offers like this are fake check scams.', w: 'FTC fake check guide.', src: 'ftc-check' },
+    { id: 'sc58', ages: 'ya', topic: 'housing', s: 'A great cheap apartment online. The "owner" wants a deposit before you see it. OK?',
+      c: ['Yes, grab it fast', 'No, scammers copy real listings', 'Yes, by app'],
+      m: 'Paying before seeing a rental is normal.', f: 'Scammers copy real listings and take deposits, then vanish.', w: 'FTC rental scam guide.', src: 'ftc-apartment' },
+    { id: 'sc59', ages: 'ya', topic: 'housing', s: 'A landlord asks you to send screenshots of your credit score from a site they pick. Normal?',
+      c: ['Yes, normal check', 'No, it can be a trick to sign you up for paid monitoring', 'Only once'],
+      m: 'Landlords need your score from their site.', f: 'It can be a scam to sign you up for credit monitoring with recurring fees.', w: 'FTC rental scam guide.', src: 'ftc-apartment' },
+    { id: 'sc60', ages: 'ya', topic: 'jobs', s: 'A friend\'s business says the real money is recruiting others, not selling. Good sign?',
+      c: ['Yes, recruit away', 'Walk away; that is a warning sign', 'Only recruit family'],
+      m: 'Recruiting is where the real money is.', f: 'In a real MLM, you make money selling the product. Recruit-focused pitches are a warning.', w: 'FTC MLM guide.', src: 'ftc-mlm' },
+    { id: 'sc61', ages: 'ya', topic: 'crypto', s: 'A stranger on social media made a fortune in crypto and wants to teach you. Trust it?',
+      c: ['Yes, learn from winners', 'No, crypto investment scams often start this way', 'Yes, if they post screenshots'],
+      m: 'Social media crypto winners want to help you.', f: 'Crypto investment scams often start with a message like this.', w: 'FTC investment scam guide.', src: 'ftc-invest' },
+    { id: 'sc62', ages: 'ya', topic: 'crypto', s: 'A seller says you must pay in crypto up front. Fine?',
+      c: ['Fine, it is modern', 'Only scammers demand crypto up front', 'Fine for small items'],
+      m: 'Some honest sellers require crypto.', f: 'No real business demands crypto in advance. That is always a scam.', w: 'FTC investment scam guide.', src: 'ftc-invest' },
+    { id: 'sc63', ages: 'ya', topic: 'shopping', s: 'An online seller has the sneakers cheap but only takes gift cards or wire. Buy?',
+      c: ['Yes, deal', 'Never buy from sellers who insist on that', 'Yes, by gift card only'],
+      m: 'Gift card only sellers are fine.', f: 'Never buy from sellers who insist on gift cards, wires, apps, or crypto.', w: 'FTC online shopping guide.', src: 'ftc-online' },
+    { id: 'sc64', ages: 'ya', topic: 'texts', s: 'You opened a sketchy delivery link but did not hit submit. All good?',
+      c: ['Yes, no harm', 'Tell your bank anyway', 'Delete your phone'],
+      m: 'No harm if you did not submit.', f: 'If you interacted with the link at all, tell your bank.', w: 'USPIS advice.', src: 'usps-smish' },
+    { id: 'sc65', ages: 'ya', topic: 'texts', s: 'Text: "Your order of a $900 laptop. Call if you did not buy this." Call?',
+      c: ['Yes, call now', 'No, fake invoices are a scam', 'Reply with your card number'],
+      m: 'Call the number on a surprise invoice.', f: 'Fake invoice texts are a scam to get your info.', w: 'FTC spam text guide.', src: 'ftc-text' },
+    { id: 'sc66', ages: 'ya', topic: 'accounts', s: 'Someone DMs saying they are app support and need your login to fix your payment app. Give it?',
+      c: ['Yes, it is support', 'Never give your login to anyone who contacts you', 'Give just the password'],
+      m: 'Support might ask for your login.', f: 'Do not give your account login to anyone who contacts you.', w: 'FTC payment app guide.', src: 'ftc-p2p' },
+    { id: 'sc67', ages: 'ya', topic: 'accounts', s: 'Too many passwords to remember. Write them in a file on your laptop?',
+      c: ['Yes, a file is fine', 'Use a password manager', 'Use one password for all'],
+      m: 'A file of passwords is fine.', f: 'Use a password manager instead of a file.', w: 'CISA advice.', src: 'cisa-pass' },
+    { id: 'sc68', ages: 'ya', topic: 'investing', s: 'An online course has a "proven" trading strategy that makes big money. Worth it?',
+      c: ['Yes, proven', 'Be wary; training scams claim proven strategies', 'Yes, if it has a money back promise'],
+      m: '"Proven" strategies are a safe buy.', f: 'Investment training scams use words like "proven" and "tested."', w: 'FTC investment scam guide.', src: 'ftc-invest' },
+    { id: 'sc69', ages: 'ya', topic: 'payments', s: 'A message says pay a small fee on a payment app to collect your winnings. OK?',
+      c: ['Yes, small fee', 'Do not pay to claim a prize', 'Pay with gift card instead'],
+      m: 'A small fee to collect winnings is OK.', f: 'Do not send a payment to claim a prize or winnings.', w: 'FTC payment app guide.', src: 'ftc-p2p' },
+    // ---------- adults ----------
+    { id: 'sc80', ages: 'adult', topic: 'family', s: 'A "lawyer" calls saying your grandson is in jail and needs bail. Sounds official. Real?',
+      c: ['Yes, a lawyer called', 'Could be a scam; scammers pose as lawyers or police', 'Yes, pay now'],
+      m: 'An official sounding caller is real.', f: 'Scammers pretend to be lawyers, police, or doctors. Slow down and verify.', w: 'FTC family emergency guide.', src: 'ftc-family' },
+    { id: 'sc81', ages: 'adult', topic: 'family', s: 'The caller knew your name, town, and your grandkid\'s name. So it must be real?',
+      c: ['Yes, they knew details', 'No, scammers find details online', 'Yes, they know too much'],
+      m: 'Knowing details proves it is real.', f: 'Scammers can learn a lot from social media or hacks.', w: 'FTC family emergency guide.', src: 'ftc-family' },
+    { id: 'sc82', ages: 'adult', topic: 'family', s: 'A family emergency caller says pay by wire, crypto, or gift card right away. Normal?',
+      c: ['Yes, emergencies are fast', 'That is how these scams always ask', 'Yes, but get a receipt'],
+      m: 'Emergencies need wire or gift card pay.', f: 'These scammers always push fast pay by wire, crypto, app, or gift card.', w: 'FTC family emergency guide.', src: 'ftc-family' },
+    { id: 'sc83', ages: 'adult', topic: 'imposters', s: 'A Social Security caller gives a real employee\'s name and sends a photo ID. Real then?',
+      c: ['Yes, the name is real', 'Not proof; scammers use real names', 'Yes, IDs cannot be faked'],
+      m: 'A real name and ID photo prove it.', f: 'Scammers may use the name of a real SSA worker and send a picture as proof.', w: 'SSA OIG scam page.', src: 'ssa-scam' },
+    { id: 'sc84', ages: 'adult', topic: 'imposters', s: 'An "FTC agent" says withdraw cash or buy gold and hand it over for safekeeping. Real?',
+      c: ['Yes, for safety', 'No, the FTC never does that', 'Only gold'],
+      m: 'Agencies may hold your gold for safety.', f: 'The FTC will never tell you to withdraw cash or buy gold for someone.', w: 'FTC warning.', src: 'ftc-signs' },
+    { id: 'sc85', ages: 'adult', topic: 'tech', s: 'Tech support "transfers" you to a government agent to protect your money. Trust it?',
+      c: ['Yes, the government is helping', 'No, that is part of the scam', 'Yes, with a badge number'],
+      m: 'Tech support can link you to a real agent.', f: 'This is a lie. The "agent" is a scammer too.', w: 'FTC tech support scam guide.', src: 'ftc-tech' },
+    { id: 'sc86', ages: 'adult', topic: 'romance', s: 'Your widowed dad has a new online friend who now wants to help him invest. Fine?',
+      c: ['Fine, nice friend', 'Warning sign; scammers build trust then pitch investing', 'Fine if small amounts'],
+      m: 'An online friend offering to invest is kind.', f: 'Scammers build friendship or love over time, then offer to help invest money.', w: 'SSA OIG scam page.', src: 'ssa-scam' },
+    { id: 'sc87', ages: 'adult', topic: 'identity', s: 'You already have a credit freeze. Can you still add a fraud alert?',
+      c: ['No, one or the other', 'Yes, you can add a fraud alert too', 'Only after 1 year'],
+      m: 'You cannot have both a freeze and a fraud alert.', f: 'Even with a freeze, you can place an initial fraud alert.', w: 'FTC identity theft guide.', src: 'ftc-idtheft' },
+    { id: 'sc88', ages: 'adult', topic: 'identity', s: 'Your kid\'s school or a doctor asks for your Social Security number. Must you give it?',
+      c: ['Yes, always', 'Ask why; they may not need it', 'Yes, by text'],
+      m: 'Always give your SSN when asked.', f: 'Ask why they need it. If not satisfied, do not share it.', w: 'FTC identity theft guide.', src: 'ftc-idtheft' },
+    { id: 'sc89', ages: 'adult', topic: 'identity', s: 'Old bank statements and Medicare papers. Toss in the trash?',
+      c: ['Yes, trash is fine', 'Shred them first', 'Recycle as is'],
+      m: 'Toss old papers in the trash.', f: 'Shred documents with personal info before throwing them away.', w: 'FTC identity theft guide.', src: 'ftc-idtheft' },
+    { id: 'sc90', ages: 'adult', topic: 'calls', s: 'A company robocalls you to sell something. That is legal without asking?',
+      c: ['Yes, any time', 'They need your written permission', 'Only after 9 PM'],
+      m: 'Sales robocalls need no permission.', f: 'A company needs your written permission to robocall you to sell something.', w: 'FTC phone scam guide.', src: 'ftc-calls' },
+    { id: 'sc91', ages: 'adult', topic: 'payments', s: 'You gave a scammer gift card numbers. Too late to do anything?',
+      c: ['Yes, it is gone', 'Report to the card company fast; ask for a refund', 'Buy more cards'],
+      m: 'Nothing can be done after a gift card scam.', f: 'Report it to the gift card company right away and ask for your money back.', w: 'Some companies may refund you.', src: 'ftc-gift' },
+    { id: 'sc92', ages: 'adult', topic: 'payments', s: 'You wired money to a scammer. Bother calling the wire company?',
+      c: ['No, wires are final', 'Yes, report it and ask to reverse it', 'Only next month'],
+      m: 'No point calling about a wire.', f: 'Call the wire company right away and ask for a reversal.', w: 'It is unlikely, but important to ask.', src: 'ftc-check' },
+    { id: 'sc93', ages: 'adult', topic: 'prizes', s: 'A letter says you won a government-run lottery. Pay the taxes up front to collect. Real?',
+      c: ['Yes, it is official', 'No, scammers fake government lotteries', 'Yes, taxes are normal'],
+      m: 'A government lottery letter is official.', f: 'Scammers pretend to be from the government. Paying to collect means scam.', w: 'FTC prize guide.', src: 'ftc-prize' },
+    { id: 'sc94', ages: 'adult', topic: 'prizes', s: 'A famous sweepstakes company calls asking for your bank number to deposit your win. OK?',
+      c: ['Yes, they are well known', 'No real sweepstakes asks for that', 'Only the routing number'],
+      m: 'Known sweepstakes firms ask for your bank number.', f: 'No real sweepstakes company will ask for money or your bank info to claim a prize.', w: 'FTC prize guide.', src: 'ftc-prize' },
+    { id: 'sc95', ages: 'adult', topic: 'payments', s: 'A caller says your utility bill is late and power goes off in an hour unless you pay now. Real?',
+      c: ['Yes, pay fast', 'No, utilities don\'t work that way', 'Yes, by gift card'],
+      m: 'Utilities cut power within the hour by phone.', f: 'Utility companies do not work that way. It is a scam.', w: 'FTC gift card guide.', src: 'ftc-gift' },
+    { id: 'sc96', ages: 'adult', topic: 'investing', s: 'A real estate seminar says its coaching makes investing "risk free." True?',
+      c: ['Yes, with good coaching', 'No, that is a training scam claim', 'Yes, if prices rise'],
+      m: 'Coaching can make investing risk free.', f: 'Claims of "risk free" profits are a sign of a real estate training scam.', w: 'FTC investment scam guide.', src: 'ftc-invest' },
+    { id: 'sc97', ages: 'adult', topic: 'family', s: 'The "grandkid" begs you not to tell their parents. Keep it quiet?',
+      c: ['Yes, respect their wish', 'No, check with family first', 'Pay then tell'],
+      m: 'Keep a grandkid\'s emergency secret.', f: 'Scammers ask you to keep it secret. Contact family to check.', w: 'FTC gift card guide.', src: 'ftc-gift' },
+    { id: 'sc98', ages: 'adult', topic: 'payments', s: 'You mailed cash to a scammer by FedEx this morning. Anything to do?',
+      c: ['No, it is gone', 'Contact FedEx as soon as possible', 'Mail more to get it back'],
+      m: 'Mailed cash cannot be stopped.', f: 'Contact the delivery service right away.', w: 'FTC advice after a scam.', src: 'ftc-scammed' },
+    { id: 'sc99', ages: 'adult', topic: 'imposters', s: 'A caller says the IRS will cancel your business license if you do not pay today. Possible?',
+      c: ['Yes, they can', 'No, the IRS cannot revoke your licenses', 'Only on Fridays'],
+      m: 'The IRS can pull your license over the phone.', f: 'The IRS cannot revoke your driver\'s or business licenses.', w: 'IRS guidance.', src: 'irs-call' }
+  ]
+});
+</script>
+<script data-src="content/decks/zz_steps_stub.js">
+// Stub deck in the step-list format, for the future "Do It" section. It is not shown in Know It.
+// It only proves deck.js can load another format with no engine changes.
+LSA.deck({
+  id: 'steps-stub', name: 'Do It (coming soon)', icon: '🧰', format: 'steps', sources: {},
+  cards: [{ id: 'st01', title: 'How to play a Gut Check round', steps: ['Read the scene.', 'Pick an answer.', 'Say how sure you are.', 'Read the fix.'] }]
+});
+</script>
+<script data-src="ui/ui.js">
+// UI. Renders screens into #app. All actions are taps (data-act), guarded against double taps.
+(function () {
+  var KEY = 'lsa_save', app = document.getElementById('app');
+  var guard = LSA.tapGuard(300);
+  var U = { screen: 'home', notice: '', mm: null, age: null, name: '' };
+  var ld = LSA.loadSave(localStorage.getItem(KEY));
+  if (ld.broken) { try { localStorage.setItem(KEY + '_broken', localStorage.getItem(KEY)); } catch (e) { } U.notice = 'Your saved game could not be read, so we started fresh.'; }
+  var S = ld.save;
+  function save() { try { localStorage.setItem(KEY, LSA.dumpSave(S)); } catch (e) { } }
+  function today() { var d = new Date(); return Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 86400000); }
+  function P() { return S.active ? S.profiles[S.active] : null; }
+  function decks() { var all = LSA.knowDecks(); return (S.decks || all).filter(function (d) { return all.indexOf(d) >= 0; }); }
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function b(act, label, cls, extra) { return '<button data-act="' + act + '"' + (cls ? ' class="' + cls + '"' : '') + (extra || '') + '>' + label + '</button>'; }
+  function ver() { return '<div class="ver" id="ver">' + esc(LSA_BUILD.label) + '</div>'; }
+  function ageName(a) { return a === 'ya' ? 'Young adults (15 to 30)' : 'Adults (30+)'; }
+  function go(s) { U.screen = s; S.screen = s; save(); render(); window.scrollTo(0, 0); }
+
+  var R = {};
+  R.home = function () {
+    var ids = Object.keys(S.profiles), h = '<h1>Life Skills Academy</h1><p>Know It: fast real life myths. Pick, say how sure you are, then see the fix.</p>';
+    if (U.notice) h += '<p class="note">' + esc(U.notice) + '</p>';
+    h += '<h2>Who is playing?</h2>';
+    ids.forEach(function (id) { var p = S.profiles[id]; h += b('prof', '👤 ' + esc(p.name) + ' <span class="muted">' + (p.age === 'ya' ? '15 to 30' : '30+') + '</span>', '', ' data-id="' + id + '"'); });
+    h += b('newprof', '➕ Add a player', 'main') + b('about', 'About and sources', 'ghost');
+    return h + ver();
+  };
+  R.newprof = function () {
+    var a = U.age, edit = U.edit;
+    return '<h1>' + (edit ? 'Change age group' : 'New player') + '</h1>' +
+      (edit ? '' : '<label for="nm">Name</label><input id="nm" maxlength="20" autocomplete="off" value="' + esc(U.name) + '">') +
+      '<h2>Age group</h2>' + b('age', 'Young adults (15 to 30)', a === 'ya' ? 'on' : '', ' data-a="ya"') + b('age', 'Adults (30+)', a === 'adult' ? 'on' : '', ' data-a="adult"') +
+      b('saveprof', 'Save', 'main', a ? '' : ' disabled') + b(edit ? 'menu' : 'home', 'Back', 'ghost');
+  };
+  R.menu = function () {
+    var p = P(), live = p.round && p.round.stage !== 'done', seen = LSA.MM.seenCards(p, decks()).length;
+    var h = '<h1>Hi, ' + esc(p.name) + '</h1><p class="muted">' + ageName(p.age) + ' · ' + Object.keys(p.boxes).length + ' cards seen · ' + p.stats.rounds + ' rounds</p>';
+    h += b('play', live ? '▶ Resume round' : '▶ Play Gut Check', 'main');
+    h += b('match', '🧩 Myth Match', 'alt', seen < 2 ? ' disabled' : '') + (seen < 2 ? '<p class="muted">Myth Match opens after you see a few cards.</p>' : '');
+    h += '<h2>Decks</h2>';
+    LSA.knowDecks().forEach(function (id) { var d = LSA.decks[id], on = decks().indexOf(id) >= 0; h += b('deck', d.icon + ' ' + esc(d.name) + (on ? ' ✓' : ''), on ? 'on' : 'ghost', ' data-id="' + id + '"'); });
+    h += b('editage', 'Change age group', 'ghost') + b('about', 'About and sources', 'ghost') + b('home', 'Switch player', 'ghost');
+    return h + ver();
+  };
+  R.play = function () {
+    var p = P(), st = p.round;
+    if (!st || st.stage === 'done') return R.recap();
+    var it = LSA.GC.cur(st), c = LSA.GC.card(st), base = st.q.filter(function (x) { return !x.again; }).length;
+    var top = '<div class="top"><span class="muted">Card ' + (st.i + 1) + ' of ' + st.q.length + (it.again ? ' · one more try' : '') + '</span>' + b('menu', 'Quit', 'ghost') + '</div>';
+    if (st.stage === 'fix') return top + fix(c, it);
+    var h = '<div class="play"><div class="card"><div class="scene" id="scene">' + esc(LSA.scenario(c, p.age)) + '</div>';
+    if (st.stage === 'conf') h += '<p class="muted">How sure are you?</p>';
+    h += '</div><div>';
+    if (st.stage === 'ask') it.order.forEach(function (ci, pos) { h += b('ans', esc(c.c[ci]), 'ans', ' data-p="' + pos + '"'); });
+    else {
+      h += '<button class="pick" disabled>' + esc(c.c[it.order[it.pick]]) + '</button>';
+      LSA.CONF.forEach(function (t, k) { h += b('conf', t, k === 2 ? 'main' : '', ' data-k="' + k + '"'); });
+    }
+    return top + h + '</div></div>';
+  };
+  function fix(c, it) {
+    var d = LSA.decks[c.deck], s = d.sources[c.src];
+    var h = '<div class="card fix" id="fix">';
+    if (it.wow) h += '<div class="wow" id="wow">😮 Wow!</div><p class="muted">You were sure, but it was a myth. Big surprises stick best.</p>';
+    h += '<p class="' + (it.right ? 'ok' : 'wrong') + '">' + (it.right ? '✅ You got it.' : '❌ Not this time.') + '</p>';
+    h += '<p><span class="lab">Many people think:</span> ' + esc(c.m) + '</p><p class="wrong">That is wrong.</p>';
+    h += '<p><span class="lab">Do this:</span> ' + esc(c.f) + '</p><p><span class="lab">Why:</span> ' + esc(c.w) + '</p>';
+    h += '<a class="src" href="' + esc(s[1]) + '" target="_blank" rel="noopener">Source: ' + esc(s[0]) + '</a></div>';
+    return h + b('next', 'Next', 'main');
+  }
+  R.recap = function () {
+    var p = P(), st = p.round;
+    if (!st) return R.menu();
+    var h = '<h1>Round done</h1><p>You got ' + st.right + ' of ' + st.q.length + ' right.</p><div class="card" id="recap"><h2>😮 Wow cards</h2>';
+    if (!st.wows.length) h += '<p class="muted">No Wow cards this round. No sure-but-wrong answers.</p>';
+    else h += '<ul class="list">' + st.wows.map(function (id) { var c = LSA.cardIndex[id]; return '<li><b>Myth:</b> ' + esc(c.m) + '<br><b>Fix:</b> ' + esc(c.f) + '</li>'; }).join('') + '</ul>';
+    return h + '</div>' + b('play', 'Play another round', 'main') + b('match', '🧩 Myth Match', 'alt') + b('menu', 'Menu', 'ghost');
+  };
+  R.match = function () {
+    var st = U.mm;
+    if (!st) return R.menu();
+    var h = '<div class="top"><h1>Myth Match</h1>' + b('menu', 'Back', 'ghost') + '</div><p class="muted">Tap a myth (blue), then its fix (green).</p><div class="tiles" id="tiles">';
+    st.tiles.forEach(function (t, i) {
+      var c = LSA.cardIndex[t.id], cls = 'tile ' + t.k + (st.cleared[i] ? ' gone' : '') + (st.sel === i ? ' sel' : '') + (U.miss && U.miss.indexOf(i) >= 0 ? ' miss' : '');
+      h += b('tile', esc(t.k === 'm' ? c.m : c.f), cls, ' data-i="' + i + '"');
+    });
+    h += '</div>';
+    if (st.done) h += '<p class="ok" id="mmdone">🎉 All matched in ' + st.tries + ' tries!</p>' + b('match', 'Play again', 'main') + b('menu', 'Menu', 'ghost');
+    return h;
+  };
+  R.about = function () {
+    var h = '<div class="top"><h1>About</h1>' + b(P() ? 'menu' : 'home', 'Back', 'ghost') + '</div>';
+    h += '<p>Each card is a real moment where the quick answer is often wrong. You pick, say how sure you are, then see the fix and its source. Cards come back on a schedule (1, 3, 7, 14 days) when you get them right. Built for families. No ads, no account, your progress stays on this phone.</p>';
+    h += '<h2>Why it works</h2><ul class="list" id="research">';
+    LSA.RESEARCH.forEach(function (r) { h += '<li>' + esc(r[0]) + '<br><span class="muted">' + esc(r[1]) + '</span><a class="src" href="' + r[2] + '" target="_blank" rel="noopener">' + r[2] + '</a></li>'; });
+    h += '</ul><p class="muted">The real life scene format is our design choice. We did not find one strong review that proves scenes beat plain questions.</p><h2>Card sources</h2>';
+    LSA.knowDecks().forEach(function (id) {
+      var d = LSA.decks[id]; h += '<h2>' + d.icon + ' ' + esc(d.name) + '</h2><ul class="list">';
+      Object.keys(d.sources).forEach(function (k) { h += '<li><a class="src" data-sid="' + k + '" href="' + esc(d.sources[k][1]) + '" target="_blank" rel="noopener">' + esc(d.sources[k][0]) + '</a></li>'; });
+      h += '</ul>';
+    });
+    h += '<p class="muted">This is general info, not medical, legal or money advice. In an emergency call 911.</p>';
+    return h + ver();
+  };
+
+  function render() { app.innerHTML = (R[U.screen] || R.home)(); }
+
+  var A = {
+    home: function () { U.notice = ''; S.active = null; go('home'); },
+    menu: function () { go(P() ? 'menu' : 'home'); },
+    about: function () { go('about'); },
+    prof: function (el) { S.active = el.dataset.id; U.notice = ''; go('menu'); },
+    newprof: function () { U.age = null; U.name = ''; U.edit = false; go('newprof'); },
+    editage: function () { U.age = P().age; U.edit = true; go('newprof'); },
+    age: function (el) { var nm = document.getElementById('nm'); if (nm) U.name = nm.value; U.age = el.dataset.a; render(); },
+    saveprof: function () {
+      if (!U.age) return;
+      if (U.edit) { var p = P(); if (p.age !== U.age) { p.age = U.age; p.round = null; } }
+      else { var nm = document.getElementById('nm'); LSA.addProfile(S, (nm && nm.value.trim()) || 'Player', U.age); }
+      go('menu');
+    },
+    deck: function (el) {
+      var cur = decks(), id = el.dataset.id, i = cur.indexOf(id);
+      if (i >= 0) { if (cur.length > 1) cur.splice(i, 1); } else cur.push(id);
+      S.decks = cur; P().round = null; save(); render();
+    },
+    play: function () {
+      var p = P();
+      if (!p.round || p.round.stage === 'done') p.round = LSA.GC.start(p, decks(), today(), (Date.now() ^ (Math.random() * 1e9)) >>> 0);
+      go('play');
+    },
+    ans: function (el) { LSA.GC.pick(P().round, +el.dataset.p); save(); render(); },
+    conf: function (el) { LSA.GC.confirm(P().round, P(), +el.dataset.k); save(); render(); window.scrollTo(0, 0); },
+    next: function () { LSA.GC.next(P().round, P()); go('play'); },
+    match: function () { U.mm = LSA.MM.start(P(), decks(), (Date.now() ^ (Math.random() * 1e9)) >>> 0, 4); U.miss = null; go(U.mm ? 'match' : 'menu'); },
+    tile: function (el) {
+      var i = +el.dataset.i, j = U.mm.sel, res = LSA.MM.tap(U.mm, i);
+      U.miss = res === 'miss' ? [i, j] : null; render();
+      if (res === 'miss') setTimeout(function () { U.miss = null; if (U.screen === 'match') render(); }, 600);
+    }
+  };
+  app.addEventListener('click', function (e) {
+    var el = e.target.closest('[data-act]'); if (!el || el.disabled) return;
+    var act = el.dataset.act;
+    // One guard for the whole screen: a double tap never counts twice, even when the screen changes under the finger.
+    if (!guard('tap', Date.now())) return;
+    if (A[act]) A[act](el);
+  });
+  // Resume where we left off (also after an auto update reload).
+  if (P() && S.screen && ['menu', 'play', 'about'].indexOf(S.screen) >= 0) U.screen = S.screen;
+  LSA.UI = { save: save, S: function () { return S; }, U: U, render: render };
+  render();
+})();
+</script>
+<script>
+(function () {
+  if (!('serviceWorker' in navigator) || location.protocol === 'file:') return;
+  var had = !!navigator.serviceWorker.controller, reloading = false;
+  function reloadNow() { if (reloading) return; reloading = true; try { if (LSA.UI) LSA.UI.save(); } catch (e) { } location.reload(); }
+  navigator.serviceWorker.addEventListener('controllerchange', function () { if (!had) { had = true; return; } reloadNow(); });
+  function check(reg) {
+    if (reg) reg.update().catch(function () { });
+    fetch('version.json?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (v) {
+      if (!v || v.id === LSA_BUILD.id) return; var k = 'lsa_reload_' + v.id; if (sessionStorage.getItem(k)) return; sessionStorage.setItem(k, '1');
+      setTimeout(reloadNow, 1500);
+    }).catch(function () { });
+  }
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).then(function (reg) {
+      check(reg); document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') check(reg); });
+      setInterval(function () { check(reg); }, 20 * 60 * 1000);
+    }).catch(function () { });
+  });
+})();
+</script>
+</body></html>

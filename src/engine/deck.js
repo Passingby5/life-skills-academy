@@ -24,9 +24,13 @@ LSA.tellLimit = function (id, k) { var e = LSA.FROZEN_DECKS.indexOf(id) >= 0 && 
 LSA.firstWord = function (x) { return x.split(/[ ,;:]/)[0]; };
 // Answer tells. words: first word -> [uses, right]. strat: expected score of simple guessing rules (ties split evenly).
 // Deck sections, in picker order. A deck without a section is Everyday.
-LSA.SECTIONS = ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living', 'Big Debates'];
+LSA.SECTIONS = ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living', 'Big Debates', 'Street Smart'];
 // Short intro shown at the top of a section in the picker.
-LSA.SECTION_NOTES = { 'Big Debates': 'Facts only. On faith and moral questions we show what each side teaches, not who is right.' };
+LSA.SECTION_NOTES = { 'Big Debates': 'Facts only. On faith and moral questions we show what each side teaches, not who is right.', 'Street Smart': 'Real cases and real laws. Learn to spot the trap and get out safe. Every card cites its source.' };
+// Street Smart rules (STREET-SMART-SPEC.md). Every card cites a law, case or account; 'none' cards (no safe choice was left)
+// stay a small minority so they are not a tell; banned words keep it recognition and defense only, never gore or how-to.
+LSA.STREET = 'Street Smart'; LSA.MAX_NONE_SHARE = 0.15;
+LSA.RX_BANNED = /\b(gore|gory|disembowel|decapitat\w*|dismember\w*|how to (make|build|cook|spike|stalk|launder)|step[- ]by[- ]step (attack|bomb))\b/i;
 LSA.sectionsOf = function (ids) {
   var names = LSA.SECTIONS.slice();
   ids.forEach(function (id) { var s = LSA.decks[id].section; if (names.indexOf(s) < 0) names.push(s); });
@@ -113,6 +117,12 @@ LSA.checkDeck = function (d) {
     if (c.img !== undefined && !(typeof c.img === 'string' && LSA.IMG_RX.test(c.img))) errs.push(p + 'img must be a path like img/name.svg');
     if (c.imgAlt !== undefined && !(typeof c.imgAlt === 'string' && c.imgAlt.trim())) errs.push(p + 'imgAlt must be text');
     if (c.src && !(d.sources && d.sources[c.src])) errs.push(p + 'unknown source ' + c.src);
+    if (d.section === LSA.STREET) {
+      if (!c.cite || typeof c.cite !== 'string') errs.push(p + 'Street Smart card needs a cite');
+      if (c.kind !== undefined && c.kind !== 'none') errs.push(p + 'bad kind');
+      if (c.kind === 'none' && !/^None of these\b/.test(c.c && c.c[1] || '')) errs.push(p + 'a none card must have "None of these..." as its right choice');
+      if (LSA.RX_BANNED.test([c.s && (c.s.ya || c.s), c.s && c.s.adult, c.f, c.w, c.m].concat(c.c || []).join(' '))) errs.push(p + 'banned word (gore or how-to)');
+    }
     if (c.also !== undefined && !(Array.isArray(c.also) && c.also.length && c.also.every(function (k) { return k !== c.src && d.sources && d.sources[k]; }))) errs.push(p + 'also must list other known sources');
   });
   // Length must give no clue: the right answer may not be much longer than the others, or the longest too often.
@@ -121,6 +131,15 @@ LSA.checkDeck = function (d) {
     var r = c.c[1].length, o = Math.max(c.c[0].length, c.c[2].length);
     if (r > LSA.MAX_RIGHT_RATIO * o) errs.push(d.id + '/' + c.id + ': right answer is ' + (r / o).toFixed(2) + 'x the next longest');
   });
+  if (d.section === LSA.STREET) {
+    if (!d.notice && d.needNotice !== false) errs.push(d.id + ': Street Smart deck needs a notice line');
+    if (['teen', 'adult'].indexOf(d.rating) < 0) errs.push(d.id + ': rating must be teen or adult');
+    var nn = d.cards.filter(function (c) { return c.kind === 'none'; }).length;
+    if (nn / d.cards.length > LSA.MAX_NONE_SHARE) errs.push(d.id + ': "none" cards are ' + Math.round(100 * nn / d.cards.length) + '% (max 15%)');
+    // A "None of these" choice must also show up as a wrong choice, so it is never a sure tell.
+    var nw = d.cards.filter(function (c) { return c.kind !== 'none' && (c.c || []).some(function (x, k) { return k !== 1 && /^None of these\b/.test(x); }); }).length;
+    if (nn && nw < nn) errs.push(d.id + ': "None of these" is right on ' + nn + ' cards but a wrong choice on only ' + nw);
+  }
   var ls = LSA.lengthStats(d);
   if (ls.rightLongest > LSA.MAX_RIGHT_LONGEST) errs.push(d.id + ': right answer is the longest on ' + Math.round(ls.rightLongest * 100) + '% of cards');
   ['ya', 'adult'].forEach(function (a) {

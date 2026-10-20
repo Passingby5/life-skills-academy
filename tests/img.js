@@ -31,7 +31,7 @@ async function imgOk(page, vp, where) {
     await page.click('[data-act=newprof]'); await wait(page); await page.fill('#nm', 'Pic'); await page.click('[data-act="age"][data-a="ya"]'); await wait(page); await page.click('[data-act=saveprof]'); await wait(page);
     // Picker: 12 decks in 4 sections, in order, all reachable and none wider than the screen.
     const pk = await page.evaluate(() => ({ sects: [...document.querySelectorAll('#picker details')].map(d => d.dataset.sect), n: document.querySelectorAll('#picker [data-act=deck]').length, sw: document.documentElement.scrollWidth }));
-    assert.deepStrictEqual(pk.sects, ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living', 'Big Debates']); assert.strictEqual(pk.n, 21); assert(pk.sw <= vp.width, 'picker fits width');
+    assert.deepStrictEqual(pk.sects, ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living', 'Big Debates', 'Street Smart']); assert.strictEqual(pk.n, 22); assert(pk.sw <= vp.width, 'picker fits width');
     // Each section header has a fold arrow that turns when open.
     const arrows = await page.evaluate(() => [...document.querySelectorAll('#picker summary')].map(s => [getComputedStyle(s, '::before').content, getComputedStyle(s, '::before').transform, s.parentNode.open]));
     arrows.forEach(([c, tr, open]) => { assert(/\u25B8|▸/.test(c), 'fold arrow ' + c); assert(open ? tr !== 'none' : tr === 'none', 'arrow turns when open ' + tr); });
@@ -69,8 +69,8 @@ async function imgOk(page, vp, where) {
     console.log('ok ' + tag + ' picture works offline');
     // Home screen picker shows too, grouped the same way.
     await ctx.setOffline(false); await page.click('[data-act=menu]'); await wait(page); await page.click('[data-act=home]'); await wait(page);
-    assert.strictEqual(await page.evaluate(() => document.querySelectorAll('#picker details').length), 6);
-    console.log('ok ' + tag + ' home screen deck picker grouped in 6 sections');
+    assert.strictEqual(await page.evaluate(() => document.querySelectorAll('#picker details').length), 7);
+    console.log('ok ' + tag + ' home screen deck picker grouped in 7 sections');
     assert.deepStrictEqual(errs, []); await ctx.close();
   }
   console.log('ok img and picker tests passed'); await b.close(); server.close(); fs.rmSync(dir, { recursive: true, force: true });

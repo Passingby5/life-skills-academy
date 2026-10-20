@@ -103,8 +103,10 @@
     h += '<p class="' + (it.right ? 'ok' : 'wrong') + '">' + (it.right ? '✅ You got it.' : '❌ Not this time.') + '</p>';
     h += '<p><span class="lab">Many people think:</span> ' + esc(c.m) + '</p><p class="wrong">That is wrong.</p>';
     h += '<p><span class="lab">Do this:</span> ' + esc(c.f) + '</p><p><span class="lab">Why:</span> ' + esc(c.w) + '</p>';
+    if (c.cite) h += '<p class="cite"><span class="lab">Law or case:</span> ' + esc(c.cite) + '</p>';
     h += '<a class="src" href="' + esc(s[1]) + '" target="_blank" rel="noopener">Source: ' + esc(s[0]) + '</a>';
     (c.also || []).forEach(function (k) { var x = d.sources[k]; h += '<a class="src also" href="' + esc(x[1]) + '" target="_blank" rel="noopener">Also: ' + esc(x[0]) + '</a>'; });
+    if (d.notice) h += '<p class="muted notice" id="notice">' + esc(d.notice) + '</p>';
     h += '</div>';
     return h + b('next', 'Next', 'main');
   }

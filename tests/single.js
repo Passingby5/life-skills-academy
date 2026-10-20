@@ -12,7 +12,7 @@ assert.deepStrictEqual(fs.readdirSync(dir), ['test.html'], 'only the one file');
   await page.click('#picker [data-act=deck][data-id=fieldcare]'); await wait();
   for (const id of ['firstaid', 'kitchen', 'money', 'scams']) { await page.evaluate(() => document.querySelectorAll('#picker details').forEach(d => d.open = true)); await page.click(`#picker [data-act=deck][data-id=${id}]`); await wait(); }
   let seen = 0;
-  for (let round = 0; round < 4 && !seen; round++) {
+  for (let round = 0; round < 12 && !seen; round++) {
     await page.click('[data-act=play]'); await wait();
     while (await page.$('[data-act=ans], [data-act=conf], [data-act=next]')) {
       if (await page.$('[data-act=next]')) {

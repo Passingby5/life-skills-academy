@@ -313,8 +313,8 @@ t('v6-5 img field: checker accepts img/name.svg, rejects others; alt text defaul
   ['img/a.png', '../x.svg', 'http://x/y.svg', 5].forEach(v => { c.img = v; assert(L.checkAll().some(e => /fa01: img must be/.test(e)), String(v)); });
   c.img = keep; delete c.img;
   assert(/burns/.test(L.imgAlt(c))); eq(L.imgAlt({ imgAlt: 'A leg with a band', topic: 'x' }), 'A leg with a band');
-  eq(L.sectionsOf(L.knowDecks()).map(g => g.name), ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living', 'Big Debates']); eq(L.sectionsOf(L.knowDecks())[0].ids, ['firstaid', 'kitchen', 'money', 'scams']);
-  eq(L.defaultDecks(), ['firstaid', 'kitchen', 'money', 'scams']); eq(L.knowDecks().length, 13);
+  eq(L.sectionsOf(L.knowDecks()).map(g => g.name), ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living', 'Big Debates', 'Street Smart']); eq(L.sectionsOf(L.knowDecks())[0].ids, ['firstaid', 'kitchen', 'money', 'scams']);
+  eq(L.defaultDecks(), ['firstaid', 'kitchen', 'money', 'scams']); eq(L.knowDecks().length, 14);
 });
 
 // ---------- v8 tests ----------
@@ -455,7 +455,7 @@ t('v9 md22 soft wording, sv74 answers the "always safe" question', () => {
 t('v10 controversy deck: 72 cards in Big Debates, opt-in, with the facts-only note', () => {
   const d = L.decks.controversy; eq(d.cards.length, 72); eq(d.section, 'Big Debates');
   assert(d.cards.every(c => /^ct\d\d$/.test(c.id))); assert(L.defaultDecks().indexOf('controversy') < 0);
-  eq(L.sectionsOf(L.knowDecks()).slice(-1)[0].ids, ['controversy']);
+  eq(L.sectionsOf(L.knowDecks()).find(g => g.name === 'Big Debates').ids, ['controversy']);
   eq(L.SECTION_NOTES['Big Debates'], 'Facts only. On faith and moral questions we show what each side teaches, not who is right.');
   eq(Object.keys(d.sources).length, 43); assert(d.cards.every(c => d.sources[c.src]));
 });
@@ -491,5 +491,26 @@ t('v11 sourcing and wording fixes: ct59, ct73, ct26, ct20, fd27 title, speakers'
 t('v11 P5 single-file copy never registers a service worker', () => {
   assert(/window\.LSA_SINGLE\) return;/.test(fs.readFileSync(path.join(__dirname, '../build.js'), 'utf8')));
   assert(/window\.LSA_SINGLE = true/.test(fs.readFileSync(path.join(__dirname, '../tools/testhtml.js'), 'utf8')));
+});
+// ---------- v12 tests (Street Smart: Legal Traps) ----------
+t('v12 legal deck: 70 cards in Street Smart, opt-in, every card cites a law or case with a saved source', () => {
+  const d = L.decks.legal; eq(d.cards.length, 70); eq(d.section, 'Street Smart'); eq(d.rating, 'teen');
+  assert(L.defaultDecks().indexOf('legal') < 0); assert(/not legal advice/i.test(d.notice));
+  assert(d.cards.every(c => /^lg\d\d$/.test(c.id) && c.cite && d.sources[c.src]));
+  ['ya', 'adult'].forEach(a => assert(L.cardsFor(a, ['legal']).length >= 50));
+  // Every quote (main and also) is in the vendored excerpt of its saved source (tools/street-quotes.js checked it against sources/street/).
+  const X = require('./fixtures/street-excerpts.json'), Q = require('../tools/quotes-new.json');
+  d.cards.forEach(c => [[c.id, c.src]].concat((c.also || []).map(k => [c.id + '@' + k, k])).forEach(([key, k]) => { const q = JSON.parse(Q[key]); assert(X[k] && X[k].some(e => e.includes(q)), key); }));
+});
+t('v12 Street Smart checker: cite, rating, notice, none-card share and tell, banned words', () => {
+  const mk = (n, extra) => Array.from({ length: n }, (_, i) => Object.assign({ id: 'z' + i, deck: 'zz', topic: 't', ages: 'both', s: 's', c: ['aaaa' + i, 'b' + i, 'cccc' + i], m: 'm', f: 'f', w: 'w', src: 'a', cite: 'x' }, extra && extra(i)));
+  const base = { id: 'zz', format: 'gutcheck', section: 'Street Smart', rating: 'teen', notice: 'n', sources: { a: ['A', 'u'] } };
+  eq(L.checkDeck(Object.assign({}, base, { cards: mk(60) })), []);
+  let e = L.checkDeck(Object.assign({}, base, { rating: 'x', notice: '', cards: mk(60, i => i === 0 ? { cite: '' } : {}) })).join('|');
+  assert(/needs a cite/.test(e) && /rating/.test(e) && /notice/.test(e));
+  e = L.checkDeck(Object.assign({}, base, { cards: mk(60, i => i < 10 ? { kind: 'none', c: ['aaaaaaaaaaaaaaaaaaaaaaaaa' + i, 'None of these; too deep ' + i, 'cccccccccccccccccccccccccc' + i] } : {}) })).join('|');
+  assert(/"none" cards are 17%/.test(e) && /wrong choice on only 0/.test(e), e);
+  e = L.checkDeck(Object.assign({}, base, { cards: mk(60, i => i === 0 ? { kind: 'none' } : i === 1 ? { f: 'Here is how to make it' } : {}) })).join('|');
+  assert(/must have "None of these/.test(e) && /banned word/.test(e), e);
 });
 console.log(n + ' unit tests passed');

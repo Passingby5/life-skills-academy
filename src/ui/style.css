@@ -57,3 +57,5 @@ input{width:100%;min-height:52px;font:inherit;padding:8px 12px;border-radius:12p
   h1{font-size:1.25rem}
 }
 .sectnote { margin: .2rem .2rem .5rem; font-size: .9rem; }
+.cite { font-size: .95rem; }
+.notice { font-size: .85rem; margin-top: .6rem; }

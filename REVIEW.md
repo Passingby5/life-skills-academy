@@ -843,6 +843,81 @@ Reviewed by: ________  Date: ________
 - [ ] **sc98** (adult) Myth: Mailed cash cannot be stopped. Fix: Contact the delivery service right away. Source: [FTC: What To Do if You Were Scammed](https://consumer.ftc.gov/articles/what-do-if-you-were-scammed)
 - [ ] **sc99** (adult) Myth: The IRS may DM you on social media. Fix: A social media direct message is never from the IRS. Source: [IRS: How to know it is the IRS](https://www.irs.gov/help/how-to-know-its-the-irs)
 
+## Legal Traps (70 cards)
+
+Reviewed by: ________  Date: ________
+
+- [ ] **lg01** (both) Myth: Holding your phone for maps is fine. Fix: Mount it (windshield corner or dash) and use one tap or swipe. Holding it while driving is a ticket. Source: [California Vehicle Code 23123.5: Handheld phones while driving](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=23123.5)
+- [ ] **lg02** (both) Myth: If the owner is not there, you can just drive off. Fix: Leave a note in plain sight with your name, address, and what happened, then report it to police or CHP. Source: [California Vehicle Code 20002: Crash that damages property only](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=20002)
+- [ ] **lg03** (both) Myth: If the other person says they are fine, you can leave. Fix: Stop, give your name, license and insurance, and help get care if needed. Call 911 if anyone is hurt. Source: [California Vehicle Code 20001: Duty to stop after an injury crash](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=20001)
+- [ ] **lg04** (both) Myth: Since cannabis is legal, an open pack in the car is fine. Fix: Opened cannabis has to ride in the trunk. In the cabin it is a ticket, even when legal to buy. Source: [California Vehicle Code 23222: Open cannabis in a vehicle](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=23222)
+- [ ] **lg05** (both) Myth: Lane splitting on a motorcycle is illegal in California. Fix: Give room and do not block the rider. California defines lane splitting in law and lets CHP issue safety tips. Source: [California Vehicle Code 21658.1: Lane splitting](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=21658.1)
+- [ ] **lg06** (both) Myth: Crossing mid-block is always a ticket. Fix: Since 2023, police may stop you only if a careful person would see an immediate danger of collision. Source: [California Vehicle Code 21955: Crossing between intersections (Freedom to Walk)](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=21955)
+- [ ] **lg07** (both) Myth: Passing close is fine if you do not hit them. Fix: Give at least three feet, or slow down and wait. If you cannot, change lanes when safe. Source: [California Vehicle Code 21760: Three Feet for Safety Act](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=21760)
+- [ ] **lg08** (both) Myth: If the light is green, you can always enter. Fix: Wait at the line until there is room for your whole car on the other side. Source: [California Vehicle Code 22526: Blocking an intersection](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=22526)
+- [ ] **lg09** (ya) Myth: There is a grace period after your license expires. Fix: Do not drive until it is renewed. Renew online at the DMV if you can. Source: [California Vehicle Code 12500: Driver license required](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=12500)
+- [ ] **lg10** (both) Myth: If you were partly at fault, you get nothing. Fix: Each side pays for its own share of fault. Being 30% at fault cuts your award by 30%, not to zero. Source: [Li v. Yellow Cab Co. (1975) 13 Cal.3d 804](https://www.courtlistener.com/opinion/1139343/nga-li-v-yellow-cab-co/)
+- [ ] **lg11** (both) Myth: A dog gets one free bite before the owner is liable. Fix: Get care, photos, and the owner's info, and report the bite to animal control. Source: [California Civil Code 3342: Dog bite liability](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=3342)
+- [ ] **lg12** (both) Myth: Helping at a crash means you will be sued. Fix: Today, good faith unpaid help at the scene, medical or not, is shielded from civil damages. Call 911 first. Source: [California Health and Safety Code 1799.102: Good Samaritan immunity](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1799.102)
+- [ ] **lg13** (both) Myth: You can secretly record any talk you are part of. Fix: Say "I am recording this" at the start, or use texts and email for proof. For threats, call police. Source: [California Penal Code 632: Recording confidential communications](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632)
+- [ ] **lg14** (adult) Myth: A company in a one-party state can tape calls with Californians. Fix: If you are in California, you can sue over secret taping by out-of-state callers. Ask "Is this call recorded?" Source: [Kearney v. Salomon Smith Barney, Inc. (2006) 39 Cal.4th 95](https://www.courtlistener.com/opinion/2633480/kearney-v-salomon-smith-barney-inc/)
+- [ ] **lg15** (both) Myth: Mail that lands at your place is yours to open. Fix: Write "not at this address" and put it back in the mail, or hand it to the right person. Source: [18 U.S.C. 1708: Theft of mail](https://www.law.cornell.edu/uscode/text/18/1708)
+- [ ] **lg16** (both) Myth: Landlords can take as long as they like to return a deposit. Fix: Send a written demand. The deposit or an itemized list is due 21 days after move-out. Small claims is next. Source: [California Civil Code 1950.5: Security deposits](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5)
+- [ ] **lg17** (both) Myth: A landlord can come in any time; it is his property. Fix: Ask for written notice. 24 hours is presumed fair, in normal business hours, except in an emergency. Source: [California Civil Code 1954: Landlord entry](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1954)
+- [ ] **lg18** (ya) Myth: Your only choice is to wait or stop paying rent. Fix: Give notice, wait a reasonable time, then fix it and deduct up to one month's rent. Keep receipts. Source: [California Civil Code 1942: Repair and deduct](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1942)
+- [ ] **lg19** (both) Myth: If you agreed to use your own car, they owe you nothing. Fix: Log the miles and phone use, and ask in writing to be repaid. The law says they must cover it. Source: [California Labor Code 2802: Employer must repay work expenses](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=2802)
+- [ ] **lg20** (both) Myth: Your boss can fire you for telling coworkers your pay. Fix: You may share your wages. Do not sign a waiver; report a threat to the Labor Commissioner. Source: [California Labor Code 232: Talking about pay](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=232)
+- [ ] **lg21** (both) Myth: Your final paycheck can wait until the next payday. Fix: When fired, all earned pay is due at once. Late pay can add a day's wage per day, up to 30 days. Source: [California Labor Code 201: Final pay when fired](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=201)
+- [ ] **lg22** (adult) Myth: A narrow noncompete is enforceable in California. Fix: Take the job. Keep their secrets and client files, but the noncompete itself does not bind you. Source: [California Business and Professions Code 16600: Noncompete agreements void](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=16600)
+- [ ] **lg23** (both) Myth: Once you sign at home, the deal is final. Fix: Cancel in writing fast: 3 business days, or 5 for a senior, for many home sales in California. Source: [California Civil Code 1689.6: Canceling a home sales contract](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1689.6)
+- [ ] **lg24** (both) Myth: If the terms say call or come in, you must. Fix: If you signed up online, you can cancel online. Screenshot the cancel page and dispute later charges. Source: [California Business and Professions Code 17602: Automatic renewals](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17602)
+- [ ] **lg25** (adult) Myth: Under warranty, all you get is more repair tries. Fix: Keep every repair order and write to the maker asking for replacement or refund under the lemon law. Source: [California Civil Code 1793.2: Lemon law, repair or replace](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1793.2)
+- [ ] **lg26** (both) Myth: You need a lawyer to sue anyone. Fix: File in small claims yourself. A person can sue for up to $12,500 there, and lawyers usually stay out. Source: [California Code of Civil Procedure 116.221: Small claims limit](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=116.221)
+- [ ] **lg27** (adult) Myth: With a bad check you can only get the face amount back. Fix: Send a written demand by certified mail. If he does not pay in 30 days, you can seek up to 3 times the check. Source: [California Civil Code 1719: Bad checks](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1719)
+- [ ] **lg28** (both) Myth: With a stolen debit card, the bank covers it no matter when you call. Fix: Call the bank now. Within 2 business days your loss is capped at $50; wait and it can go to $500 or more. Source: [15 U.S.C. 1693g: Debit card loss limits (Electronic Fund Transfer Act)](https://www.law.cornell.edu/uscode/text/15/1693g)
+- [ ] **lg29** (both) Myth: You can dispute a credit card charge any time. Fix: Send a written dispute so it arrives within 60 days of the bill. Your loss on unauthorized use is capped at $50. Source: [FTC: Using Credit Cards and Disputing Charges](https://consumer.ftc.gov/articles/using-credit-cards-and-disputing-charges)
+- [ ] **lg30** (both) Myth: If a collector calls, you have to pay right away. Fix: Dispute it in writing within 30 days of the notice. They must verify the debt before they keep collecting. Source: [15 U.S.C. 1692g: Debt validation](https://www.law.cornell.edu/uscode/text/15/1692g)
+- [ ] **lg31** (ya) Myth: Payment apps always refund you if you get scammed. Fix: Report to the app and your bank right away, and at ReportFraud.ftc.gov. Pay only people you know. Source: [FTC: Mobile Payment Apps, How to Avoid a Scam](https://consumer.ftc.gov/articles/mobile-payment-apps-how-avoid-scam-when-you-use-one)
+- [ ] **lg32** (ya) Myth: It is your own card, so you can sell it. Fix: Say no and walk away. Selling or passing on a card to defraud is grand theft, and you pay the debt. Source: [California Penal Code 484e: Selling or passing on access cards](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=484e)
+- [ ] **lg33** (ya) Myth: Tips under $20 a month are not taxed. Fix: Keep a daily tip log and report all tips on your return. Source: [IRS Topic 761: Tips](https://www.irs.gov/taxtopics/tc761)
+- [ ] **lg34** (both) Myth: If you do not get a tax form, gambling wins are tax free. Fix: Report all winnings. Keep a log of wins and losses; losses can only offset wins if you itemize. Source: [IRS Topic 419: Gambling income and losses](https://www.irs.gov/taxtopics/tc419)
+- [ ] **lg35** (adult) Myth: Forgiven debt is a gift with no tax. Fix: Watch for a 1099-C and ask a tax pro about exclusions such as insolvency before you file. Source: [IRS Topic 431: Canceled debt, is it taxable or not?](https://www.irs.gov/taxtopics/tc431)
+- [ ] **lg36** (both) Myth: Crypto is not taxed until you turn it into dollars. Fix: Track the value on the day of each swap. Report gains or losses on your return. Source: [IRS: Digital assets](https://www.irs.gov/filing/digital-assets)
+- [ ] **lg37** (both) Myth: Small side income does not need a tax return. Fix: File if net self-employment earnings hit $400. Set aside part of each payment for the 15.3% tax. Source: [26 U.S.C. 6017: Self-employment tax returns](https://www.law.cornell.edu/uscode/text/26/6017)
+- [ ] **lg38** (adult) Myth: Money from a hobby does not count as income. Fix: Report hobby income on Schedule 1. If you want to deduct costs, run it like a real business. Source: [IRS: Know the difference between a hobby and a business](https://www.irs.gov/newsroom/know-the-difference-between-a-hobby-and-a-business)
+- [ ] **lg39** (ya) Myth: Unemployment benefits are tax free. Fix: Include it on your return. You can ask to have tax taken out of each payment. Source: [IRS: Unemployment compensation](https://www.irs.gov/individuals/employees/unemployment-compensation)
+- [ ] **lg40** (adult) Myth: All the profit on your home sale is taxed. Fix: If you owned and lived in it 2 of the last 5 years, up to $500,000 of gain can be excluded for a couple. Source: [26 U.S.C. 121: Sale of a main home](https://www.law.cornell.edu/uscode/text/26/121)
+- [ ] **lg41** (adult) Myth: The person who gets a gift pays gift tax. Fix: You owe no gift tax. Your aunt may need to file Form 709, though most givers owe nothing. Source: [26 U.S.C. 2502: Who pays the gift tax](https://www.law.cornell.edu/uscode/text/26/2502)
+- [ ] **lg42** (both) Myth: Once you file, you can toss your tax records. Fix: Keep tax records at least 3 years; longer in some cases, like unreported income or bad debt. Source: [IRS: How long should I keep records?](https://www.irs.gov/businesses/small-businesses-self-employed/how-long-should-i-keep-records)
+- [ ] **lg43** (both) Myth: Health plans can exclude conditions you had before. Fix: Appeal in writing and cite the law. Then file a complaint with the state if it stands. Source: [42 U.S.C. 300gg-3: No preexisting condition exclusions](https://www.law.cornell.edu/uscode/text/42/300gg-3)
+- [ ] **lg44** (adult) Myth: Leaving something off an insurance form only matters if you meant to. Fix: Answer every health question fully and keep a copy of what you sent. Source: [California Insurance Code 331: Concealment lets insurer rescind](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=331)
+- [ ] **lg45** (adult) Myth: Insurers can deny a claim without checking the facts. Fix: Ask for the denial reason in writing and for the claim file. A lazy denial can be bad faith. Source: [Egan v. Mutual of Omaha Ins. Co. (1979) 24 Cal.3d 809](https://www.courtlistener.com/opinion/1217902/egan-v-mutual-of-omaha-insurance/)
+- [ ] **lg46** (adult) Myth: The one-year time to sue keeps running while the insurer stalls. Fix: Talk to a lawyer now. The clock pauses from your notice until the written denial. Source: [Prudential-LMI Com. Ins. v. Superior Court (1990) 51 Cal.3d 674](https://www.courtlistener.com/opinion/1258604/prudential-lmi-commercial-insurance-v-superior-court/)
+- [ ] **lg47** (adult) Myth: You must rebuild in one year to get full replacement cost. Fix: Ask for the time limit in writing. In a declared emergency, you get at least 36 months from first payment. Source: [California Insurance Code 2051.5: Replacement cost time limits](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=2051.5)
+- [ ] **lg48** (adult) Myth: Earthquake damage is always in a homeowners policy. Fix: Check your declarations page now for a quake policy, often through the California Earthquake Authority. Source: [California Insurance Code 10081: Earthquake coverage must be offered](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=10081)
+- [ ] **lg49** (adult) Myth: An insurer can keep its claim estimates secret. Fix: Ask in writing for all claim-related documents, such as estimates and appraisals. Source: [California Insurance Code 2071: Standard fire policy](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=2071)
+- [ ] **lg50** (adult) Myth: If an insurer treats you badly, all you can sue for is the policy amount. Fix: Keep notes of every call and letter. Unfair handling can be a bad faith tort with extra damages. Source: [Gruenberg v. Aetna Ins. Co. (1973) 9 Cal.3d 566](https://www.courtlistener.com/opinion/1117033/gruenberg-v-aetna-insurance/)
+- [ ] **lg51** (both) Myth: A landlord can charge the deposit for any repair after you leave. Fix: Ask for the itemized list and receipts. Normal wear and tear cannot come out of the deposit. Source: [California Civil Code 1950.5: Security deposits](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5)
+- [ ] **lg52** (both) Myth: You only learn about deposit charges after you move out. Fix: Ask in writing for an initial inspection up to two weeks before move-out, then fix what they list. Source: [California Civil Code 1950.5: Security deposits](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5)
+- [ ] **lg53** (both) Myth: Touching a phone at all while driving is illegal. Fix: Mount it and keep it to one tap or swipe. Set the map and music before you pull out. Source: [California Vehicle Code 23123.5: Handheld phones while driving](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=23123.5)
+- [ ] **lg54** (both) Myth: You always pay your own lawyer in a wage case. Fix: Keep receipts and ask. Fees to enforce your right to be repaid count as costs the employer owes. Source: [California Labor Code 2802: Employer must repay work expenses](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=2802)
+- [ ] **lg55** (both) Myth: Late final pay has no penalty, or it grows forever. Fix: File with the Labor Commissioner. Penalty pay runs a day's wage per day, capped at 30 days. Source: [California Labor Code 203: Waiting time penalty](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=203)
+- [ ] **lg56** (both) Myth: Free trials can charge you before you get a chance to cancel. Fix: Cancel before the trial ends and screenshot it. Dispute any charge they made without a cancel option. Source: [California Business and Professions Code 17602: Automatic renewals](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17602)
+- [ ] **lg57** (both) Myth: Seniors get no extra time to cancel a home sale. Fix: Cancel in writing before midnight of the 5th business day, and keep proof you sent it. Source: [California Civil Code 1689.6: Canceling a home sales contract](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1689.6)
+- [ ] **lg58** (both) Myth: You can never record anyone without their consent in California. Fix: Record openly. Talks at open public meetings are not "confidential" under the law. Source: [California Penal Code 632: Recording confidential communications](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632)
+- [ ] **lg59** (both) Myth: If you try to help and hurt someone, you will lose a lawsuit. Fix: Call 911, then help in good faith. Unpaid help at the scene is shielded from civil damages. Source: [California Health and Safety Code 1799.102: Good Samaritan immunity](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1799.102)
+- [ ] **lg60** (both) Myth: Anyone bitten on private property was trespassing. Fix: Report it and get care. People doing a lawful duty, like delivering mail, are lawfully there. Source: [California Civil Code 3342: Dog bite liability](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=3342)
+- [ ] **lg61** (both) Myth: A collector can just call you with no written notice. Fix: Wait for the validation notice, then dispute in writing within 30 days if it is wrong. Source: [FTC: Debt Collection FAQs](https://consumer.ftc.gov/articles/debt-collection-faqs)
+- [ ] **lg62** (both) Myth: Holding someone else's cards is harmless if you do not use them. Fix: Refuse, and do not touch them. Report it if you were pressured. Source: [California Penal Code 484e: Selling or passing on access cards](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=484e)
+- [ ] **lg63** (both) Myth: Being paid in crypto is not income until you sell. Fix: Record the dollar value on the day you were paid and report it as income. Source: [IRS: Digital assets](https://www.irs.gov/filing/digital-assets)
+- [ ] **lg64** (both) Myth: You can net gambling losses against other income. Fix: Report all wins. Losses count only if you itemize, and only up to what you won. Source: [IRS Topic 419: Gambling income and losses](https://www.irs.gov/taxtopics/tc419)
+- [ ] **lg65** (both) Myth: Freelance income is taxed the same as a paycheck. Fix: Set aside about a quarter of each payment and pay estimated tax each quarter. Source: [IRS: Self-employment tax](https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes)
+- [ ] **lg66** (both) Myth: Any home sale profit is tax free. Fix: Plan the sale date. You must own and live there as your main home 2 of the last 5 years. Source: [26 U.S.C. 121: Sale of a main home](https://www.law.cornell.edu/uscode/text/26/121)
+- [ ] **lg67** (both) Myth: You always get only one year to sue after a fire. Fix: Write down the loss date. In a declared emergency the time to sue is 24 months. Source: [California Insurance Code 2071: Standard fire policy](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=2071)
+- [ ] **lg68** (both) Myth: Old health problems can be left out of a new plan. Fix: Appeal any denial in writing. Plans may not exclude a condition you had before you joined. Source: [42 U.S.C. 300gg-3: No preexisting condition exclusions](https://www.law.cornell.edu/uscode/text/42/300gg-3)
+- [ ] **lg69** (both) Myth: Small property damage with no one around needs no action. Fix: Find the owner or leave a note with your name and address, and tell police without delay. Source: [California Vehicle Code 20002: Crash that damages property only](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=20002)
+- [ ] **lg70** (both) Myth: A landlord can ask any deposit amount. Fix: Ask about the new limit. Most landlords may take only one month's rent as a deposit. Source: [California Civil Code 1950.5: Security deposits](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5)
+
 ## Field Survival: Water, Food and Knots (64 cards)
 
 Reviewed by: ________  Date: ________
@@ -3405,6 +3480,369 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Choices: Push off quickly / **Let it float first** / Fill it with gear first
 - Fix: Let it lie on the water a few minutes to be sure it floats. Don't drag it on the ground.
 - Source: `atp-3-50-21` (https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN12086_ATP%203-50x21%20FINAL%20WEB%202.pdf) quote: "let the raft lay on the water a few minutes to ensure that it floats."
+
+## Legal Traps (`legal`)
+
+**lg01** (both, driving). YA: You hold your phone in your lap to follow the map while you drive. Legal in California? / Adult: You hold your phone in one hand to check the route at a red light. Legal in California?
+- Choices: Yes, maps are always fine / **Only when it is mounted** / Yes, at red lights
+- Fix: Mount it (windshield corner or dash) and use one tap or swipe. Holding it while driving is a ticket.
+- Source: `veh-23123-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=23123.5) quote: "is mounted on a vehicle"
+
+**lg02** (both, driving). YA: You scrape a parked car in a lot. Nobody saw. The owner is gone. What does the law require? / Adult: Backing out at the store, you dent an empty parked car. No one is around. What must you do?
+- Choices: Drive off, since no one saw it / **Leave a note and report it** / Wait an hour, then go
+- Fix: Leave a note in plain sight with your name, address, and what happened, then report it to police or CHP.
+- Source: `veh-20002` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=20002) quote: "Leave in a conspicuous place on the vehicle or other property damaged a written notice"
+
+**lg03** (both, driving). YA: A biker clips your mirror and falls. He waves and says he is fine. You are late. Can you go? / Adult: A man on a scooter hits your bumper and falls, then says he is fine. Can you just leave?
+- Choices: Leave, since he said fine / **Stop and trade your info** / Stay only if police come
+- Fix: Stop, give your name, license and insurance, and help get care if needed. Call 911 if anyone is hurt.
+- Source: `veh-20001` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=20001) quote: "shall immediately stop the vehicle at the scene of the accident"
+
+**lg04** (both, driving). YA: Your friend has an opened vape cart of cannabis in his pocket while driving you home. Problem? / Adult: Your adult son keeps an opened bag of legal cannabis in the cup holder. Is that a problem?
+- Choices: None, cannabis is legal now / **A ticket unless in the trunk** / Legal once he is over 21
+- Fix: Opened cannabis has to ride in the trunk. In the cabin it is a ticket, even when legal to buy.
+- Source: `veh-23222` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=23222) quote: "a receptacle containing cannabis or cannabis products"
+
+**lg05** (both, fault). YA: A motorcycle passes between lanes in stopped traffic. Your friend says that is illegal. Right? / Adult: A rider splits lanes past your car on the freeway. Your spouse says he broke the law. Did he?
+- Choices: Illegal in every state / **Legal here for motorcycles** / Legal on city streets only, not freeways
+- Fix: Give room and do not block the rider. California defines lane splitting in law and lets CHP issue safety tips.
+- Source: `veh-21658-1` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=21658.1) quote: "lane splitting"
+
+**lg06** (both, fault). YA: You cross mid-block on an empty street. A cop says jaywalking is a ticket. Is it? / Adult: You cross mid-block with no cars in sight. An officer says he can cite you. Can he?
+- Choices: Yes, any mid-block crossing / **Only with clear crash danger** / In school zones only
+- Fix: Since 2023, police may stop you only if a careful person would see an immediate danger of collision.
+- Source: `veh-21955` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=21955) quote: "immediate danger of a collision"
+
+**lg07** (both, driving). YA: You pass a cyclist with a foot of space. There was no crash. Did you break a law? / Adult: On a narrow road you pass a cyclist close, about a foot away. Any law broken?
+- Choices: None, since no one was hit / **Yes, three feet is the law** / In a bike lane, yes
+- Fix: Give at least three feet, or slow down and wait. If you cannot, change lanes when safe.
+- Source: `veh-21760` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=21760) quote: "at a distance of less than three feet"
+
+**lg08** (both, driving). YA: The light is green but traffic is backed up past the intersection. You pull in anyway. Legal? / Adult: Green light, but cars are stacked on the far side. Can you roll into the box anyway?
+- Choices: Yes, green means go / **Wait until there is room** / Yes, if you honk first
+- Fix: Wait at the line until there is room for your whole car on the other side.
+- Source: `veh-22526` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=22526) quote: "shall not enter an intersection or marked crosswalk unless there is sufficient space"
+
+**lg09** (ya, driving). Your license expired last month. You only drive to work. Your friend says there is a grace period. Is there?
+- Choices: Yes, you get 90 days to renew / **Renew it before you drive again** / Yes, for trips to work
+- Fix: Do not drive until it is renewed. Renew online at the DMV if you can.
+- Source: `veh-12500` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=12500) quote: "unless the person then holds a valid driver"
+
+**lg10** (both, fault). YA: Nga Li turned left across traffic and was hit by a speeding cab. She was partly at fault. Could she get anything? / Adult: In Li v. Yellow Cab, the driver hit by a speeding cab was also partly at fault. What did the court decide?
+- Choices: Nothing; any fault bars her / **Yes, cut by her share** / Only if the cab was insured
+- Fix: Each side pays for its own share of fault. Being 30% at fault cuts your award by 30%, not to zero.
+- Source: `li-yellowcab` (https://www.courtlistener.com/opinion/1139343/nga-li-v-yellow-cab-co/) quote: "must give way to a system of comparative negligence"
+
+**lg11** (both, fault). YA: A friend's dog that has never bitten anyone bites you at his house. He says he is not liable. Right? / Adult: A neighbor's gentle dog bites your son on the sidewalk. She says it never bit before. Is she off the hook?
+- Choices: Yes, the first bite is free / **The owner is still liable** / Off the hook if leashed
+- Fix: Get care, photos, and the owner's info, and report the bite to animal control.
+- Source: `civ-3342` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=3342) quote: "regardless of the former viciousness of the dog"
+
+**lg12** (both, fault). YA: After a crash, Lisa Torti pulled a friend from a car she feared would explode. She was sued. What changed after? / Adult: In Van Horn v. Watson, a woman pulled a friend from a wreck and was sued. What did lawmakers do next?
+- Choices: Nothing; rescuers get sued / **Added nonmedical care** / Made rescue a crime
+- Fix: Today, good faith unpaid help at the scene, medical or not, is shielded from civil damages. Call 911 first.
+- Source: `hsc-1799-102` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1799.102) quote: "emergency medical or nonmedical care"
+- Also: `vanhorn` (https://www.courtlistener.com/opinion/2627382/van-horn-v-watson/) quote: "immunize from liability for civil damages any person who renders emergency medical care"
+
+**lg13** (both, privacy). YA: Your boss yells at you in a closed office. You secretly record it on your phone. Legal in California? / Adult: Your ex makes threats on a private phone call. You record it without saying so. Legal in California?
+- Choices: Yes, it is your own talk / **Illegal without all consent** / Yes, if it is for court
+- Fix: Say "I am recording this" at the start, or use texts and email for proof. For threats, call police.
+- Source: `pen-632` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632) quote: "without the consent of all parties to a confidential communication"
+
+**lg14** (adult, privacy). A Georgia firm taped calls with California clients without telling them. Georgia allows it. Which law won?
+- Choices: Georgia law, the firm's home state / **California law for its people** / Federal law, across states
+- Fix: If you are in California, you can sue over secret taping by out-of-state callers. Ask "Is this call recorded?"
+- Source: `kearney` (https://www.courtlistener.com/opinion/2633480/kearney-v-salomon-smith-barney-inc/) quote: "impair California"
+
+**lg15** (both, privacy). YA: A package for your ex roommate shows up. You open it to see what it is. Big deal? / Adult: Your neighbor's letter lands in your box. You open it and keep the gift card inside. Big deal?
+- Choices: Fine, it came to your door / **It is a federal crime** / A crime once you sell it
+- Fix: Write "not at this address" and put it back in the mail, or hand it to the right person.
+- Source: `usc-18-1708` (https://www.law.cornell.edu/uscode/text/18/1708) quote: "Whoever steals, takes, or abstracts"
+
+**lg16** (both, renting). YA: You moved out 5 weeks ago. The landlord has not returned your deposit or sent a list. Too bad? / Adult: Your tenant left a month ago. You have not sent the deposit or a list yet. Is that OK?
+- Choices: Landlords get 60 days to pay / **Due 21 days after move-out** / There is no deadline
+- Fix: Send a written demand. The deposit or an itemized list is due 21 days after move-out. Small claims is next.
+- Source: `civ-1950-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5) quote: "No later than 21 calendar days after the tenant has vacated the premises"
+- Also: `ccp-116-221` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=116.221) quote: "twelve thousand five hundred dollars ($12,500)"
+
+**lg17** (both, renting). YA: Your landlord lets himself in while you are at class to "check things." No notice. Allowed? / Adult: Your landlord walks in on a Sunday night with no notice to look at the heater. Allowed?
+- Choices: Yes, he owns the place / **Written notice comes first** / Yes, once a month
+- Fix: Ask for written notice. 24 hours is presumed fair, in normal business hours, except in an emergency.
+- Source: `civ-1954` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1954) quote: "Twenty-four hours shall be presumed to be reasonable notice"
+
+**lg18** (ya, renting). The landlord ignores a broken lock on your door for weeks after you told him. Any lawful option?
+- Choices: Stop paying rent at all / **Repair it, then deduct** / Move and keep the deposit
+- Fix: Give notice, wait a reasonable time, then fix it and deduct up to one month's rent. Keep receipts.
+- Source: `civ-1942` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1942) quote: "more than one month"
+
+**lg19** (both, work). YA: Your job makes you use your own phone and car for deliveries and pays nothing extra. Legal? / Adult: Your new job wants you to use your own car for client visits with no mileage pay. Legal?
+- Choices: Yes, it was in your offer / **They must repay costs** / Only for full-time staff
+- Fix: Log the miles and phone use, and ask in writing to be repaid. The law says they must cover it.
+- Source: `lab-2802` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=2802) quote: "An employer shall indemnify his or her employee for all necessary expenditures"
+- Also: `gattuso` (https://www.courtlistener.com/opinion/2625135/gattuso-v-harte-hanks-shoppers-inc/) quote: "does not separately reimburse outside sales representatives for their automobile expenses"
+
+**lg20** (both, work). YA: Your manager says talking about pay with coworkers will get you fired. Can he do that? / Adult: HR asks you to sign a paper saying you will never tell anyone your salary. Can they?
+- Choices: Yes, pay is a private matter / **Sharing your pay is protected** / In a union shop only
+- Fix: You may share your wages. Do not sign a waiver; report a threat to the Labor Commissioner.
+- Source: `lab-232` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=232) quote: "deny the employee the right to disclose the amount of his or her wages"
+
+**lg21** (both, work). YA: You are fired on Monday. Your boss says your last check comes on the next payday. OK? / Adult: You are let go. The company says your final pay will be mailed in two weeks. OK?
+- Choices: Next payday is fine / **It is due at once** / Due within 2 weeks
+- Fix: When fired, all earned pay is due at once. Late pay can add a day's wage per day, up to 30 days.
+- Source: `lab-201` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=201) quote: "due and payable immediately"
+- Also: `lab-203` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=203) quote: "but the wages shall not continue for more than 30 days"
+
+**lg22** (adult, work). Your old firm says the noncompete you signed bars you from working for a rival for a year. In California?
+- Choices: It holds if narrow / **It is void here** / It holds for one year
+- Fix: Take the job. Keep their secrets and client files, but the noncompete itself does not bind you.
+- Source: `bpc-16600` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=16600) quote: "no matter how narrowly tailored"
+- Also: `edwards` (https://www.courtlistener.com/opinion/5608069/edwards-v-arthur-andersen-llp/) quote: "section 16600 prohibits employee noncompetition agreements unless the agreement falls within a statutory exception"
+
+**lg23** (both, consumer). YA: A door-to-door seller signs you up for a solar contract. Next day you regret it. Stuck? / Adult: Your mom, 72, signed a home repair contract with a man at the door yesterday. Is she stuck?
+- Choices: A signature is final / **She can cancel in days** / Void if he lied out loud
+- Fix: Cancel in writing fast: 3 business days, or 5 for a senior, for many home sales in California.
+- Source: `civ-1689-6` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1689.6) quote: "until midnight of the third business day, or until midnight of the fifth business day if the buyer is a senior citizen"
+- Also: `cfr-16-429` (https://www.law.cornell.edu/cfr/text/16/429.1) quote: "within THREE BUSINESS DAYS"
+
+**lg24** (both, consumer). YA: You signed up for an app online. To cancel, they say you must call during work hours. Allowed? / Adult: You joined a gym online. Now they say you have to cancel in person. Allowed in California?
+- Choices: Yes, it is in the terms / **Online sign-up, online cancel** / Yearly plans are exempt
+- Fix: If you signed up online, you can cancel online. Screenshot the cancel page and dispute later charges.
+- Source: `bpc-17602` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17602) quote: "terminate the automatic renewal or continuous service exclusively online"
+
+**lg25** (adult, consumer). Your new car went back to the dealer four times for the same brake fault under warranty. Any right?
+- Choices: Keep trying more repairs / **Seek a buyback or new car** / A free extended warranty only
+- Fix: Keep every repair order and write to the maker asking for replacement or refund under the lemon law.
+- Source: `civ-1793-2` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1793.2) quote: "the manufacturer shall either replace the goods or reimburse the buyer"
+
+**lg26** (both, consumer). YA: Your old roommate owes you $3,000 and refuses to pay. You think you need a lawyer. True? / Adult: A contractor took $9,000 and quit. You think suing means hiring a lawyer. True?
+- Choices: Courts need lawyers to sue / **File in small claims yourself** / Under $1,000 only
+- Fix: File in small claims yourself. A person can sue for up to $12,500 there, and lawyers usually stay out.
+- Source: `ccp-116-221` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=116.221) quote: "twelve thousand five hundred dollars ($12,500)"
+
+**lg27** (adult, consumer). A buyer paid you $400 with a check that bounced. He shrugs and says you can only get the $400. True?
+- Choices: The face amount and nothing more / **Up to triple damages** / The bank fee only
+- Fix: Send a written demand by certified mail. If he does not pay in 30 days, you can seek up to 3 times the check.
+- Source: `civ-1719` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1719) quote: "three times the amount of the check up to one thousand five hundred dollars ($1,500)"
+
+**lg28** (both, money). YA: Your debit card is stolen. You wait two weeks to tell the bank. Does it matter? / Adult: Your wallet is stolen with your debit card. You plan to call the bank Monday. Does timing matter?
+- Choices: The bank covers it all / **Report it within 2 days** / Only credit cards matter
+- Fix: Call the bank now. Within 2 business days your loss is capped at $50; wait and it can go to $500 or more.
+- Source: `usc-15-1693g` (https://www.law.cornell.edu/uscode/text/15/1693g) quote: "within two business days after the consumer learns of the loss or theft"
+
+**lg29** (both, money). YA: A charge you did not make shows up on your credit card. You will deal with it after a few months. OK? / Adult: A store double charged your credit card. You plan to deal with it next quarter. OK?
+- Choices: Any time this year / **Write within 60 days** / A phone call is enough
+- Fix: Send a written dispute so it arrives within 60 days of the bill. Your loss on unauthorized use is capped at $50.
+- Source: `ftc-fcba` (https://consumer.ftc.gov/articles/using-credit-cards-and-disputing-charges) quote: "within 60 days after the first bill with the error was sent to you"
+
+**lg30** (both, money). YA: A collector calls about a $900 debt you do not know. He wants payment today. What should you do? / Adult: A collector says you owe $4,000 on an old card you think you paid off. What first?
+- Choices: Pay to stop the calls / **Dispute it in writing** / Ignore it until it fades
+- Fix: Dispute it in writing within 30 days of the notice. They must verify the debt before they keep collecting.
+- Source: `usc-15-1692g` (https://www.law.cornell.edu/uscode/text/15/1692g) quote: "within thirty days after receipt of the notice, disputes the validity of the debt"
+- Also: `ftc-debt` (https://consumer.ftc.gov/articles/debt-collection-faqs) quote: "within five days of the first contact"
+
+**lg31** (ya, money). You send $600 on a payment app for concert tickets that never come. The seller blocks you. Will the app refund it?
+- Choices: Yes, apps refund scams / **Likely not; act fast** / Yes, after 60 days
+- Fix: Report to the app and your bank right away, and at ReportFraud.ftc.gov. Pay only people you know.
+- Source: `ftc-p2p` (https://consumer.ftc.gov/articles/mobile-payment-apps-how-avoid-scam-when-you-use-one) quote: "Protect your account"
+
+**lg32** (ya, money). A stranger offers $200 for your debit card and PIN "for a few days." It is your card. Is selling it legal?
+- Choices: Yes, it is your card / **It can be grand theft** / Yes, if you get it back
+- Fix: Say no and walk away. Selling or passing on a card to defraud is grand theft, and you pay the debt.
+- Source: `pen-484e` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=484e) quote: "with intent to defraud, sells, transfers, or conveys, an access card"
+
+**lg33** (ya, tax). You make about $15 a month in cash tips at a coffee shop. Your coworker says tips under $20 are tax free. True?
+- Choices: Yes, under $20 is free / **Report them anyway** / Card tips count only
+- Fix: Keep a daily tip log and report all tips on your return.
+- Source: `irs-tips` (https://www.irs.gov/taxtopics/tc761) quote: "must report these amounts as income on their tax returns"
+
+**lg34** (both, tax). YA: You win $800 on a sports betting app. No form came. Your friend says no form means no tax. True? / Adult: You win $1,200 at a casino on a trip. No form was given. Do you owe tax?
+- Choices: No form means no tax / **All wins are taxable** / Wins over $5,000 only
+- Fix: Report all winnings. Keep a log of wins and losses; losses can only offset wins if you itemize.
+- Source: `irs-gambling` (https://www.irs.gov/taxtopics/tc419) quote: "Gambling winnings are fully taxable"
+
+**lg35** (adult, tax). A card company settles your $10,000 debt for $4,000. You are relieved. Any tax catch?
+- Choices: Debt relief is always tax free / **The $6,000 may be income** / Only the bank pays tax
+- Fix: Watch for a 1099-C and ask a tax pro about exclusions such as insolvency before you file.
+- Source: `irs-cancel-debt` (https://www.irs.gov/taxtopics/tc431) quote: "Your responsibility to report the correct taxable amount of canceled debt as income"
+
+**lg36** (both, tax). YA: You trade one crypto coin for another and never cash out to dollars. Anything to report? / Adult: You swapped bitcoin for another coin and kept it all in crypto. Any tax issue?
+- Choices: Not until you cash out / **Swaps must be reported** / Over $10,000 only
+- Fix: Track the value on the day of each swap. Report gains or losses on your return.
+- Source: `irs-crypto` (https://www.irs.gov/filing/digital-assets) quote: "digital assets are considered property, not currency"
+
+**lg37** (both, tax). YA: You made $2,000 doing gig delivery. No taxes were taken out. Do you have to file? / Adult: Your teen made $900 mowing lawns this summer. Does she need to file?
+- Choices: Not under $5,000 / **Yes, at $400 or more** / With a 1099 form only
+- Fix: File if net self-employment earnings hit $400. Set aside part of each payment for the 15.3% tax.
+- Source: `usc-26-6017` (https://www.law.cornell.edu/uscode/text/26/6017) quote: "net earnings from self-employment of $400 or more"
+- Also: `irs-se` (https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes) quote: "The self-employment tax rate is 15.3%"
+
+**lg38** (adult, tax). You sell your quilts at craft fairs just for fun, about $3,000 a year. A friend says hobby money is not taxed. True?
+- Choices: Yes, hobbies are exempt / **Report it as income** / Only if you sell online
+- Fix: Report hobby income on Schedule 1. If you want to deduct costs, run it like a real business.
+- Source: `irs-hobby` (https://www.irs.gov/newsroom/know-the-difference-between-a-hobby-and-a-business) quote: "they must report the income they receive on Schedule 1"
+
+**lg39** (ya, tax). You got laid off and drew unemployment for three months. Your cousin says that money is tax free. True?
+- Choices: Yes, it is aid, not pay / **It is taxable income** / The state taxes it only
+- Fix: Include it on your return. You can ask to have tax taken out of each payment.
+- Source: `irs-unemploy` (https://www.irs.gov/individuals/employees/unemployment-compensation) quote: "Unemployment compensation is taxable income"
+
+**lg40** (adult, tax). You sell the home you lived in for 10 years at a $300,000 gain. You are married filing jointly. Owe tax on all of it?
+- Choices: Yes, the full $300,000 / **Likely none of it** / Exactly half of it
+- Fix: If you owned and lived in it 2 of the last 5 years, up to $500,000 of gain can be excluded for a couple.
+- Source: `usc-26-121` (https://www.law.cornell.edu/uscode/text/26/121) quote: "shall not exceed $250,000"
+
+**lg41** (adult, tax). Your aunt gives you $40,000. A friend says you now owe gift tax. Who is liable for gift tax?
+- Choices: You, the one who got it / **Your aunt, the giver** / Both of you, half each
+- Fix: You owe no gift tax. Your aunt may need to file Form 709, though most givers owe nothing.
+- Source: `usc-26-2502` (https://www.law.cornell.edu/uscode/text/26/2502) quote: "paid by the donor"
+
+**lg42** (both, tax). YA: You filed your taxes last year. Can you throw out the receipts now? / Adult: You are cleaning the garage. Can you shred last year's tax papers?
+- Choices: Toss them after a year / **Keep them 3 years or more** / Yes, after one month
+- Fix: Keep tax records at least 3 years; longer in some cases, like unreported income or bad debt.
+- Source: `irs-records` (https://www.irs.gov/businesses/small-businesses-self-employed/how-long-should-i-keep-records) quote: "Keep records for 3 years"
+
+**lg43** (both, insurance). YA: You have asthma and buy your own health plan. The insurer says asthma care is excluded. Allowed? / Adult: Your new job's health plan says it will not cover your diabetes for a year. Allowed?
+- Choices: Yes, for past conditions / **That exclusion is banned** / Yes, but for one year only
+- Fix: Appeal in writing and cite the law. Then file a complaint with the state if it stands.
+- Source: `usc-42-300gg-3` (https://www.law.cornell.edu/uscode/text/42/300gg-3) quote: "may not impose any preexisting condition exclusion"
+
+**lg44** (adult, insurance). On your life insurance form you left out a past heart scare. You die in two years. What can the insurer do?
+- Choices: Nothing; it was a mistake / **Rescind the policy** / Lower the payout only
+- Fix: Answer every health question fully and keep a copy of what you sent.
+- Source: `ins-331` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=331) quote: "Concealment, whether intentional or unintentional, entitles the injured party to rescind insurance"
+
+**lg45** (adult, insurance). In Egan, an insurer cut off a hurt roofer's disability pay without a real look at his doctors. What did the court say?
+- Choices: They can deny at will / **They must look fairly** / Only federal law applies
+- Fix: Ask for the denial reason in writing and for the claim file. A lazy denial can be bad faith.
+- Source: `egan` (https://www.courtlistener.com/opinion/1217902/egan-v-mutual-of-omaha-insurance/) quote: "further investigation"
+- Also: `gruenberg` (https://www.courtlistener.com/opinion/1117033/gruenberg-v-aetna-insurance/) quote: "implied covenant of good faith and fair dealing"
+
+**lg46** (adult, insurance). Your fire claim was denied after 8 months of back and forth. Your policy says sue within 12 months. Is it almost over?
+- Choices: Yes, 4 months are left to sue / **The clock paused until denial** / It ran out already
+- Fix: Talk to a lawyer now. The clock pauses from your notice until the written denial.
+- Source: `prudential-lmi` (https://www.courtlistener.com/opinion/1258604/prudential-lmi-commercial-insurance-v-superior-court/) quote: "equitably tolled from the time the insured files a timely notice"
+- Also: `ins-2071` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=2071) quote: "extended to 24 months after inception of the loss"
+
+**lg47** (adult, insurance). Your house burned in a declared wildfire. The insurer says rebuild within a year or lose full replacement pay. True?
+- Choices: Yes, one year is the rule / **At least 36 months** / About 6 months
+- Fix: Ask for the time limit in writing. In a declared emergency, you get at least 36 months from first payment.
+- Source: `ins-2051-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=2051.5) quote: "a time limit of less than 36 months"
+
+**lg48** (adult, insurance). After a quake cracks your foundation, you find your homeowners policy does not cover it. Was the insurer required to offer it?
+- Choices: Quakes are not insurable / **Yes, it must be offered** / Near a fault line only
+- Fix: Check your declarations page now for a quake policy, often through the California Earthquake Authority.
+- Source: `ins-10081` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=10081) quote: "offered coverage for loss or damage caused by the peril of earthquake"
+
+**lg49** (adult, insurance). An adjuster says you have no right to see the estimates they used to value your fire claim. True?
+- Choices: Yes, those are private / **You can ask for them** / With a lawyer only
+- Fix: Ask in writing for all claim-related documents, such as estimates and appraisals.
+- Source: `ins-2071` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=2071) quote: "copies of claim-related documents"
+
+**lg50** (adult, insurance). Your insurer stalls your claim and treats you as a suspect with no basis. Is that only a contract issue?
+- Choices: Yes, just the contract / **It can be a bad faith tort** / Only a state fine applies
+- Fix: Keep notes of every call and letter. Unfair handling can be a bad faith tort with extra damages.
+- Source: `gruenberg` (https://www.courtlistener.com/opinion/1117033/gruenberg-v-aetna-insurance/) quote: "implied duty of good faith and fair dealing"
+
+**lg51** (both, renting). YA: You lived in an apartment 3 years. The landlord takes $400 from your deposit for faded paint and worn carpet. Allowed? / Adult: Your tenant of 6 years moves out. Can you charge the deposit for normal worn carpet?
+- Choices: Sure, any repair counts / **Not for normal wear** / Half the cost is fair
+- Fix: Ask for the itemized list and receipts. Normal wear and tear cannot come out of the deposit.
+- Source: `civ-1950-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5) quote: "exclusive of ordinary wear and tear"
+
+**lg52** (both, renting). YA: Your lease ends next month. Can you ask the landlord to walk through first so you can fix things before move-out? / Adult: Your lease ends soon. Is there a way to learn what the landlord will charge before you move?
+- Choices: Landlords decide after you go / **Yes, ask for a pre-inspection** / With a lawyer's letter, maybe
+- Fix: Ask in writing for an initial inspection up to two weeks before move-out, then fix what they list.
+- Source: `civ-1950-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5) quote: "option to request an initial inspection"
+
+**lg53** (both, driving). YA: Your phone is mounted on the dash. You tap once to start a song. Legal? / Adult: Your phone is in a dash mount. You swipe once to answer a call on speaker. Legal?
+- Choices: Never, any touch is illegal / **Yes, one tap or swipe** / At a full stop only
+- Fix: Mount it and keep it to one tap or swipe. Set the map and music before you pull out.
+- Source: `veh-23123-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=23123.5) quote: "single swipe or tap"
+
+**lg54** (both, work). YA: You win back $300 of unpaid mileage from your boss, but it cost you lawyer fees. Who pays those? / Adult: You sue your employer to get work costs repaid. Who pays your lawyer if you win?
+- Choices: You always do, win or lose / **Yes, the employer can owe it** / The court splits it evenly
+- Fix: Keep receipts and ask. Fees to enforce your right to be repaid count as costs the employer owes.
+- Source: `lab-2802` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=2802) quote: "attorney's fees incurred by the employee enforcing the rights"
+
+**lg55** (both, work). YA: Your old job paid your final check 45 days late. How many days of penalty pay can you ask for? / Adult: Your ex employer paid final wages two months late. What is the most penalty you can claim?
+- Choices: None at all, it is just late / **Only up to 30 days** / All 60 days, with interest
+- Fix: File with the Labor Commissioner. Penalty pay runs a day's wage per day, capped at 30 days.
+- Source: `lab-203` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=203) quote: "not continue for more than 30 days"
+
+**lg56** (both, consumer). YA: You start a free trial of a streaming app. Must they let you cancel before the first charge? / Adult: Your free meal kit trial turns into a paid plan. Did they have to tell you how to cancel first?
+- Choices: Trials can bill at once / **Yes, before you pay** / Only by mail
+- Fix: Cancel before the trial ends and screenshot it. Dispute any charge they made without a cancel option.
+- Source: `bpc-17602` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17602) quote: "allow the consumer to cancel, the automatic renewal or continuous service before the consumer pays"
+
+**lg57** (both, consumer). YA: Your grandpa, 80, signed a roof deal at his door Monday. How long can he cancel? / Adult: Your father, 70, signed a home repair deal at his door. How long does he have?
+- Choices: Never once it is signed / **Until midnight, 5th business day** / Only a day after he signs it
+- Fix: Cancel in writing before midnight of the 5th business day, and keep proof you sent it.
+- Source: `civ-1689-6` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1689.6) quote: "until midnight of the fifth business day if the buyer is a senior citizen"
+
+**lg58** (both, privacy). YA: At a public city council meeting, a man yells threats at the mic. Can you record it on your phone? / Adult: At an open school board meeting, you want to record what a speaker says. Legal?
+- Choices: Never without his clear consent / **Yes, it is a public meeting** / With a press pass only
+- Fix: Record openly. Talks at open public meetings are not "confidential" under the law.
+- Source: `pen-632` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632) quote: "excludes a communication made in a public gathering"
+
+**lg59** (both, fault). YA: A man collapses at a gas station. You do CPR for free until help comes. Can he sue you for a cracked rib? / Adult: A shopper collapses in a parking lot and you give CPR for free. Can she sue you?
+- Choices: Sure, any harm is on you / **If it was not in good faith** / Only nurses are covered
+- Fix: Call 911, then help in good faith. Unpaid help at the scene is shielded from civil damages.
+- Source: `hsc-1799-102` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1799.102) quote: "in good faith, and not for compensation, renders emergency medical or nonmedical care"
+
+**lg60** (both, fault). YA: You are delivering a package to a porch when the owner's dog bites you. Can the owner say you were trespassing? / Adult: A mail carrier is bitten on your porch. Can you claim she was trespassing?
+- Choices: Yes, it was private land / **No, delivery is lawful** / If you were invited in, yes
+- Fix: Report it and get care. People doing a lawful duty, like delivering mail, are lawfully there.
+- Source: `civ-3342` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=3342) quote: "in the performance of"
+
+**lg61** (both, money). YA: A collector calls you and never sends anything in writing. Must they? / Adult: A debt collector phoned twice but never mailed details. Do they have to?
+- Choices: Phone calls are enough / **Yes, within 5 days** / Whenever you ask them to
+- Fix: Wait for the validation notice, then dispute in writing within 30 days if it is wrong.
+- Source: `ftc-debt` (https://consumer.ftc.gov/articles/debt-collection-faqs) quote: "within five days of the first contact"
+- Also: `usc-15-1692g` (https://www.law.cornell.edu/uscode/text/15/1692g) quote: "will obtain verification of the debt"
+
+**lg62** (both, money). YA: A friend asks you to "hold" four debit cards in other people's names for a week. Risk? / Adult: A coworker asks your son to keep cards in other people's names for him. Risk?
+- Choices: Little, they are not his cards / **Yes, grand theft charges** / Only if he uses one
+- Fix: Refuse, and do not touch them. Report it if you were pressured.
+- Source: `pen-484e` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=484e) quote: "acquires access cards issued in the names of four or more persons"
+
+**lg63** (both, tax). YA: A client pays you in crypto for a logo. Is it income? / Adult: Your side job pays you in crypto. Is that taxable?
+- Choices: Not until you sell the coins / **Yes, report its value** / If it is over $600, yes
+- Fix: Record the dollar value on the day you were paid and report it as income.
+- Source: `irs-crypto` (https://www.irs.gov/filing/digital-assets) quote: "receive (as a reward, award or payment for property or services)"
+
+**lg64** (both, tax). YA: You won $500 betting but lost $900 this year. Can you just report a $400 loss? / Adult: You won $2,000 on lottery tickets and lost $3,000. Can you deduct the net loss?
+- Choices: Report the net loss / **Only up to your wins** / Losses are not counted
+- Fix: Report all wins. Losses count only if you itemize, and only up to what you won.
+- Source: `irs-gambling` (https://www.irs.gov/taxtopics/tc419) quote: "can't be more than the amount of gambling income you reported"
+
+**lg65** (both, tax). YA: Your gig app pays you as a contractor. Is income tax the only tax you owe? / Adult: You start freelancing. Is regular income tax all you owe on that money?
+- Choices: Income tax is the only one / **Yes, plus 15.3% SE tax** / The app pays all of it
+- Fix: Set aside about a quarter of each payment and pay estimated tax each quarter.
+- Source: `irs-se` (https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes) quote: "12.4% for social security"
+
+**lg66** (both, tax). YA: You bought a condo and sold it after one year for a profit. Is the gain tax free like a home sale? / Adult: You sell a rental you never lived in. Does the home sale exclusion apply?
+- Choices: Every home sale is tax free / **Only after 2 years living there** / Tax free if under $100,000 in gain
+- Fix: Plan the sale date. You must own and live there as your main home 2 of the last 5 years.
+- Source: `usc-26-121` (https://www.law.cornell.edu/uscode/text/26/121) quote: "for periods aggregating 2 years or more"
+
+**lg67** (both, insurance). YA: Your apartment burned in a declared wildfire. The insurer stalls. How long to sue under the standard policy? / Adult: Your home was lost in a declared fire emergency. How long do you have to sue the insurer?
+- Choices: Half a year at most / **Yes, 24 months** / 12 months, then it is over
+- Fix: Write down the loss date. In a declared emergency the time to sue is 24 months.
+- Source: `ins-2071` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=2071) quote: "extended to 24 months after inception of the loss"
+
+**lg68** (both, insurance). YA: You had a cancer scare at 19. Can a new health plan refuse to cover care for it at 24? / Adult: Your wife had a heart condition years ago. Can her new plan exclude it?
+- Choices: Sure, past issues are left out / **Yes, it must be covered** / Only for one year after joining
+- Fix: Appeal any denial in writing. Plans may not exclude a condition you had before you joined.
+- Source: `usc-42-300gg-3` (https://www.law.cornell.edu/uscode/text/42/300gg-3) quote: "may not impose any preexisting condition exclusion"
+
+**lg69** (both, driving). YA: You knock over a neighbor's mailbox backing out. Do you have to do anything? / Adult: You back into a fence at the church lot. No one sees. What must you do?
+- Choices: Pay later if they happen to ask / **Yes, note and report it** / Above $1,000 in damage
+- Fix: Find the owner or leave a note with your name and address, and tell police without delay.
+- Source: `veh-20002` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=20002) quote: "or other property damaged"
+
+**lg70** (both, renting). YA: A landlord wants first month plus three months of rent as a deposit for an unfurnished place. Allowed? / Adult: A landlord asks for a deposit of two months' rent. Is that legal now?
+- Choices: Whatever the landlord wants / **Only one month's rent, usually** / Two months' rent is the cap
+- Fix: Ask about the new limit. Most landlords may take only one month's rent as a deposit.
+- Source: `civ-1950-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5) quote: "in excess of an amount equal to one month"
 
 ## Field Survival: Water, Food and Knots (`survive`)
 

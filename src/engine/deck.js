@@ -50,6 +50,8 @@ LSA.allowedDecks = function (ids, p) { return (ids || []).filter(function (id) {
 // The parent PIN is kept only as a hash (it is a speed bump for a shared family phone, not a lock).
 LSA.hashPin = function (pin) { var h = 2166136261; String(pin).split('').forEach(function (ch) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619) >>> 0; }); return 'h' + h.toString(36); };
 LSA.PIN_RX = /^\d{4}$/;
+// v20.4 M2 (Tom decided): opening an Adult profile from Switch player needs the PIN whenever a PIN exists.
+LSA.REQUIRE_PIN_TO_SWITCH_TO_ADULT = true;
 LSA.RX_BANNED = /\b(gore|gory|disembowel|decapitat\w*|dismember\w*|how to (make|build|cook|spike|stalk|launder)|step[- ]by[- ]step (attack|bomb))\b/i;
 LSA.sectionsOf = function (ids) {
   var names = LSA.SECTIONS.slice();

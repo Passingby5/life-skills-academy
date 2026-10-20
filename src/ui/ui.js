@@ -65,19 +65,38 @@
     return '<h1>' + (edit ? 'Change age group' : 'New player') + '</h1>' +
       (edit ? '' : '<label for="nm">Name</label><input id="nm" maxlength="20" autocomplete="off" value="' + esc(U.name) + '">') +
       '<h2>Age group</h2>' + b('age', 'Young adults (15 to 30)', a === 'ya' ? 'on' : '', ' data-a="ya"') + b('age', 'Adults (30+)', a === 'adult' ? 'on' : '', ' data-a="adult"') +
-      (needPin() ? '<label for="pinp">Parent PIN (needed to make an Adult profile)</label><input id="pinp" type="password" inputmode="numeric" maxlength="4" autocomplete="off">' : '') +
+      (needPin() === 'nopin' ? '<p id="askparent"><b>Ask a parent to set a PIN first.</b></p>' : needPin() ? '<label for="pinp">Parent PIN (needed to make an Adult profile)</label><input id="pinp" type="password" inputmode="numeric" maxlength="4" autocomplete="off">' : '') +
       (U.pinMsg ? '<p class="wrong" id="pinmsg">' + esc(U.pinMsg) + '</p>' : '') +
-      b('saveprof', 'Save', 'main', a ? '' : ' disabled') + b(edit ? 'menu' : 'home', 'Back', 'ghost');
+      b('saveprof', 'Save', 'main', a && needPin() !== 'nopin' ? '' : ' disabled') + b(edit ? 'menu' : 'home', 'Back', 'ghost');
   };
   // v20.1 B2: once a PIN exists, turning a YA into an Adult, or adding an Adult while a YA profile exists, needs it.
+  // v20.4 M1: the parent profile (the first made on the device) never needs it. Any other profile switching to Adult
+  // needs the PIN; with no PIN yet it is blocked ('nopin'). A new Adult profile needs it while a YA profile exists.
   function needPin() {
-    if (!S.pin || U.age !== 'adult') return false;
-    if (U.edit) return P() && P().age === 'ya';
-    return Object.keys(S.profiles).some(function (k) { return S.profiles[k].age === 'ya'; });
+    if (U.age !== 'adult') return false;
+    var r;
+    if (U.edit) r = P() && P().age === 'ya' && !LSA.isParent(S, S.active);
+    else r = Object.keys(S.profiles).some(function (k) { return S.profiles[k].age === 'ya'; });
+    if (!r) return false;
+    return S.pin ? true : 'nopin';
   }
+  // v20.4 M2: Switch player into an Adult profile asks for the PIN whenever one exists (Tom's call; LSA.REQUIRE_PIN_TO_SWITCH_TO_ADULT).
+  function needSwitchPin(id) {
+    var p = S.profiles[id];
+    return !!(LSA.REQUIRE_PIN_TO_SWITCH_TO_ADULT && S.pin && p && p.age === 'adult');
+  }
+  R.swpin = function () {
+    var p = S.profiles[U.swId]; if (!p) return R.home();
+    var h = '<h1>Parent PIN</h1><p>' + esc(p.name) + ' is an Adult profile. Type the parent PIN to open it.</p>';
+    h += '<label for="pin1">Parent PIN</label><input id="pin1" type="password" inputmode="numeric" maxlength="4" autocomplete="off">';
+    if (U.pinMsg) h += '<p class="wrong" id="pinmsg">' + esc(U.pinMsg) + '</p>';
+    return h + b('swok', 'Open', 'main') + b('home', 'Cancel', 'ghost');
+  };
   R.menu = function () {
     var p = P(), live = p.round && p.round.stage !== 'done', seen = LSA.MM.seenCards(p, playDecks()).length;
-    var h = (U.notice ? '<p class="note">' + esc(U.notice) + '</p>' : '') + '<h1>Hi, ' + esc(p.name) + '</h1><p class="muted">' + ageName(p.age) + ' · ' + Object.keys(p.boxes).length + ' cards seen · ' + p.stats.rounds + ' rounds</p>';
+    // v20.4 P2: Hard Reads questions are counted on their own, not as cards.
+    var bx = Object.keys(p.boxes), isQ = function (id) { var c = LSA.cardIndex && LSA.cardIndex[id], d = c && LSA.decks[c.deck]; return !!(d && d.format === 'passage'); }, nq = bx.filter(isQ).length;
+    var h = (U.notice ? '<p class="note">' + esc(U.notice) + '</p>' : '') + '<h1>Hi, ' + esc(p.name) + '</h1><p class="muted">' + ageName(p.age) + ' · ' + (bx.length - nq) + ' cards seen · ' + (nq ? '<span id="hrseen">' + nq + ' Hard Reads questions</span> · ' : '') + p.stats.rounds + ' rounds</p>';
     h += b('play', live ? '▶ Resume round' : '▶ Play Gut Check', 'main');
     h += b('match', '🧩 Myth Match', 'alt', seen < 2 ? ' disabled' : '') + (seen < 2 ? '<p class="muted">Myth Match opens after you see a few cards.</p>' : '');
     // Red Flags shows once a Red Flags deck is on.
@@ -86,7 +105,7 @@
     if (LSA.passagesFor(p.age, LSA.allowedDecks(decks(), p)).length) h += b('prplay', p.pr && p.pr.stage !== 'done' ? '📖 Resume Hard Reads' : '📖 Play Hard Reads', 'alt', ' id="prbtn"');
     h += '<h2>Decks</h2>' + (live ? '<p class="muted" id="decknote">Deck changes start with your next round. Your round in progress is kept.</p>' : '');
     h += picker();
-    if (p.age === 'adult') h += b('parent', '🔐 Parent settings', 'ghost');
+    if (LSA.isParent(S, S.active)) h += b('parent', '🔐 Parent settings', 'ghost');
     h += b('editage', 'Change age group', 'ghost') + b('about', 'About and sources', 'ghost') + b('home', 'Switch player', 'ghost') + b('delask', 'Delete this player', 'ghost danger');
     return h + ver();
   };
@@ -96,14 +115,14 @@
     var h = '<h1>Parent PIN</h1><p>' + esc(d.icon + ' ' + d.name) + ' is rated for adults. A parent can turn it on for ' + esc(P().name) + '.</p>';
     if (d.cover) h += '<p class="muted">' + esc(d.cover) + '</p>';
     // v20.1 B1: the first PIN is set only from an Adult profile, in Parent settings.
-    if (!S.pin) return h + '<p id="askparent"><b>Ask a parent to set this up.</b> A parent opens their Adult profile and taps Parent settings to make a PIN.</p>' + b('menu', 'Back', 'main');
+    if (!S.pin) return h + '<p id="askparent"><b>Ask a parent to set this up.</b> A parent opens the parent profile (the first one made on this phone) and taps Parent settings to make a PIN.</p>' + b('menu', 'Back', 'main');
     h += '<label for="pin1">Parent PIN</label><input id="pin1" type="password" inputmode="numeric" maxlength="4" autocomplete="off">';
     if (U.pinMsg) h += '<p class="wrong" id="pinmsg">' + esc(U.pinMsg) + '</p>';
     return h + b('pinok', 'Unlock', 'main') + b('menu', 'Cancel', 'ghost');
   };
-  // v20.1: Parent settings, on Adult profiles only. Set the PIN, or change it with the old one.
+  // v20.1: Parent settings, on the parent profile only (v20.4). Set the PIN, or change it with the old one.
   R.parent = function () {
-    if (!P() || P().age !== 'adult') return R.menu();
+    if (!P() || !LSA.isParent(S, S.active)) return R.menu();
     var h = '<h1>Parent settings</h1><p>The parent PIN turns on adult-rated decks for a young adult, and is needed to make a profile Adult.</p><p class="muted" id="speedbump">Parent lock is a simple speed bump, not real security.</p>';
     if (S.pin) h += '<label for="pin0">Current PIN</label><input id="pin0" type="password" inputmode="numeric" maxlength="4" autocomplete="off">';
     h += '<label for="pin1">' + (S.pin ? 'New 4-digit PIN' : 'Set a 4-digit parent PIN') + '</label><input id="pin1" type="password" inputmode="numeric" maxlength="4" autocomplete="off">';
@@ -289,13 +308,19 @@
     home: function () { U.notice = ''; S.active = null; go('home'); },
     menu: function () { go(P() ? 'menu' : 'home'); },
     about: function () { go('about'); },
-    prof: function (el) { S.active = el.dataset.id; U.notice = ''; go('menu'); },
+    prof: function (el) { var id = el.dataset.id; U.notice = ''; if (needSwitchPin(id)) { U.swId = id; U.pinMsg = ''; return go('swpin'); } S.active = id; go('menu'); },
+    swok: function () {
+      var a = (document.getElementById('pin1') || {}).value || '';
+      if (!S.profiles[U.swId]) return go('home');
+      if (LSA.hashPin(a) !== S.pin) { U.pinMsg = 'That PIN is not right.'; return render(); }
+      S.active = U.swId; U.swId = null; U.pinMsg = ''; go('menu');
+    },
     newprof: function () { U.age = null; U.name = ''; U.edit = false; U.pinMsg = ''; go('newprof'); },
     editage: function () { U.age = P().age; U.edit = true; U.pinMsg = ''; go('newprof'); },
     parent: function () { U.pinMsg = ''; U.pinOk = false; go('parent'); },
     pinset: function () {
       var v = function (i) { return (document.getElementById(i) || {}).value || ''; }, a = v('pin1');
-      if (!P() || P().age !== 'adult') return go('menu');
+      if (!P() || !LSA.isParent(S, S.active)) return go('menu');
       U.pinOk = false;
       if (S.pin && LSA.hashPin(v('pin0')) !== S.pin) U.pinMsg = 'The current PIN is not right.';
       else if (!LSA.PIN_RX.test(a)) U.pinMsg = 'Use 4 digits.';
@@ -306,6 +331,7 @@
     age: function (el) { var nm = document.getElementById('nm'); if (nm) U.name = nm.value; U.age = el.dataset.a; render(); },
     saveprof: function () {
       if (!U.age) return;
+      if (needPin() === 'nopin') { U.pinMsg = 'Ask a parent to set a PIN first.'; return render(); }
       if (needPin()) { var pp = (document.getElementById('pinp') || {}).value || ''; var nm0 = document.getElementById('nm'); if (nm0) U.name = nm0.value; if (LSA.hashPin(pp) !== S.pin) { U.pinMsg = 'That PIN is not right.'; return render(); } }
       U.pinMsg = '';
       if (U.edit) { var p = P(); if (p.age !== U.age) { p.age = U.age; p.round = null; } }

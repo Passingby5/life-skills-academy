@@ -2,15 +2,25 @@
 // Every field is checked deeply. Bad parts are fixed or reset; a save that cannot be used at all starts fresh.
 var LSA = typeof LSA !== 'undefined' ? LSA : {};
 LSA.SAVE_V = 2;
-LSA.SCREENS = ['home', 'menu', 'play', 'about', 'match', 'newprof', 'rf', 'pr', 'parent'];
+LSA.SCREENS = ['home', 'menu', 'play', 'about', 'match', 'newprof', 'rf', 'pr', 'parent', 'swpin'];
 LSA.newStats = function () { return { rounds: 0, right: 0, seen: 0, wows: 0 }; };
 LSA.newProfile = function (name, age) { return { name: String(name || 'Player').slice(0, 20), age: age === 'ya' ? 'ya' : 'adult', boxes: {}, round: null, rf: null, pr: null, carry: [], stats: LSA.newStats() }; };
-LSA.newSave = function () { return { v: LSA.SAVE_V, active: null, next: 1, profiles: {}, decks: null }; };
+LSA.newSave = function () { return { v: LSA.SAVE_V, active: null, next: 1, profiles: {}, decks: null, parent: null }; };
 LSA.addProfile = function (s, name, age) {
   var id; do { id = 'p' + (s.next++); } while (s.profiles[id]);
-  s.profiles[id] = LSA.newProfile(name, age); s.active = id; return id;
+  s.profiles[id] = LSA.newProfile(name, age); s.active = id;
+  if (!s.parent || !s.profiles[s.parent]) s.parent = id; // v20.4 M1: the first profile made on the device is the parent
+  return id;
 };
-LSA.deleteProfile = function (s, id) { delete s.profiles[id]; if (s.active === id) s.active = null; };
+// v20.4 M1: the parent is the earliest-created Adult profile, or else the earliest profile (ids are p1, p2, ... in order).
+LSA.pickParent = function (s) {
+  var n = function (k) { var m = /^p(\d+)$/.exec(k); return m ? +m[1] : 1e9; };
+  var ids = Object.keys(s.profiles).sort(function (a, b) { return n(a) - n(b); });
+  var ad = ids.filter(function (k) { return s.profiles[k].age === 'adult'; });
+  return ad[0] || ids[0] || null;
+};
+LSA.isParent = function (s, id) { return !!id && s.parent === id; };
+LSA.deleteProfile = function (s, id) { delete s.profiles[id]; if (s.active === id) s.active = null; if (s.parent === id) s.parent = LSA.pickParent(s); };
 // v1 was one player: { v:1, name, age, boxes, round }
 LSA.upgrade = function (o) {
   if (o && o.v === 1) {
@@ -132,6 +142,8 @@ LSA.loadSave = function (text) {
       if (ds.length && Array.isArray(o.decks) && ds.length === o.decks.length) s.decks = ds; else { fixed = true; s.decks = ds.length ? ds : null; }
     }
     if (typeof o.pin === 'string' && /^h[0-9a-z]{1,8}$/.test(o.pin)) s.pin = o.pin; else if (o.pin !== undefined && o.pin !== null) fixed = true;
+    // v20.4 M1: keep a valid stored parent; older saves get the earliest Adult profile, or else the first profile.
+    if (typeof o.parent === 'string' && s.profiles[o.parent]) s.parent = o.parent; else { s.parent = LSA.pickParent(s); if (o.parent !== undefined && o.parent !== null) fixed = true; }
     if (LSA.SCREENS.indexOf(o.screen) >= 0) s.screen = o.screen;
     return { save: s, broken: false, repaired: fixed, pruned: pruned };
   } catch (e) { return { save: LSA.newSave(), broken: true, repaired: false }; }

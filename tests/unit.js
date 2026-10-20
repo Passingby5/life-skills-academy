@@ -743,4 +743,16 @@ t('v20.1 B1/M2 PIN is 4 digits; a ya lock prompt can not set one', () => {
   const ui = fs.readFileSync(path.join(__dirname, '../src/ui/ui.js'), 'utf8'), pin = ui.slice(ui.indexOf('R.pin = '), ui.indexOf('R.parent = '));
   assert(/Ask a parent to set this up/.test(pin) && !/pin2/.test(pin), 'lock prompt has no set-PIN'); assert(/speed bump, not real security/.test(ui));
 });
+t('v20.4 M1 first profile is the parent; old saves pick the earliest Adult, or else the first profile; M2 switch constant', () => {
+  const a = L.newSave(); L.addProfile(a, 'Kid', 'ya'); L.addProfile(a, 'Mom', 'adult'); eq(a.parent, 'p1');
+  const old = L.newSave(); L.addProfile(old, 'Kid', 'ya'); L.addProfile(old, 'Mom', 'adult'); L.addProfile(old, 'Dad', 'adult'); delete old.parent;
+  eq(L.loadSave(L.dumpSave(old)).save.parent, 'p2', 'earliest Adult');
+  const ya = L.newSave(); L.addProfile(ya, 'A', 'ya'); L.addProfile(ya, 'B', 'ya'); delete ya.parent; eq(L.loadSave(L.dumpSave(ya)).save.parent, 'p1', 'else first');
+  const bad = JSON.parse(L.dumpSave(a)); bad.parent = 'p9'; const lb = L.loadSave(JSON.stringify(bad)); eq(lb.save.parent, 'p2'); assert(lb.repaired);
+  eq(L.loadSave(L.dumpSave(a)).save.parent, 'p1', 'a stored parent is kept');
+  L.deleteProfile(a, 'p1'); eq(a.parent, 'p2');
+  eq(L.REQUIRE_PIN_TO_SWITCH_TO_ADULT, true);
+  const ui = fs.readFileSync(path.join(__dirname, '../src/ui/ui.js'), 'utf8');
+  assert(/Ask a parent to set a PIN first/.test(ui) && /LSA\.isParent\(S, S\.active\)\) h \+= b\('parent'/.test(ui), 'parent-only settings, no-PIN block');
+});
 console.log(n + ' unit tests passed');

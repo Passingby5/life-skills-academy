@@ -95,9 +95,44 @@ exports.check = function (L, ids) {
   return { errs, scores };
 };
 // v20 Hard Reads passage-free check: the same two models trained on each question plus its choices, never the passage.
+// v20.4 M3: limit 40% (QA's line), plus every simple one-feature rule QA tried (longest, shortest, middle, most or fewest
+// words, middle words, most or least question overlap), each at or under 40% on every seed.
+exports.PASSAGE_LIMIT = 0.40;
+const RULES = {
+  longest: c => c.map(x => x.length), shortest: c => c.map(x => -x.length),
+  middle: c => { const s = c.map(x => x.length).slice().sort((a, b) => a - b); return c.map(x => x.length === s[1] ? 1 : 0); },
+  mostWords: c => c.map(wc), fewestWords: c => c.map(x => -wc(x)),
+  middleWords: c => { const s = c.map(wc).slice().sort((a, b) => a - b); return c.map(x => wc(x) === s[1] ? 1 : 0); },
+  mostOverlap: (c, q) => { const Q = qw(q); return c.map(x => [...qw(x)].filter(w => Q.has(w)).length); },
+  leastOverlap: (c, q) => { const Q = qw(q); return c.map(x => -[...qw(x)].filter(w => Q.has(w)).length); }
+};
+exports.ruleScores = function (qs, seeds) {
+  const out = {};
+  Object.keys(RULES).forEach(k => { out[k] = 0; (seeds || exports.SEEDS).forEach(sd => {
+    const r = rng(sd * 7919); let hit = 0;
+    qs.forEach(q => { const o = shuffle([0, 1, 2], r), c = o.map(i => q.c[i]), v = RULES[k](c, q.q), mx = Math.max(...v), top = v.map((x, i) => x === mx ? i : -1).filter(i => i >= 0); if (top.indexOf(o.indexOf(1)) >= 0) hit += 1 / top.length; });
+    out[k] = Math.max(out[k], hit / qs.length); }); });
+  return out;
+};
+// v20.4 M3 by-hand-style screen: a choice that a reader could drop without reading. Extreme or absolute words, and
+// tone or stance words that no careful writer on a grave subject would take (approving harm, joking, cheering).
+exports.EXTREME = /\b(always|never|every|everyone|everything|all|none|nobody|nothing|only|entirely|completely|totally|forever|must|impossible|guaranteed|any)\b/i;
+exports.OFFTONE = /\b(celebrat\w*|deserved?|earned their|glorif\w*|gleeful)\b/i;
+// On tone questions, moods no careful writer would take on a grave subject can be dropped without reading.
+exports.OFFTONE_TONE = /\b(amus\w*|playful|thrill\w*|joking|joyful|cheerful|silly|bored|indifferent|mocking|flippant|whimsical|lighthearted|sentimental|preachy|useless|irrelevant|sympathetic to|sarcastic|upbeat|excited|triumphant|worshipful|cheerleading|lurid|sensational)\b/i;
+exports.heuristic = function (cards) {
+  const out = [];
+  cards.forEach(c => c.qs.forEach(q => q.c.forEach((x, k) => {
+    if (exports.EXTREME.test(x)) out.push(q.id + ' choice ' + k + ' has an extreme word: ' + x);
+    if (exports.OFFTONE.test(x) || (q.type === 'tone' && exports.OFFTONE_TONE.test(x))) out.push(q.id + ' choice ' + k + ' is an off-tone or repugnant option: ' + x);
+  })));
+  return out;
+};
 exports.checkPassage = function (L, ids) {
   const errs = [], scores = {};
-  ids.forEach(id => { const qs = []; L.decks[id].cards.forEach(c => c.qs.forEach(q => qs.push({ c: q.c, q: q.q }))); const s = exports.score(qs); scores[id] = s; ['gbm', 'logreg'].forEach(k => { if (s[k] > exports.LIMIT) errs.push(id + ': passage-free ' + k + ' model picks the right answer ' + (s[k] * 100).toFixed(1) + '% of held-out questions without the passage (limit 45%)'); }); });
+  ids.forEach(id => { const qs = []; L.decks[id].cards.forEach(c => c.qs.forEach(q => qs.push({ c: q.c, q: q.q }))); const s = exports.score(qs);
+    const rs = exports.ruleScores(qs); s.rules = rs; Object.keys(rs).forEach(k => { if (rs[k] > exports.PASSAGE_LIMIT) errs.push(id + ': passage-free rule "' + k + '" picks the right answer ' + (rs[k] * 100).toFixed(1) + '% (limit 40%)'); });
+    exports.heuristic(L.decks[id].cards).forEach(e => errs.push(id + ': ' + e)); scores[id] = s; ['gbm', 'logreg'].forEach(k => { if (s[k] > exports.PASSAGE_LIMIT) errs.push(id + ': passage-free ' + k + ' model picks the right answer ' + (s[k] * 100).toFixed(1) + '% of held-out questions without the passage (limit 40%)'); }); });
   return { errs, scores };
 };
 if (require.main === module) {

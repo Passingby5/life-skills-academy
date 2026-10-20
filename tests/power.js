@@ -17,8 +17,12 @@ const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.sp
     const shot = async (n, full) => { if (dir) { await page.screenshot({ path: path.join(dir, 'v18-' + n + '-' + vp.name + '.jpg'), type: 'jpeg', quality: 85, fullPage: !!full }); } };
     const openStreet = () => page.evaluate(() => { document.querySelectorAll('#picker details').forEach(d => d.open = d.dataset.sect === 'Street Smart'); });
     await page.goto(base);
+    // v20.4 M1: the first profile made on the device is the parent. Tom (Adult) comes first; no PIN exists yet.
+    await tap('[data-act=newprof]'); await page.fill('#nm', 'Tom'); await tap('[data-act="age"][data-a="adult"]'); assert(!(await page.$('#pinp')), 'no PIN asked for the first profile'); await tap('[data-act=saveprof]');
+    assert(await page.$('[data-act=parent]'), 'Parent settings on the parent profile');
+    let sv = await page.evaluate(() => JSON.parse(localStorage.lsa_save)); assert.strictEqual(sv.parent, 'p1', 'first profile stored as parent');
     // Young adult: locked.
-    await tap('[data-act=newprof]'); await page.fill('#nm', 'Kid'); await tap('[data-act="age"][data-a="ya"]'); await tap('[data-act=saveprof]');
+    await tap('[data-act=home]'); await tap('[data-act=newprof]'); await page.fill('#nm', 'Kid'); await tap('[data-act="age"][data-a="ya"]'); await tap('[data-act=saveprof]');
     await openStreet();
     const lock = await page.evaluate(() => { const e = document.querySelector('#picker [data-act=deck][data-id=power]'); return e && { lock: e.dataset.lock, text: e.textContent }; });
     assert(lock && lock.lock === '1' && /🔒/.test(lock.text) && /parent PIN/.test(lock.text), 'power locked for ya: ' + JSON.stringify(lock));
@@ -27,10 +31,15 @@ const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.sp
     // v20.1 B1: with no PIN yet, a young adult is told to ask a parent; there is no way to set one here.
     await tap('#picker [data-act=deck][data-id=power]'); assert(await page.$('#askparent') && !(await page.$('#pin1')) && !(await page.$('#pin2')), 'ask a parent, no set-PIN on the lock prompt');
     await shot('2-ask-parent'); await tap('[data-act=menu]');
-    assert(!(await page.$('[data-act=parent]')), 'no Parent settings on a ya profile');
-    let sv = await page.evaluate(() => JSON.parse(localStorage.lsa_save)); assert(!sv.pin && !sv.profiles.p1.unlock, 'nothing set by the ya');
-    // Adult profile (no PIN yet, so no gate) sets the PIN in Parent settings.
-    await tap('[data-act=home]'); await tap('[data-act=newprof]'); await page.fill('#nm', 'Tom'); await tap('[data-act="age"][data-a="adult"]'); assert(!(await page.$('#pinp')), 'no PIN asked before one exists'); await tap('[data-act=saveprof]');
+    assert(!(await page.$('[data-act=parent]')), 'no Parent settings on a non-parent profile');
+    // v20.4 M1 (QA MJ1): with no PIN yet, the ya cannot make itself Adult.
+    await tap('[data-act=editage]'); await tap('[data-act="age"][data-a="adult"]');
+    assert(/set a PIN first/.test(await page.textContent('#askparent')) && !(await page.$('#pinp')), 'blocked: ask a parent to set a PIN first');
+    assert(await page.$('[data-act=saveprof][disabled]'), 'save disabled with no PIN');
+    await tap('[data-act=menu]');
+    sv = await page.evaluate(() => JSON.parse(localStorage.lsa_save)); assert(!sv.pin && !sv.profiles.p2.unlock && sv.profiles.p2.age === 'ya', 'nothing set by the ya');
+    // The parent sets the PIN in Parent settings (no PIN yet, so switching in needs none).
+    await tap('[data-act=home]'); await tap('[data-act=prof][data-id=p1]');
     await tap('[data-act=parent]'); assert(/speed bump/.test(await page.textContent('#speedbump')));
     await page.fill('#pin1', '246'); await page.fill('#pin2', '246'); await tap('[data-act=pinset]'); assert(/4 digits/.test(await page.textContent('#pinmsg')));
     await page.fill('#pin1', '2468'); await page.fill('#pin2', '1357'); await tap('[data-act=pinset]'); assert(/do not match/.test(await page.textContent('#pinmsg')), 'mismatch message');
@@ -39,20 +48,27 @@ const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.sp
     sv = await page.evaluate(() => JSON.parse(localStorage.lsa_save)); assert(/^h/.test(sv.pin) && sv.pin !== '2468');
     await tap('[data-act=menu]');
     // The ya now unlocks with the PIN.
-    await tap('[data-act=home]'); await tap('[data-act=prof][data-id=p1]'); await openStreet();
+    await tap('[data-act=home]'); await tap('[data-act=prof][data-id=p2]'); await openStreet();
     await tap('#picker [data-act=deck][data-id=power]'); assert(await page.$('#pin1') && !(await page.$('#pin2')), 'PIN asked once');
     await page.fill('#pin1', '0000'); await tap('[data-act=pinok]'); assert(/not right/.test(await page.textContent('#pinmsg')));
     await page.fill('#pin1', '2468'); await tap('[data-act=pinok]');
     sv = await page.evaluate(() => JSON.parse(localStorage.lsa_save));
-    assert.deepStrictEqual(sv.profiles.p1.unlock, ['power']); assert(sv.decks.indexOf('power') >= 0);
+    assert.deepStrictEqual(sv.profiles.p2.unlock, ['power']); assert(sv.decks.indexOf('power') >= 0);
     assert(/Power Plays covers/.test(await page.textContent('.note')), 'adult-rated deck note');
     // v20.1 B2: Change age group to Adult needs the PIN.
     await tap('[data-act=editage]'); await tap('[data-act="age"][data-a="adult"]'); assert(await page.$('#pinp'), 'PIN field on age change');
     await page.fill('#pinp', '1111'); await tap('[data-act=saveprof]'); assert(/not right/.test(await page.textContent('#pinmsg')));
-    assert.strictEqual(await page.evaluate(() => JSON.parse(localStorage.lsa_save).profiles.p1.age), 'ya', 'still ya after a wrong PIN');
+    assert.strictEqual(await page.evaluate(() => JSON.parse(localStorage.lsa_save).profiles.p2.age), 'ya', 'still ya after a wrong PIN');
     await page.fill('#pinp', '2468'); await tap('[data-act=saveprof]');
-    assert.strictEqual(await page.evaluate(() => JSON.parse(localStorage.lsa_save).profiles.p1.age), 'adult', 'adult with the PIN');
+    assert.strictEqual(await page.evaluate(() => JSON.parse(localStorage.lsa_save).profiles.p2.age), 'adult', 'adult with the PIN');
+    assert(!(await page.$('[data-act=parent]')), 'an Adult that is not the parent gets no Parent settings');
     await tap('[data-act=editage]'); await tap('[data-act="age"][data-a="ya"]'); await tap('[data-act=saveprof]');
+    // v20.4 M2 (QA MJ2): Switch player into an Adult profile asks for the PIN (REQUIRE_PIN_TO_SWITCH_TO_ADULT).
+    assert.strictEqual(await page.evaluate(() => LSA.REQUIRE_PIN_TO_SWITCH_TO_ADULT), true);
+    await tap('[data-act=home]'); await tap('[data-act=prof][data-id=p1]'); assert(await page.$('[data-act=swok]'), 'PIN asked to open the Adult profile');
+    await page.fill('#pin1', '1111'); await tap('[data-act=swok]'); assert(/not right/.test(await page.textContent('#pinmsg')));
+    assert.notStrictEqual(await page.evaluate(() => JSON.parse(localStorage.lsa_save).active), 'p1', 'not opened with a wrong PIN');
+    await page.fill('#pin1', '2468'); await tap('[data-act=swok]'); assert(await page.$('[data-act=parent]'), 'parent opened with the PIN');
     // A second ya: still locked. A new Adult profile while a ya exists needs the PIN.
     await tap('[data-act=home]'); await tap('[data-act=newprof]'); await page.fill('#nm', 'Teen'); await tap('[data-act="age"][data-a="ya"]'); await tap('[data-act=saveprof]');
     await openStreet(); assert.strictEqual(await page.getAttribute('#picker [data-act=deck][data-id=power]', 'data-lock'), '1', 'still locked on a second ya profile');
@@ -62,6 +78,12 @@ const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.sp
     assert.strictEqual(Object.keys((await page.evaluate(() => JSON.parse(localStorage.lsa_save))).profiles).length, np, 'no profile made without the PIN');
     assert.strictEqual(await page.inputValue('#nm'), 'Sneak', 'name kept');
     await page.fill('#pinp', '2468'); await tap('[data-act=saveprof]');
+    // v20.4 M2 (Tom's call): every Adult profile, not just the parent, needs the PIN from Switch player once a PIN exists.
+    const sneak = await page.evaluate(() => JSON.parse(localStorage.lsa_save).active);
+    await tap('[data-act=home]'); await tap('[data-act=prof][data-id=' + sneak + ']'); assert(await page.$('#pin1') && await page.$('[data-act=swok]'), 'PIN asked to open a non-parent Adult');
+    await tap('[data-act=home]'); assert(!(await page.$('[data-act=swok]')) && await page.$('[data-act=newprof]'), 'Cancel goes back to the player list without opening it');
+    await tap('[data-act=prof][data-id=' + sneak + ']'); await page.fill('#pin1', '2468'); await tap('[data-act=swok]');
+    assert.strictEqual(await page.evaluate(() => JSON.parse(localStorage.lsa_save).active), sneak, 'opened with the PIN');
     await tap('[data-act=about]'); assert(/speed bump/.test(await page.textContent('#pinnote'))); await tap('[data-act=menu]');
     await openStreet(); assert.strictEqual(await page.getAttribute('#picker [data-act=deck][data-id=power]', 'data-lock'), null);
     for (const o of await page.evaluate(() => JSON.parse(localStorage.lsa_save).decks)) if (o !== 'power') { await openStreet(); await page.evaluate(id => { const e = document.querySelector(`#picker [data-act=deck][data-id=${id}]`); const d = e.closest('details'); if (d) d.open = true; e.scrollIntoView(); }, o); await tap(`#picker [data-act=deck][data-id=${o}]`); }

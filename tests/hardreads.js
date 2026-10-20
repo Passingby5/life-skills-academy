@@ -21,11 +21,13 @@ const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.sp
     const big = async (sel, w) => { const s = await page.$$eval(sel, a => a.map(e => { const r = e.getBoundingClientRect(); return [r.width, r.height]; })); assert(s.length && s.every(([x, y]) => x >= 48 && y >= 48), w + ' targets 48 px: ' + JSON.stringify(s)); };
     const st = () => page.evaluate(() => { const s = JSON.parse(localStorage.lsa_save), p = s.profiles[s.active]; return p.pr; });
     await page.goto(base);
-    await tap('[data-act=newprof]'); await page.fill('#nm', 'Kid'); await tap('[data-act="age"][data-a="ya"]'); await tap('[data-act=saveprof]');
+    // v20.4 M1: the first profile is the parent, so the Adult is made first; no PIN is set in this test.
+    await tap('[data-act=newprof]'); await page.fill('#nm', 'Tom'); await tap('[data-act="age"][data-a="adult"]'); await tap('[data-act=saveprof]');
+    await tap('[data-act=home]'); await tap('[data-act=newprof]'); await page.fill('#nm', 'Kid'); await tap('[data-act="age"][data-a="ya"]'); await tap('[data-act=saveprof]');
     await openStreet();
     assert.strictEqual(await page.getAttribute('#picker [data-act=deck][data-id=hardreads]', 'data-lock'), '1', 'Hard Reads locked for a young adult');
     assert(!(await page.$('#prbtn')), 'no Hard Reads button while locked');
-    await tap('[data-act=home]'); await tap('[data-act=newprof]'); await page.fill('#nm', 'Tom'); await tap('[data-act="age"][data-a="adult"]'); await tap('[data-act=saveprof]');
+    await tap('[data-act=home]'); await tap('[data-act=prof][data-id=p1]');
     assert(!(await page.$('#prbtn')), 'no Hard Reads button while the deck is off');
     await openStreet(); await page.evaluate(() => document.querySelector('#picker [data-act=deck][data-id=hardreads]').scrollIntoView()); await tap('#picker [data-act=deck][data-id=hardreads]');
     assert(/Hard Reads covers/.test(await page.textContent('.note')), 'adult-rated deck note');
@@ -63,6 +65,11 @@ const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.sp
     assert.strictEqual(s.right, Math.ceil(n / 2)); await fits('recap'); await shot('6-recap');
     const boxes = await page.evaluate(() => { const s = JSON.parse(localStorage.lsa_save); return Object.keys(s.profiles[s.active].boxes).filter(k => /^hr\d+-q\d+$/.test(k)).length; });
     assert.strictEqual(boxes, n, 'one Leitner box per question');
+    // v20.4 P2: the menu counts Hard Reads questions apart from Gut Check cards.
+    await tap('[data-act=menu]');
+    const menu = await page.evaluate(() => { const s = JSON.parse(localStorage.lsa_save), all = Object.keys(s.profiles[s.active].boxes).length; return { all, txt: document.getElementById('app').textContent, hr: (document.getElementById('hrseen') || {}).textContent || '' }; });
+    assert.strictEqual(menu.hr, n + ' Hard Reads questions', 'hard reads count: ' + menu.hr);
+    assert(menu.txt.indexOf((menu.all - n) + ' cards seen') >= 0, 'cards seen excludes Hard Reads');
     // Offline: the service worker serves the app; a new passage still plays.
     await page.waitForTimeout(800); await ctx.setOffline(true); await page.reload(); await page.waitForTimeout(800);
     await tap('[data-act=prplay]'); assert(await page.$('#passage .para'), 'passage plays offline'); await tap('#prread'); assert.strictEqual(await page.$$eval('[data-act=prans]', a => a.length), 3, 'question offline');

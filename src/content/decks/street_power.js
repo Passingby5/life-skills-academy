@@ -104,7 +104,7 @@ LSA.deck({
       s: 'China, spring 1957. Mao invites open criticism: "Let a hundred flowers bloom." Students and professors put up wall posters. A teacher is urged to speak up at a meeting. What is the wise move?',
       c: ['Speak out fully; the invite is the new rule here', 'Go slow; watch what happens to the first critics', 'Name the coworkers who are complaining'],
       m: 'When a one-party state asks for criticism, it is safe to give it.', f: 'Test an invite from a regime that punishes dissent. Watch what happens to the first ones who speak, and keep your records private.',
-      w: 'By July 1957 the Anti-Rightist Campaign had begun. China later admitted at least 550,000 people were persecuted, many sent to labor camps.',
+      w: 'By early July 1957 an anti-rightist campaign was under way. Britannica says most of the recent critics lost their jobs and were forced to do manual labor in the country.',
       steps: ['Pause before speaking', 'Watch the first critics', 'Keep notes private'] },
     { id: 'pw08', ages: 'both', topic: 'regime', kind: 'none', tactic: 'loyaltyTest', cite: 'Peng Dehuai removed as defense minister, 1959', src: 'brit-peng',
       s: 'China, 1959. Marshal Peng Dehuai, the defense minister and a hero of the Long March, criticizes the party\'s military and economic policies. What would have kept him safe and still told the truth?',

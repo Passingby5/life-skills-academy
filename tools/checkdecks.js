@@ -20,6 +20,6 @@ console.log('QA tell models (4 seeds, 10-fold x5): ' + sss.map(id => id + ' gbm 
 L.knowDecks().filter(id => L.decks[id].format === 'gutcheck' && L.FROZEN_DECKS.indexOf(id) < 0).forEach(id => TQA.textTells(L.decks[id].cards).forEach(e => errs.push(id + ': exact-text tell: ' + e)));
 // v20: passage-free tell check on Hard Reads (question plus choices only).
 const pds = L.passageDecks(), pq = TQA.checkPassage(L, pds); pq.errs.forEach(e => errs.push(e));
-if (pds.length) console.log('Passage-free models (4 seeds, 10-fold x5): ' + pds.map(id => id + ' gbm ' + (pq.scores[id].gbm * 100).toFixed(1) + '% logreg ' + (pq.scores[id].logreg * 100).toFixed(1) + '%').join(' | '));
+if (pds.length) console.log('Passage-free models (4 seeds, 10-fold x5, limit 40%; one-feature rules and the extreme-word screen also checked): ' + pds.map(id => id + ' gbm ' + (pq.scores[id].gbm * 100).toFixed(1) + '% logreg ' + (pq.scores[id].logreg * 100).toFixed(1) + '%').join(' | '));
 if (errs.length) { console.error(errs.join('\n')); process.exit(1); }
 console.log('ok deck checker (strategies, classifier, counts, sources)');

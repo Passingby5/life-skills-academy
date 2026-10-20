@@ -6,7 +6,7 @@ LSA.deck({
   sources: {
     'tbmed-530': ['TB MED 530 / NAVMED P-5010-1: Tri-Service Food Code', 'https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN15052_TB_MED_530_FINAL.pdf'],
     'fsgov-temps': ['FoodSafety.gov: Safe Minimum Internal Temperatures', 'https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures'],
-    'cdc-foodsafety': ['CDC: Four Steps to Food Safety', 'https://www.cdc.gov/food-safety/prevention/index.html'],
+    'cdc-foodsafety': ['CDC: Preventing Food Poisoning', 'https://www.cdc.gov/food-safety/prevention/index.html'],
     'cdc-noro': ['CDC: Preventing Norovirus', 'https://www.cdc.gov/norovirus/prevention/index.html']
   },
   cards: [

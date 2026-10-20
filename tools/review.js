@@ -15,7 +15,7 @@ L.knowDecks().filter(id => L.FROZEN_DECKS.indexOf(id) < 0).forEach(id => {
   nw += `\n## ${d.name} (\`${id}\`)\n`;
   d.cards.forEach(c => {
     const s = typeof c.s === 'string' ? c.s : 'YA: ' + c.s.ya + ' / Adult: ' + c.s.adult;
-    nw += `\n**${c.id}** (${c.ages}, ${c.topic})${c.img ? ' img: ' + c.img.replace('img/', '') : ''}. ${s}\n- Choices: ${c.c[0]} / **${c.c[1]}** / ${c.c[2]}\n- Fix: ${c.f}\n- Source: \`${c.src}\` (${d.sources[c.src][1]}) quote: ${Q[c.id] || '(MISSING)'}\n`;
+    nw += `\n**${c.id}** (${c.ages}, ${c.topic})${c.img ? ' img: ' + c.img.replace('img/', '') : ''}. ${s}\n- Choices: ${c.c[0]} / **${c.c[1]}** / ${c.c[2]}\n- Fix: ${c.f}\n- Source: \`${c.src}\` (${d.sources[c.src][1]}) quote: ${Q[c.id] || '(MISSING)'}\n` + (c.also || []).map(k => `- Also: \`${k}\` (${d.sources[k][1]}) quote: ${Q[c.id + '@' + k] || '(MISSING)'}\n`).join('');
   });
 });
 fs.writeFileSync(path.join(__dirname, '../docs/REVIEW-NEW.md'), nw);

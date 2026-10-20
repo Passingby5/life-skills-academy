@@ -10,7 +10,7 @@ const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.sp
 (async () => {
   await new Promise(r => server.listen(0, r)); const base = 'http://127.0.0.1:' + server.address().port + '/';
   const b = await chromium.launch({ executablePath: '/usr/bin/google-chrome', args: ['--no-sandbox'] });
-  if (shots) fs.mkdirSync(path.join(shots, 'v10'), { recursive: true });
+  if (shots) fs.mkdirSync(path.join(shots, 'v11'), { recursive: true });
   for (const vp of [{ width: 390, height: 844, name: 'portrait' }, { width: 844, height: 390, name: 'landscape' }]) {
     const ctx = await b.newContext({ viewport: vp, deviceScaleFactor: 2, isMobile: true, hasTouch: true }), page = await ctx.newPage(), errs = [];
     page.on('console', m => { if (['error', 'warning'].includes(m.type())) errs.push(m.text()); }); page.on('pageerror', e => errs.push(e.message));
@@ -35,7 +35,7 @@ const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.sp
         const bd = await page.evaluate(() => { const d = document.querySelector('#picker details[data-sect="Big Debates"]'); const nt = d && d.querySelector('.sectnote'); return d && { ids: [...d.querySelectorAll('[data-act=deck]')].map(e => e.dataset.id), note: nt && nt.textContent }; });
         assert(bd, 'Big Debates section'); assert.deepStrictEqual(bd.ids, ['controversy']);
         assert.strictEqual(bd.note, 'Facts only. On faith and moral questions we show what each side teaches, not who is right.');
-        if (shots && vp.name === 'portrait') { await page.evaluate(() => { document.querySelectorAll('#picker details').forEach(d => d.open = d.dataset.sect === 'Big Debates' || d.dataset.sect === 'Everyday'); document.querySelector('#picker details[data-sect="Big Debates"]').scrollIntoView(); }); await page.screenshot({ path: path.join(shots, 'v10/1-picker-big-debates.jpg'), type: 'jpeg', quality: 85 }); await page.evaluate(() => window.scrollTo(0, 0)); }
+        if (shots && vp.name === 'portrait') { await page.evaluate(() => { document.querySelectorAll('#picker details').forEach(d => d.open = d.dataset.sect === 'Big Debates' || d.dataset.sect === 'Everyday'); document.querySelector('#picker details[data-sect="Big Debates"]').scrollIntoView(); }); await page.screenshot({ path: path.join(shots, 'v11/1-picker-big-debates.jpg'), type: 'jpeg', quality: 85 }); await page.evaluate(() => window.scrollTo(0, 0)); }
       }
       await tap('[data-act=play]');
       let n = 0, pics = 0;
@@ -51,7 +51,7 @@ const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.sp
           if (id === 'fieldcare' && !done.has('fc')) { done.add('fc'); await shot('2-fieldcare-fix-picture.jpg'); }
           if (id === 'homestead' && !done.has('hm')) { done.add('hm'); await shot('3-homestead-fix-picture.jpg'); }
         }
-        if (id === 'controversy' && shots && vp.name === 'portrait' && !done.has('ct' + st.stage) && (st.stage === 'ask' || st.stage === 'fix')) { done.add('ct' + st.stage); await page.evaluate(() => window.scrollTo(0, 0)); await page.screenshot({ path: path.join(shots, st.stage === 'ask' ? 'v10/2-ct-question.jpg' : 'v10/3-ct-fix.jpg'), type: 'jpeg', quality: 85 }); }
+        if (id === 'controversy' && shots && vp.name === 'portrait' && !done.has('ct' + st.stage) && (st.stage === 'ask' || st.stage === 'fix')) { done.add('ct' + st.stage); await page.evaluate(() => window.scrollTo(0, 0)); await page.screenshot({ path: path.join(shots, st.stage === 'ask' ? 'v11/2-ct-question.jpg' : 'v11/3-ct-fix.jpg'), type: 'jpeg', quality: 85 }); }
         if (await page.$('[data-act=ans]')) { await tap('[data-act=ans][data-p="' + (n % 3) + '"]'); n++; }
         else if (await page.$('[data-act=conf]')) await tap('[data-act=conf][data-k="1"]');
         else await tap('[data-act=next]');

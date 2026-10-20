@@ -9,7 +9,9 @@
   function backup() { try { if (raw) localStorage.setItem(KEY + '_broken', raw); } catch (e) { } }
   if (ld.broken) { backup(); U.notice = FRESH; }
   else if (ld.repaired) { backup(); U.notice = 'Part of your saved game could not be read and was reset.'; }
+  else if (ld.pruned) U.notice = 'This update retired a few cards. Your progress on every other card is kept.';
   var S = ld.save;
+  if (ld.pruned && !ld.repaired) save();
   function save() { try { localStorage.setItem(KEY, LSA.dumpSave(S)); } catch (e) { } }
   function today() { var d = new Date(); return Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 86400000); }
   function P() { return S.active ? S.profiles[S.active] : null; }
@@ -101,7 +103,9 @@
     h += '<p class="' + (it.right ? 'ok' : 'wrong') + '">' + (it.right ? '✅ You got it.' : '❌ Not this time.') + '</p>';
     h += '<p><span class="lab">Many people think:</span> ' + esc(c.m) + '</p><p class="wrong">That is wrong.</p>';
     h += '<p><span class="lab">Do this:</span> ' + esc(c.f) + '</p><p><span class="lab">Why:</span> ' + esc(c.w) + '</p>';
-    h += '<a class="src" href="' + esc(s[1]) + '" target="_blank" rel="noopener">Source: ' + esc(s[0]) + '</a></div>';
+    h += '<a class="src" href="' + esc(s[1]) + '" target="_blank" rel="noopener">Source: ' + esc(s[0]) + '</a>';
+    (c.also || []).forEach(function (k) { var x = d.sources[k]; h += '<a class="src also" href="' + esc(x[1]) + '" target="_blank" rel="noopener">Also: ' + esc(x[0]) + '</a>'; });
+    h += '</div>';
     return h + b('next', 'Next', 'main');
   }
   R.recap = function () {

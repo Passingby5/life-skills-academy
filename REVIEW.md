@@ -82,7 +82,7 @@ Reviewed by: ________  Date: ________
 - [ ] **ct03** (both) Myth: Most gay people chose their orientation. Fix: The APA says most people experience little or no sense of choice about their orientation. Source: [American Psychological Association: Answers to Your Questions for a Better Understanding of Sexual Orientation and Homosexuality](https://www.apa.org/topics/lgbtq/orientation.pdf)
 - [ ] **ct04** (both) Myth: The Catholic Church teaches its members to shun gay people. Fix: Catechism 2358: they must be accepted with respect, compassion and sensitivity, with no unjust discrimination. Source: [Catechism of the Catholic Church 2357-2359: Chastity and homosexuality](https://www.vatican.va/archive/ENG0015/__P85.HTM)
 - [ ] **ct05** (both) Myth: The Catholic Church now officially approves same-sex relationships. Fix: Catechism 2357 still says homosexual acts "under no circumstances can be approved." Source: [Catechism of the Catholic Church 2357-2359: Chastity and homosexuality](https://www.vatican.va/archive/ENG0015/__P85.HTM)
-- [ ] **ct06** (both) Myth: All Christian churches teach the same thing about same-sex marriage. Fix: Teachings differ: the SBC says marriage is one man and one woman, while the ELCA allows several positions of conscience. Source: [Southern Baptist Convention: The Baptist Faith and Message 2000](https://bfm.sbc.net/bfm2000/)
+- [ ] **ct06** (both) Myth: All Christian churches teach the same thing about same-sex marriage. Fix: Teachings differ: the SBC says marriage is one man and one woman, while the ELCA holds four "positions of bound conscience." Source: [Southern Baptist Convention: The Baptist Faith and Message 2000](https://bfm.sbc.net/bfm2000/)
 - [ ] **ct07** (both) Myth: Obergefell bans churches from teaching against same-sex marriage. Fix: The opinion says religions may keep advocating, with sincere conviction, that same-sex marriage should not be condoned. Source: [Obergefell v. Hodges, 576 U.S. 644 (2015)](https://www.law.cornell.edu/supremecourt/text/14-556)
 - [ ] **ct08** (both) Myth: The Obergefell dissent said the Constitution forbids same-sex marriage. Fix: Chief Justice Roberts wrote that the people of a state are free to expand marriage or keep the historic definition. Source: [Obergefell v. Hodges, 576 U.S. 644 (2015)](https://www.law.cornell.edu/supremecourt/text/14-556)
 - [ ] **ct09** (both) Myth: Most young adults now identify as LGBTQ+. Fix: Gallup 2024: more than one in five Gen Z adults identify as LGBTQ+; 9.3% of all U.S. adults do. Source: [Gallup: LGBTQ+ Identification in U.S. Rises to 9.3% (2025)](https://news.gallup.com/poll/656708/lgbtq-identification-rises.aspx)
@@ -94,7 +94,7 @@ Reviewed by: ________  Date: ________
 - [ ] **ct15** (both) Myth: Islam has already passed Christianity as the largest religion. Fix: Pew 2020: Christians were 28.8% of the world (2.3 billion) and Muslims 25.6%. Source: [Pew Research Center: How the Global Religious Landscape Changed From 2010 to 2020 (2025)](https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/)
 - [ ] **ct16** (both) Myth: The number of Christians in the world is falling. Fix: Pew: Christians grew by 122 million to 2.3 billion, while their share of the world fell 1.8 points. Source: [Pew Research Center: How the Global Religious Landscape Changed From 2010 to 2020 (2025)](https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/)
 - [ ] **ct18** (both) Myth: Most of the world's Christians live in Europe. Fix: Pew: sub-Saharan Africa is now home to the largest number of Christians, passing Europe. Source: [Pew Research Center: How the Global Religious Landscape Changed From 2010 to 2020 (2025)](https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/)
-- [ ] **ct20** (both) Myth: Most Americans believe humans evolved with no role for God. Fix: Gallup 2024: 24% said humans evolved without God, 34% said God guided evolution, and 37% said God created humans in present form. Source: [Gallup: Majority Still Credits God for Humankind, but Not Creationism (2024)](https://news.gallup.com/poll/647594/majority-credits-god-humankind-not-creationism.aspx)
+- [ ] **ct20** (both) Myth: Most Americans believe humans evolved with no role for God. Fix: Gallup 2024: 24% said humans evolved without God, 34% said God guided evolution, and 37% said God created humans in present form within the past 10,000 years. Source: [Gallup: Majority Still Credits God for Humankind, but Not Creationism (2024)](https://news.gallup.com/poll/647594/majority-credits-god-humankind-not-creationism.aspx)
 - [ ] **ct21** (both) Myth: Evolution says humans came from monkeys. Fix: Smithsonian: humans are not descended from monkeys or any living primate; we share a common ape ancestor with chimpanzees. Source: [Smithsonian Human Origins Program: Frequently Asked Questions](https://humanorigins.si.edu/education/frequently-asked-questions)
 - [ ] **ct22** (both) Myth: A scientific theory is just a guess. Fix: The National Academies define a theory as a well-substantiated explanation of some aspect of the natural world. Source: [National Academies: Evolution Resources, Science and Religion](https://www.nationalacademies.org/evolution/science-and-religion)
 - [ ] **ct23** (both) Myth: The Catholic Church rejects evolution. Fix: John Paul II said new findings lead to seeing evolution as "more than an hypothesis," with the soul created directly by God. Source: [Pope John Paul II: Message to the Pontifical Academy of Sciences on Evolution (1996)](https://www.ewtn.com/catholicism/library/message-to-the-pontifical-academy-of-sciences-on-evolution-8825)
@@ -107,7 +107,7 @@ Reviewed by: ________  Date: ________
 - [ ] **ct30** (both) Myth: U.S. carbon emissions now fall every year. Fix: EIA: U.S. energy-related CO2 rose 2% in 2025, from colder winter, more coal power and higher demand. Source: [U.S. EIA: Energy-Related Carbon Dioxide Emissions, 2025](https://www.eia.gov/environment/emissions/carbon/)
 - [ ] **ct33** (both) Myth: A VAERS report proves the vaccine caused the problem. Fix: VAERS is not designed to determine if a vaccine caused a health problem; anyone can file a report. Source: [CDC and FDA: About VAERS](https://vaers.hhs.gov/about.html)
 - [ ] **ct34** (both) Myth: Studies found the MMR vaccine causes autism. Fix: CDC: the IOM and AHRQ reviews found, with a high strength of evidence, no association between MMR and autism. Source: [CDC: Autism and Vaccines (page dated July 22, 2026)](https://www.cdc.gov/vaccine-safety/about/autism.html)
-- [ ] **ct35** (both) Myth: The CDC website says it is settled that vaccines do not cause autism. Fix: The CDC page (July 2026) says "vaccines do not cause autism" is not evidence-based because studies have not ruled out infant vaccines. Source: [CDC: Autism and Vaccines (page dated July 22, 2026)](https://www.cdc.gov/vaccine-safety/about/autism.html)
+- [ ] **ct35** (both) Myth: The CDC website says it is settled that vaccines do not cause autism. Fix: Since its July 2026 change, the CDC page says "vaccines do not cause autism" is not evidence-based because studies have not ruled out a link. That is not evidence of a link. Source: [CDC: Autism and Vaccines (page dated July 22, 2026)](https://www.cdc.gov/vaccine-safety/about/autism.html)
 - [ ] **ct36** (ya) Myth: Scientists already know what causes autism. Fix: CDC: scientists have not identified the root causes of autism. Source: [CDC: Autism and Vaccines (page dated July 22, 2026)](https://www.cdc.gov/vaccine-safety/about/autism.html)
 - [ ] **ct37** (both) Myth: The unauthorized immigrant population has been shrinking for years. Fix: Pew: it reached a record 14 million in 2023, up 3.5 million in two years. Source: [Pew Research Center: U.S. Unauthorized Immigrant Population Reached a Record 14 Million in 2023 (2025)](https://www.pewresearch.org/race-and-ethnicity/2025/08/21/u-s-unauthorized-immigrant-population-reached-a-record-14-million-in-2023/)
 - [ ] **ct38** (both) Myth: Most immigrants in the U.S. are here illegally. Fix: Pew: unauthorized immigrants were 27% of the foreign-born in 2023; 46% of all immigrants were naturalized citizens. Source: [Pew Research Center: U.S. Unauthorized Immigrant Population Reached a Record 14 Million in 2023 (2025)](https://www.pewresearch.org/race-and-ethnicity/2025/08/21/u-s-unauthorized-immigrant-population-reached-a-record-14-million-in-2023/)
@@ -319,12 +319,12 @@ Reviewed by: ________  Date: ________
 - [ ] **fd04** (both) Myth: Cool to the touch is cold enough. Fix: Cold food must be held at 41°F (5°C) or less. Source: [TB MED 530 / NAVMED P-5010-1: Tri-Service Food Code](https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN15052_TB_MED_530_FINAL.pdf)
 - [ ] **fd05** (both) Myth: Cooling can take all night. Fix: It must drop from 135°F to 70°F within 2 hours. Source: [TB MED 530 / NAVMED P-5010-1: Tri-Service Food Code](https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN15052_TB_MED_530_FINAL.pdf)
 - [ ] **fd06** (both) Myth: Once it is warm, not hot, there is no rush. Fix: From 70°F to 41°F must take 4 hours or less, 6 hours total. Source: [TB MED 530 / NAVMED P-5010-1: Tri-Service Food Code](https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN15052_TB_MED_530_FINAL.pdf)
-- [ ] **fd07** (both) Myth: Let food cool on the counter before you put it away. Fix: Pack hot food into several clean, shallow containers, then refrigerate. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
-- [ ] **fd08** (both) Myth: Food is fine all day if you keep it in the shade. Fix: Never leave perishable food out more than 2 hours, or 1 hour above 90°F. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
-- [ ] **fd09** (ya) Myth: Wrapped food stays safe for hours. Fix: Above 90°F, perishable food can sit out for 1 hour at most. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
-- [ ] **fd10** (both) Myth: Freezing food is the danger. Fix: Germs grow fast between 40°F and 140°F. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
-- [ ] **fd11** (adult) Myth: A little warmer fridge is fine. Fix: Keep the fridge at 40°F or below and the freezer at 0°F or below. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
-- [ ] **fd12** (adult) Myth: Thawing on the counter is safe. Fix: Never thaw food on the counter. Germs multiply in the parts that warm up. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd07** (both) Myth: Let food cool on the counter before you put it away. Fix: Pack hot food into several clean, shallow containers, then refrigerate. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd08** (both) Myth: Food is fine all day if you keep it in the shade. Fix: Never leave perishable food out more than 2 hours, or 1 hour above 90°F. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd09** (ya) Myth: Wrapped food stays safe for hours. Fix: Above 90°F, perishable food can sit out for 1 hour at most. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd10** (both) Myth: Freezing food is the danger. Fix: Germs grow fast between 40°F and 140°F. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd11** (adult) Myth: A little warmer fridge is fine. Fix: Keep the fridge at 40°F or below and the freezer at 0°F or below. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd12** (adult) Myth: Thawing on the counter is safe. Fix: Never thaw food on the counter. Germs multiply in the parts that warm up. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
 - [ ] **fd13** (both) Myth: Warm water thaws food fast and safely. Fix: Thaw in the fridge at 41°F or less, under cold running water, in a microwave right before cooking, or as part of cooking. Source: [TB MED 530 / NAVMED P-5010-1: Tri-Service Food Code](https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN15052_TB_MED_530_FINAL.pdf)
 - [ ] **fd14** (both) Myth: Hot running water is the best way. Fix: Yes, fully under running drinking water at 70°F or below. Source: [TB MED 530 / NAVMED P-5010-1: Tri-Service Food Code](https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN15052_TB_MED_530_FINAL.pdf)
 - [ ] **fd15** (both) Myth: Chicken is done at 145°F like beef. Fix: All poultry must reach 165°F (74°C) inside. Source: [FoodSafety.gov: Safe Minimum Internal Temperatures](https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures)
@@ -332,17 +332,17 @@ Reviewed by: ________  Date: ________
 - [ ] **fd17** (both) Myth: All meat must reach 165°F. Fix: Steaks, roasts and chops: 145°F, then rest 3 minutes. Source: [FoodSafety.gov: Safe Minimum Internal Temperatures](https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures)
 - [ ] **fd18** (adult) Myth: Just warm it until it steams a bit. Fix: Leftovers must reach 165°F (74°C). Source: [FoodSafety.gov: Safe Minimum Internal Temperatures](https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures)
 - [ ] **fd19** (adult) Myth: Wild game is safe rare. Fix: Rabbit and venison, wild or farm-raised: 160°F (71°C). Source: [FoodSafety.gov: Safe Minimum Internal Temperatures](https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures)
-- [ ] **fd20** (both) Myth: Clear juice means it is done. Fix: The only way to tell is a food thermometer. Color and feel can fool you. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
-- [ ] **fd21** (ya) Myth: Standing time is only so it's not too hot. Fix: Letting it sit lets cold spots soak up heat and cook more fully. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd20** (both) Myth: Clear juice means it is done. Fix: The only way to tell is a food thermometer. Color and feel can fool you. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd21** (ya) Myth: Standing time is only so it's not too hot. Fix: Letting it sit lets cold spots soak up heat and cook more fully. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
 - [ ] **fd22** (both) Myth: Serve it right out of the microwave. Fix: Stir or turn it, cover it, and let it stand covered for 2 minutes after reaching 165°F. Source: [TB MED 530 / NAVMED P-5010-1: Tri-Service Food Code](https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN15052_TB_MED_530_FINAL.pdf)
 - [ ] **fd23** (both) Myth: Clams are done after a quick steam. Fix: Cook clams, oysters and mussels until the shells open. Source: [FoodSafety.gov: Safe Minimum Internal Temperatures](https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures)
 - [ ] **fd24** (adult) Myth: A runny yolk is always safe. Fix: Cook eggs until both the yolk and white are firm. Source: [FoodSafety.gov: Safe Minimum Internal Temperatures](https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures)
-- [ ] **fd25** (both) Myth: Rinsing chicken makes it cleaner. Fix: Raw chicken does not need washing. Washing spreads germs to the sink and counter. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
-- [ ] **fd26** (both) Myth: A quick wipe makes the board clean. Fix: Use one board for raw meat and a separate one for foods that won't be cooked. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
-- [ ] **fd27** (both) Myth: Only hot water gets your hands clean. Fix: Wash for at least 20 seconds with soap and warm or cold water. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
-- [ ] **fd28** (ya) Myth: Eggless cookie dough is safe raw. Fix: Raw dough or batter made with uncooked flour is risky. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
-- [ ] **fd29** (adult) Myth: Sprouts are a safe health food. Fix: Raw or undercooked sprouts are a known food safety risk. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
-- [ ] **fd30** (adult) Myth: Fresh, raw cider is always safe. Fix: Unpasteurized milk, juice, cider and soft cheese can carry germs. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd25** (both) Myth: Rinsing chicken makes it cleaner. Fix: Raw chicken does not need washing. Washing spreads germs to the sink and counter. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd26** (both) Myth: A quick wipe makes the board clean. Fix: Use one board for raw meat and a separate one for foods that won't be cooked. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd27** (both) Myth: Only hot water gets your hands clean. Fix: Wash for at least 20 seconds with soap and warm or cold water. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd28** (ya) Myth: Eggless cookie dough is safe raw. Fix: Raw dough or batter made with uncooked flour is risky. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd29** (adult) Myth: Sprouts are a safe health food. Fix: Raw or undercooked sprouts are a known food safety risk. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd30** (adult) Myth: Fresh, raw cider is always safe. Fix: Unpasteurized milk, juice, cider and soft cheese can carry germs. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
 - [ ] **fd31** (both) Myth: A fast rinse meets the rule. Fix: Food workers must clean hands and exposed arms for at least 20 seconds. Source: [TB MED 530 / NAVMED P-5010-1: Tri-Service Food Code](https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN15052_TB_MED_530_FINAL.pdf)
 - [ ] **fd32** (both) Myth: Palms are all that matter. Fix: Pay special attention to the soil under the fingernails. Source: [TB MED 530 / NAVMED P-5010-1: Tri-Service Food Code](https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN15052_TB_MED_530_FINAL.pdf)
 - [ ] **fd33** (both) Myth: Just rinse off the knife. Fix: Wash hands when switching between raw food and ready-to-eat food. Source: [TB MED 530 / NAVMED P-5010-1: Tri-Service Food Code](https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN15052_TB_MED_530_FINAL.pdf)
@@ -375,10 +375,10 @@ Reviewed by: ________  Date: ________
 - [ ] **fd60** (ya) Myth: Norovirus makes food look or smell off. Fix: Food with norovirus may look, smell and taste normal. Source: [CDC: Preventing Norovirus](https://www.cdc.gov/norovirus/prevention/index.html)
 - [ ] **fd61** (adult) Myth: Wipe bleach right off. Fix: Leave bleach cleaner on the area for at least 5 minutes. Source: [CDC: Preventing Norovirus](https://www.cdc.gov/norovirus/prevention/index.html)
 - [ ] **fd62** (adult) Myth: Shake them out first. Fix: Handle soiled items carefully without shaking them. Source: [CDC: Preventing Norovirus](https://www.cdc.gov/norovirus/prevention/index.html)
-- [ ] **fd63** (ya) Myth: Fruit is always safe. Fix: Cut melon is a known food safety risk. Keep it cold. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd63** (ya) Myth: Fruit is always safe. Fix: Cut melon is a known food safety risk. Keep it cold. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
 - [ ] **fd64** (ya) Myth: Shrimp is done as soon as it floats. Fix: Cook shrimp, lobster, crab and scallops until pearly or white, and opaque. Source: [FoodSafety.gov: Safe Minimum Internal Temperatures](https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures)
 - [ ] **fd65** (ya) Myth: Egg dishes are done when they look set. Fix: Egg dishes like quiche or frittata must reach 160°F (71°C). Source: [FoodSafety.gov: Safe Minimum Internal Temperatures](https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures)
-- [ ] **fd66** (ya) Myth: Freezing makes recalled food safe. Fix: Throw away recalled foods and clean the fridge where you kept them. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd66** (ya) Myth: Freezing makes recalled food safe. Fix: Throw away recalled foods and clean the fridge where you kept them. Source: [CDC: Preventing Food Poisoning](https://www.cdc.gov/food-safety/prevention/index.html)
 - [ ] **fd67** (ya) Myth: Resting is just for looks. Fix: Rest time lets the innermost parts become fully and safely cooked. Source: [FoodSafety.gov: Safe Minimum Internal Temperatures](https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures)
 - [ ] **fd68** (ya) Myth: Gloves cover it. Fix: Food workers must wash hands after using the toilet. Source: [TB MED 530 / NAVMED P-5010-1: Tri-Service Food Code](https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN15052_TB_MED_530_FINAL.pdf)
 - [ ] **fd69** (ya) Myth: Pets are clean enough. Fix: Wash hands after handling animals, including service animals. Source: [TB MED 530 / NAVMED P-5010-1: Tri-Service Food Code](https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN15052_TB_MED_530_FINAL.pdf)
@@ -1331,7 +1331,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Fix: The APA says scientists have no consensus on what causes any sexual orientation.
 - Source: `apa-orientation` (https://www.apa.org/topics/lgbtq/orientation.pdf) quote: "There is no consensus among scientists about the exact reasons that an individual develops a heterosexual, bisexual, gay, or lesbian orientation."
 
-**ct03** (both, orientation). YA: Someone in the comments says gay people just pick their orientation. What does the APA report? / Adult: A man at church says gay people simply decide to be gay. What does the APA report about this?
+**ct03** (both, orientation). YA: Someone in the comments says gay people just pick their orientation. What does the APA report? / Adult: A coworker says gay people simply decide to be gay. What does the APA report about this?
 - Choices: Most people simply choose it / **Most gay people feel little choice** / It mostly comes from the media
 - Fix: The APA says most people experience little or no sense of choice about their orientation.
 - Source: `apa-orientation` (https://www.apa.org/topics/lgbtq/orientation.pdf) quote: "Many think that nature and nurture both play complex roles; most people experience little or no sense of choice about their sexual orientation."
@@ -1348,10 +1348,11 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 
 **ct06** (both, orientation). YA: A classmate says all Christian churches teach the same thing about same-sex marriage. True? / Adult: A friend says every Christian church holds the same view on same-sex marriage. Is that right?
 - Choices: They all teach exactly the same thing / **Each church has its own view** / None has any official view
-- Fix: Teachings differ: the SBC says marriage is one man and one woman, while the ELCA allows several positions of conscience.
+- Fix: Teachings differ: the SBC says marriage is one man and one woman, while the ELCA holds four "positions of bound conscience."
 - Source: `sbc-bfm` (https://bfm.sbc.net/bfm2000/) quote: "Marriage is the uniting of one man and one woman in covenant commitment for a lifetime."
+- Also: `elca` (https://www.elca.org/Faith/Faith-and-Society/Social-Statements/Human-Sexuality) quote: "A fresh consideration of the “church’s current concept of the four positions of bound conscience”"
 
-**ct07** (both, orientation). YA: A post says the Obergefell ruling means churches must stop teaching against same-sex marriage. Does it? / Adult: Your pastor friend worries Obergefell bans churches from teaching against same-sex marriage. What did the Court write?
+**ct07** (both, orientation). YA: A post says the Obergefell ruling means churches must stop teaching against same-sex marriage. Does it? / Adult: A friend worries Obergefell bans churches from teaching against same-sex marriage. What did the Court write?
 - Choices: Churches must stop teaching it / **Religions may keep teaching against it** / Inside church buildings only
 - Fix: The opinion says religions may keep advocating, with sincere conviction, that same-sex marriage should not be condoned.
 - Source: `obergefell` (https://www.law.cornell.edu/supremecourt/text/14-556) quote: "\"Finally, it must be emphasized that religions, and those who adhere to religious doctrines, may continue to advocate with utmost, sincere conviction that, by divine precepts, same-sex marriage should not be condoned.\""
@@ -1371,7 +1372,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Fix: Gallup 2024: 56% of LGBTQ+ adults say they are bisexual; 21% gay, 15% lesbian.
 - Source: `gallup-lgbt` (https://news.gallup.com/poll/656708/lgbtq-identification-rises.aspx) quote: "Among the nearly 900 LGBTQ+ individuals Gallup interviewed last year, more than half, 56%, said they were bisexual. Twenty-one percent said they were gay, 15% lesbian"
 
-**ct11** (both, faiths). YA: A friend says Muslims do not believe in Jesus at all. Does the Quran honor Jesus? / Adult: A man in your Bible study says Islam does not honor Jesus. Does the Quran honor him?
+**ct11** (both, faiths). YA: A friend says Muslims do not believe in Jesus at all. Does the Quran honor Jesus? / Adult: A friend from work says Islam does not honor Jesus. Does the Quran honor him?
 - Choices: It never mentions him / **Yes, it calls him the Messiah** / It calls him a false prophet
 - Fix: The Quran (3:45) calls him "the Messiah, Jesus, son of Mary," honored in this world and the next.
 - Source: `quran-3-45` (https://quran.com/3/45-46) quote: "Allah gives you good news of a Word 1 from Him, his name will be the Messiah, 2 Jesus, son of Mary; honoured in this world and the Hereafter, and he will be one of those nearest ˹to Allah˺."
@@ -1379,7 +1380,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 **ct12** (both, faiths). YA: A classmate says Islam and Christianity teach the same thing about Jesus. Do they? / Adult: A coworker says Muslims and Christians believe the same about Jesus. Is that right?
 - Choices: Both call him the Son of God / **It denies he is God's Son** / Both say he was only an angel
 - Fix: Quran 4:171 calls Jesus a messenger, says "do not say Trinity," and says God is far above having a son.
-- Source: `quran-4-171` (https://quran.com/4/171) quote: "So believe in Allah and His messengers and do not say, \u201cTrinity."
+- Source: `quran-4-171` (https://quran.com/4/171) quote: "So believe in Allah and His messengers and do not say, “Trinity."
 
 **ct13** (both, faiths). YA: A post claims most Muslims support suicide bombing. What did Pew's survey of 39 countries find? / Adult: A cousin says most Muslims back violence against civilians. What did Pew's worldwide survey find?
 - Choices: Most of them support it / **Most reject it** / About half say it is often justified
@@ -1394,7 +1395,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 **ct15** (both, faiths). YA: A video says Islam has passed Christianity as the world's biggest religion. Has it? / Adult: A friend says Islam is now larger than Christianity worldwide. What did Pew find for 2020?
 - Choices: Islam is now the biggest faith / **Christianity is still largest** / The two are exactly tied in size
 - Fix: Pew 2020: Christians were 28.8% of the world (2.3 billion) and Muslims 25.6%.
-- Source: `pew-landscape` (https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/) quote: "The number of Christians rose by 122 million, reaching 2.3 billion. Yet, as a share of the world\u2019s population, Christians fell 1.8 percentage points, to 28.8%."
+- Source: `pew-landscape` (https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/) quote: "The number of Christians rose by 122 million, reaching 2.3 billion. Yet, as a share of the world’s population, Christians fell 1.8 percentage points, to 28.8%."
 
 **ct16** (both, faiths). YA: A post says the number of Christians in the world is dropping. Did it drop from 2010 to 2020? / Adult: Someone says Christianity is losing people worldwide in raw numbers. What did Pew find for 2010 to 2020?
 - Choices: The count dropped / **No, it rose by 122 million** / It fell by 50 million
@@ -1408,8 +1409,8 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 
 **ct20** (both, origins). YA: A friend says almost every American now accepts evolution without God. What did Gallup find in 2024? / Adult: A news host says nearly all Americans believe humans evolved with no role for God. What did Gallup find?
 - Choices: Most Americans now believe that / **About 1 in 4 Americans** / Under 1 in 20 of them said so
-- Fix: Gallup 2024: 24% said humans evolved without God, 34% said God guided evolution, and 37% said God created humans in present form.
-- Source: `gallup-creation` (https://news.gallup.com/poll/647594/majority-credits-god-humankind-not-creationism.aspx) quote: "34%, straddle both theories, saying humans evolved, but with God\u2019s guidance."
+- Fix: Gallup 2024: 24% said humans evolved without God, 34% said God guided evolution, and 37% said God created humans in present form within the past 10,000 years.
+- Source: `gallup-creation` (https://news.gallup.com/poll/647594/majority-credits-god-humankind-not-creationism.aspx) quote: "37%, are creationist purists, saying God created humans in their present form within the past 10,000 years."
 
 **ct21** (both, origins). YA: Someone jokes that evolution says your great-great-grandpa was a monkey. What does the Smithsonian say? / Adult: Your uncle says evolution teaches humans came from monkeys. What does the Smithsonian say?
 - Choices: We came from monkeys / **We share an ape ancestor** / From chimpanzees, really
@@ -1470,11 +1471,15 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Choices: They found it does / **They found no link** / The reviews never looked at MMR
 - Fix: CDC: the IOM and AHRQ reviews found, with a high strength of evidence, no association between MMR and autism.
 - Source: `cdc-autism` (https://www.cdc.gov/vaccine-safety/about/autism.html) quote: "\"The MMR vaccine has been studied regarding autism, and the reviews from IOM and AHRQ maintain with a high strength of evidence that there is no association with autism spectrum disorders based on observational evidence only.\""
+- Also: `hviid2019` (https://pubmed.ncbi.nlm.nih.gov/30831578/) quote: "The study strongly supports that MMR vaccination does not increase the risk for autism"
+- Also: `taylor2014` (https://pubmed.ncbi.nlm.nih.gov/24814559/) quote: "Findings of this meta-analysis suggest that vaccinations are not associated with the development of autism or autism spectrum disorder."
 
 **ct35** (both, vaccines). YA: A post says the CDC states flatly that no vaccine causes autism. What does the CDC page say now? / Adult: A nurse friend says the CDC site says vaccines do not cause autism, case closed. What does the page say now?
 - Choices: It says the case is closed / **It says it is not ruled out** / It says vaccines cause it
-- Fix: The CDC page (July 2026) says "vaccines do not cause autism" is not evidence-based because studies have not ruled out infant vaccines.
+- Fix: Since its July 2026 change, the CDC page says "vaccines do not cause autism" is not evidence-based because studies have not ruled out a link. That is not evidence of a link.
 - Source: `cdc-autism` (https://www.cdc.gov/vaccine-safety/about/autism.html) quote: "\"The claim \"vaccines do not cause autism\" is not an evidence-based claim because studies have not ruled out the possibility that infant vaccines cause autism.\""
+- Also: `hviid2019` (https://pubmed.ncbi.nlm.nih.gov/30831578/) quote: "657 461 children born in Denmark"
+- Also: `taylor2014` (https://pubmed.ncbi.nlm.nih.gov/24814559/) quote: "Five cohort studies involving 1,256,407 children"
 
 **ct36** (ya, vaccines). A friend says scientists already know the main cause of autism. Do they?
 - Choices: The main cause is known now / **They have not found root causes** / It is screen time
@@ -1486,7 +1491,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Fix: Pew: it reached a record 14 million in 2023, up 3.5 million in two years.
 - Source: `pew-unauth2023` (https://www.pewresearch.org/race-and-ethnicity/2025/08/21/u-s-unauthorized-immigrant-population-reached-a-record-14-million-in-2023/) quote: "The increase of 3.5 million in two years is the biggest on record."
 
-**ct38** (both, immigration). YA: Someone says most immigrants in the U.S. are here illegally. What share are unauthorized? / Adult: A man at the diner says most immigrants are illegal. What share of U.S. immigrants were unauthorized in 2023?
+**ct38** (both, immigration). YA: Someone says most immigrants in the U.S. are here illegally. What share are unauthorized? / Adult: A woman at the diner says most immigrants are illegal. What share of U.S. immigrants were unauthorized in 2023?
 - Choices: Most of them are / **About 1 in 4** / Almost none of them
 - Fix: Pew: unauthorized immigrants were 27% of the foreign-born in 2023; 46% of all immigrants were naturalized citizens.
 - Source: `pew-unauth2023` (https://www.pewresearch.org/race-and-ethnicity/2025/08/21/u-s-unauthorized-immigrant-population-reached-a-record-14-million-in-2023/) quote: "As a result, in 2023, almost half (46%) of all immigrants in the country were naturalized U.S. citizens."
@@ -1499,7 +1504,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 **ct40** (both, immigration). YA: Which country did most unauthorized immigrants come from in 2023? / Adult: Your coworker says most unauthorized immigrants are Mexican. What did Pew find for 2023?
 - Choices: Mexico, by a big majority / **Mexico, but only 30%** / A mix led by Canada
 - Fix: Pew: Mexico is still the top country but was 30% in 2023; Mexicans used to be a majority.
-- Source: `pew-unauth2023` (https://www.pewresearch.org/race-and-ethnicity/2025/08/21/u-s-unauthorized-immigrant-population-reached-a-record-14-million-in-2023/) quote: "Though Mexico remains the country where the most unauthorized immigrants in the U.S. are from, it accounted for 30% of the nation\u2019s unauthorized immigrants living here in 2023."
+- Source: `pew-unauth2023` (https://www.pewresearch.org/race-and-ethnicity/2025/08/21/u-s-unauthorized-immigrant-population-reached-a-record-14-million-in-2023/) quote: "Though Mexico remains the country where the most unauthorized immigrants in the U.S. are from, it accounted for 30% of the nation’s unauthorized immigrants living here in 2023."
 
 **ct42** (both, guns). YA: A post says most gun deaths in the U.S. are murders. What did CDC data show for 2024? / Adult: A news segment implies most gun deaths are homicides. What did CDC data show for 2024?
 - Choices: Most of them are murders / **Most are suicides** / About 9 in 10 are accidents
@@ -1511,7 +1516,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Fix: FBI 2024: handguns were in 53% of gun murders with data, all rifles in 3%, and 42% type not stated.
 - Source: `pew-guns` (https://www.pewresearch.org/short-reads/2023/04/26/what-the-data-says-about-gun-deaths-in-the-u-s/) quote: "The FBI found that in 2024: Handguns were involved in 53% of the 11,717 U.S. gun murders and nonnegligent manslaughters for which data is available."
 
-**ct44** (both, guns). YA: Someone says the Second Amendment means any weapon, anywhere, no limits. What did the Court say in Heller? / Adult: A man at the range says the Second Amendment allows no limits at all. What did Heller say?
+**ct44** (both, guns). YA: Someone says the Second Amendment means any weapon, anywhere, no limits. What did the Court say in Heller? / Adult: A coworker says the Second Amendment allows no limits at all. What did Heller say?
 - Choices: It has no limits / **The right is not unlimited** / It only covers hunting rifles
 - Fix: Heller (2008): "Like most rights, the Second Amendment right is not unlimited."
 - Source: `sc-heller` (https://www.law.cornell.edu/supct/html/07-290.ZS.html) quote: "Like most rights, the Second Amendment right is not unlimited."
@@ -1654,7 +1659,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 **ct76** (both, speech). YA: A classmate says hate speech is not protected by the First Amendment. What did the Supreme Court say in Matal v. Tam? / Adult: A friend says hateful speech is not covered by free speech law. What did the Court say in 2017?
 - Choices: It is not protected / **Yes, it is protected** / Only when said online
 - Fix: Matal v. Tam (2017): the government may not ban speech for being offensive; we protect "the thought that we hate."
-- Source: `sc-matal` (https://www.supremecourt.gov/opinions/16pdf/15-1293_1o13.pdf) quote: "the proudest boast of our free speech jurisprudence is that we protect the freedom to express \u201cthe thought that we hate.\u201d"
+- Source: `sc-matal` (https://www.supremecourt.gov/opinions/16pdf/15-1293_1o13.pdf) quote: "the proudest boast of our free speech jurisprudence is that we protect the freedom to express “the thought that we hate.”"
 
 **ct77** (both, speech). YA: Is it automatically illegal to argue in general that force or lawbreaking is justified? / Adult: Someone says any speech advocating force is a crime. What test did Brandenburg v. Ohio set?
 - Choices: Yes, always illegal / **Only if it incites now** / If it is posted online, yes
@@ -1674,7 +1679,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 **ct80** (both, deathpen). YA: What does the Catholic Catechism now teach about the death penalty? / Adult: A Catholic friend says the Church still accepts the death penalty in grave cases. What does the Catechism say now?
 - Choices: It is still acceptable / **It is inadmissible** / The bishops decide it
 - Fix: Catechism 2267: the death penalty is inadmissible, and the Church works for its abolition.
-- Source: `ccc-2267` (https://www.vatican.va/archive/ENG0015/__P7Z.HTM) quote: "\u201cthe death penalty is inadmissible because it is an attack on the inviolability and dignity of the person\u201d"
+- Source: `ccc-2267` (https://www.vatican.va/archive/ENG0015/__P7Z.HTM) quote: "“the death penalty is inadmissible because it is an attack on the inviolability and dignity of the person”"
 
 **ct81** (both, deathpen). YA: A post says most Americans now oppose the death penalty. What did Gallup find in 2023? / Adult: A podcast says most Americans oppose capital punishment now. What did Gallup find in 2023?
 - Choices: Most oppose it / **A slim majority favor it** / Nearly all of them favor it

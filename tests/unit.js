@@ -131,7 +131,7 @@ t('M1 deep save check: bad saves never throw, bad parts are reset, good parts ke
   };
   Object.keys(cases).forEach(k => {
     const s = goodSave(); cases[k](s); const r = L.loadSave(JSON.stringify(s));
-    assert(!r.broken && r.repaired, k); const o = r.save;
+    assert(!r.broken && (r.repaired || (k === 'round-badid' && r.pruned)), k); const o = r.save;
     Object.values(o.profiles).forEach(p => {
       assert(typeof p.name === 'string' && typeof p.boxes === 'object' && p.boxes);
       if (p.round) { assert(L.checkRound(p.round), k); L.GC.card(p.round); }
@@ -423,7 +423,7 @@ function v7save() {
 }
 t('v9 v7 save: cut tr34 is current, tr33 and sv25 carried; only those ids go, the round stays', () => {
   ['tr33', 'tr34', 'sv25'].forEach(id => assert(!L.cardIndex[id], id + ' should be cut'));
-  const r = L.loadSave(JSON.stringify(v7save())); assert(!r.broken); assert(r.repaired);
+  const r = L.loadSave(JSON.stringify(v7save())); assert(!r.broken); assert(r.pruned); assert(!r.repaired);
   const p = r.save.profiles.p1, st = p.round;
   assert(st, 'round kept'); jeq(st.q.map(x => x.id), ['tr01', 'tr02', 'sv01']);
   assert.strictEqual(st.i, 1); assert.strictEqual(st.stage, 'ask'); assert.strictEqual(st.q[1].pick, null);
@@ -441,7 +441,7 @@ t('v9 unknown ids are pruned from Leitner boxes so cards seen is right', () => {
   const p = L.loadSave(JSON.stringify(v7save())).save.profiles.p1;
   jeq(Object.keys(p.boxes).sort(), ['sv01', 'tr01']);
   assert.strictEqual(L.MM.seenCards(p, ['triage', 'survive']).length, 2);
-  const clean = L.loadSave(L.dumpSave(L.loadSave(JSON.stringify(v7save())).save)); assert(!clean.repaired);
+  const clean = L.loadSave(L.dumpSave(L.loadSave(JSON.stringify(v7save())).save)); assert(!clean.repaired && !clean.pruned);
 });
 t('v9 fd27 no longer asks the kf24 question', () => {
   const a = L.cardIndex.fd27, k = L.cardIndex.kf24;
@@ -457,6 +457,39 @@ t('v10 controversy deck: 72 cards in Big Debates, opt-in, with the facts-only no
   assert(d.cards.every(c => /^ct\d\d$/.test(c.id))); assert(L.defaultDecks().indexOf('controversy') < 0);
   eq(L.sectionsOf(L.knowDecks()).slice(-1)[0].ids, ['controversy']);
   eq(L.SECTION_NOTES['Big Debates'], 'Facts only. On faith and moral questions we show what each side teaches, not who is right.');
-  eq(Object.keys(d.sources).length, 41); assert(d.cards.every(c => d.sources[c.src]));
+  eq(Object.keys(d.sources).length, 43); assert(d.cards.every(c => d.sources[c.src]));
+});
+// ---------- v11 tests ----------
+t('v11 m1 dropping retired cards is a gentle prune, not a reset; a real repair still says reset', () => {
+  const r = L.loadSave(JSON.stringify(v7save())); assert(r.pruned && !r.repaired);
+  const ui = fs.readFileSync(path.join(__dirname, '../src/ui/ui.js'), 'utf8');
+  assert(/ld\.pruned\) U\.notice = 'This update retired a few cards\. Your progress on every other card is kept\.'/.test(ui));
+  const s = v7save(); s.profiles.p1.boxes.fa01 = { b: 9, due: 1 }; const r2 = L.loadSave(JSON.stringify(s)); assert(r2.repaired && r2.pruned);
+});
+t('v11 M1 vaccine cards say the large studies found no link and cite them', () => {
+  const X = require('./fixtures/also-excerpts.json'), Q = require('../tools/quotes-new.json');
+  ['ct34', 'ct35'].forEach(id => {
+    const c = L.cardIndex[id]; eq(c.also, ['hviid2019', 'taylor2014']);
+    assert(/no link/.test(c.f + ' ' + c.w), id); assert(/657,461/.test(c.w) && /1\.2 million/.test(c.w), id);
+    c.also.forEach(k => { const q = JSON.parse(Q[id + '@' + k]); assert(X[k].some(e => e.includes(q)), id + '@' + k); });
+  });
+  assert(/July 2026 change/.test(L.cardIndex.ct35.f) && /not evidence of a link/.test(L.cardIndex.ct35.f));
+  assert(/657 461/.test(X.hviid2019.join()) && /1,256,407/.test(X.taylor2014.join()));
+});
+t('v11 also-sources are checked, shown, and quoted', () => {
+  L.knowDecks().forEach(id => L.decks[id].cards.forEach(c => (c.also || []).forEach(k => { assert(L.decks[id].sources[k]); assert(require('../tools/quotes-new.json')[c.id + '@' + k], c.id + '@' + k); })));
+  const c = L.cardIndex.ct06; eq(c.also, ['elca']); assert(/bound conscience/.test(c.f));
+  c.also = ['nope']; assert(L.checkAll().some(e => /ct06: also must list/.test(e))); c.also = ['elca'];
+  assert(/Also: /.test(fs.readFileSync(path.join(__dirname, '../src/ui/ui.js'), 'utf8')));
+});
+t('v11 sourcing and wording fixes: ct59, ct73, ct26, ct20, fd27 title, speakers', () => {
+  assert(!/\$15/.test(L.cardIndex.ct59.w)); assert(!/0\.2%|3\.6%/.test(L.cardIndex.ct73.w));
+  assert(!/cast doubt/.test(L.cardIndex.ct26.w)); assert(/within the past 10,000 years/.test(L.cardIndex.ct20.f));
+  eq(L.decks.foodsafe.sources['cdc-foodsafety'][0], 'CDC: Preventing Food Poisoning');
+  L.decks.controversy.cards.forEach(c => { const s = JSON.stringify(c.s); assert(!/A man at|man in your Bible|pastor friend/.test(s), c.id); });
+});
+t('v11 P5 single-file copy never registers a service worker', () => {
+  assert(/window\.LSA_SINGLE\) return;/.test(fs.readFileSync(path.join(__dirname, '../build.js'), 'utf8')));
+  assert(/window\.LSA_SINGLE = true/.test(fs.readFileSync(path.join(__dirname, '../tools/testhtml.js'), 'utf8')));
 });
 console.log(n + ' unit tests passed');

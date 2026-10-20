@@ -113,6 +113,7 @@ LSA.checkDeck = function (d) {
     if (c.img !== undefined && !(typeof c.img === 'string' && LSA.IMG_RX.test(c.img))) errs.push(p + 'img must be a path like img/name.svg');
     if (c.imgAlt !== undefined && !(typeof c.imgAlt === 'string' && c.imgAlt.trim())) errs.push(p + 'imgAlt must be text');
     if (c.src && !(d.sources && d.sources[c.src])) errs.push(p + 'unknown source ' + c.src);
+    if (c.also !== undefined && !(Array.isArray(c.also) && c.also.length && c.also.every(function (k) { return k !== c.src && d.sources && d.sources[k]; }))) errs.push(p + 'also must list other known sources');
   });
   // Length must give no clue: the right answer may not be much longer than the others, or the longest too often.
   d.cards.forEach(function (c) {

@@ -52,11 +52,11 @@ LSA.pruneRound = function (r) {
   if (isObj(r.again)) Object.keys(r.again).forEach(function (k) { if (!known(k)) delete r.again[k]; });
   return true;
 };
-// Returns { save, broken, repaired } and never throws.
+// Returns { save, broken, repaired, pruned } and never throws. pruned: only retired card ids were dropped (nothing was reset).
 LSA.loadSave = function (text) {
   if (!text) return { save: LSA.newSave(), broken: false, repaired: false };
   try {
-    var o = LSA.upgrade(JSON.parse(text)), fixed = false;
+    var o = LSA.upgrade(JSON.parse(text)), fixed = false, pruned = false;
     if (!isObj(o) || o.v !== LSA.SAVE_V || !isObj(o.profiles)) throw new Error('bad save');
     var s = LSA.newSave(), maxN = 0;
     Object.keys(o.profiles).forEach(function (k) {
@@ -66,13 +66,13 @@ LSA.loadSave = function (text) {
       if (q.name !== p.name || q.age !== p.age) fixed = true;
       if (isObj(p.boxes)) Object.keys(p.boxes).forEach(function (id) {
         var e = p.boxes[id];
-        if (!known(id)) { fixed = true; return; } // v9: forget boxes for cards that no longer exist
+        if (!known(id)) { pruned = true; return; } // v9: forget boxes for cards that no longer exist
         if (isObj(e) && isInt(e.b, 1, 5) && typeof e.due === 'number' && isFinite(e.due)) q.boxes[id] = { b: e.b, due: e.due, n: isInt(e.n, 0, 1e9) ? e.n : 1 };
         else fixed = true;
       }); else fixed = true;
-      if (p.round !== null && p.round !== undefined) { if (LSA.pruneRound(p.round)) fixed = true; if (p.round.q && !p.round.q.length) p.round = null; }
+      if (p.round !== null && p.round !== undefined) { if (LSA.pruneRound(p.round)) pruned = true; if (p.round.q && !p.round.q.length) p.round = null; }
       if (p.round !== null && p.round !== undefined) { if (LSA.checkRound(p.round)) q.round = p.round; else fixed = true; }
-      if (Array.isArray(p.carry)) { q.carry = p.carry.filter(known).slice(0, 10); if (q.carry.length !== p.carry.length) fixed = true; } else if (p.carry !== undefined) fixed = true;
+      if (Array.isArray(p.carry)) { q.carry = p.carry.filter(known).slice(0, 10); if (q.carry.length !== p.carry.length) pruned = true; } else if (p.carry !== undefined) fixed = true;
       if (isObj(p.stats)) Object.keys(q.stats).forEach(function (st) { if (isInt(p.stats[st], 0, 1e9)) q.stats[st] = p.stats[st]; });
       else fixed = true;
       s.profiles[k] = q;
@@ -86,7 +86,7 @@ LSA.loadSave = function (text) {
       if (ds.length && Array.isArray(o.decks) && ds.length === o.decks.length) s.decks = ds; else { fixed = true; s.decks = ds.length ? ds : null; }
     }
     if (LSA.SCREENS.indexOf(o.screen) >= 0) s.screen = o.screen;
-    return { save: s, broken: false, repaired: fixed };
+    return { save: s, broken: false, repaired: fixed, pruned: pruned };
   } catch (e) { return { save: LSA.newSave(), broken: true, repaired: false }; }
 };
 LSA.dumpSave = function (s) { return JSON.stringify(s); };

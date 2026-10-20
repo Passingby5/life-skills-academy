@@ -24,7 +24,9 @@ LSA.tellLimit = function (id, k) { var e = LSA.FROZEN_DECKS.indexOf(id) >= 0 && 
 LSA.firstWord = function (x) { return x.split(/[ ,;:]/)[0]; };
 // Answer tells. words: first word -> [uses, right]. strat: expected score of simple guessing rules (ties split evenly).
 // Deck sections, in picker order. A deck without a section is Everyday.
-LSA.SECTIONS = ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living'];
+LSA.SECTIONS = ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living', 'Big Debates'];
+// Short intro shown at the top of a section in the picker.
+LSA.SECTION_NOTES = { 'Big Debates': 'Facts only. On faith and moral questions we show what each side teaches, not who is right.' };
 LSA.sectionsOf = function (ids) {
   var names = LSA.SECTIONS.slice();
   ids.forEach(function (id) { var s = LSA.decks[id].section; if (names.indexOf(s) < 0) names.push(s); });

@@ -73,6 +73,83 @@ Reviewed by: ________  Date: ________
 - [ ] **cp64** (adult) Myth: Pick fuses clean. Fix: Do not pick at or scratch safety fuses while cleaning lids. Source: [NCHFP: How to Use Boiling Water and Pressure Canners](https://nchfp.uga.edu/how/can/general-information/recommended-canners/)
 - [ ] **cp65** (adult) Myth: All home canned food must be boiled. Fix: It may be eaten without boiling if every safety check was met. Source: [USDA Complete Guide to Home Canning (2015)](https://nchfp.uga.edu/resources/category/usda-guide)
 
+## Controversial Topics (72 cards)
+
+Reviewed by: ________  Date: ________
+
+- [ ] **ct01** (both) Myth: Major medical groups still class homosexuality as a mental disorder. Fix: Mainstream U.S. medical and mental health groups long ago dropped calling it a mental disorder. Source: [American Psychological Association: Answers to Your Questions for a Better Understanding of Sexual Orientation and Homosexuality](https://www.apa.org/topics/lgbtq/orientation.pdf)
+- [ ] **ct02** (both) Myth: Science has proven a gene makes people gay. Fix: The APA says scientists have no consensus on what causes any sexual orientation. Source: [American Psychological Association: Answers to Your Questions for a Better Understanding of Sexual Orientation and Homosexuality](https://www.apa.org/topics/lgbtq/orientation.pdf)
+- [ ] **ct03** (both) Myth: Most gay people chose their orientation. Fix: The APA says most people experience little or no sense of choice about their orientation. Source: [American Psychological Association: Answers to Your Questions for a Better Understanding of Sexual Orientation and Homosexuality](https://www.apa.org/topics/lgbtq/orientation.pdf)
+- [ ] **ct04** (both) Myth: The Catholic Church teaches its members to shun gay people. Fix: Catechism 2358: they must be accepted with respect, compassion and sensitivity, with no unjust discrimination. Source: [Catechism of the Catholic Church 2357-2359: Chastity and homosexuality](https://www.vatican.va/archive/ENG0015/__P85.HTM)
+- [ ] **ct05** (both) Myth: The Catholic Church now officially approves same-sex relationships. Fix: Catechism 2357 still says homosexual acts "under no circumstances can be approved." Source: [Catechism of the Catholic Church 2357-2359: Chastity and homosexuality](https://www.vatican.va/archive/ENG0015/__P85.HTM)
+- [ ] **ct06** (both) Myth: All Christian churches teach the same thing about same-sex marriage. Fix: Teachings differ: the SBC says marriage is one man and one woman, while the ELCA allows several positions of conscience. Source: [Southern Baptist Convention: The Baptist Faith and Message 2000](https://bfm.sbc.net/bfm2000/)
+- [ ] **ct07** (both) Myth: Obergefell bans churches from teaching against same-sex marriage. Fix: The opinion says religions may keep advocating, with sincere conviction, that same-sex marriage should not be condoned. Source: [Obergefell v. Hodges, 576 U.S. 644 (2015)](https://www.law.cornell.edu/supremecourt/text/14-556)
+- [ ] **ct08** (both) Myth: The Obergefell dissent said the Constitution forbids same-sex marriage. Fix: Chief Justice Roberts wrote that the people of a state are free to expand marriage or keep the historic definition. Source: [Obergefell v. Hodges, 576 U.S. 644 (2015)](https://www.law.cornell.edu/supremecourt/text/14-556)
+- [ ] **ct09** (both) Myth: Most young adults now identify as LGBTQ+. Fix: Gallup 2024: more than one in five Gen Z adults identify as LGBTQ+; 9.3% of all U.S. adults do. Source: [Gallup: LGBTQ+ Identification in U.S. Rises to 9.3% (2025)](https://news.gallup.com/poll/656708/lgbtq-identification-rises.aspx)
+- [ ] **ct10** (both) Myth: Most LGBTQ+ adults are gay men or lesbians. Fix: Gallup 2024: 56% of LGBTQ+ adults say they are bisexual; 21% gay, 15% lesbian. Source: [Gallup: LGBTQ+ Identification in U.S. Rises to 9.3% (2025)](https://news.gallup.com/poll/656708/lgbtq-identification-rises.aspx)
+- [ ] **ct11** (both) Myth: Muslims do not believe in Jesus at all. Fix: The Quran (3:45) calls him "the Messiah, Jesus, son of Mary," honored in this world and the next. Source: [The Quran 3:45-46 (Quran.com)](https://quran.com/3/45-46)
+- [ ] **ct12** (both) Myth: Islam teaches Jesus is the Son of God, like Christianity. Fix: Quran 4:171 calls Jesus a messenger, says "do not say Trinity," and says God is far above having a son. Source: [The Quran 4:171 (Quran.com)](https://quran.com/4/171)
+- [ ] **ct13** (both) Myth: Most Muslims support suicide bombing. Fix: Pew: in most countries about three-quarters or more of Muslims reject suicide bombing and violence against civilians. Source: [Pew Research Center: The World's Muslims: Religion, Politics and Society (2013)](https://www.pewresearch.org/religion/2013/04/30/the-worlds-muslims-religion-politics-society-overview/)
+- [ ] **ct14** (both) Myth: Hardly any Muslims want sharia as the official law. Fix: Pew 2013: medians of 84% in South Asia, 77% in Southeast Asia and 74% in the Middle East and North Africa favor it. Source: [Pew Research Center: The World's Muslims: Religion, Politics and Society (2013)](https://www.pewresearch.org/religion/2013/04/30/the-worlds-muslims-religion-politics-society-overview/)
+- [ ] **ct15** (both) Myth: Islam has already passed Christianity as the largest religion. Fix: Pew 2020: Christians were 28.8% of the world (2.3 billion) and Muslims 25.6%. Source: [Pew Research Center: How the Global Religious Landscape Changed From 2010 to 2020 (2025)](https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/)
+- [ ] **ct16** (both) Myth: The number of Christians in the world is falling. Fix: Pew: Christians grew by 122 million to 2.3 billion, while their share of the world fell 1.8 points. Source: [Pew Research Center: How the Global Religious Landscape Changed From 2010 to 2020 (2025)](https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/)
+- [ ] **ct18** (both) Myth: Most of the world's Christians live in Europe. Fix: Pew: sub-Saharan Africa is now home to the largest number of Christians, passing Europe. Source: [Pew Research Center: How the Global Religious Landscape Changed From 2010 to 2020 (2025)](https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/)
+- [ ] **ct20** (both) Myth: Most Americans believe humans evolved with no role for God. Fix: Gallup 2024: 24% said humans evolved without God, 34% said God guided evolution, and 37% said God created humans in present form. Source: [Gallup: Majority Still Credits God for Humankind, but Not Creationism (2024)](https://news.gallup.com/poll/647594/majority-credits-god-humankind-not-creationism.aspx)
+- [ ] **ct21** (both) Myth: Evolution says humans came from monkeys. Fix: Smithsonian: humans are not descended from monkeys or any living primate; we share a common ape ancestor with chimpanzees. Source: [Smithsonian Human Origins Program: Frequently Asked Questions](https://humanorigins.si.edu/education/frequently-asked-questions)
+- [ ] **ct22** (both) Myth: A scientific theory is just a guess. Fix: The National Academies define a theory as a well-substantiated explanation of some aspect of the natural world. Source: [National Academies: Evolution Resources, Science and Religion](https://www.nationalacademies.org/evolution/science-and-religion)
+- [ ] **ct23** (both) Myth: The Catholic Church rejects evolution. Fix: John Paul II said new findings lead to seeing evolution as "more than an hypothesis," with the soul created directly by God. Source: [Pope John Paul II: Message to the Pontifical Academy of Sciences on Evolution (1996)](https://www.ewtn.com/catholicism/library/message-to-the-pontifical-academy-of-sciences-on-evolution-8825)
+- [ ] **ct24** (both) Myth: You cannot accept evolution and be religious. Fix: The National Academies say accepting evolution can be compatible with religious faith, and many denominations say so. Source: [National Academies: Evolution Resources, Science and Religion](https://www.nationalacademies.org/evolution/science-and-religion)
+- [ ] **ct25** (both) Myth: Almost no scientists believe in God. Fix: Pew 2009: 33% of scientists believe in God and 18% in a higher power; 41% believe in neither. Source: [Pew Research Center: Scientists and Belief (2009)](https://www.pewresearch.org/science/2009/11/05/scientists-and-belief/)
+- [ ] **ct26** (both) Myth: Scientists in the 1970s agreed an ice age was coming. Fix: A 2008 review in the Bulletin of the AMS found greenhouse warming dominated scientists' thinking even then. Source: [Peterson, Connolley and Fleck: The Myth of the 1970s Global Cooling Scientific Consensus, BAMS (2008)](https://journals.ametsoc.org/view/journals/bams/89/9/2008bams2370_1.xml)
+- [ ] **ct27** (both) Myth: The Sun is causing today's warming. Fix: NASA: solar energy reaching Earth has followed its 11-year cycle with no net increase since the 1950s. Source: [NASA: Is the Sun Causing Global Warming?](https://science.nasa.gov/climate-change/faq/is-the-sun-causing-global-warming/)
+- [ ] **ct28** (both) Myth: Today's warming is just the natural cycle. Fix: NASA: the current warming is clearly the result of human activity since the mid-1800s, at a rate not seen in many millennia. Source: [NASA: Evidence (Climate Change)](https://science.nasa.gov/climate-change/evidence/)
+- [ ] **ct29** (both) Myth: Earth has already warmed about 5 degrees F. Fix: NASA: about 2 degrees F (1 degree C) since the late 19th century. Source: [NASA: Evidence (Climate Change)](https://science.nasa.gov/climate-change/evidence/)
+- [ ] **ct30** (both) Myth: U.S. carbon emissions now fall every year. Fix: EIA: U.S. energy-related CO2 rose 2% in 2025, from colder winter, more coal power and higher demand. Source: [U.S. EIA: Energy-Related Carbon Dioxide Emissions, 2025](https://www.eia.gov/environment/emissions/carbon/)
+- [ ] **ct33** (both) Myth: A VAERS report proves the vaccine caused the problem. Fix: VAERS is not designed to determine if a vaccine caused a health problem; anyone can file a report. Source: [CDC and FDA: About VAERS](https://vaers.hhs.gov/about.html)
+- [ ] **ct34** (both) Myth: Studies found the MMR vaccine causes autism. Fix: CDC: the IOM and AHRQ reviews found, with a high strength of evidence, no association between MMR and autism. Source: [CDC: Autism and Vaccines (page dated July 22, 2026)](https://www.cdc.gov/vaccine-safety/about/autism.html)
+- [ ] **ct35** (both) Myth: The CDC website says it is settled that vaccines do not cause autism. Fix: The CDC page (July 2026) says "vaccines do not cause autism" is not evidence-based because studies have not ruled out infant vaccines. Source: [CDC: Autism and Vaccines (page dated July 22, 2026)](https://www.cdc.gov/vaccine-safety/about/autism.html)
+- [ ] **ct36** (ya) Myth: Scientists already know what causes autism. Fix: CDC: scientists have not identified the root causes of autism. Source: [CDC: Autism and Vaccines (page dated July 22, 2026)](https://www.cdc.gov/vaccine-safety/about/autism.html)
+- [ ] **ct37** (both) Myth: The unauthorized immigrant population has been shrinking for years. Fix: Pew: it reached a record 14 million in 2023, up 3.5 million in two years. Source: [Pew Research Center: U.S. Unauthorized Immigrant Population Reached a Record 14 Million in 2023 (2025)](https://www.pewresearch.org/race-and-ethnicity/2025/08/21/u-s-unauthorized-immigrant-population-reached-a-record-14-million-in-2023/)
+- [ ] **ct38** (both) Myth: Most immigrants in the U.S. are here illegally. Fix: Pew: unauthorized immigrants were 27% of the foreign-born in 2023; 46% of all immigrants were naturalized citizens. Source: [Pew Research Center: U.S. Unauthorized Immigrant Population Reached a Record 14 Million in 2023 (2025)](https://www.pewresearch.org/race-and-ethnicity/2025/08/21/u-s-unauthorized-immigrant-population-reached-a-record-14-million-in-2023/)
+- [ ] **ct39** (both) Myth: Undocumented immigrants commit more crime than native-born citizens. Fix: A 2020 PNAS study of Texas arrests found lower felony arrest rates for undocumented immigrants than for native-born citizens. Source: [Light, He and Robey: Comparing crime rates between undocumented immigrants, legal immigrants, and native-born US citizens in Texas, PNAS (2020)](https://pmc.ncbi.nlm.nih.gov/articles/PMC7768760/)
+- [ ] **ct40** (both) Myth: Most unauthorized immigrants are from Mexico. Fix: Pew: Mexico is still the top country but was 30% in 2023; Mexicans used to be a majority. Source: [Pew Research Center: U.S. Unauthorized Immigrant Population Reached a Record 14 Million in 2023 (2025)](https://www.pewresearch.org/race-and-ethnicity/2025/08/21/u-s-unauthorized-immigrant-population-reached-a-record-14-million-in-2023/)
+- [ ] **ct42** (both) Myth: Most U.S. gun deaths are murders. Fix: CDC 2024: 62% of the 44,447 gun deaths were suicides and 35% were homicides. Source: [Pew Research Center: What the Data Says About Gun Deaths in the U.S. (updated 2026, CDC and FBI data)](https://www.pewresearch.org/short-reads/2023/04/26/what-the-data-says-about-gun-deaths-in-the-u-s/)
+- [ ] **ct43** (both) Myth: Assault-style rifles are used in most gun murders. Fix: FBI 2024: handguns were in 53% of gun murders with data, all rifles in 3%, and 42% type not stated. Source: [Pew Research Center: What the Data Says About Gun Deaths in the U.S. (updated 2026, CDC and FBI data)](https://www.pewresearch.org/short-reads/2023/04/26/what-the-data-says-about-gun-deaths-in-the-u-s/)
+- [ ] **ct44** (both) Myth: The Second Amendment right has no limits. Fix: Heller (2008): "Like most rights, the Second Amendment right is not unlimited." Source: [District of Columbia v. Heller, 554 U.S. 570 (2008)](https://www.law.cornell.edu/supct/html/07-290.ZS.html)
+- [ ] **ct45** (both) Myth: The Second Amendment protects only militia service. Fix: Heller: it protects an individual right to keep a gun unconnected with militia service, such as for self-defense at home. Source: [District of Columbia v. Heller, 554 U.S. 570 (2008)](https://www.law.cornell.edu/supct/html/07-290.ZS.html)
+- [ ] **ct46** (both) Myth: The U.S. gun death rate is at an all-time high. Fix: CDC: 12.8 gun deaths per 100,000 in 2024, below the peak of 16.3 in 1974. Source: [Pew Research Center: What the Data Says About Gun Deaths in the U.S. (updated 2026, CDC and FBI data)](https://www.pewresearch.org/short-reads/2023/04/26/what-the-data-says-about-gun-deaths-in-the-u-s/)
+- [ ] **ct48** (both) Myth: Republicans and Democrats agree on no gun policies. Fix: Pew: 88% of Republicans and 89% of Democrats favor keeping people with mental illness from buying guns. Source: [Pew Research Center: Key Facts About Americans and Guns (2024)](https://www.pewresearch.org/short-reads/2024/07/24/key-facts-about-americans-and-guns/)
+- [ ] **ct49** (both) Myth: Most gun owners own guns mainly for hunting. Fix: Pew: 72% of gun owners say protection is a major reason; 32% say hunting. Source: [Pew Research Center: Key Facts About Americans and Guns (2024)](https://www.pewresearch.org/short-reads/2024/07/24/key-facts-about-americans-and-guns/)
+- [ ] **ct50** (ya) Myth: Most American adults own a gun. Fix: Pew 2023: 32% of adults say they personally own a gun; another 10% live with someone who does. Source: [Pew Research Center: Key Facts About Americans and Guns (2024)](https://www.pewresearch.org/short-reads/2024/07/24/key-facts-about-americans-and-guns/)
+- [ ] **ct51** (both) Myth: Violent crime is far higher now than in the 1990s. Fix: FBI: the violent crime rate fell 49% from 1993 to 2022; the BJS survey shows a 71% drop. Source: [Pew Research Center: What the Data Says About Crime in the U.S. (2024, FBI and BJS data)](https://www.pewresearch.org/short-reads/2024/04/24/what-the-data-says-about-crime-in-the-us/)
+- [ ] **ct52** (both) Myth: Murder did not really rise during the pandemic. Fix: Pew: in 2020 the U.S. murder rate saw its largest single-year increase on record. Source: [Pew Research Center: What the Data Says About Crime in the U.S. (2024, FBI and BJS data)](https://www.pewresearch.org/short-reads/2024/04/24/what-the-data-says-about-crime-in-the-us/)
+- [ ] **ct53** (both) Myth: Nearly all violent crimes are reported to police. Fix: BJS 2022: only 41.5% of violent crimes and 31.8% of household property crimes were reported. Source: [Pew Research Center: What the Data Says About Crime in the U.S. (2024, FBI and BJS data)](https://www.pewresearch.org/short-reads/2024/04/24/what-the-data-says-about-crime-in-the-us/)
+- [ ] **ct54** (adult) Myth: Police solve most reported violent crimes. Fix: FBI 2022: police cleared 36.7% of reported violent crimes, down from 48.1% in 2013. Source: [Pew Research Center: What the Data Says About Crime in the U.S. (2024, FBI and BJS data)](https://www.pewresearch.org/short-reads/2024/04/24/what-the-data-says-about-crime-in-the-us/)
+- [ ] **ct56** (both) Myth: A $15 federal minimum wage would cost no jobs. Fix: CBO (2021): employment would fall by 1.4 million workers in 2025 on average, about 0.9%. Source: [CBO: The Budgetary Effects of the Raise the Wage Act of 2021](https://www.cbo.gov/system/files/2021-02/56975-Minimum-Wage.pdf)
+- [ ] **ct57** (both) Myth: A $15 minimum wage would not lift anyone out of poverty. Fix: CBO (2021): 0.9 million fewer people in poverty, and 17 million workers would get raises. Source: [CBO: The Budgetary Effects of the Raise the Wage Act of 2021](https://www.cbo.gov/system/files/2021-02/56975-Minimum-Wage.pdf)
+- [ ] **ct58** (both) Myth: Almost all minimum wage workers are teenagers. Fix: BLS 2023: workers under 25 were 44% of those at or below the federal minimum; 25 and older were about 56%. Source: [BLS: Characteristics of Minimum Wage Workers, 2023](https://www.bls.gov/opub/reports/minimum-wage/2023/home.htm)
+- [ ] **ct59** (both) Myth: A large share of U.S. workers earn $7.25 an hour or less. Fix: BLS 2023: 1.1% of hourly workers earned the federal minimum or less, down from 13.4% in 1979. Source: [BLS: Characteristics of Minimum Wage Workers, 2023](https://www.bls.gov/opub/reports/minimum-wage/2023/home.htm)
+- [ ] **ct60** (both) Myth: Moving into a higher bracket raises the tax on all your income. Fix: IRS: you pay the higher rate only on the part of income that is in the new bracket. Source: [IRS: Federal Income Tax Rates and Brackets](https://www.irs.gov/filing/federal-income-tax-rates-and-brackets)
+- [ ] **ct61** (both) Myth: The top 1% pay a smaller share of income tax than their share of income. Fix: IRS 2023: the top 1% had 20.6% of income (AGI) and paid 38.4% of federal income tax. Source: [IRS Statistics of Income: Table 4.1, Shares of AGI and Income Tax by Percentile, 2023](https://www.irs.gov/statistics/soi-tax-stats-individual-statistical-tables-by-tax-rate-and-income-percentile)
+- [ ] **ct62** (both) Myth: The very richest Americans pay the highest average income tax rate. Fix: IRS 2023: the top 0.001% paid an average 23.6%, below the top 0.1% at 26.7% and top 1% at 26.3%. Source: [IRS Statistics of Income: Table 4.1, Shares of AGI and Income Tax by Percentile, 2023](https://www.irs.gov/statistics/soi-tax-stats-individual-statistical-tables-by-tax-rate-and-income-percentile)
+- [ ] **ct64** (both) Myth: Any tax-funded social program makes an economy socialist. Fix: Britannica: social programs exist in most capitalist economies and do not make an economy socialist. Source: [Britannica: Socialism](https://www.britannica.com/money/socialism)
+- [ ] **ct65** (both) Myth: Denmark is a socialist country. Fix: PM Lars Lokke Rasmussen: "Denmark is far from a socialist planned economy. Denmark is a market economy." Source: [The Local Denmark: Danish PM in US: Denmark Is Not Socialist (2015)](https://www.thelocal.dk/20151101/danish-pm-in-us-denmark-is-not-socialist)
+- [ ] **ct66** (both) Myth: Nordic benefits are paid for by taxing only the rich. Fix: The PM said the catch is high taxes: a 25% sales tax and total taxes near half of national income, vs about 25% in the U.S. Source: [The Local Denmark: Danish PM in US: Denmark Is Not Socialist (2015)](https://www.thelocal.dk/20151101/danish-pm-in-us-denmark-is-not-socialist)
+- [ ] **ct67** (both) Myth: Socialism just means high taxes. Fix: Britannica: in socialism the major means of production are owned or controlled collectively, not mainly by private owners. Source: [Britannica: Socialism](https://www.britannica.com/money/socialism)
+- [ ] **ct69** (both) Myth: The Dobbs decision banned abortion nationwide. Fix: Dobbs (2022) overruled Roe and Casey and returned the authority to regulate abortion to the people and their elected representatives. Source: [Dobbs v. Jackson Women's Health Organization, 597 U.S. 215 (2022)](https://www.supremecourt.gov/opinions/21pdf/19-1392_6j37.pdf)
+- [ ] **ct70** (both) Myth: Most abortions happen late in pregnancy. Fix: CDC 2022: 92.8% were at 13 weeks or earlier; 6.1% at 14 to 20 weeks and 1.1% at 21 weeks or later. Source: [CDC: Abortion Surveillance Findings and Reports (2022 data)](https://www.cdc.gov/reproductive-health/data-statistics/abortion-surveillance-findings-reports.html)
+- [ ] **ct71** (both) Myth: Abortions after 21 weeks never happen. Fix: CDC 2022: 1.1% of reported abortions were at 21 weeks or later. Source: [CDC: Abortion Surveillance Findings and Reports (2022 data)](https://www.cdc.gov/reproductive-health/data-statistics/abortion-surveillance-findings-reports.html)
+- [ ] **ct72** (adult) Myth: Most abortions are surgical. Fix: CDC 2022: 53.3% were early medication abortions at 9 weeks or less. Source: [CDC: Abortion Surveillance Findings and Reports (2022 data)](https://www.cdc.gov/reproductive-health/data-statistics/abortion-surveillance-findings-reports.html)
+- [ ] **ct73** (ya) Myth: Most abortions are among teenagers. Fix: CDC 2022: women in their twenties accounted for 56.5% of abortions. Source: [CDC: Abortion Surveillance Findings and Reports (2022 data)](https://www.cdc.gov/reproductive-health/data-statistics/abortion-surveillance-findings-reports.html)
+- [ ] **ct74** (both) Myth: The Southern Baptist Convention has no official stance on unborn life. Fix: Baptist Faith and Message 2000: speak on behalf of the unborn and for the sanctity of all human life from conception to natural death. Source: [Southern Baptist Convention: The Baptist Faith and Message 2000](https://bfm.sbc.net/bfm2000/)
+- [ ] **ct75** (both) Myth: A private company blocking your speech violates the First Amendment. Fix: Halleck (2019): the Free Speech Clause prohibits only governmental, not private, abridgment of speech. Source: [Manhattan Community Access Corp. v. Halleck, 587 U.S. 802 (2019)](https://www.supremecourt.gov/opinions/18pdf/17-1702_h315.pdf)
+- [ ] **ct76** (both) Myth: Hate speech is not protected by the First Amendment. Fix: Matal v. Tam (2017): the government may not ban speech for being offensive; we protect "the thought that we hate." Source: [Matal v. Tam, 582 U.S. 218 (2017)](https://www.supremecourt.gov/opinions/16pdf/15-1293_1o13.pdf)
+- [ ] **ct77** (both) Myth: Any speech that advocates force is illegal. Fix: Brandenburg (1969): it is protected unless it is directed to inciting imminent lawless action and likely to produce it. Source: [Brandenburg v. Ohio, 395 U.S. 444 (1969)](https://www.law.cornell.edu/supremecourt/text/395/444)
+- [ ] **ct78** (both) Myth: Research proves the death penalty deters murder. Fix: NRC 2012: research to date does not show whether capital punishment decreases, increases or has no effect on homicide. Source: [National Research Council: Deterrence and the Death Penalty (2012), Summary](https://nap.nationalacademies.org/read/13363/chapter/2)
+- [ ] **ct79** (both) Myth: Research proves the death penalty has no deterrent effect. Fix: NRC 2012: the studies are uninformative, so they cannot show it has no effect either. Source: [National Research Council: Deterrence and the Death Penalty (2012), Summary](https://nap.nationalacademies.org/read/13363/chapter/2)
+- [ ] **ct80** (both) Myth: The Catholic Church still teaches the death penalty is acceptable. Fix: Catechism 2267: the death penalty is inadmissible, and the Church works for its abolition. Source: [Catechism of the Catholic Church 2267: The death penalty](https://www.vatican.va/archive/ENG0015/__P7Z.HTM)
+- [ ] **ct81** (both) Myth: Most Americans oppose the death penalty. Fix: Gallup 2023: a slim 53% majority favor it for convicted murderers. Source: [Gallup: Death Penalty, historical trends page](https://news.gallup.com/poll/1606/death-penalty.aspx)
+
 ## Field Care: Bleeding and Wounds (68 cards)
 
 Reviewed by: ________  Date: ________
@@ -1241,6 +1318,368 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Choices: Never, always boil it first / **Sure, if all checks pass** / After a week, always
 - Fix: It may be eaten without boiling if every safety check was met.
 - Source: `nchfp-intro` (https://nchfp.uga.edu/resources/category/usda-guide) quote: "All low-acid foods canned according to the approved recommendations may be eaten without boiling them when you are sure of all the following"
+
+## Controversial Topics (`controversy`)
+
+**ct01** (both, orientation). YA: A post says doctors still list being gay as a mental illness. Do major U.S. mental health groups? / Adult: A relative says psychologists still classify homosexuality as a mental disorder. Do they?
+- Choices: It is still on the official list / **They dropped it decades ago** / Psychiatrists still list it
+- Fix: Mainstream U.S. medical and mental health groups long ago dropped calling it a mental disorder.
+- Source: `apa-orientation` (https://www.apa.org/topics/lgbtq/orientation.pdf) quote: "Therefore, these mainstream organizations long ago abandoned classifications of homosexuality as a mental disorder."
+
+**ct02** (both, orientation). YA: A friend says science has proven people are simply born gay because of a gene. Has it? / Adult: A coworker says it is proven that a gene makes people gay. Is that what the science says?
+- Choices: A single gay gene was found / **It is not settled by science** / It comes from birth order alone
+- Fix: The APA says scientists have no consensus on what causes any sexual orientation.
+- Source: `apa-orientation` (https://www.apa.org/topics/lgbtq/orientation.pdf) quote: "There is no consensus among scientists about the exact reasons that an individual develops a heterosexual, bisexual, gay, or lesbian orientation."
+
+**ct03** (both, orientation). YA: Someone in the comments says gay people just pick their orientation. What does the APA report? / Adult: A man at church says gay people simply decide to be gay. What does the APA report about this?
+- Choices: Most people simply choose it / **Most gay people feel little choice** / It mostly comes from the media
+- Fix: The APA says most people experience little or no sense of choice about their orientation.
+- Source: `apa-orientation` (https://www.apa.org/topics/lgbtq/orientation.pdf) quote: "Many think that nature and nurture both play complex roles; most people experience little or no sense of choice about their sexual orientation."
+
+**ct04** (both, orientation). YA: A video says the Catholic Church tells its people to shun gay people. What does the Catechism say? / Adult: A neighbor says Catholic teaching calls for shunning gay people. What does the Catechism actually say?
+- Choices: It tells Catholics to shun them entirely / **Treat them with respect** / It does not mention gay people
+- Fix: Catechism 2358: they must be accepted with respect, compassion and sensitivity, with no unjust discrimination.
+- Source: `ccc-2357` (https://www.vatican.va/archive/ENG0015/__P85.HTM) quote: "They must be accepted with respect, compassion, and sensitivity."
+
+**ct05** (both, orientation). YA: A headline makes it sound like the Catholic Church now approves same-sex relationships. Does the Catechism? / Adult: Your sister heard the Catholic Church changed and now approves same-sex relationships. What does the Catechism say?
+- Choices: It recently approved them / **It says the acts cannot be approved** / The priest in each parish decides
+- Fix: Catechism 2357 still says homosexual acts "under no circumstances can be approved."
+- Source: `ccc-2357` (https://www.vatican.va/archive/ENG0015/__P85.HTM) quote: "Under no circumstances can they be approved."
+
+**ct06** (both, orientation). YA: A classmate says all Christian churches teach the same thing about same-sex marriage. True? / Adult: A friend says every Christian church holds the same view on same-sex marriage. Is that right?
+- Choices: They all teach exactly the same thing / **Each church has its own view** / None has any official view
+- Fix: Teachings differ: the SBC says marriage is one man and one woman, while the ELCA allows several positions of conscience.
+- Source: `sbc-bfm` (https://bfm.sbc.net/bfm2000/) quote: "Marriage is the uniting of one man and one woman in covenant commitment for a lifetime."
+
+**ct07** (both, orientation). YA: A post says the Obergefell ruling means churches must stop teaching against same-sex marriage. Does it? / Adult: Your pastor friend worries Obergefell bans churches from teaching against same-sex marriage. What did the Court write?
+- Choices: Churches must stop teaching it / **Religions may keep teaching against it** / Inside church buildings only
+- Fix: The opinion says religions may keep advocating, with sincere conviction, that same-sex marriage should not be condoned.
+- Source: `obergefell` (https://www.law.cornell.edu/supremecourt/text/14-556) quote: "\"Finally, it must be emphasized that religions, and those who adhere to religious doctrines, may continue to advocate with utmost, sincere conviction that, by divine precepts, same-sex marriage should not be condoned.\""
+
+**ct08** (both, orientation). YA: Someone says the Obergefell dissenters argued the Constitution bans same-sex marriage. Did they? / Adult: A podcast says the Obergefell dissent claimed the Constitution forbids same-sex marriage. Is that what it said?
+- Choices: They said it is banned / **It said each state should decide** / Congress alone can make that call
+- Fix: Chief Justice Roberts wrote that the people of a state are free to expand marriage or keep the historic definition.
+- Source: `obergefell` (https://www.law.cornell.edu/supremecourt/text/14-556) quote: "Roberts dissent: \"The people of a State are free to expand marriage to include same-sex couples, or to retain the historic definition.\""
+
+**ct09** (both, orientation). YA: A meme says most people your age now identify as LGBTQ+. What did Gallup find for Gen Z adults? / Adult: A commentator says most young adults now identify as LGBTQ+. What did Gallup find for Gen Z?
+- Choices: Over half of Gen Z adults do / **A little over 1 in 5** / About 1 in 50
+- Fix: Gallup 2024: more than one in five Gen Z adults identify as LGBTQ+; 9.3% of all U.S. adults do.
+- Source: `gallup-lgbt` (https://news.gallup.com/poll/656708/lgbtq-identification-rises.aspx) quote: "More than one in five Gen Z adults -- those born between 1997 and 2006, who were between the ages of 18 and 27 in 2024 -- identify as LGBTQ+."
+
+**ct10** (both, orientation). YA: Which group makes up the largest share of LGBTQ+ adults in Gallup's 2024 data? / Adult: Among U.S. adults who identify as LGBTQ+, which group did Gallup find is largest?
+- Choices: Gay men, by a wide margin / **Bisexual people, over half** / Transgender adults mostly
+- Fix: Gallup 2024: 56% of LGBTQ+ adults say they are bisexual; 21% gay, 15% lesbian.
+- Source: `gallup-lgbt` (https://news.gallup.com/poll/656708/lgbtq-identification-rises.aspx) quote: "Among the nearly 900 LGBTQ+ individuals Gallup interviewed last year, more than half, 56%, said they were bisexual. Twenty-one percent said they were gay, 15% lesbian"
+
+**ct11** (both, faiths). YA: A friend says Muslims do not believe in Jesus at all. Does the Quran honor Jesus? / Adult: A man in your Bible study says Islam does not honor Jesus. Does the Quran honor him?
+- Choices: It never mentions him / **Yes, it calls him the Messiah** / It calls him a false prophet
+- Fix: The Quran (3:45) calls him "the Messiah, Jesus, son of Mary," honored in this world and the next.
+- Source: `quran-3-45` (https://quran.com/3/45-46) quote: "Allah gives you good news of a Word 1 from Him, his name will be the Messiah, 2 Jesus, son of Mary; honoured in this world and the Hereafter, and he will be one of those nearest ˹to Allah˺."
+
+**ct12** (both, faiths). YA: A classmate says Islam and Christianity teach the same thing about Jesus. Do they? / Adult: A coworker says Muslims and Christians believe the same about Jesus. Is that right?
+- Choices: Both call him the Son of God / **It denies he is God's Son** / Both say he was only an angel
+- Fix: Quran 4:171 calls Jesus a messenger, says "do not say Trinity," and says God is far above having a son.
+- Source: `quran-4-171` (https://quran.com/4/171) quote: "So believe in Allah and His messengers and do not say, \u201cTrinity."
+
+**ct13** (both, faiths). YA: A post claims most Muslims support suicide bombing. What did Pew's survey of 39 countries find? / Adult: A cousin says most Muslims back violence against civilians. What did Pew's worldwide survey find?
+- Choices: Most of them support it / **Most reject it** / About half say it is often justified
+- Fix: Pew: in most countries about three-quarters or more of Muslims reject suicide bombing and violence against civilians.
+- Source: `pew-muslims` (https://www.pewresearch.org/religion/2013/04/30/the-worlds-muslims-religion-politics-society-overview/) quote: "In most countries where the question was asked, roughly three-quarters or more Muslims reject suicide bombing and other forms of violence against civilians."
+
+**ct14** (both, faiths). YA: Someone says hardly any Muslims want Islamic law as their country's law. What did Pew find? / Adult: A professor says very few Muslims want sharia as official law. What did Pew's survey find?
+- Choices: Very few of them want that / **Majorities in many regions want it** / Every country surveyed said yes
+- Fix: Pew 2013: medians of 84% in South Asia, 77% in Southeast Asia and 74% in the Middle East and North Africa favor it.
+- Source: `pew-muslims` (https://www.pewresearch.org/religion/2013/04/30/the-worlds-muslims-religion-politics-society-overview/) quote: "Medians of at least six-in-ten Muslims in sub-Saharan Africa (64%), the Middle East-North Africa region (74%) and Southeast Asia (77%) also favor enshrining sharia as official law."
+
+**ct15** (both, faiths). YA: A video says Islam has passed Christianity as the world's biggest religion. Has it? / Adult: A friend says Islam is now larger than Christianity worldwide. What did Pew find for 2020?
+- Choices: Islam is now the biggest faith / **Christianity is still largest** / The two are exactly tied in size
+- Fix: Pew 2020: Christians were 28.8% of the world (2.3 billion) and Muslims 25.6%.
+- Source: `pew-landscape` (https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/) quote: "The number of Christians rose by 122 million, reaching 2.3 billion. Yet, as a share of the world\u2019s population, Christians fell 1.8 percentage points, to 28.8%."
+
+**ct16** (both, faiths). YA: A post says the number of Christians in the world is dropping. Did it drop from 2010 to 2020? / Adult: Someone says Christianity is losing people worldwide in raw numbers. What did Pew find for 2010 to 2020?
+- Choices: The count dropped / **No, it rose by 122 million** / It fell by 50 million
+- Fix: Pew: Christians grew by 122 million to 2.3 billion, while their share of the world fell 1.8 points.
+- Source: `pew-landscape` (https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/) quote: "Yet, as a share of the world’s population, Christians fell 1.8 percentage points, to 28.8%."
+
+**ct18** (both, faiths). YA: Which region now has the most Christians in the world? / Adult: Your church is supporting missions abroad. Which region now has the most Christians?
+- Choices: Europe / **Sub-Saharan Africa** / Latin America and the Caribbean
+- Fix: Pew: sub-Saharan Africa is now home to the largest number of Christians, passing Europe.
+- Source: `pew-landscape` (https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/) quote: "Sub-Saharan Africa is now home to the largest number of Christians, surpassing Europe."
+
+**ct20** (both, origins). YA: A friend says almost every American now accepts evolution without God. What did Gallup find in 2024? / Adult: A news host says nearly all Americans believe humans evolved with no role for God. What did Gallup find?
+- Choices: Most Americans now believe that / **About 1 in 4 Americans** / Under 1 in 20 of them said so
+- Fix: Gallup 2024: 24% said humans evolved without God, 34% said God guided evolution, and 37% said God created humans in present form.
+- Source: `gallup-creation` (https://news.gallup.com/poll/647594/majority-credits-god-humankind-not-creationism.aspx) quote: "34%, straddle both theories, saying humans evolved, but with God\u2019s guidance."
+
+**ct21** (both, origins). YA: Someone jokes that evolution says your great-great-grandpa was a monkey. What does the Smithsonian say? / Adult: Your uncle says evolution teaches humans came from monkeys. What does the Smithsonian say?
+- Choices: We came from monkeys / **We share an ape ancestor** / From chimpanzees, really
+- Fix: Smithsonian: humans are not descended from monkeys or any living primate; we share a common ape ancestor with chimpanzees.
+- Source: `smithsonian-ancestor` (https://humanorigins.si.edu/education/frequently-asked-questions) quote: "We do share a common ape ancestor with chimpanzees."
+
+**ct22** (both, origins). YA: In biology class someone says evolution is "just a theory," meaning a guess. What does "theory" mean in science? / Adult: A parent at school says evolution is "only a theory," like a hunch. What does the word mean in science?
+- Choices: A guess or a hunch / **A well-tested explanation** / A fact proven beyond any doubt
+- Fix: The National Academies define a theory as a well-substantiated explanation of some aspect of the natural world.
+- Source: `nas-theory` (https://www.nationalacademies.org/evolution/science-and-religion) quote: "Theory A plausible or scientifically acceptable, well-substantiated explanation of some aspect of the natural world; an organized system of accepted knowledge that applies in a variety of circumstances to explain a specific set of phenomena and predict the characteristics of as yet unobserved phenomena."
+
+**ct23** (both, origins). YA: A friend says the Catholic Church rejects evolution. What did Pope John Paul II say in 1996? / Adult: Someone says the Catholic Church opposes evolution. What did John Paul II tell the Pontifical Academy in 1996?
+- Choices: The Church rejects evolution / **Evolution is more than a hypothesis** / It has never spoken on it
+- Fix: John Paul II said new findings lead to seeing evolution as "more than an hypothesis," with the soul created directly by God.
+- Source: `jp2-evolution` (https://www.ewtn.com/catholicism/library/message-to-the-pontifical-academy-of-sciences-on-evolution-8825) quote: "some new findings lead us toward the recognition of evolution as more than an hypothesis."
+
+**ct24** (both, origins). YA: A YouTuber says you cannot accept evolution and still be religious. What do the National Academies say? / Adult: A writer says faith and evolution cannot go together. What do the National Academies say?
+- Choices: They cannot go together / **Faith and evolution can fit** / Science has shown faith is false
+- Fix: The National Academies say accepting evolution can be compatible with religious faith, and many denominations say so.
+- Source: `nas-theory` (https://www.nationalacademies.org/evolution/science-and-religion) quote: "Acceptance of the evidence for evolution can be compatible with religious faith."
+
+**ct25** (both, origins). YA: A friend says basically no scientists believe in God. What did Pew's 2009 survey of scientists find? / Adult: A coworker says real scientists do not believe in God. What did Pew's 2009 scientist survey find?
+- Choices: Almost none of them do / **About a third** / About 8 in 10 of them
+- Fix: Pew 2009: 33% of scientists believe in God and 18% in a higher power; 41% believe in neither.
+- Source: `pew-scientists` (https://www.pewresearch.org/science/2009/11/05/scientists-and-belief/) quote: "According to the poll, just over half of scientists (51%) believe in some form of deity or higher power; specifically, 33% of scientists say they believe in God, while 18% believe in a universal spirit or higher power."
+
+**ct26** (both, climate). YA: A meme says scientists in the 1970s said an ice age was coming. Was that the consensus? / Adult: A talk host says 1970s scientists all predicted an ice age. Was that the scientific view?
+- Choices: Most of them predicted it / **Warming led even then** / The papers made no forecasts
+- Fix: A 2008 review in the Bulletin of the AMS found greenhouse warming dominated scientists' thinking even then.
+- Source: `peterson` (https://journals.ametsoc.org/view/journals/bams/89/9/2008bams2370_1.xml) quote: "A review of the literature suggests that, on the contrary, greenhouse warming even then dominated scientists' thinking as being one of the most important forces shaping Earth's climate on human time scales."
+
+**ct27** (both, climate). YA: A post says the Sun is what is heating the planet. What does NASA say? / Adult: A neighbor says recent warming is just the Sun. What does NASA say about solar energy since the 1950s?
+- Choices: It is mostly the Sun / **No net rise in Sun energy** / The Sun has cooled
+- Fix: NASA: solar energy reaching Earth has followed its 11-year cycle with no net increase since the 1950s.
+- Source: `nasa-sun` (https://science.nasa.gov/climate-change/faq/is-the-sun-causing-global-warming/) quote: "The amount of solar energy Earth receives has followed the Sun’s natural 11-year cycle of small ups and downs with no net increase since the 1950s."
+
+**ct28** (both, climate). YA: A friend says climate has always changed, so this warming is natural. What does NASA say? / Adult: Your brother says climate always changes, so today's warming is natural. What does NASA say?
+- Choices: It is just the normal cycle / **Humans drive today's warming** / Mostly from volcanoes
+- Fix: NASA: the current warming is clearly the result of human activity since the mid-1800s, at a rate not seen in many millennia.
+- Source: `nasa-evidence` (https://science.nasa.gov/climate-change/evidence/) quote: "The current warming trend is different because it is clearly the result of human activities since the mid-1800s, and is proceeding at a rate not seen over many recent millennia."
+
+**ct29** (both, climate). YA: A post says Earth has already warmed by 5 degrees F. How much has it warmed since the late 1800s? / Adult: A speaker says the planet has already heated up 5 degrees F. How much does NASA say it has warmed?
+- Choices: About 5 degrees F / **About 2 degrees F** / About 10 degrees F
+- Fix: NASA: about 2 degrees F (1 degree C) since the late 19th century.
+- Source: `nasa-evidence` (https://science.nasa.gov/climate-change/evidence/) quote: "The planet's average surface temperature has risen about 2 degrees Fahrenheit (1 degrees Celsius) since the late 19th century"
+
+**ct30** (both, climate). YA: A friend says U.S. carbon emissions fall every single year now. Did they fall in 2025? / Adult: A coworker says U.S. CO2 emissions keep dropping every year. What did the EIA report for 2025?
+- Choices: They fell again in 2025 / **They rose about 2%** / They fell by half since 2024
+- Fix: EIA: U.S. energy-related CO2 rose 2% in 2025, from colder winter, more coal power and higher demand.
+- Source: `eia-co2` (https://www.eia.gov/environment/emissions/carbon/) quote: "energy-related CO 2 emissions increased by 2%"
+
+**ct33** (both, vaccines). YA: A post shows a VAERS report and says it proves a vaccine caused an injury. Does it? / Adult: A relative says a report in VAERS proves the shot caused a death. Does a VAERS report prove that?
+- Choices: Yes, a filed report is proof / **A report is not proof alone** / If a doctor filed it, yes
+- Fix: VAERS is not designed to determine if a vaccine caused a health problem; anyone can file a report.
+- Source: `vaers` (https://vaers.hhs.gov/about.html) quote: "VAERS is not designed to determine if a vaccine caused a health problem, but is especially useful for detecting unusual or unexpected patterns of adverse event reporting that might indicate a possible safety problem with a vaccine."
+
+**ct34** (both, vaccines). YA: A friend says studies found the MMR shot causes autism. What do the IOM and AHRQ reviews say? / Adult: A mom in your group says the MMR vaccine was shown to cause autism. What do the major reviews say?
+- Choices: They found it does / **They found no link** / The reviews never looked at MMR
+- Fix: CDC: the IOM and AHRQ reviews found, with a high strength of evidence, no association between MMR and autism.
+- Source: `cdc-autism` (https://www.cdc.gov/vaccine-safety/about/autism.html) quote: "\"The MMR vaccine has been studied regarding autism, and the reviews from IOM and AHRQ maintain with a high strength of evidence that there is no association with autism spectrum disorders based on observational evidence only.\""
+
+**ct35** (both, vaccines). YA: A post says the CDC states flatly that no vaccine causes autism. What does the CDC page say now? / Adult: A nurse friend says the CDC site says vaccines do not cause autism, case closed. What does the page say now?
+- Choices: It says the case is closed / **It says it is not ruled out** / It says vaccines cause it
+- Fix: The CDC page (July 2026) says "vaccines do not cause autism" is not evidence-based because studies have not ruled out infant vaccines.
+- Source: `cdc-autism` (https://www.cdc.gov/vaccine-safety/about/autism.html) quote: "\"The claim \"vaccines do not cause autism\" is not an evidence-based claim because studies have not ruled out the possibility that infant vaccines cause autism.\""
+
+**ct36** (ya, vaccines). A friend says scientists already know the main cause of autism. Do they?
+- Choices: The main cause is known now / **They have not found root causes** / It is screen time
+- Fix: CDC: scientists have not identified the root causes of autism.
+- Source: `cdc-autism` (https://www.cdc.gov/vaccine-safety/about/autism.html) quote: "\"Scientists have not identified the root causes of autism.\""
+
+**ct37** (both, immigration). YA: A post says the number of immigrants here illegally has been shrinking for years. What did Pew find for 2023? / Adult: A commentator says illegal immigration numbers have been falling for years. What did Pew find for 2023?
+- Choices: It kept shrinking / **A record 14 million** / Fewer than 2 million people
+- Fix: Pew: it reached a record 14 million in 2023, up 3.5 million in two years.
+- Source: `pew-unauth2023` (https://www.pewresearch.org/race-and-ethnicity/2025/08/21/u-s-unauthorized-immigrant-population-reached-a-record-14-million-in-2023/) quote: "The increase of 3.5 million in two years is the biggest on record."
+
+**ct38** (both, immigration). YA: Someone says most immigrants in the U.S. are here illegally. What share are unauthorized? / Adult: A man at the diner says most immigrants are illegal. What share of U.S. immigrants were unauthorized in 2023?
+- Choices: Most of them are / **About 1 in 4** / Almost none of them
+- Fix: Pew: unauthorized immigrants were 27% of the foreign-born in 2023; 46% of all immigrants were naturalized citizens.
+- Source: `pew-unauth2023` (https://www.pewresearch.org/race-and-ethnicity/2025/08/21/u-s-unauthorized-immigrant-population-reached-a-record-14-million-in-2023/) quote: "As a result, in 2023, almost half (46%) of all immigrants in the country were naturalized U.S. citizens."
+
+**ct39** (both, immigration). YA: A video says immigrants here illegally commit more crime than citizens. What did a big Texas study find? / Adult: A neighbor says undocumented immigrants are more likely to commit crimes. What did the PNAS Texas study find?
+- Choices: Much higher crime rates / **Lower felony arrest rates** / Exactly the same rates
+- Fix: A 2020 PNAS study of Texas arrests found lower felony arrest rates for undocumented immigrants than for native-born citizens.
+- Source: `pnas` (https://pmc.ncbi.nlm.nih.gov/articles/PMC7768760/) quote: "We find that undocumented immigrants have substantially lower crime rates than native-born citizens and legal immigrants across a range of felony offenses."
+
+**ct40** (both, immigration). YA: Which country did most unauthorized immigrants come from in 2023? / Adult: Your coworker says most unauthorized immigrants are Mexican. What did Pew find for 2023?
+- Choices: Mexico, by a big majority / **Mexico, but only 30%** / A mix led by Canada
+- Fix: Pew: Mexico is still the top country but was 30% in 2023; Mexicans used to be a majority.
+- Source: `pew-unauth2023` (https://www.pewresearch.org/race-and-ethnicity/2025/08/21/u-s-unauthorized-immigrant-population-reached-a-record-14-million-in-2023/) quote: "Though Mexico remains the country where the most unauthorized immigrants in the U.S. are from, it accounted for 30% of the nation\u2019s unauthorized immigrants living here in 2023."
+
+**ct42** (both, guns). YA: A post says most gun deaths in the U.S. are murders. What did CDC data show for 2024? / Adult: A news segment implies most gun deaths are homicides. What did CDC data show for 2024?
+- Choices: Most of them are murders / **Most are suicides** / About 9 in 10 are accidents
+- Fix: CDC 2024: 62% of the 44,447 gun deaths were suicides and 35% were homicides.
+- Source: `pew-guns` (https://www.pewresearch.org/short-reads/2023/04/26/what-the-data-says-about-gun-deaths-in-the-u-s/) quote: "In 2024, 62% of all gun-related deaths in the U.S. were suicides (27,593), while 35% were homicides (15,364)."
+
+**ct43** (both, guns). YA: A friend says most gun murders are done with AR-style rifles. What did the FBI find for 2024? / Adult: A coworker says assault-style rifles are used in most gun murders. What did the FBI find for 2024?
+- Choices: Mostly AR-style rifles / **Handguns, by a wide margin** / Mostly hunting shotguns
+- Fix: FBI 2024: handguns were in 53% of gun murders with data, all rifles in 3%, and 42% type not stated.
+- Source: `pew-guns` (https://www.pewresearch.org/short-reads/2023/04/26/what-the-data-says-about-gun-deaths-in-the-u-s/) quote: "The FBI found that in 2024: Handguns were involved in 53% of the 11,717 U.S. gun murders and nonnegligent manslaughters for which data is available."
+
+**ct44** (both, guns). YA: Someone says the Second Amendment means any weapon, anywhere, no limits. What did the Court say in Heller? / Adult: A man at the range says the Second Amendment allows no limits at all. What did Heller say?
+- Choices: It has no limits / **The right is not unlimited** / It only covers hunting rifles
+- Fix: Heller (2008): "Like most rights, the Second Amendment right is not unlimited."
+- Source: `sc-heller` (https://www.law.cornell.edu/supct/html/07-290.ZS.html) quote: "Like most rights, the Second Amendment right is not unlimited."
+
+**ct45** (both, guns). YA: A classmate says the Second Amendment only protects state militias. What did the Supreme Court hold in Heller? / Adult: A friend says the Second Amendment only covers militias. What did the Supreme Court hold in 2008?
+- Choices: Militia service only / **An individual right** / Police and soldiers only
+- Fix: Heller: it protects an individual right to keep a gun unconnected with militia service, such as for self-defense at home.
+- Source: `sc-heller` (https://www.law.cornell.edu/supct/html/07-290.ZS.html) quote: "The Second Amendment protects an individual right to possess a firearm unconnected with service in a militia, and to use that arm for traditionally lawful purposes, such as self-defense within the home."
+
+**ct46** (both, guns). YA: A post says the gun death rate is the highest it has ever been. Is it? / Adult: A speaker says gun deaths per person are at an all-time high. What does the CDC rate show?
+- Choices: An all-time high, yes / **Below the 1974 peak** / The lowest rate ever recorded
+- Fix: CDC: 12.8 gun deaths per 100,000 in 2024, below the peak of 16.3 in 1974.
+- Source: `pew-guns` (https://www.pewresearch.org/short-reads/2023/04/26/what-the-data-says-about-gun-deaths-in-the-u-s/) quote: "That was below the peak rate of 16.3 per 100,000 in 1974."
+
+**ct48** (both, guns). YA: Someone says Republicans and Democrats agree on nothing about guns. Do they agree on any gun policy? / Adult: A cousin says the two parties agree on zero gun policies. Did Pew find any they agree on?
+- Choices: They agree on nothing at all / **Yes, on some** / They agree on every gun policy
+- Fix: Pew: 88% of Republicans and 89% of Democrats favor keeping people with mental illness from buying guns.
+- Source: `pew-gunowners` (https://www.pewresearch.org/short-reads/2024/07/24/key-facts-about-americans-and-guns/) quote: "Majorities of U.S. adults in both partisan coalitions somewhat or strongly favor two policies that would restrict gun access: preventing those with mental illnesses from purchasing guns (88% of Republicans and 89% of Democrats support this) and increasing the minimum age for buying guns to 21 years old (69% of Republicans, 90% of Democrats)."
+
+**ct49** (both, guns). YA: A friend says most gun owners own guns mainly for hunting. What did Pew find? / Adult: A city friend thinks gun owners mostly keep guns to hunt. What reason did Pew find tops the list?
+- Choices: Mostly for hunting / **Mostly for protection** / Mostly for collecting
+- Fix: Pew: 72% of gun owners say protection is a major reason; 32% say hunting.
+- Source: `pew-gunowners` (https://www.pewresearch.org/short-reads/2024/07/24/key-facts-about-americans-and-guns/) quote: "About seven-in-ten gun owners (72%) say protection is a major reason they own a gun."
+
+**ct50** (ya, guns). A post says most American adults personally own a gun. What did Pew find?
+- Choices: Most adults do / **About 1 in 3 adults** / About 9 in 10 rural adults
+- Fix: Pew 2023: 32% of adults say they personally own a gun; another 10% live with someone who does.
+- Source: `pew-gunowners` (https://www.pewresearch.org/short-reads/2024/07/24/key-facts-about-americans-and-guns/) quote: "About a third of adults (32%) say they own a gun, while another 10% say they do not personally own a gun but someone else in their household does."
+
+**ct51** (both, crime). YA: A video says violent crime is way worse now than in the 1990s. What does FBI data show? / Adult: A neighbor says violent crime is far higher than in the early 1990s. What does FBI data show?
+- Choices: It is far higher now / **Down 49% since 1993** / About the same as back then
+- Fix: FBI: the violent crime rate fell 49% from 1993 to 2022; the BJS survey shows a 71% drop.
+- Source: `pew-crime` (https://www.pewresearch.org/short-reads/2024/04/24/what-the-data-says-about-crime-in-the-us/) quote: "Per BJS, the U.S. violent and property crime rates each fell 71% between 1993 and 2022."
+
+**ct52** (both, crime). YA: A friend says murder did not really go up during the pandemic. Did it go up? / Adult: A podcaster says murder did not really rise in 2020. Did it rise?
+- Choices: It barely changed at all / **Yes, a record jump** / It fell 20% that year
+- Fix: Pew: in 2020 the U.S. murder rate saw its largest single-year increase on record.
+- Source: `pew-crime` (https://www.pewresearch.org/short-reads/2024/04/24/what-the-data-says-about-crime-in-the-us/) quote: "In 2020, for example, the U.S. murder rate saw its largest single-year increase on record"
+
+**ct53** (both, crime). YA: Do most violent crimes get reported to the police? / Adult: A friend assumes nearly all violent crimes get reported to police. What did the BJS survey find for 2022?
+- Choices: Yes, nearly all / **Only about 4 in 10 get reported** / Almost none of them ever do
+- Fix: BJS 2022: only 41.5% of violent crimes and 31.8% of household property crimes were reported.
+- Source: `pew-crime` (https://www.pewresearch.org/short-reads/2024/04/24/what-the-data-says-about-crime-in-the-us/) quote: "It found that in 2022, only 41.5% of violent crimes and 31.8% of household property crimes were reported to authorities."
+
+**ct54** (adult, crime). A neighbor says police solve most violent crimes that are reported. What did the FBI find for 2022?
+- Choices: Most of them get solved / **About a third** / About 9 in 10 get solved
+- Fix: FBI 2022: police cleared 36.7% of reported violent crimes, down from 48.1% in 2013.
+- Source: `pew-crime` (https://www.pewresearch.org/short-reads/2024/04/24/what-the-data-says-about-crime-in-the-us/) quote: "Police cleared a little over a third (36.7%) of the violent crimes that came to their attention in 2022, down from nearly half (48.1%) as recently as 2013."
+
+**ct56** (both, wages). YA: A friend says a $15 federal minimum wage would cost zero jobs. What did the CBO estimate? / Adult: A candidate says a $15 minimum wage would not cost any jobs. What did the CBO estimate in 2021?
+- Choices: No jobs lost at all / **1.4 million fewer jobs** / 10 million fewer jobs
+- Fix: CBO (2021): employment would fall by 1.4 million workers in 2025 on average, about 0.9%.
+- Source: `cbo-minwage` (https://www.cbo.gov/system/files/2021-02/56975-Minimum-Wage.pdf) quote: "In the 2019 report, CBO estimated that employment would fall by 1.3 million workers in 2025; in this report, the estimated reduction is 1.4 million workers."
+
+**ct57** (both, wages). YA: Someone says a $15 minimum wage would not help anyone out of poverty. What did the CBO estimate? / Adult: A business owner says a $15 minimum would not lift anyone out of poverty. What did the CBO find?
+- Choices: It helps nobody / **0.9 million fewer poor** / It ends poverty for 17 million
+- Fix: CBO (2021): 0.9 million fewer people in poverty, and 17 million workers would get raises.
+- Source: `cbo-minwage` (https://www.cbo.gov/system/files/2021-02/56975-Minimum-Wage.pdf) quote: "In 2025, 0.9 million fewer people would have income below the federal poverty thresholds, CBO estimates."
+
+**ct58** (both, wages). YA: People say minimum wage jobs are mostly for teens. What did BLS find for 2023? / Adult: A coworker says almost all minimum wage earners are teenagers. What did BLS find?
+- Choices: Almost all are teenagers / **Most are 25 or older** / Most are over 65
+- Fix: BLS 2023: workers under 25 were 44% of those at or below the federal minimum; 25 and older were about 56%.
+- Source: `bls-minwage` (https://www.bls.gov/opub/reports/minimum-wage/2023/home.htm) quote: "Table 1: 25 years and older = 55.6% of workers at or below the federal minimum."
+
+**ct59** (both, wages). YA: A post says tons of American workers earn $7.25 an hour or less. What share of hourly workers did in 2023? / Adult: A speaker says millions earn the $7.25 federal minimum or less. What share of hourly workers did in 2023?
+- Choices: About 1 in 4 workers / **About 1 in 100** / About 1 in 10
+- Fix: BLS 2023: 1.1% of hourly workers earned the federal minimum or less, down from 13.4% in 1979.
+- Source: `bls-minwage` (https://www.bls.gov/opub/reports/minimum-wage/2023/home.htm) quote: "The percentage of hourly paid workers earning the prevailing federal minimum wage or less edged down from 1.3 percent in 2022 to 1.1 percent in 2023."
+
+**ct60** (both, taxes). YA: You get a raise that moves you into the next tax bracket. Does your whole paycheck get taxed at the higher rate? / Adult: A coworker turns down a raise so she will not jump a tax bracket. Will all her pay be taxed at the higher rate?
+- Choices: Yes, all of it / **Only the part above the line** / If you are married filing jointly
+- Fix: IRS: you pay the higher rate only on the part of income that is in the new bracket.
+- Source: `irs-brackets` (https://www.irs.gov/filing/federal-income-tax-rates-and-brackets) quote: "You pay the higher rate only on the part that's in the new tax bracket."
+
+**ct61** (both, taxes). YA: A post says the top 1% pay a smaller share of income tax than their share of income. What does IRS data show? / Adult: A friend says the top 1% pay less than their fair share of income tax compared to what they earn. What does IRS data show?
+- Choices: A smaller share than their income / **About 38% of it** / About 5% of all of it
+- Fix: IRS 2023: the top 1% had 20.6% of income (AGI) and paid 38.4% of federal income tax.
+- Source: `irs-soi` (https://www.irs.gov/statistics/soi-tax-stats-individual-statistical-tables-by-tax-rate-and-income-percentile) quote: "Total income tax share (percentage) [2]: All returns: 100.00; Top 0.001 percent: 3.49; Top 0.01 percent: 8.47; Top 0.1 percent: 19.00; Top 1 percent: 38.40"
+
+**ct62** (both, taxes). YA: Someone says the richest of the rich pay the highest income tax rate of anyone. What does IRS data show? / Adult: A coworker says the very richest pay the highest average income tax rates. What did the IRS find for 2023?
+- Choices: Yes, the richest pay the most / **No, the top 0.001% pay less** / They pay no income tax
+- Fix: IRS 2023: the top 0.001% paid an average 23.6%, below the top 0.1% at 26.7% and top 1% at 26.3%.
+- Source: `irs-soi` (https://www.irs.gov/statistics/soi-tax-stats-individual-statistical-tables-by-tax-rate-and-income-percentile) quote: "Average tax rate (percentage): [3] All returns: 14.11; Top 0.001 percent: 23.61; Top 0.01 percent: 25.24; Top 0.1 percent: 26.65; Top 1 percent: 26.27"
+
+**ct64** (both, economy). YA: A friend says any tax-funded program, like aid for the poor, makes a country socialist. Does it, by definition? / Adult: Your uncle says any government benefit program is socialism. Is that the definition?
+- Choices: Yes, that is socialism / **Capitalist nations have them too** / If taxes top 20% of income, yes
+- Fix: Britannica: social programs exist in most capitalist economies and do not make an economy socialist.
+- Source: `brit-socialism` (https://www.britannica.com/money/socialism) quote: "Tax-funded benefits and income assistance redistribute resources, but such programs don't make an economy socialist."
+
+**ct65** (both, economy). YA: A post calls Denmark a socialist country. What did Denmark's own prime minister say at Harvard? / Adult: A candidate holds up Denmark as socialism that works. What did Denmark's prime minister say in 2015?
+- Choices: It is a socialist nation / **A market economy** / A monarchy with no markets
+- Fix: PM Lars Lokke Rasmussen: "Denmark is far from a socialist planned economy. Denmark is a market economy."
+- Source: `denmark` (https://www.thelocal.dk/20151101/danish-pm-in-us-denmark-is-not-socialist) quote: "Denmark is far from a socialist planned economy."
+
+**ct66** (both, economy). YA: Someone says Denmark pays for free college and health care just by taxing the rich. How does its PM describe it? / Adult: A friend says Nordic benefits come from taxing only the wealthy. How did Denmark's PM describe the cost?
+- Choices: Only the rich pay for all of it / **It costs high taxes on nearly all** / Oil money pays for it
+- Fix: The PM said the catch is high taxes: a 25% sales tax and total taxes near half of national income, vs about 25% in the U.S.
+- Source: `denmark` (https://www.thelocal.dk/20151101/danish-pm-in-us-denmark-is-not-socialist) quote: "In total, Danish taxes come to almost half of our national income compared to around 25 percent in the US."
+
+**ct67** (both, economy). YA: What is the defining feature of socialism? / Adult: At dinner someone says socialism just means high taxes. What is its defining feature?
+- Choices: High taxes on the rich / **Shared control of production** / Free health care for everyone
+- Fix: Britannica: in socialism the major means of production are owned or controlled collectively, not mainly by private owners.
+- Source: `brit-socialism` (https://www.britannica.com/money/socialism) quote: "are owned or controlled collectively rather than primarily by private individuals or companies."
+
+**ct69** (both, abortion). YA: A post says the Dobbs decision banned abortion across the whole U.S. Did it? / Adult: A friend thinks the Supreme Court outlawed abortion nationwide in 2022. What did Dobbs do?
+- Choices: It banned abortion nationwide / **It returned it to voters** / A federal right to abortion
+- Fix: Dobbs (2022) overruled Roe and Casey and returned the authority to regulate abortion to the people and their elected representatives.
+- Source: `sc-dobbs` (https://www.supremecourt.gov/opinions/21pdf/19-1392_6j37.pdf) quote: "Held: The Constitution does not confer a right to abortion; Roe and Casey are overruled; and the authority to regulate abortion is returned to the people and their elected representatives."
+
+**ct70** (both, abortion). YA: When in pregnancy do most U.S. abortions happen, according to CDC data? / Adult: A relative believes most abortions happen late in pregnancy. What does CDC data for 2022 show?
+- Choices: Mostly late, after 21 weeks / **About 93% by 13 weeks** / Mostly at 14 to 20 weeks
+- Fix: CDC 2022: 92.8% were at 13 weeks or earlier; 6.1% at 14 to 20 weeks and 1.1% at 21 weeks or later.
+- Source: `cdc-abortion` (https://www.cdc.gov/reproductive-health/data-statistics/abortion-surveillance-findings-reports.html) quote: "Nearly all abortions in 2022 took place early in gestation: 92.8% of abortions were performed at <=13 weeks' gestation; a smaller number of abortions (6.1%) were performed at 14-20 weeks' gestation, and even fewer (1.1%) were performed at >=21 weeks' gestation.\""
+
+**ct71** (both, abortion). YA: A friend says abortions after 21 weeks basically never happen. Do they happen? / Adult: Someone says abortions at 21 weeks or later never happen. Do they, per CDC data for 2022?
+- Choices: They never happen / **Yes, they do, about 1 in 100** / About 1 in 5 of all abortions
+- Fix: CDC 2022: 1.1% of reported abortions were at 21 weeks or later.
+- Source: `cdc-abortion` (https://www.cdc.gov/reproductive-health/data-statistics/abortion-surveillance-findings-reports.html) quote: "Nearly all abortions in 2022 took place early in gestation: 92.8% of abortions were performed at <=13 weeks' gestation; a smaller number of abortions (6.1%) were performed at 14-20 weeks' gestation, and even fewer (1.1%) were performed at >=21 weeks' gestation.\""
+
+**ct72** (adult, abortion). How were most U.S. abortions done in 2022, according to the CDC?
+- Choices: Mostly by surgery / **Mostly early medication** / Mostly late procedures
+- Fix: CDC 2022: 53.3% were early medication abortions at 9 weeks or less.
+- Source: `cdc-abortion` (https://www.cdc.gov/reproductive-health/data-statistics/abortion-surveillance-findings-reports.html) quote: "\"In 2022, 53.3% of all abortions were early medication abortions.\""
+
+**ct73** (ya, abortion). A post says most abortions are among teenagers. What age group had the most in 2022?
+- Choices: Teenagers, by far / **Women in their 20s** / Women over 40
+- Fix: CDC 2022: women in their twenties accounted for 56.5% of abortions.
+- Source: `cdc-abortion` (https://www.cdc.gov/reproductive-health/data-statistics/abortion-surveillance-findings-reports.html) quote: "\"Similar to previous years, in 2022, women in their twenties accounted for more than half of abortions (56.5%)."
+
+**ct74** (both, abortion). YA: What does the Southern Baptist Convention's statement of faith say about the unborn? / Adult: A coworker says the SBC has no official stance on unborn life. What does the Baptist Faith and Message say?
+- Choices: It takes no stance / **Life from conception** / Life begins at birth for all
+- Fix: Baptist Faith and Message 2000: speak on behalf of the unborn and for the sanctity of all human life from conception to natural death.
+- Source: `sbc-bfm` (https://bfm.sbc.net/bfm2000/) quote: "We should speak on behalf of the unborn and contend for the sanctity of all human life from conception to natural death."
+
+**ct75** (both, speech). YA: A creator says a private platform banning her account violates her First Amendment rights. Does it? / Adult: A friend says a private company firing or banning him for a post violates the First Amendment. Does it?
+- Choices: Yes, that is censorship by law / **It limits government only** / If you paid for the account
+- Fix: Halleck (2019): the Free Speech Clause prohibits only governmental, not private, abridgment of speech.
+- Source: `sc-halleck` (https://www.supremecourt.gov/opinions/18pdf/17-1702_h315.pdf) quote: "The Free Speech Clause of the First Amendment prohibits only governmental, not private, abridgment of speech."
+
+**ct76** (both, speech). YA: A classmate says hate speech is not protected by the First Amendment. What did the Supreme Court say in Matal v. Tam? / Adult: A friend says hateful speech is not covered by free speech law. What did the Court say in 2017?
+- Choices: It is not protected / **Yes, it is protected** / Only when said online
+- Fix: Matal v. Tam (2017): the government may not ban speech for being offensive; we protect "the thought that we hate."
+- Source: `sc-matal` (https://www.supremecourt.gov/opinions/16pdf/15-1293_1o13.pdf) quote: "the proudest boast of our free speech jurisprudence is that we protect the freedom to express \u201cthe thought that we hate.\u201d"
+
+**ct77** (both, speech). YA: Is it automatically illegal to argue in general that force or lawbreaking is justified? / Adult: Someone says any speech advocating force is a crime. What test did Brandenburg v. Ohio set?
+- Choices: Yes, always illegal / **Only if it incites now** / If it is posted online, yes
+- Fix: Brandenburg (1969): it is protected unless it is directed to inciting imminent lawless action and likely to produce it.
+- Source: `sc-brandenburg` (https://www.law.cornell.edu/supremecourt/text/395/444) quote: "These later decisions have fashioned the principle that the constitutional guarantees of free speech and free press do not permit a State to forbid or proscribe advocacy of the use of force or of law violation except where such advocacy is directed to inciting or producing imminent lawless action and is likely to incite or produce such action."
+
+**ct78** (both, deathpen). YA: A friend says research proves the death penalty deters murder. What did the National Research Council conclude? / Adult: A coworker says studies prove capital punishment deters murder. What did the National Research Council find in 2012?
+- Choices: Research proves it deters / **The research is not informative** / It shows it raises murder
+- Fix: NRC 2012: research to date does not show whether capital punishment decreases, increases or has no effect on homicide.
+- Source: `nap-deterrence` (https://nap.nationalacademies.org/read/13363/chapter/2) quote: "CONCLUSION AND RECOMMENDATION: The committee concludes that research to date on the effect of capital punishment on homicide is not informative about whether capital punishment decreases, increases, or has no effect on homicide rates."
+
+**ct79** (both, deathpen). YA: Someone says studies prove the death penalty does not deter murder at all. Is that what the NRC found? / Adult: A friend says research proves capital punishment has no deterrent effect. Is that what the NRC found?
+- Choices: Studies prove it has no effect / **The studies cannot tell yet** / It shows more murders
+- Fix: NRC 2012: the studies are uninformative, so they cannot show it has no effect either.
+- Source: `nap-deterrence` (https://nap.nationalacademies.org/read/13363/chapter/2) quote: "the committee recommends that these studies not be used to inform deliberations requiring judgments about the effect of the death penalty on homicide"
+
+**ct80** (both, deathpen). YA: What does the Catholic Catechism now teach about the death penalty? / Adult: A Catholic friend says the Church still accepts the death penalty in grave cases. What does the Catechism say now?
+- Choices: It is still acceptable / **It is inadmissible** / The bishops decide it
+- Fix: Catechism 2267: the death penalty is inadmissible, and the Church works for its abolition.
+- Source: `ccc-2267` (https://www.vatican.va/archive/ENG0015/__P7Z.HTM) quote: "\u201cthe death penalty is inadmissible because it is an attack on the inviolability and dignity of the person\u201d"
+
+**ct81** (both, deathpen). YA: A post says most Americans now oppose the death penalty. What did Gallup find in 2023? / Adult: A podcast says most Americans oppose capital punishment now. What did Gallup find in 2023?
+- Choices: Most oppose it / **A slim majority favor it** / Nearly all of them favor it
+- Fix: Gallup 2023: a slim 53% majority favor it for convicted murderers.
+- Source: `gallup-dp` (https://news.gallup.com/poll/1606/death-penalty.aspx) quote: "A record-low 47% of Americans think the death penalty is fairly applied in the U.S., while a slim 53% majority continue to favor its use for convicted murderers."
 
 ## Field Care: Bleeding and Wounds (`fieldcare`)
 

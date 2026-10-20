@@ -36,7 +36,7 @@
     var on = decks(), h = '<div class="picker" id="picker">';
     LSA.sectionsOf(LSA.knowDecks()).forEach(function (g) {
       var n = g.ids.filter(function (id) { return on.indexOf(id) >= 0; }).length, k = U.open && U.open[g.name], open = k !== undefined ? k : (g.name === 'Everyday' || n > 0);
-      h += '<details class="sect"' + (open ? ' open' : '') + ' data-sect="' + esc(g.name) + '"><summary>' + esc(g.name) + ' <span class="muted">' + n + ' of ' + g.ids.length + ' on</span></summary><div class="decks">';
+      h += '<details class="sect"' + (open ? ' open' : '') + ' data-sect="' + esc(g.name) + '"><summary>' + esc(g.name) + ' <span class="muted">' + n + ' of ' + g.ids.length + ' on</span></summary>' + (LSA.SECTION_NOTES && LSA.SECTION_NOTES[g.name] ? '<p class="muted sectnote">' + esc(LSA.SECTION_NOTES[g.name]) + '</p>' : '') + '<div class="decks">';
       g.ids.forEach(function (id) { var d = LSA.decks[id], k = on.indexOf(id) >= 0; h += b('deck', d.icon + ' ' + esc(d.name) + (k ? ' ✓' : ''), k ? 'on' : 'ghost', ' data-id="' + id + '" aria-pressed="' + k + '"'); });
       h += '</div></details>';
     });

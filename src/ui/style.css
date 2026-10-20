@@ -56,3 +56,4 @@ input{width:100%;min-height:52px;font:inherit;padding:8px 12px;border-radius:12p
   .picker .decks{grid-template-columns:1fr 1fr 1fr}
   h1{font-size:1.25rem}
 }
+.sectnote { margin: .2rem .2rem .5rem; font-size: .9rem; }

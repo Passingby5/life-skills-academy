@@ -262,7 +262,7 @@ t('v4-2/3/4 mn56, kf89, sc34 choices answer their questions', () => {
   assert(!g('sc34').includes('It is free'));
 });
 t('v4-4 no very terse choices except short direct answers to which/how-long/how-much questions', () => {
-  const ok = new Set(['fa19', 'kf55', 'kf56', 'kf88', 'kf90', 'kf97', 'mn61', 'mn62', 'mn86', 'sc33']);
+  const ok = new Set(['fa19', 'kf55', 'kf56', 'kf88', 'kf90', 'kf97', 'mn61', 'mn62', 'mn86', 'sc33', 'ct18']);
   L.knowDecks().forEach(id => L.decks[id].cards.forEach(c => { if (c.c.some(x => x.split(' ').length < 3 && !/\d/.test(x))) assert(ok.has(c.id), c.id + ' ' + c.c.join(' | ')); }));
 });
 t('v4-5 a carried retry is kept while its deck is off and comes back when it is on', () => {
@@ -313,8 +313,8 @@ t('v6-5 img field: checker accepts img/name.svg, rejects others; alt text defaul
   ['img/a.png', '../x.svg', 'http://x/y.svg', 5].forEach(v => { c.img = v; assert(L.checkAll().some(e => /fa01: img must be/.test(e)), String(v)); });
   c.img = keep; delete c.img;
   assert(/burns/.test(L.imgAlt(c))); eq(L.imgAlt({ imgAlt: 'A leg with a band', topic: 'x' }), 'A leg with a band');
-  eq(L.sectionsOf(L.knowDecks()).map(g => g.name), ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living']); eq(L.sectionsOf(L.knowDecks())[0].ids, ['firstaid', 'kitchen', 'money', 'scams']);
-  eq(L.defaultDecks(), ['firstaid', 'kitchen', 'money', 'scams']); eq(L.knowDecks().length, 12);
+  eq(L.sectionsOf(L.knowDecks()).map(g => g.name), ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living', 'Big Debates']); eq(L.sectionsOf(L.knowDecks())[0].ids, ['firstaid', 'kitchen', 'money', 'scams']);
+  eq(L.defaultDecks(), ['firstaid', 'kitchen', 'money', 'scams']); eq(L.knowDecks().length, 13);
 });
 
 // ---------- v8 tests ----------
@@ -450,5 +450,13 @@ t('v9 fd27 no longer asks the kf24 question', () => {
 t('v9 md22 soft wording, sv74 answers the "always safe" question', () => {
   const m = L.cardIndex.md22; assert(!/waste of money|avoid that/i.test(m.f + m.c.join()));
   assert(/^No, /.test(L.cardIndex.sv74.c[1]));
+});
+// ---------- v10 tests ----------
+t('v10 controversy deck: 72 cards in Big Debates, opt-in, with the facts-only note', () => {
+  const d = L.decks.controversy; eq(d.cards.length, 72); eq(d.section, 'Big Debates');
+  assert(d.cards.every(c => /^ct\d\d$/.test(c.id))); assert(L.defaultDecks().indexOf('controversy') < 0);
+  eq(L.sectionsOf(L.knowDecks()).slice(-1)[0].ids, ['controversy']);
+  eq(L.SECTION_NOTES['Big Debates'], 'Facts only. On faith and moral questions we show what each side teaches, not who is right.');
+  eq(Object.keys(d.sources).length, 41); assert(d.cards.every(c => d.sources[c.src]));
 });
 console.log(n + ' unit tests passed');

@@ -121,7 +121,7 @@ LSA.deck({
         { t: 'Your bank says it must ask why you need so much cash', flag: false, why: 'Banks ask to protect you. Answer honestly.' },
         { t: 'A friend you know pays you back with a check', flag: false, why: 'A known person paying a known debt is fine.' },
         { t: 'Your bank says you must sign loan papers at a branch', flag: false, why: 'A normal step for a loan you asked for.' },
-        { t: 'A caller from your gym says your class moved to noon', flag: false, why: 'Ordinary call from a place you use.' }
+        { t: 'Your gym calls to say your class moved to noon', flag: false, why: 'Ordinary call from a place you use.' }
       ],
       doThis: 'Never let strangers send money through your account. If you already did, stop, keep records and report at ic3.gov.', src: 'doj-dolisi', also: ['ftc-fake-check'] },
     { id: 'sf07', ages: 'both', topic: 'moneyMule', cite: 'U.S. Attorney, E.D. Pa., Aug. 10, 2026', s: 'Emily Zawacki of Chester County took about $2 million in wires and mailed cash for a man called "David Thomas" she had never met. Which signs are red flags?',
@@ -150,7 +150,7 @@ LSA.deck({
         { t: 'The caller says a courier must pick up the money', flag: true, why: 'A courier at the door is the scam crew.' },
         { t: 'You call your grandchild\'s mom on her own number to check', flag: false, why: 'Checking with family is the right move.' },
         { t: 'A neighbor says they will keep an eye on your home for you', flag: false, why: 'Ordinary kindness.' },
-        { t: 'A caller from the police station tells you to hang up and call its main number', flag: false, why: 'Being told to check for yourself is a good sign.' },
+        { t: 'A caller says to hang up and call the police main number', flag: false, why: 'Being told to check for yourself is a good sign.' },
         { t: 'Your grandchild says the game money came from a job', flag: false, why: 'Normal family talk.' }
       ],
       doThis: 'Call your grandchild or their parent on a number you know. Never hand cash to a courier. Report at ic3.gov.', src: 'doj-pla' },
@@ -160,7 +160,7 @@ LSA.deck({
         { t: 'The school says your grandchild is in class right now', flag: false, why: 'A quick call can end the scam.' },
         { t: 'They say a courier will come to your home for the cash', flag: true, why: 'Real courts and lawyers do not do this.' },
         { t: 'Your grandchild\'s mom says she will call from her own phone', flag: false, why: 'A known number you can trust.' },
-        { t: 'A caller from the hospital says to call the main desk to confirm', flag: false, why: 'Calling the real main number is a good check.' },
+        { t: 'A caller says to call the hospital main desk to confirm', flag: false, why: 'Calling the real main number is a good check.' },
         { t: 'Your family has a code word you must hear first', flag: false, why: 'A code word helps you spot fakes.' }
       ],
       doThis: 'Hang up. Call your grandchild or a parent on a number you know. Set a family code word.', src: 'doj-ky-grand' },
@@ -221,7 +221,7 @@ LSA.deck({
         { t: 'Cash and gold will close the case, the caller claims', flag: true, why: 'Police do not take gold.' },
         { t: 'A real officer gives you a card with a station number', flag: false, why: 'You can call the station.' },
         { t: 'Your bank says you must come in about a large check', flag: false, why: 'A real bank check.' },
-        { t: 'A caller from your pharmacy says your refill is ready', flag: false, why: 'Normal call that asks for nothing.' }
+        { t: 'Your pharmacy calls to say your refill is ready', flag: false, why: 'Normal call that asks for nothing.' }
       ],
       doThis: 'Hang up and tell someone you trust. Police never ask for cash or gold. Report at ReportFraud.ftc.gov.', src: 'doj-mohammed' },
     { id: 'sf17', ages: 'both', topic: 'impostor', cite: 'U.S. Attorney, W.D. Tex., Nov. 13, 2025', s: 'Dhruv Mangukiya, a student in Texas, picked up cash and gold from seniors told by "Treasury officials" to make a deposit to end an investigation. Which signs are red flags?',
@@ -310,7 +310,7 @@ LSA.deck({
         { t: 'The email says to call its number to cancel', flag: true, why: 'Use the company\'s real site, not the email\'s number.' },
         { t: 'Your $300 refund shows up as $3,000', flag: true, why: 'They faked your balance to demand "payback."' },
         { t: 'Your streaming app shows your plan in settings', flag: false, why: 'Check plans in the real app.' },
-        { t: 'A caller from a store you used asks you to rate your visit', flag: false, why: 'A survey asks for no money.' },
+        { t: 'A store you used calls to ask you to rate your visit', flag: false, why: 'A survey asks for no money.' },
         { t: 'The support agent asks you to open your bank app with him', flag: true, why: 'A caller in your bank app is a big red flag.' }
       ],
       doThis: 'Check subscriptions in the real app or account. Never open your bank while a stranger guides you. Report at ReportFraud.ftc.gov.', src: 'doj-chen' },
@@ -529,7 +529,7 @@ LSA.deck({
         { t: 'Someone from your past contacts you on many apps', flag: true, why: 'Contact across many apps is a stalking pattern.' },
         { t: 'They say your new partner and family will pay', flag: true, why: 'Threats to others are serious. Report them.' },
         { t: 'Someone you know likes your post once', flag: false, why: 'Normal.' },
-        { t: 'They pay a hacker to sign in to your accounts', flag: true, why: 'Account break-ins are cyberstalking.' },
+        { t: 'They ask a hacker to break into your accounts', flag: true, why: 'Account break-ins are cyberstalking.' },
         { t: 'A classmate asks for notes from class', flag: false, why: 'Normal.' },
         { t: 'Your mom texts to check in', flag: false, why: 'Normal.' }
       ],

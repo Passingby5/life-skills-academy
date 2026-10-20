@@ -2,7 +2,7 @@
 var LSA = typeof LSA !== 'undefined' ? LSA : {};
 LSA.MM = {
   seenCards: function (profile, deckIds) {
-    return LSA.cardsFor(profile.age, deckIds).filter(function (c) { return profile.boxes[c.id]; });
+    return LSA.cardsFor(profile.age, deckIds).filter(function (c) { return profile.boxes[c.id] && LSA.deckAllowed(c.deck, profile); });
   },
   start: function (profile, deckIds, seed, pairs) {
     var r = LSA.rng(seed), seen = LSA.shuffle(LSA.MM.seenCards(profile, deckIds), r).slice(0, pairs || 4);

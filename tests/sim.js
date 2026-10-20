@@ -37,8 +37,9 @@ assert.strictEqual(backToBack, 0, 'retry too close to its card');
 console.log('ok 10 no cross-age cards; ok 21 due first and interleaved; ok v3-2 zero same-card-back-to-back over ' + rounds + ' rounds');
 ['ya', 'adult'].forEach(age => {
   const p = L.newProfile('Perfect', age), r = L.rng(age === 'ya' ? 1 : 2);
-  for (let day = 0; day < 60; day++) { let g = 0; while (playRound(p, day, r.int(1e9), 1, r) && g++ < 200) { const due = L.cardsFor(age).some(c => !p.boxes[c.id] || p.boxes[c.id].due <= day); if (!due) break; } }
-  const all = L.cardsFor(age), at5 = all.filter(c => p.boxes[c.id] && p.boxes[c.id].b === 5).length;
+  for (let day = 0; day < 60; day++) { let g = 0; while (playRound(p, day, r.int(1e9), 1, r) && g++ < 200) { const due = L.cardsFor(age).filter(c => L.deckAllowed(c.deck, p)).some(c => !p.boxes[c.id] || p.boxes[c.id].due <= day); if (!due) break; } }
+  const all = L.cardsFor(age).filter(c => L.deckAllowed(c.deck, p)), // v19: a locked adult-rated deck never plays for a young adult
+    at5 = all.filter(c => p.boxes[c.id] && p.boxes[c.id].b === 5).length;
   console.log(`perfect ${age}: ${at5}/${all.length} cards in box 5`);
   assert.strictEqual(at5, all.length);
 });

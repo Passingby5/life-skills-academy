@@ -95,6 +95,13 @@ LSA.loadSave = function (text) {
       else fixed = true;
       // v18: decks a parent PIN unlocked on this profile (adult-rated decks for a young adult).
       if (Array.isArray(p.unlock)) { var ul = p.unlock.filter(function (d) { return typeof d === 'string' && LSA.decks && LSA.decks[d]; }); if (ul.length) q.unlock = ul; if (ul.length !== p.unlock.length) fixed = true; } else if (p.unlock !== undefined) fixed = true;
+      // v19: age filter on load. A hand-edited save cannot put a card this profile may not see (wrong age, or an
+      // adult-rated deck that is not unlocked) in front of it; such a round is dropped, the boxes are kept.
+      ['round', 'rf'].forEach(function (rk) {
+        var r = q[rk]; if (!r || !Array.isArray(r.q)) return;
+        var bad = r.q.some(function (it) { var c = LSA.cardIndex && LSA.cardIndex[it && it.id]; return c && (!LSA.visible(c, q.age) || !LSA.deckAllowed(c.deck, q)); });
+        if (bad) { q[rk] = null; fixed = true; }
+      });
       s.profiles[k] = q;
       var m = /^p(\d+)$/.exec(k); if (m) maxN = Math.max(maxN, +m[1]);
     });

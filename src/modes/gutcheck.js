@@ -2,7 +2,7 @@
 var LSA = typeof LSA !== 'undefined' ? LSA : {};
 LSA.GC = {
   start: function (profile, deckIds, today, seed) {
-    var r = LSA.rng(seed), cards = LSA.cardsFor(profile.age, deckIds);
+    var r = LSA.rng(seed), cards = LSA.cardsFor(profile.age, deckIds).filter(function (c) { return LSA.deckAllowed(c.deck, profile); }); // v19: adult-rated decks need an Adult profile or a PIN unlock, even when deckIds is not given
     // Cards missed at the very end of the last round come first.
     var carry = (profile.carry || []).map(function (id) { return LSA.cardIndex[id]; }).filter(function (c) { return c && cards.indexOf(c) >= 0; }).slice(0, 10);
     // Keep carried cards whose deck is off right now; they come back when the deck is on again.

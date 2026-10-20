@@ -113,6 +113,18 @@ t('28 step-list stub deck loads through deck.js and stays out of Know It', () =>
 });
 
 // ---------- v2 regression tests (QA of v1 81ceab5) ----------
+t('v19 age filter on load: a hand-edited save cannot show an adult card to a young adult', () => {
+  const mk = (age, id, unlock) => { const s = L.newSave(), k = L.addProfile(s, 'A', age), p = s.profiles[k]; p.round = L.GC.start(p, null, 0, 4); p.round.q[0].id = id; if (unlock) p.unlock = unlock; return { k, txt: L.dumpSave(s) }; };
+  let m = mk('ya', 'es33'); let r = L.loadSave(m.txt); assert.strictEqual(r.save.profiles[m.k].round, null, 'adult-only card dropped for ya'); assert(r.repaired);
+  m = mk('ya', 'pw01'); assert.strictEqual(L.loadSave(m.txt).save.profiles[m.k].round, null, 'locked power card dropped for ya');
+  m = mk('ya', 'pw01', ['power']); assert(L.loadSave(m.txt).save.profiles[m.k].round, 'kept when the parent PIN unlocked it');
+  m = mk('adult', 'es33'); assert(L.loadSave(m.txt).save.profiles[m.k].round, 'adult keeps it');
+});
+t('v19 QA tell models: catch the v17 Estate tell, and every Street Smart deck passes', () => {
+  const Q = require('../tools/tellqa.js'), old = require('./fixtures/estate-v17-choices.json').map(c => ({ c }));
+  assert(Q.score(old).gbm > Q.LIMIT, 'v17 estate choices should fail the QA gbm gate');
+  const r = Q.check(L, L.knowDecks().filter(id => L.decks[id].section === 'Street Smart')); assert.deepStrictEqual(r.errs, []);
+});
 const goodSave = () => { const s = L.newSave(), id = L.addProfile(s, 'Sam', 'ya'); s.profiles[id].round = L.GC.start(s.profiles[id], null, 0, 5); return s; };
 t('M1 deep save check: bad saves never throw, bad parts are reset, good parts kept', () => {
   const cases = {

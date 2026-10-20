@@ -12,5 +12,9 @@ const errs = L.checkAll().concat(G.check(L, sc));
 // v18 Power Plays: banned Greene law titles (tools/powerban.js).
 const PBAN = require('./powerban.js');
 L.deckOrder.filter(id => L.decks[id].power).forEach(id => PBAN.check(L.decks[id], L.POWER_TACTICS).forEach(e => errs.push(e)));
+// v19: QA-style tell models (gradient-boosted trees and logistic) on every Street Smart Gut Check deck.
+const TQA = require('./tellqa.js'), sss = L.knowDecks().filter(id => L.decks[id].section === 'Street Smart');
+const tq = TQA.check(L, sss); tq.errs.forEach(e => errs.push(e));
+console.log('QA tell models (4 seeds, 10-fold x5): ' + sss.map(id => id + ' gbm ' + (tq.scores[id].gbm * 100).toFixed(1) + '% logreg ' + (tq.scores[id].logreg * 100).toFixed(1) + '%').join(' | '));
 if (errs.length) { console.error(errs.join('\n')); process.exit(1); }
 console.log('ok deck checker (strategies, classifier, counts, sources)');

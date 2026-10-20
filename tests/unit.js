@@ -493,11 +493,15 @@ t('v11 P5 single-file copy never registers a service worker', () => {
   assert(/window\.LSA_SINGLE = true/.test(fs.readFileSync(path.join(__dirname, '../tools/testhtml.js'), 'utf8')));
 });
 // ---------- v12 tests (Street Smart: Legal Traps) ----------
-t('v12 legal deck: 70 cards in Street Smart, opt-in, every card cites a law or case with a saved source', () => {
-  const d = L.decks.legal; eq(d.cards.length, 70); eq(d.section, 'Street Smart'); eq(d.rating, 'teen');
+t('v13 legal deck: 52 cards in Street Smart, opt-in, every card cites a law or case with a saved source', () => {
+  const d = L.decks.legal; eq(d.cards.length, 52); eq(d.section, 'Street Smart'); eq(d.rating, 'teen');
   assert(L.defaultDecks().indexOf('legal') < 0); assert(/not legal advice/i.test(d.notice));
   assert(d.cards.every(c => /^lg\d\d$/.test(c.id) && c.cite && d.sources[c.src]));
   ['ya', 'adult'].forEach(a => assert(L.cardsFor(a, ['legal']).length >= 50));
+  // v13: every card is built on a real, named case or enforcement action, with the statute kept as a second source.
+  const statute = k => /^(veh|civ|pen|lab|usc|irs|ins|bpc|hsc)-/.test(k);
+  d.cards.forEach(c => { assert([c.src].concat(c.also || []).some(k => !statute(k)), c.id + ' has no case source');
+    assert(/ v\. |FTC|DOJ|U\.S\. Attorney|Secret Service/.test(c.cite + ' ' + (typeof c.s === 'string' ? c.s : c.s.adult)), c.id + ' names no case'); });
   // Every quote (main and also) is in the vendored excerpt of its saved source (tools/street-quotes.js checked it against sources/street/).
   const X = require('./fixtures/street-excerpts.json'), Q = require('../tools/quotes-new.json');
   d.cards.forEach(c => [[c.id, c.src]].concat((c.also || []).map(k => [c.id + '@' + k, k])).forEach(([key, k]) => { const q = JSON.parse(Q[key]); assert(X[k] && X[k].some(e => e.includes(q)), key); }));

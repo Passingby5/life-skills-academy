@@ -2418,366 +2418,293 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 
 ## Legal Traps (`legal`)
 
-**lg01** (both, driving). YA: You hold your phone in your lap to follow the map while you drive. Legal in California? / Adult: You hold your phone in one hand to check the route at a red light. Legal in California?
-- Choices: Yes, maps are always fine / **Only when it is mounted** / Yes, at red lights
-- Fix: Mount it (windshield corner or dash) and use one tap or swipe. Holding it while driving is a ticket.
-- Source: `veh-23123-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=23123.5) quote: "is mounted on a vehicle"
+**lg01** (both, driving). Steven Spriggs, stuck in Fresno County traffic, held his phone to check a map. The court threw out his ticket. Could he do that today?
+- Choices: Yes, the Spriggs ruling still holds / **No, the law changed after** / Yes, but in heavy traffic
+- Fix: Mount the phone before you drive. Spriggs read the old law, which only banned talking while holding the phone.
+- Source: `spriggs` (https://www.courtlistener.com/opinion/2655025/people-v-spriggs/) quote: "At the trial held before a Fresno County Superior Court traffic commissioner, both Spriggs and the California Highway Patrol officer who issued the citation testified that Spriggs was cited for looking at a map on his cellular telephone while holding the telephone in his hand and driving."
+- Also: `veh-23123-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=23123.5) quote: "(e) This section does not apply to an emergency services professional using an electronic wireless communications device while operating an authorized emergency vehicle, as defined in Section 165, in the course and scope of his or her duties."
 
-**lg02** (both, driving). YA: You scrape a parked car in a lot. Nobody saw. The owner is gone. What does the law require? / Adult: Backing out at the store, you dent an empty parked car. No one is around. What must you do?
-- Choices: Drive off, since no one saw it / **Leave a note and report it** / Wait an hour, then go
-- Fix: Leave a note in plain sight with your name, address, and what happened, then report it to police or CHP.
-- Source: `veh-20002` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=20002) quote: "Leave in a conspicuous place on the vehicle or other property damaged a written notice"
+**lg02** (both, driving). Nathaniel Porter held his phone in his left hand and looked at a map while driving in Santa Clara County. Was that a violation?
+- Choices: Not unless he typed something / **Yes, viewing it counts** / When he was over the limit
+- Fix: Use a mount and voice directions. Under Porter, looking at an app on a phone in your hand is "operating" it.
+- Source: `porter` (https://www.courtlistener.com/opinion/10598135/people-v-porter/) quote: "A trial was held before a Santa Clara County Superior Court traffic commissioner, where both Porter and the police officer agreed Porter was looking at a mapping application on his cellular telephone while holding the phone in his left hand and driving."
+- Also: `veh-23123-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=23123.5) quote: "(2) The driver's hand is used to activate or deactivate a feature or function of the handheld wireless telephone or wireless communications device with the motion of a single swipe or tap of the driver's finger."
 
-**lg03** (both, driving). YA: A biker clips your mirror and falls. He waves and says he is fine. You are late. Can you go? / Adult: A man on a scooter hits your bumper and falls, then says he is fine. Can you just leave?
-- Choices: Leave, since he said fine / **Stop and trade your info** / Stay only if police come
-- Fix: Stop, give your name, license and insurance, and help get care if needed. Call 911 if anyone is hurt.
-- Source: `veh-20001` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=20001) quote: "shall immediately stop the vehicle at the scene of the accident"
+**lg03** (both, driving). After Porter lost his appeal over a handheld map, a friend asks how to use a phone map legally while driving in California. What works?
+- Choices: Hold it low, below the window / **Mount it, one tap or swipe** / Use it on side streets only
+- Fix: Mount it on the dash or windshield corner and limit it to a single tap or swipe.
+- Source: `veh-23123-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=23123.5) quote: "(2) The driver's hand is used to activate or deactivate a feature or function of the handheld wireless telephone or wireless communications device with the motion of a single swipe or tap of the driver's finger."
+- Also: `porter` (https://www.courtlistener.com/opinion/10598135/people-v-porter/) quote: "Section 23123.5(c) also allows a driver to interact with their mounted phone with \"a single swipe or tap,\" but section 23123.5(a) does not include language regarding a single swipe or tap."
 
-**lg04** (both, driving). YA: Your friend has an opened vape cart of cannabis in his pocket while driving you home. Problem? / Adult: Your adult son keeps an opened bag of legal cannabis in the cup holder. Is that a problem?
-- Choices: None, cannabis is legal now / **A ticket unless in the trunk** / Legal once he is over 21
-- Fix: Opened cannabis has to ride in the trunk. In the cabin it is a ticket, even when legal to buy.
-- Source: `veh-23222` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=23222) quote: "a receptacle containing cannabis or cannabis products"
+**lg04** (both, driving). Esteban Jimenez fled police, ran onto a sidewalk and hit a cinder block wall, then ran. No one else was hurt. Was that still hit-and-run?
+- Choices: No, a person must be hurt / **Yes, property damage counts** / When a car was hit, yes
+- Fix: After hitting anything, stop. Find the owner or leave a note with your name and address, and call police.
+- Source: `jimenez-20002` (https://www.courtlistener.com/opinion/9472686/people-v-jimenez/) quote: "Eventually, the Corolla came to a stop when it drove onto the sidewalk and collided with a short cinder block wall, causing a large cloud of smoke and debris."
+- Also: `veh-20002` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=20002) quote: "(a) The driver of any vehicle involved in an accident resulting only in damage to any property, including vehicles, shall immediately stop the vehicle at the nearest location that will not impede traffic or otherwise jeopardize the safety of other motorists."
 
-**lg05** (both, fault). YA: A motorcycle passes between lanes in stopped traffic. Your friend says that is illegal. Right? / Adult: A rider splits lanes past your car on the freeway. Your spouse says he broke the law. Did he?
-- Choices: Illegal in every state / **Legal here for motorcycles** / Legal on city streets only, not freeways
-- Fix: Give room and do not block the rider. California defines lane splitting in law and lets CHP issue safety tips.
-- Source: `veh-21658-1` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=21658.1) quote: "lane splitting"
+**lg05** (both, driving). Barry Halajian said his truck was only for private use, so license and registration rules did not apply. Deputies impounded it. Who won?
+- Choices: Halajian, private trucks are exempt / **The tow company, it was lawful** / No one, the case was dropped
+- Fix: Keep a valid license and registration. "Private travel" arguments lose, and your car can be towed and held until fees are paid.
+- Source: `halajian` (https://www.courtlistener.com/opinion/5811308/halajian-v-d-b-towing/) quote: "In the published portions of this opinion, we conclude that the sheriff's department's impounding of the truck did not violate plaintiff's right to travel, was not an unreasonable seizure, and did not misapply the Vehicle Code to his noncommercial use of the truck."
+- Also: `veh-12500` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=12500) quote: "(a) A person may not drive a motor vehicle upon a highway, unless the person then holds a valid driver's license issued under this code, except those persons who are expressly exempted under this code."
 
-**lg06** (both, fault). YA: You cross mid-block on an empty street. A cop says jaywalking is a ticket. Is it? / Adult: You cross mid-block with no cars in sight. An officer says he can cite you. Can he?
-- Choices: Yes, any mid-block crossing / **Only with clear crash danger** / In school zones only
-- Fix: Since 2023, police may stop you only if a careful person would see an immediate danger of collision.
-- Source: `veh-21955` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=21955) quote: "immediate danger of a collision"
+**lg06** (both, fault). Nga Li turned left across traffic and was hit by a speeding Yellow Cab. She was partly at fault too. What did the California Supreme Court decide?
+- Choices: Any fault of hers bars recovery / **Damages split by share of fault** / The cab pays all, no matter what
+- Fix: Even if you made a mistake, you can still recover. Your award is cut by your share of the fault.
+- Source: `li-yellowcab` (https://www.courtlistener.com/opinion/1139343/nga-li-v-yellow-cab-co/) quote: "As we have indicated, this reexamination leads us to the conclusion that the \"all-or-nothing\" rule of contributory negligence can be and ought to be superseded by a rule which assesses liability in proportion to fault."
 
-**lg07** (both, driving). YA: You pass a cyclist with a foot of space. There was no crash. Did you break a law? / Adult: On a narrow road you pass a cyclist close, about a foot away. Any law broken?
-- Choices: None, since no one was hit / **Yes, three feet is the law** / In a bike lane, yes
-- Fix: Give at least three feet, or slow down and wait. If you cannot, change lanes when safe.
-- Source: `veh-21760` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=21760) quote: "at a distance of less than three feet"
+**lg07** (both, fault). After a crash, the other driver's insurer says, "You were 20% at fault, so under California law you get zero." What does Li v. Yellow Cab say?
+- Choices: That is right, zero / **You can recover 80%** / Half, by default
+- Fix: Push back. California uses pure comparative fault, so a driver 20% at fault can still recover the other 80%.
+- Source: `li-yellowcab` (https://www.courtlistener.com/opinion/1139343/nga-li-v-yellow-cab-co/) quote: "The first of these, the so-called \"pure\" form of comparative negligence, apportions liability in direct proportion to fault in all cases."
 
-**lg08** (both, driving). YA: The light is green but traffic is backed up past the intersection. You pull in anyway. Legal? / Adult: Green light, but cars are stacked on the far side. Can you roll into the box anyway?
-- Choices: Yes, green means go / **Wait until there is room** / Yes, if you honk first
-- Fix: Wait at the line until there is room for your whole car on the other side.
-- Source: `veh-22526` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=22526) quote: "shall not enter an intersection or marked crosswalk unless there is sufficient space"
+**lg08** (both, fault). Lisa Torti pulled her friend Alexandra Van Horn from a crashed car. Van Horn said the move left her paralyzed and sued. What did the court rule in 2008?
+- Choices: Rescuers are always immune / **Shield was for medical care only** / She had committed a crime
+- Fix: Call 911 first. Move a person only if there is real danger, like fire or traffic.
+- Source: `vanhorn` (https://www.courtlistener.com/opinion/2627382/van-horn-v-watson/) quote: "Torti does not contend that she rendered emergency medical care and she may not, therefore, claim the immunity in section 1799.102."
 
-**lg09** (ya, driving). Your license expired last month. You only drive to work. Your friend says there is a grace period. Is there?
-- Choices: Yes, you get 90 days to renew / **Renew it before you drive again** / Yes, for trips to work
-- Fix: Do not drive until it is renewed. Renew online at the DMV if you can.
-- Source: `veh-12500` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=12500) quote: "unless the person then holds a valid driver"
+**lg09** (both, fault). After the Van Horn ruling against rescuer Lisa Torti, what did the Legislature change in the Good Samaritan law?
+- Choices: Nothing changed whatsoever / **It now covers nonmedical help** / Rescuing became mandatory
+- Fix: Today, unpaid good faith help at the scene, medical or nonmedical, is shielded from civil damages.
+- Source: `hsc-1799-102` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1799.102) quote: "(a) No person who in good faith, and not for compensation, renders emergency medical or nonmedical care at the scene of an emergency shall be liable for any civil damages resulting from any act or omission."
+- Also: `vanhorn` (https://www.courtlistener.com/opinion/2627382/van-horn-v-watson/) quote: "Disposition In light of the foregoing reasons, we conclude that the Legislature intended for section 1799.102 to immunize from liability for civil damages only those persons who in good faith render emergency medical care at the scene of a medical emergency."
 
-**lg10** (both, fault). YA: Nga Li turned left across traffic and was hit by a speeding cab. She was partly at fault. Could she get anything? / Adult: In Li v. Yellow Cab, the driver hit by a speeding cab was also partly at fault. What did the court decide?
-- Choices: Nothing; any fault bars her / **Yes, cut by her share** / Only if the cab was insured
-- Fix: Each side pays for its own share of fault. Being 30% at fault cuts your award by 30%, not to zero.
-- Source: `li-yellowcab` (https://www.courtlistener.com/opinion/1139343/nga-li-v-yellow-cab-co/) quote: "must give way to a system of comparative negligence"
+**lg10** (both, fault). Bradley Johnson was on a ladder fixing a swamp cooler when the owners' puppy jumped and its jaws closed on his trousers. No wound. Does the dog bite law apply?
+- Choices: No, there must be a wound / **Yes, a bite is a bite** / For a vicious dog only
+- Fix: Report it and get checked. A bite without a wound can still fall under the strict liability statute.
+- Source: `johnson-mcmahan` (https://www.courtlistener.com/opinion/2302331/johnson-v-mcmahan/) quote: "The sole issue in this case is whether the California dog bite statute, Civil Code section 3342, applies when the bitee does not suffer a wound."
+- Also: `civ-3342` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=3342) quote: "(a) The owner of any dog is liable for the damages suffered by any person who is bitten by the dog while in a public place or lawfully in a private place, including the property of the owner of the dog, regardless of the former viciousness of the dog or the owner's knowledge of such viciousness."
 
-**lg11** (both, fault). YA: A friend's dog that has never bitten anyone bites you at his house. He says he is not liable. Right? / Adult: A neighbor's gentle dog bites your son on the sidewalk. She says it never bit before. Is she off the hook?
-- Choices: Yes, the first bite is free / **The owner is still liable** / Off the hook if leashed
-- Fix: Get care, photos, and the owner's info, and report the bite to animal control.
-- Source: `civ-3342` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=3342) quote: "regardless of the former viciousness of the dog"
+**lg11** (both, fault). Marta Priebe, a kennel worker, was badly bitten by a boarded dog. She sued its owner under the strict dog bite law. Did it apply?
+- Choices: Yes, the owner is always liable / **Not for a kennel worker** / When the dog bit before, yes
+- Fix: If you work with dogs for pay, know the risk is mostly yours. Ask about the dog's history and use safe handling.
+- Source: `priebe` (https://www.courtlistener.com/opinion/2599903/priebe-v-nelson/) quote: "The Court of Appeal concluded the doctrine should apply, finding Priebe assumed the risk of being bitten by dogs boarded at the kennel by virtue of the nature of her occupation as a kennel worker."
 
-**lg12** (both, fault). YA: After a crash, Lisa Torti pulled a friend from a car she feared would explode. She was sued. What changed after? / Adult: In Van Horn v. Watson, a woman pulled a friend from a wreck and was sued. What did lawmakers do next?
-- Choices: Nothing; rescuers get sued / **Added nonmedical care** / Made rescue a crime
-- Fix: Today, good faith unpaid help at the scene, medical or not, is shielded from civil damages. Call 911 first.
-- Source: `hsc-1799-102` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1799.102) quote: "emergency medical or nonmedical care"
-- Also: `vanhorn` (https://www.courtlistener.com/opinion/2627382/van-horn-v-watson/) quote: "immunize from liability for civil damages any person who renders emergency medical care"
+**lg12** (both, privacy). Brokers at an Atlanta office taped calls with California clients without telling them. Georgia allows it. Whose law applied?
+- Choices: Georgia law, where the firm sat / **California law, for its residents** / Federal law across states
+- Fix: If you are in California, secret taping by an out-of-state caller can still break California law. Ask "Is this recorded?"
+- Source: `kearney` (https://www.courtlistener.com/opinion/2633480/kearney-v-salomon-smith-barney-inc/) quote: "Apparently in the course of the litigation of those claims, Kearney and Levy learned that numerous telephone calls that were made and received by SSB's Atlanta office to and from California clients, while the clients were in California, were tape-recorded by SSB employees without the clients' knowledge or consent."
 
-**lg13** (both, privacy). YA: Your boss yells at you in a closed office. You secretly record it on your phone. Legal in California? / Adult: Your ex makes threats on a private phone call. You record it without saying so. Legal in California?
-- Choices: Yes, it is your own talk / **Illegal without all consent** / Yes, if it is for court
-- Fix: Say "I am recording this" at the start, or use texts and email for proof. For threats, call police.
-- Source: `pen-632` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632) quote: "without the consent of all parties to a confidential communication"
+**lg13** (both, privacy). In Flanagan, a family fight was over secretly taped phone calls. When is a talk "confidential" under California's recording law?
+- Choices: When someone says it is secret / **When one expects no one overhears** / Never on a phone line
+- Fix: Assume a private call is confidential. Get consent from everyone before you record it.
+- Source: `flanagan` (https://www.courtlistener.com/opinion/2600714/flanagan-v-flanagan/) quote: "One line of authority holds that a conversation is confidential if a party to that conversation has an objectively reasonable expectation that the conversation is not being overheard or recorded."
+- Also: `pen-632` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632) quote: "(d) Except as proof in an action or prosecution for violation of this section, evidence obtained as a result of eavesdropping upon or recording a confidential communication in violation of this section is not admissible in any judicial, administrative, legislative, or other proceeding."
 
-**lg14** (adult, privacy). A Georgia firm taped calls with California clients without telling them. Georgia allows it. Which law won?
-- Choices: Georgia law, the firm's home state / **California law for its people** / Federal law, across states
-- Fix: If you are in California, you can sue over secret taping by out-of-state callers. Ask "Is this call recorded?"
-- Source: `kearney` (https://www.courtlistener.com/opinion/2633480/kearney-v-salomon-smith-barney-inc/) quote: "impair California"
+**lg14** (both, privacy). Per Flanagan v. Flanagan, what can a person secretly taped on a confidential call ask for in civil court?
+- Choices: Nothing; criminal penalties / **$5,000 or 3x damages** / A formal apology letter
+- Fix: Save proof of the recording and talk to a lawyer. Civil penalties are available on top of the crime.
+- Source: `flanagan` (https://www.courtlistener.com/opinion/2600714/flanagan-v-flanagan/) quote: "(a).) 1 Violation of the law is a misdemeanor (ibid.) and may entail a civil penalty of $5,000 or three times the actual damages, whichever is greater (§ 637.2)."
 
-**lg15** (both, privacy). YA: A package for your ex roommate shows up. You open it to see what it is. Big deal? / Adult: Your neighbor's letter lands in your box. You open it and keep the gift card inside. Big deal?
-- Choices: Fine, it came to your door / **It is a federal crime** / A crime once you sell it
-- Fix: Write "not at this address" and put it back in the mail, or hand it to the right person.
-- Source: `usc-18-1708` (https://www.law.cornell.edu/uscode/text/18/1708) quote: "Whoever steals, takes, or abstracts"
+**lg15** (both, privacy). Kamila Malinowski had dash cam videos of her ex with their kids at custody exchanges. The trial court threw them out as illegal recordings. Was that right?
+- Choices: Yes, they were secret tapes / **No, they were not confidential** / Audio alone was banned
+- Fix: Talks in a car at a public exchange may not be "confidential." Ask a family law lawyer before you rely on a video.
+- Source: `malinowski` (https://www.courtlistener.com/opinion/10050351/malinowski-v-martin/) quote: "(2) no \"confidential communications\" were captured given the public nature of the exchange location;"
 
-**lg16** (both, renting). YA: You moved out 5 weeks ago. The landlord has not returned your deposit or sent a list. Too bad? / Adult: Your tenant left a month ago. You have not sent the deposit or a list yet. Is that OK?
-- Choices: Landlords get 60 days to pay / **Due 21 days after move-out** / There is no deadline
-- Fix: Send a written demand. The deposit or an itemized list is due 21 days after move-out. Small claims is next.
-- Source: `civ-1950-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5) quote: "No later than 21 calendar days after the tenant has vacated the premises"
-- Also: `ccp-116-221` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=116.221) quote: "twelve thousand five hundred dollars ($12,500)"
+**lg16** (both, privacy). In 2010 Jason and Jolynn May drove around grabbing packages off porches and from community mailboxes. What crime did they plead to?
+- Choices: Municipal infraction fine / **Federal mail theft** / Nothing, porches are public
+- Fix: Never take a package that is not yours. If one lands at your door by mistake, return it or hand it to the carrier.
+- Source: `us-may` (https://www.courtlistener.com/opinion/820330/united-states-v-jolynn-may/) quote: "they looked for packages on porches, in doorways, or in community mailboxes"
+- Also: `usc-18-1708` (https://www.law.cornell.edu/uscode/text/18/1708) quote: "Code § 1708 - Theft or receipt of stolen mail matter gen­erally U.S."
 
-**lg17** (both, renting). YA: Your landlord lets himself in while you are at class to "check things." No notice. Allowed? / Adult: Your landlord walks in on a Sunday night with no notice to look at the heater. Allowed?
-- Choices: Yes, he owns the place / **Written notice comes first** / Yes, once a month
-- Fix: Ask for written notice. 24 hours is presumed fair, in normal business hours, except in an emergency.
-- Source: `civ-1954` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1954) quote: "Twenty-four hours shall be presumed to be reasonable notice"
+**lg17** (both, renting). Lisa Granberry's class of tenants sued a landlord over late deposit returns. How long does a California landlord have to return a deposit or explain what was kept?
+- Choices: Within sixty days / **Within three weeks** / No set deadline exists
+- Fix: Send a written request. The refund or an itemized list is due within 21 days of move-out.
+- Source: `granberry` (https://www.courtlistener.com/opinion/1436586/granberry-v-islay-investments/) quote: "An important provision of our statutory landlord-tenant law provides that within three weeks after the termination of tenancy a landlord must return the security deposit paid by a former tenant and provide a written accounting of any portion retained as compensation for unpaid rent, repairs, and cleaning."
+- Also: `civ-1950-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5) quote: "No later than 21 calendar days after the tenant has vacated the premises"
 
-**lg18** (ya, renting). The landlord ignores a broken lock on your door for weeks after you told him. Any lawful option?
-- Choices: Stop paying rent at all / **Repair it, then deduct** / Move and keep the deposit
-- Fix: Give notice, wait a reasonable time, then fix it and deduct up to one month's rent. Keep receipts.
-- Source: `civ-1942` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1942) quote: "more than one month"
+**lg18** (both, renting). In Granberry, the landlord missed the deposit deadline in good faith. Could it still sue the tenants for real unpaid rent and repairs?
+- Choices: No, it forfeits all claims / **Yes, it can still sue** / For half the amount
+- Fix: Do not count on a missed deadline. Pay what you truly owe, and keep move-out photos and receipts.
+- Source: `granberry` (https://www.courtlistener.com/opinion/1436586/granberry-v-islay-investments/) quote: "We conclude that a good faith failure to comply with section 1950.5, subdivision (f), does not bar a landlord from recovering damages for unpaid *742rent, repairs, and cleaning, and we agree with the Court of Appeal to the extent that it so held."
 
-**lg19** (both, work). YA: Your job makes you use your own phone and car for deliveries and pays nothing extra. Legal? / Adult: Your new job wants you to use your own car for client visits with no mileage pay. Legal?
-- Choices: Yes, it was in your offer / **They must repay costs** / Only for full-time staff
-- Fix: Log the miles and phone use, and ask in writing to be repaid. The law says they must cover it.
-- Source: `lab-2802` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=2802) quote: "An employer shall indemnify his or her employee for all necessary expenditures"
-- Also: `gattuso` (https://www.courtlistener.com/opinion/2625135/gattuso-v-harte-hanks-shoppers-inc/) quote: "does not separately reimburse outside sales representatives for their automobile expenses"
+**lg19** (both, renting). Marina Lukovsky rented a Santa Monica condo since 1994. Her landlord wanted weekend open houses to sell it. Did the court allow them?
+- Choices: Never on weekends / **Yes, 1 to 4:30 weekends** / Weekday nights only
+- Fix: You can ask for limits, but showings to buyers are allowed in normal business hours with proper notice.
+- Source: `dromy` (https://www.courtlistener.com/opinion/1039474/dromy-v-lukovsky/) quote: "Dromy argues that the statute does not preclude weekend open houses because it states nothing about the days on which a landlord may exhibit a dwelling, but merely limits the hours he or she may do so."
+- Also: `civ-1954` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1954) quote: "(d) (1) Except as provided in subdivision (e), or as provided in paragraph (2) or (3), the landlord shall give the tenant reasonable notice in writing of his or her intent to enter and enter only during normal business hours."
 
-**lg20** (both, work). YA: Your manager says talking about pay with coworkers will get you fired. Can he do that? / Adult: HR asks you to sign a paper saying you will never tell anyone your salary. Can they?
-- Choices: Yes, pay is a private matter / **Sharing your pay is protected** / In a union shop only
-- Fix: You may share your wages. Do not sign a waiver; report a threat to the Labor Commissioner.
-- Source: `lab-232` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=232) quote: "deny the employee the right to disclose the amount of his or her wages"
+**lg20** (both, renting). In Dromy, the landlord won the right to show the condo. What must a landlord still give a tenant before entering for a showing?
+- Choices: Nothing, he owns the place / **Written notice of the entry** / A key for the new owner
+- Fix: Ask for written notice with date, time and purpose. 24 hours is presumed reasonable.
+- Source: `civ-1954` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1954) quote: "(d) (1) Except as provided in subdivision (e), or as provided in paragraph (2) or (3), the landlord shall give the tenant reasonable notice in writing of his or her intent to enter and enter only during normal business hours."
+- Also: `dromy` (https://www.courtlistener.com/opinion/1039474/dromy-v-lukovsky/) quote: "Thus when a landlord seeks to exhibit a leased dwelling unit to prospective or actual purchasers, he or she may only enter the property during reasonable hours, unless the tenant consents to another time."
 
-**lg21** (both, work). YA: You are fired on Monday. Your boss says your last check comes on the next payday. OK? / Adult: You are let go. The company says your final pay will be mailed in two weeks. OK?
-- Choices: Next payday is fine / **It is due at once** / Due within 2 weeks
-- Fix: When fired, all earned pay is due at once. Late pay can add a day's wage per day, up to 30 days.
-- Source: `lab-201` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=201) quote: "due and payable immediately"
-- Also: `lab-203` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=203) quote: "but the wages shall not continue for more than 30 days"
+**lg21** (both, work). Colin Cochran had to use his own cell phone for work calls. His plan had unlimited minutes. Did the company owe him anything?
+- Choices: No, unlimited costs nothing extra / **A fair share of the bill** / Overseas calls only
+- Fix: Ask in writing for a reasonable share of your phone bill if your job needs your phone.
+- Source: `cochran` (https://www.courtlistener.com/opinion/2717454/cochran-v-schwans-home-service-inc/) quote: "Whether the employees have cell phone plans with unlimited minutes or limited minutes, the reimbursement owed is a reasonable percentage of their cell phone bills."
+- Also: `lab-2802` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=2802) quote: "(c) For purposes of this section, the term \"necessary expenditures or losses\" shall include all reasonable costs, including, but not limited to, attorney's fees incurred by the employee enforcing the rights granted by this section."
 
-**lg22** (adult, work). Your old firm says the noncompete you signed bars you from working for a rival for a year. In California?
-- Choices: It holds if narrow / **It is void here** / It holds for one year
-- Fix: Take the job. Keep their secrets and client files, but the noncompete itself does not bind you.
-- Source: `bpc-16600` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=16600) quote: "no matter how narrowly tailored"
-- Also: `edwards` (https://www.courtlistener.com/opinion/5608069/edwards-v-arthur-andersen-llp/) quote: "section 16600 prohibits employee noncompetition agreements unless the agreement falls within a statutory exception"
+**lg22** (both, work). Frank Gattuso and other sales reps drove their own cars and got no mileage pay, only commissions. Can a higher commission count as repayment?
+- Choices: Never, mileage checks only / **Yes, if the extra can be traced** / Yes, any commission counts
+- Fix: Ask your employer to show which part of your pay is for car costs. If they cannot, ask to be repaid.
+- Source: `gattuso` (https://www.courtlistener.com/opinion/2625135/gattuso-v-harte-hanks-shoppers-inc/) quote: "provided there is a means or method to apportion the enhanced compensation to determine what amount is being paid for labor performed and what amount is reimbursement for business expenses"
 
-**lg23** (both, consumer). YA: A door-to-door seller signs you up for a solar contract. Next day you regret it. Stuck? / Adult: Your mom, 72, signed a home repair contract with a man at the door yesterday. Is she stuck?
-- Choices: A signature is final / **She can cancel in days** / Void if he lied out loud
-- Fix: Cancel in writing fast: 3 business days, or 5 for a senior, for many home sales in California.
-- Source: `civ-1689-6` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1689.6) quote: "until midnight of the third business day, or until midnight of the fifth business day if the buyer is a senior citizen"
-- Also: `cfr-16-429` (https://www.law.cornell.edu/cfr/text/16/429.1) quote: "within THREE BUSINESS DAYS"
+**lg23** (both, work). At a 1999 meeting, Sharron Grant-Burton joined other directors comparing how their bonuses worked. She was fired, partly for that. Was that allowed?
+- Choices: Yes, pay talk is private / **No, that firing broke policy** / In a union shop only
+- Fix: You may discuss your pay. If you are punished for it, write down what happened and report it.
+- Source: `grant-burton` (https://www.courtlistener.com/opinion/2285001/grant-burton-v-covenant-care-inc/) quote: "Westbrook said that the discharge was based on what Grant-Burton had said at the February 4 meeting."
+- Also: `lab-232` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=232) quote: "(b) Require an employee to sign a waiver or other document that purports to deny the employee the right to disclose the amount of his or her wages."
 
-**lg24** (both, consumer). YA: You signed up for an app online. To cancel, they say you must call during work hours. Allowed? / Adult: You joined a gym online. Now they say you have to cancel in person. Allowed in California?
-- Choices: Yes, it is in the terms / **Online sign-up, online cancel** / Yearly plans are exempt
-- Fix: If you signed up online, you can cancel online. Screenshot the cancel page and dispute later charges.
-- Source: `bpc-17602` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17602) quote: "terminate the automatic renewal or continuous service exclusively online"
+**lg24** (both, work). Amanza Smith worked one day as a hair model at a L'Oreal show for $500. When was her pay due?
+- Choices: On the next regular payday / **Right when the job ended** / Within 30 days after
+- Fix: For a one-day or fixed job, ask to be paid at the end. Late pay can bring waiting time penalties.
+- Source: `smith-loreal` (https://www.courtlistener.com/opinion/2633518/smith-v-superior-court/) quote: "Section 201 of the Labor Code 1 provides that if an employer \"discharges\" an employee, wages earned and unpaid at the time of discharge are due and payable immediately."
+- Also: `lab-201` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=201) quote: "(a) If an employer discharges an employee, the wages earned and unpaid at the time of discharge are due and payable immediately."
 
-**lg25** (adult, consumer). Your new car went back to the dealer four times for the same brake fault under warranty. Any right?
-- Choices: Keep trying more repairs / **Seek a buyback or new car** / A free extended warranty only
-- Fix: Keep every repair order and write to the maker asking for replacement or refund under the lemon law.
-- Source: `civ-1793-2` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1793.2) quote: "the manufacturer shall either replace the goods or reimburse the buyer"
-
-**lg26** (both, consumer). YA: Your old roommate owes you $3,000 and refuses to pay. You think you need a lawyer. True? / Adult: A contractor took $9,000 and quit. You think suing means hiring a lawyer. True?
-- Choices: Courts need lawyers to sue / **File in small claims yourself** / Under $1,000 only
-- Fix: File in small claims yourself. A person can sue for up to $12,500 there, and lawyers usually stay out.
-- Source: `ccp-116-221` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=116.221) quote: "twelve thousand five hundred dollars ($12,500)"
-
-**lg27** (adult, consumer). A buyer paid you $400 with a check that bounced. He shrugs and says you can only get the $400. True?
-- Choices: The face amount and nothing more / **Up to triple damages** / The bank fee only
-- Fix: Send a written demand by certified mail. If he does not pay in 30 days, you can seek up to 3 times the check.
-- Source: `civ-1719` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1719) quote: "three times the amount of the check up to one thousand five hundred dollars ($1,500)"
-
-**lg28** (both, money). YA: Your debit card is stolen. You wait two weeks to tell the bank. Does it matter? / Adult: Your wallet is stolen with your debit card. You plan to call the bank Monday. Does timing matter?
-- Choices: The bank covers it all / **Report it within 2 days** / Only credit cards matter
-- Fix: Call the bank now. Within 2 business days your loss is capped at $50; wait and it can go to $500 or more.
-- Source: `usc-15-1693g` (https://www.law.cornell.edu/uscode/text/15/1693g) quote: "within two business days after the consumer learns of the loss or theft"
-
-**lg29** (both, money). YA: A charge you did not make shows up on your credit card. You will deal with it after a few months. OK? / Adult: A store double charged your credit card. You plan to deal with it next quarter. OK?
-- Choices: Any time this year / **Write within 60 days** / A phone call is enough
-- Fix: Send a written dispute so it arrives within 60 days of the bill. Your loss on unauthorized use is capped at $50.
-- Source: `ftc-fcba` (https://consumer.ftc.gov/articles/using-credit-cards-and-disputing-charges) quote: "within 60 days after the first bill with the error was sent to you"
-
-**lg30** (both, money). YA: A collector calls about a $900 debt you do not know. He wants payment today. What should you do? / Adult: A collector says you owe $4,000 on an old card you think you paid off. What first?
-- Choices: Pay to stop the calls / **Dispute it in writing** / Ignore it until it fades
-- Fix: Dispute it in writing within 30 days of the notice. They must verify the debt before they keep collecting.
-- Source: `usc-15-1692g` (https://www.law.cornell.edu/uscode/text/15/1692g) quote: "within thirty days after receipt of the notice, disputes the validity of the debt"
-- Also: `ftc-debt` (https://consumer.ftc.gov/articles/debt-collection-faqs) quote: "within five days of the first contact"
-
-**lg31** (ya, money). You send $600 on a payment app for concert tickets that never come. The seller blocks you. Will the app refund it?
-- Choices: Yes, apps refund scams / **Likely not; act fast** / Yes, after 60 days
-- Fix: Report to the app and your bank right away, and at ReportFraud.ftc.gov. Pay only people you know.
-- Source: `ftc-p2p` (https://consumer.ftc.gov/articles/mobile-payment-apps-how-avoid-scam-when-you-use-one) quote: "Protect your account"
-
-**lg32** (ya, money). A stranger offers $200 for your debit card and PIN "for a few days." It is your card. Is selling it legal?
-- Choices: Yes, it is your card / **It can be grand theft** / Yes, if you get it back
-- Fix: Say no and walk away. Selling or passing on a card to defraud is grand theft, and you pay the debt.
-- Source: `pen-484e` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=484e) quote: "with intent to defraud, sells, transfers, or conveys, an access card"
-
-**lg33** (ya, tax). You make about $15 a month in cash tips at a coffee shop. Your coworker says tips under $20 are tax free. True?
-- Choices: Yes, under $20 is free / **Report them anyway** / Card tips count only
-- Fix: Keep a daily tip log and report all tips on your return.
-- Source: `irs-tips` (https://www.irs.gov/taxtopics/tc761) quote: "must report these amounts as income on their tax returns"
-
-**lg34** (both, tax). YA: You win $800 on a sports betting app. No form came. Your friend says no form means no tax. True? / Adult: You win $1,200 at a casino on a trip. No form was given. Do you owe tax?
-- Choices: No form means no tax / **All wins are taxable** / Wins over $5,000 only
-- Fix: Report all winnings. Keep a log of wins and losses; losses can only offset wins if you itemize.
-- Source: `irs-gambling` (https://www.irs.gov/taxtopics/tc419) quote: "Gambling winnings are fully taxable"
-
-**lg35** (adult, tax). A card company settles your $10,000 debt for $4,000. You are relieved. Any tax catch?
-- Choices: Debt relief is always tax free / **The $6,000 may be income** / Only the bank pays tax
-- Fix: Watch for a 1099-C and ask a tax pro about exclusions such as insolvency before you file.
-- Source: `irs-cancel-debt` (https://www.irs.gov/taxtopics/tc431) quote: "Your responsibility to report the correct taxable amount of canceled debt as income"
-
-**lg36** (both, tax). YA: You trade one crypto coin for another and never cash out to dollars. Anything to report? / Adult: You swapped bitcoin for another coin and kept it all in crypto. Any tax issue?
-- Choices: Not until you cash out / **Swaps must be reported** / Over $10,000 only
-- Fix: Track the value on the day of each swap. Report gains or losses on your return.
-- Source: `irs-crypto` (https://www.irs.gov/filing/digital-assets) quote: "digital assets are considered property, not currency"
-
-**lg37** (both, tax). YA: You made $2,000 doing gig delivery. No taxes were taken out. Do you have to file? / Adult: Your teen made $900 mowing lawns this summer. Does she need to file?
-- Choices: Not under $5,000 / **Yes, at $400 or more** / With a 1099 form only
-- Fix: File if net self-employment earnings hit $400. Set aside part of each payment for the 15.3% tax.
-- Source: `usc-26-6017` (https://www.law.cornell.edu/uscode/text/26/6017) quote: "net earnings from self-employment of $400 or more"
-- Also: `irs-se` (https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes) quote: "The self-employment tax rate is 15.3%"
-
-**lg38** (adult, tax). You sell your quilts at craft fairs just for fun, about $3,000 a year. A friend says hobby money is not taxed. True?
-- Choices: Yes, hobbies are exempt / **Report it as income** / Only if you sell online
-- Fix: Report hobby income on Schedule 1. If you want to deduct costs, run it like a real business.
-- Source: `irs-hobby` (https://www.irs.gov/newsroom/know-the-difference-between-a-hobby-and-a-business) quote: "they must report the income they receive on Schedule 1"
-
-**lg39** (ya, tax). You got laid off and drew unemployment for three months. Your cousin says that money is tax free. True?
-- Choices: Yes, it is aid, not pay / **It is taxable income** / The state taxes it only
-- Fix: Include it on your return. You can ask to have tax taken out of each payment.
-- Source: `irs-unemploy` (https://www.irs.gov/individuals/employees/unemployment-compensation) quote: "Unemployment compensation is taxable income"
-
-**lg40** (adult, tax). You sell the home you lived in for 10 years at a $300,000 gain. You are married filing jointly. Owe tax on all of it?
-- Choices: Yes, the full $300,000 / **Likely none of it** / Exactly half of it
-- Fix: If you owned and lived in it 2 of the last 5 years, up to $500,000 of gain can be excluded for a couple.
-- Source: `usc-26-121` (https://www.law.cornell.edu/uscode/text/26/121) quote: "shall not exceed $250,000"
-
-**lg41** (adult, tax). Your aunt gives you $40,000. A friend says you now owe gift tax. Who is liable for gift tax?
-- Choices: You, the one who got it / **Your aunt, the giver** / Both of you, half each
-- Fix: You owe no gift tax. Your aunt may need to file Form 709, though most givers owe nothing.
-- Source: `usc-26-2502` (https://www.law.cornell.edu/uscode/text/26/2502) quote: "paid by the donor"
-
-**lg42** (both, tax). YA: You filed your taxes last year. Can you throw out the receipts now? / Adult: You are cleaning the garage. Can you shred last year's tax papers?
-- Choices: Toss them after a year / **Keep them 3 years or more** / Yes, after one month
-- Fix: Keep tax records at least 3 years; longer in some cases, like unreported income or bad debt.
-- Source: `irs-records` (https://www.irs.gov/businesses/small-businesses-self-employed/how-long-should-i-keep-records) quote: "Keep records for 3 years"
-
-**lg43** (both, insurance). YA: You have asthma and buy your own health plan. The insurer says asthma care is excluded. Allowed? / Adult: Your new job's health plan says it will not cover your diabetes for a year. Allowed?
-- Choices: Yes, for past conditions / **That exclusion is banned** / Yes, but for one year only
-- Fix: Appeal in writing and cite the law. Then file a complaint with the state if it stands.
-- Source: `usc-42-300gg-3` (https://www.law.cornell.edu/uscode/text/42/300gg-3) quote: "may not impose any preexisting condition exclusion"
-
-**lg44** (adult, insurance). On your life insurance form you left out a past heart scare. You die in two years. What can the insurer do?
-- Choices: Nothing; it was a mistake / **Rescind the policy** / Lower the payout only
-- Fix: Answer every health question fully and keep a copy of what you sent.
-- Source: `ins-331` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=331) quote: "Concealment, whether intentional or unintentional, entitles the injured party to rescind insurance"
-
-**lg45** (adult, insurance). In Egan, an insurer cut off a hurt roofer's disability pay without a real look at his doctors. What did the court say?
-- Choices: They can deny at will / **They must look fairly** / Only federal law applies
-- Fix: Ask for the denial reason in writing and for the claim file. A lazy denial can be bad faith.
-- Source: `egan` (https://www.courtlistener.com/opinion/1217902/egan-v-mutual-of-omaha-insurance/) quote: "further investigation"
-- Also: `gruenberg` (https://www.courtlistener.com/opinion/1117033/gruenberg-v-aetna-insurance/) quote: "implied covenant of good faith and fair dealing"
-
-**lg46** (adult, insurance). Your fire claim was denied after 8 months of back and forth. Your policy says sue within 12 months. Is it almost over?
-- Choices: Yes, 4 months are left to sue / **The clock paused until denial** / It ran out already
-- Fix: Talk to a lawyer now. The clock pauses from your notice until the written denial.
-- Source: `prudential-lmi` (https://www.courtlistener.com/opinion/1258604/prudential-lmi-commercial-insurance-v-superior-court/) quote: "equitably tolled from the time the insured files a timely notice"
-- Also: `ins-2071` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=2071) quote: "extended to 24 months after inception of the loss"
-
-**lg47** (adult, insurance). Your house burned in a declared wildfire. The insurer says rebuild within a year or lose full replacement pay. True?
-- Choices: Yes, one year is the rule / **At least 36 months** / About 6 months
-- Fix: Ask for the time limit in writing. In a declared emergency, you get at least 36 months from first payment.
-- Source: `ins-2051-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=2051.5) quote: "a time limit of less than 36 months"
-
-**lg48** (adult, insurance). After a quake cracks your foundation, you find your homeowners policy does not cover it. Was the insurer required to offer it?
-- Choices: Quakes are not insurable / **Yes, it must be offered** / Near a fault line only
-- Fix: Check your declarations page now for a quake policy, often through the California Earthquake Authority.
-- Source: `ins-10081` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=10081) quote: "offered coverage for loss or damage caused by the peril of earthquake"
-
-**lg49** (adult, insurance). An adjuster says you have no right to see the estimates they used to value your fire claim. True?
-- Choices: Yes, those are private / **You can ask for them** / With a lawyer only
-- Fix: Ask in writing for all claim-related documents, such as estimates and appraisals.
-- Source: `ins-2071` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=2071) quote: "copies of claim-related documents"
-
-**lg50** (adult, insurance). Your insurer stalls your claim and treats you as a suspect with no basis. Is that only a contract issue?
-- Choices: Yes, just the contract / **It can be a bad faith tort** / Only a state fine applies
-- Fix: Keep notes of every call and letter. Unfair handling can be a bad faith tort with extra damages.
-- Source: `gruenberg` (https://www.courtlistener.com/opinion/1117033/gruenberg-v-aetna-insurance/) quote: "implied duty of good faith and fair dealing"
-
-**lg51** (both, renting). YA: You lived in an apartment 3 years. The landlord takes $400 from your deposit for faded paint and worn carpet. Allowed? / Adult: Your tenant of 6 years moves out. Can you charge the deposit for normal worn carpet?
-- Choices: Sure, any repair counts / **Not for normal wear** / Half the cost is fair
-- Fix: Ask for the itemized list and receipts. Normal wear and tear cannot come out of the deposit.
-- Source: `civ-1950-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5) quote: "exclusive of ordinary wear and tear"
-
-**lg52** (both, renting). YA: Your lease ends next month. Can you ask the landlord to walk through first so you can fix things before move-out? / Adult: Your lease ends soon. Is there a way to learn what the landlord will charge before you move?
-- Choices: Landlords decide after you go / **Yes, ask for a pre-inspection** / With a lawyer's letter, maybe
-- Fix: Ask in writing for an initial inspection up to two weeks before move-out, then fix what they list.
-- Source: `civ-1950-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5) quote: "option to request an initial inspection"
-
-**lg53** (both, driving). YA: Your phone is mounted on the dash. You tap once to start a song. Legal? / Adult: Your phone is in a dash mount. You swipe once to answer a call on speaker. Legal?
-- Choices: Never, any touch is illegal / **Yes, one tap or swipe** / At a full stop only
-- Fix: Mount it and keep it to one tap or swipe. Set the map and music before you pull out.
-- Source: `veh-23123-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=23123.5) quote: "single swipe or tap"
-
-**lg54** (both, work). YA: You win back $300 of unpaid mileage from your boss, but it cost you lawyer fees. Who pays those? / Adult: You sue your employer to get work costs repaid. Who pays your lawyer if you win?
-- Choices: You always do, win or lose / **Yes, the employer can owe it** / The court splits it evenly
-- Fix: Keep receipts and ask. Fees to enforce your right to be repaid count as costs the employer owes.
-- Source: `lab-2802` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=2802) quote: "attorney's fees incurred by the employee enforcing the rights"
-
-**lg55** (both, work). YA: Your old job paid your final check 45 days late. How many days of penalty pay can you ask for? / Adult: Your ex employer paid final wages two months late. What is the most penalty you can claim?
-- Choices: None at all, it is just late / **Only up to 30 days** / All 60 days, with interest
+**lg25** (both, work). In the L'Oreal hair model case, what can a worker seek when an employer willfully pays final wages late?
+- Choices: The wages and no more / **Up to 30 days' extra pay** / A full year of extra pay
 - Fix: File with the Labor Commissioner. Penalty pay runs a day's wage per day, capped at 30 days.
-- Source: `lab-203` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=203) quote: "not continue for more than 30 days"
+- Source: `lab-203` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=203) quote: "but the wages shall not continue for more than 30 days."
+- Also: `smith-loreal` (https://www.courtlistener.com/opinion/2633518/smith-v-superior-court/) quote: "Under section 203, an employer's willful failure to pay wages to a \"discharged\" employee in accordance with section 201 subjects the employer to penalties."
 
-**lg56** (both, consumer). YA: You start a free trial of a streaming app. Must they let you cancel before the first charge? / Adult: Your free meal kit trial turns into a paid plan. Did they have to tell you how to cancel first?
-- Choices: Trials can bill at once / **Yes, before you pay** / Only by mail
-- Fix: Cancel before the trial ends and screenshot it. Dispute any charge they made without a cancel option.
-- Source: `bpc-17602` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=17602) quote: "allow the consumer to cancel, the automatic renewal or continuous service before the consumer pays"
+**lg26** (both, work). Raymond Edwards signed a deal at Arthur Andersen barring him from serving certain clients after he left. Was it valid in California?
+- Choices: Yes, because it was narrow / **No, it was void** / Yes, for one year
+- Fix: Protect real trade secrets, but a noncompete itself will not hold in California.
+- Source: `edwards` (https://www.courtlistener.com/opinion/5608069/edwards-v-arthur-andersen-llp/) quote: "Andersen would not release Edwards, or any other employee, from the noncompetition agreement unless that employee signed the TONC."
+- Also: `bpc-16600` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=16600) quote: "Arthur Andersen LLP (2008) 44 Cal.4th 937, to void the application of any noncompete agreement in an employment context, or any noncompete clause in an employment contract, no matter how narrowly tailored, that does not satisfy an exception in this chapter."
 
-**lg57** (both, consumer). YA: Your grandpa, 80, signed a roof deal at his door Monday. How long can he cancel? / Adult: Your father, 70, signed a home repair deal at his door. How long does he have?
-- Choices: Never once it is signed / **Until midnight, 5th business day** / Only a day after he signs it
-- Fix: Cancel in writing before midnight of the 5th business day, and keep proof you sent it.
-- Source: `civ-1689-6` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1689.6) quote: "until midnight of the fifth business day if the buyer is a senior citizen"
+**lg27** (both, work). After Edwards v. Arthur Andersen, an employer says its noncompete is "narrowly tailored" so it works. What does California law now say?
+- Choices: Narrow ones are still valid / **Void, however narrow** / Valid if paired with a raise
+- Fix: Take the new job. Return company files and keep secrets, but the noncompete does not bind you.
+- Source: `bpc-16600` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=16600) quote: "Arthur Andersen LLP (2008) 44 Cal.4th 937, to void the application of any noncompete agreement in an employment context, or any noncompete clause in an employment contract, no matter how narrowly tailored, that does not satisfy an exception in this chapter."
+- Also: `edwards` (https://www.courtlistener.com/opinion/5608069/edwards-v-arthur-andersen-llp/) quote: "the noncompetition agreement did not violate section 16600 because it was narrowly tailored"
 
-**lg58** (both, privacy). YA: At a public city council meeting, a man yells threats at the mic. Can you record it on your phone? / Adult: At an open school board meeting, you want to record what a speaker says. Legal?
-- Choices: Never without his clear consent / **Yes, it is a public meeting** / With a press pass only
-- Fix: Record openly. Talks at open public meetings are not "confidential" under the law.
-- Source: `pen-632` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632) quote: "excludes a communication made in a public gathering"
+**lg28** (both, consumer). Raul Figueroa's new Dodge Ram kept overheating. He took it back six to eight times, and the maker refused to buy it back. What did the jury find?
+- Choices: Keep fixing; that is all / **A willful lemon law violation** / He had to pay for the repairs
+- Fix: Keep every repair order and ask the maker in writing for a buyback or replacement.
+- Source: `figueroa` (https://www.courtlistener.com/opinion/8434997/figueroa-v-fca-us/) quote: "Figueroa took his truck back to the dealership another six to eight times complaining of overheating."
+- Also: `civ-1793-2` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1793.2) quote: "(A) In the case of replacement, the manufacturer shall replace the buyer's vehicle with a new motor vehicle substantially identical to the vehicle replaced."
 
-**lg59** (both, fault). YA: A man collapses at a gas station. You do CPR for free until help comes. Can he sue you for a cracked rib? / Adult: A shopper collapses in a parking lot and you give CPR for free. Can she sue you?
-- Choices: Sure, any harm is on you / **If it was not in good faith** / Only nurses are covered
-- Fix: Call 911, then help in good faith. Unpaid help at the scene is shielded from civil damages.
-- Source: `hsc-1799-102` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1799.102) quote: "in good faith, and not for compensation, renders emergency medical or nonmedical care"
+**lg29** (both, consumer). Figueroa had to sell his lemon truck and got about $3,000 more than he owed. FCA wanted that $3,000 taken off his award. Did the court agree?
+- Choices: Yes, it is a fair credit / **No credit was given** / Half was credited
+- Fix: Keep records of what you paid and any sale. The maker does not get credit for what you received selling it.
+- Source: `figueroa` (https://www.courtlistener.com/opinion/8434997/figueroa-v-fca-us/) quote: "Plaintiff was forced to sell the truck and received a little more than $3,000 than he owed on the loan to purchase the truck."
 
-**lg60** (both, fault). YA: You are delivering a package to a porch when the owner's dog bites you. Can the owner say you were trespassing? / Adult: A mail carrier is bitten on your porch. Can you claim she was trespassing?
-- Choices: Yes, it was private land / **No, delivery is lawful** / If you were invited in, yes
-- Fix: Report it and get care. People doing a lawful duty, like delivering mail, are lawfully there.
-- Source: `civ-3342` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=3342) quote: "in the performance of"
+**lg30** (both, consumer). Justin Kiluk bought a certified pre-owned Mercedes for about $122,000. Mercedes said the lemon law only binds sellers of used cars. Who won?
+- Choices: Mercedes, used cars are out / **Kiluk; its warranty bound it** / No one, it was settled
+- Fix: Keep the warranty papers on a certified pre-owned car. A maker that issues a warranty can be held to it.
+- Source: `kiluk` (https://www.courtlistener.com/opinion/4686676/kiluk-v-mercedes-benz-usa-llc/) quote: "Although the Song-Beverly Act generally binds only distributors and retail sellers in the sale of used goods, we conclude Mercedes Benz stepped into that role by issuing an express warranty on the sale of a used vehicle."
 
-**lg61** (both, money). YA: A collector calls you and never sends anything in writing. Must they? / Adult: A debt collector phoned twice but never mailed details. Do they have to?
-- Choices: Phone calls are enough / **Yes, within 5 days** / Whenever you ask them to
-- Fix: Wait for the validation notice, then dispute in writing within 30 days if it is wrong.
-- Source: `ftc-debt` (https://consumer.ftc.gov/articles/debt-collection-faqs) quote: "within five days of the first contact"
-- Also: `usc-15-1692g` (https://www.law.cornell.edu/uscode/text/15/1692g) quote: "will obtain verification of the debt"
+**lg31** (both, consumer). Wajeeh Mughrabi's Santa Ana market cashed 35 payroll checks that all bounced. The trial court gave him only the face amount. Was that right?
+- Choices: Yes, the face amount of the checks / **No, treble damages are owed** / The bank fees only
+- Fix: Send a written demand. If unpaid in 30 days, you can seek damages of up to 3 times the check.
+- Source: `mughrabi` (https://www.courtlistener.com/opinion/2116109/mughrabi-v-suzuki/) quote: "3, ante.) Mughrabi's request for treble damages pursuant to the mandatory directive of section 1719 should have been granted."
+- Also: `civ-1719` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1719) quote: "When a person becomes liable for treble damages for a check that is the subject of a written demand, that person shall no longer be liable for any service charge for that check and any costs to mail the written demand."
 
-**lg62** (both, money). YA: A friend asks you to "hold" four debit cards in other people's names for a week. Risk? / Adult: A coworker asks your son to keep cards in other people's names for him. Risk?
-- Choices: Little, they are not his cards / **Yes, grand theft charges** / Only if he uses one
-- Fix: Refuse, and do not touch them. Report it if you were pressured.
-- Source: `pen-484e` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=484e) quote: "acquires access cards issued in the names of four or more persons"
+**lg32** (both, consumer). Bill Toomey's company phoned people to sell $25 to $30 casino coupon books "worth hundreds." Buyers were not told they could cancel. What did the court order?
+- Choices: Nothing; all sales were final / **Refunds and $150,000 penalties** / A warning letter, nothing more
+- Fix: Cancel in writing within the cancel window and keep proof. Report sellers who hide it to the Attorney General.
+- Source: `toomey` (https://www.courtlistener.com/opinion/2121705/people-v-toomey/) quote: "The casino packages were priced at $25 to $30, and were generally represented by solicitations or advertisements to be worth hundreds of dollars."
+- Also: `civ-1689-6` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1689.6) quote: "(4) The five-day right to cancel added by the act that amended paragraphs (1) and (2) shall apply to contracts entered into, or offers to purchase conveyed, on or after January 1, 2021."
 
-**lg63** (both, tax). YA: A client pays you in crypto for a logo. Is it income? / Adult: Your side job pays you in crypto. Is that taxable?
-- Choices: Not until you sell the coins / **Yes, report its value** / If it is over $600, yes
-- Fix: Record the dollar value on the day you were paid and report it as income.
-- Source: `irs-crypto` (https://www.irs.gov/filing/digital-assets) quote: "receive (as a reward, award or payment for property or services)"
+**lg33** (both, consumer). The FTC said Amazon signed people up for Prime without clear consent and made it very hard to cancel. How did it end in 2025?
+- Choices: It was dismissed in court / **A $2.5 billion settlement** / Amazon paid a $10,000 fine
+- Fix: Cancel subscriptions online and screenshot it. Report traps to the FTC at ReportFraud.ftc.gov.
+- Source: `ftc-amazon-prime` (https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-secures-historic-25-billion-settlement-against-amazon) quote: "Additionally, the settlement requires Amazon to stop their unlawful practices and make meaningful changes to the Prime enrollment and cancellation flows by: including a clear and conspicuous button for customers to decline Prime."
 
-**lg64** (both, tax). YA: You won $500 betting but lost $900 this year. Can you just report a $400 loss? / Adult: You won $2,000 on lottery tickets and lost $3,000. Can you deduct the net loss?
-- Choices: Report the net loss / **Only up to your wins** / Losses are not counted
-- Fix: Report all wins. Losses count only if you itemize, and only up to what you won.
-- Source: `irs-gambling` (https://www.irs.gov/taxtopics/tc419) quote: "can't be more than the amount of gambling income you reported"
+**lg34** (both, consumer). Kyle Kimoto's companies sold "credit cards" that were really debit offers, then enrolled buyers in "free trials" that started billing. What did the FTC win?
+- Choices: Nothing; the fine print covers it / **A court win against him** / A warning letter only
+- Fix: Read before you click. Check your statement every month and dispute charges you never agreed to.
+- Source: `ftc-grant-connect` (https://www.courtlistener.com/opinion/2718331/federal-trade-commission-v-grant-connect-llc/) quote: "SMITH, Circuit Judge: Kyle Kimoto (Kimoto) appeals from the district court's grant of summary judgment to the Federal Trade Commission (FTC), and its order permanently enjoining Kimoto from engaging in a variety of marketing tactics, and ordering him to pay restitution."
 
-**lg65** (both, tax). YA: Your gig app pays you as a contractor. Is income tax the only tax you owe? / Adult: You start freelancing. Is regular income tax all you owe on that money?
-- Choices: Income tax is the only one / **Yes, plus 15.3% SE tax** / The app pays all of it
-- Fix: Set aside about a quarter of each payment and pay estimated tax each quarter.
-- Source: `irs-se` (https://www.irs.gov/businesses/small-businesses-self-employed/self-employment-tax-social-security-and-medicare-taxes) quote: "12.4% for social security"
+**lg35** (both, money). Omar Molina was found with a credit card in someone else's name. The owner had canceled it. Can holding a canceled card still be a crime?
+- Choices: No, it is dead plastic / **Yes, it can still count** / If he used it, but not before
+- Fix: Cut up old cards. Never hold or keep a card in someone else's name.
+- Source: `molina-484e` (https://www.courtlistener.com/opinion/2257630/people-v-molina/) quote: "In the published portion of this opinion, we hold that possession of another's cancelled credit card constitutes possession of access card account information with respect to an access card validly issued to another."
+- Also: `pen-484e` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=484e) quote: "(d) Every person who acquires or retains possession of access card account information with respect to an access card validly issued to another person, without the cardholder's or issuer's consent, with the intent to use it fraudulently, is guilty of grand theft."
 
-**lg66** (both, tax). YA: You bought a condo and sold it after one year for a profit. Is the gain tax free like a home sale? / Adult: You sell a rental you never lived in. Does the home sale exclusion apply?
-- Choices: Every home sale is tax free / **Only after 2 years living there** / Tax free if under $100,000 in gain
-- Fix: Plan the sale date. You must own and live there as your main home 2 of the last 5 years.
-- Source: `usc-26-121` (https://www.law.cornell.edu/uscode/text/26/121) quote: "for periods aggregating 2 years or more"
+**lg36** (both, money). Adedayo John directed others to open bank accounts and receive money sent by romance scam victims, many older. What happened to him?
+- Choices: Nothing; transfers aren't crimes / **Seven years in prison** / A modest fine
+- Fix: Never open accounts or receive money for someone you met online. Report the ask at ic3.gov.
+- Source: `usss-john` (https://www.secretservice.gov/newsroom/releases/2024/06/leader-money-laundering-and-bank-fraud-ring-sentenced-seven-years-prison) quote: "JOHN directed other members of the conspiracy to open new bank accounts and/or to be ready to receive money that was going to be sent from others, and he assisted members with procuring fake passports and other identification documents in order to open fraudulent bank accounts."
 
-**lg67** (both, insurance). YA: Your apartment burned in a declared wildfire. The insurer stalls. How long to sue under the standard policy? / Adult: Your home was lost in a declared fire emergency. How long do you have to sue the insurer?
-- Choices: Half a year at most / **Yes, 24 months** / 12 months, then it is over
-- Fix: Write down the loss date. In a declared emergency the time to sue is 24 months.
-- Source: `ins-2071` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=2071) quote: "extended to 24 months after inception of the loss"
+**lg37** (both, money). In the Adedayo John case, how did victims get tricked into sending money to the ring's bank accounts?
+- Choices: Fake lottery prize calls / **Fake romances online** / Robberies on the street
+- Fix: If an online love interest asks for money or a transfer, stop and talk to family first.
+- Source: `usss-john` (https://www.secretservice.gov/newsroom/releases/2024/06/leader-money-laundering-and-bank-fraud-ring-sentenced-seven-years-prison) quote: "Attorney Damian Williams said: \"The defendants in this case have acknowledged their roles as part of a criminal enterprise that not only defrauded businesses by assuming the online identities of legitimate entities, but also preyed on elderly people, deceiving victims into sending money in phony romance scams."
 
-**lg68** (both, insurance). YA: You had a cancer scare at 19. Can a new health plan refuse to cover care for it at 24? / Adult: Your wife had a heart condition years ago. Can her new plan exclude it?
-- Choices: Sure, past issues are left out / **Yes, it must be covered** / Only for one year after joining
-- Fix: Appeal any denial in writing. Plans may not exclude a condition you had before you joined.
-- Source: `usc-42-300gg-3` (https://www.law.cornell.edu/uscode/text/42/300gg-3) quote: "may not impose any preexisting condition exclusion"
+**lg38** (both, money). Thieves made unauthorized withdrawals from Margaretha Widjaja's Chase account, starting with a transfer under $2, while she was overseas. How fast must a customer report to keep EFTA protection?
+- Choices: Within one full year / **60 days after the statement** / Within 24 hours of the theft
+- Fix: Read every statement. Report any odd charge, even $2, right away and in writing.
+- Source: `widjaja` (https://www.courtlistener.com/opinion/5307933/margaretha-widjaja-v-jpmorgan-chase-bank-na/) quote: "(2) the consumer fails to report the unauthorized transfer to her bank within 60 days after the statement is sent to her;"
+- Also: `usc-15-1693g` (https://www.law.cornell.edu/uscode/text/15/1693g) quote: "(d)Restriction on liability Nothing in this section imposes liability upon a consumer for an unauthorized electronic fund transfer in excess of his liability for such a transfer under other applicable law or under any agreement with the consumer's financial institution."
 
-**lg69** (both, driving). YA: You knock over a neighbor's mailbox backing out. Do you have to do anything? / Adult: You back into a fence at the church lot. No one sees. What must you do?
-- Choices: Pay later if they happen to ask / **Yes, note and report it** / Above $1,000 in damage
-- Fix: Find the owner or leave a note with your name and address, and tell police without delay.
-- Source: `veh-20002` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=20002) quote: "or other property damaged"
+**lg39** (both, money). John Gorman disputed a credit card charge for a satellite TV system he was unhappy with. What must the card bank do after a dispute through the credit bureaus?
+- Choices: Nothing; it can ignore the dispute / **A reasonable investigation** / Erase the whole debt
+- Fix: Dispute in writing with both the card issuer and the credit bureaus, and keep copies.
+- Source: `gorman` (https://www.courtlistener.com/opinion/3054308/gorman-v-wolpoff-abramson-llp/) quote: "a furnisher's obligation to conduct a reasonable investigation under § 1681s-2(b)(l)(A) arises when it receives a notice of dispute from a CRA"
 
-**lg70** (both, renting). YA: A landlord wants first month plus three months of rent as a deposit for an unfurnished place. Allowed? / Adult: A landlord asks for a deposit of two months' rent. Is that legal now?
-- Choices: Whatever the landlord wants / **Only one month's rent, usually** / Two months' rent is the cap
-- Fix: Ask about the new limit. Most landlords may take only one month's rent as a deposit.
-- Source: `civ-1950-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5) quote: "in excess of an amount equal to one month"
+**lg40** (both, money). Maria Hernandez's debt passed to a second collector, which never sent its own validation notice. Did it have to?
+- Choices: No, the first one did / **Yes, each collector must** / When she asked, yes
+- Fix: Wait for each collector's notice and dispute in writing within 30 days if anything looks wrong.
+- Source: `hernandez-wzp` (https://www.courtlistener.com/opinion/4240209/maria-hernandez-v-williams-zinman-parham-pc/) quote: "According to WZP, under this definition, it was not obligated to send a validation notice because, as the second collector to attempt to collect the debt, it did not send Hernandez the very first (i.e., \"the initial\") communication about the debt."
+- Also: `usc-15-1692g` (https://www.law.cornell.edu/uscode/text/15/1692g) quote: "(3)a statement that unless the consumer, within thirty days after receipt of the notice, disputes the validity of the debt, or any portion thereof, the debt will be assumed to be valid by the debt collector;"
+
+**lg41** (both, tax). Frank Ahlgren sold about $3.7 million in bitcoin in 2017 to buy a house and claimed fake high purchase prices. What happened?
+- Choices: Nothing; crypto is untraceable / **Two years in prison** / A warning letter from the IRS
+- Fix: Report every crypto sale and keep records of what you paid.
+- Source: `doj-ahlgren` (https://www.justice.gov/archives/opa/pr/early-bitcoin-investor-sentenced-filing-tax-returns-falsely-reported-his-cryptocurrency) quote: "In October 2017, Ahlgren sold approximately 640 bitcoins trading at approximately $5,807.53 per bitcoin for a total of $3.7 million, and used the proceeds to purchase a house in Park City, Utah."
+- Also: `irs-crypto` (https://www.irs.gov/filing/digital-assets) quote: "Income from digital assets is taxable."
+
+**lg42** (both, tax). For 2018 and 2019, Ahlgren moved bitcoin through mixers and traded for cash in person. Did hiding it work?
+- Choices: Yes, mixers hide everything / **No, he was caught** / Temporarily, for one year
+- Fix: Do not try to hide crypto gains. Report gains and losses on your return.
+- Source: `doj-ahlgren` (https://www.justice.gov/archives/opa/pr/early-bitcoin-investor-sentenced-filing-tax-returns-falsely-reported-his-cryptocurrency) quote: "In 2018 and 2019, Ahlgren sold bitcoins for more than $650,000, and did not report these sales at all on his 2018 and 2019 tax returns."
+
+**lg43** (both, tax). David and Christine Gates tore down their old Santa Barbara house, built a new one, never lived in it, then sold. Could they exclude $500,000 of gain?
+- Choices: Yes, the land was theirs / **No, the exclusion failed** / Half of it, yes
+- Fix: Before you sell, check that you owned and lived in that home 2 of the last 5 years.
+- Source: `gates` (https://www.courtlistener.com/opinion/4560935/gates-v-commissioner/) quote: "Respondent contends that petitioners did not sell property they had owned and used as their principal residence for the required statutory period because they never occupied the new house as their principal residence before they sold it."
+- Also: `usc-26-121` (https://www.law.cornell.edu/uscode/text/26/121) quote: "(5)Exclusion of gain allocated to nonqualified use (A)In general Subsection (a) shall not apply to so much of the gain from the sale or exchange of property as is allocated to periods of nonqualified use."
+
+**lg44** (both, tax). The Engdahls ran a saddlebred horse ranch for years at a loss and did most of the work. The IRS called it a hobby. Who won?
+- Choices: The IRS, losses mean hobby / **The Engdahls; a real business** / No one, it settled
+- Fix: Run a side venture like a business: books, a plan, and real effort. That is what courts look at.
+- Source: `engdahl` (https://www.courtlistener.com/opinion/4705020/engdahl-v-commissioner/) quote: "Held, on the facts, the horse-breeding operation was an activity engaged in for profit under sec."
+- Also: `irs-hobby` (https://www.irs.gov/newsroom/know-the-difference-between-a-hobby-and-a-business) quote: "https://www.irs.gov/newsroom/know-the-difference-between-a-hobby-and-a-business FS-2022-38, October 2022 Most people take up hobbies for personal enjoyment, not to make a profit."
+
+**lg45** (both, insurance). Michael Egan hurt his back at work. Mutual of Omaha cut off his disability pay without having a doctor examine him or asking his own doctors. What did the court say?
+- Choices: Insurers deny whenever / **That broke good faith** / Entirely the agent's decision
+- Fix: Ask for the denial reason in writing and for the claim file. A denial with no real look can be bad faith.
+- Source: `egan` (https://www.courtlistener.com/opinion/1217902/egan-v-mutual-of-omaha-insurance/) quote: "The trial court, in directing a verdict against defendants, ruled as a matter of law that defendants' failure to have plaintiff examined by a doctor of their choice or to consult with plaintiff's treating physicians and surgeon violated the covenant of good faith and fair dealing."
+
+**lg46** (both, insurance). Egan won at trial against Mutual of Omaha and two of its claims staff. What did the California Supreme Court keep?
+- Choices: The whole verdict, as is / **Compensatory damages vs. Mutual** / Nothing at all was kept
+- Fix: Keep every letter and note. Appeals can change parts of a verdict, so a strong record matters.
+- Source: `egan` (https://www.courtlistener.com/opinion/1217902/egan-v-mutual-of-omaha-insurance/) quote: "We conclude *815the judgment should be affirmed insofar as it awards compensatory damages against defendant Mutual of Omaha Insurance Company (Mutual) but reversed in all other respects."
+
+**lg47** (both, insurance). Jerome Gruenberg's Brass Rail lounge burned. The adjuster told arson police he was over-insured; the arson charges were dismissed. Insurers still denied. Could he sue for bad faith?
+- Choices: No, just the policy amount / **Yes, bad faith is a tort** / He can sue the arson unit
+- Fix: Keep notes of every call and letter. Unfair handling can be a bad faith tort with extra damages.
+- Source: `gruenberg` (https://www.courtlistener.com/opinion/1117033/gruenberg-v-aetna-insurance/) quote: "In response the Fletcher court observed: \"An insurer owes to its insured an implied-in-law duty of good faith and fair dealing that it will do nothing to deprive the insured of the benefits of the policy."
+
+**lg48** (both, insurance). In Gruenberg, the insurers demanded an exam under oath while arson charges were pending. His lawyer asked to wait. What did the insurers do?
+- Choices: Waited for the charges to end / **Denied for not appearing** / Paid in full at once
+- Fix: Talk to a lawyer before an exam under oath, and ask in writing for a delay if charges are pending.
+- Source: `gruenberg` (https://www.courtlistener.com/opinion/1117033/gruenberg-v-aetna-insurance/) quote: "Ricketts refused the request and warned that failure to appear for the examination would void coverage under the policies."
+
+**lg49** (both, insurance). Owners found a big foundation crack in 1985 and filed a claim. Prudential took over a year to investigate. They sued 20 months after the claim. Too late?
+- Choices: Yes, a year is a year / **No, the clock was paused** / Late, unless the crack was new
+- Fix: Write down when you gave notice and when the denial came. The clock pauses in between.
+- Source: `prudential-lmi` (https://www.courtlistener.com/opinion/1258604/prudential-lmi-commercial-insurance-v-superior-court/) quote: "If it is found that plaintiffs' delayed discovery of the loss was reasonable, then the rule of equitable tolling would operate to toll the one-year suit provision from the date the insured filed a timely notice of loss to Prudential's formal denial of coverage."
+- Also: `ins-2071` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=2071) quote: "unless commenced within 12 months next after inception of the loss"
+
+**lg50** (both, insurance). In Prudential-LMI, the damage built up slowly over years. When does the one-year clock first start for a slowly growing loss?
+- Choices: The day the policy began / **When damage is appreciable** / The day of the denial letter
+- Fix: Report damage as soon as you notice it, and keep the date in writing.
+- Source: `prudential-lmi` (https://www.courtlistener.com/opinion/1258604/prudential-lmi-commercial-insurance-v-superior-court/) quote: "we hold that the one-year suit provision begins to run on the date of inception of the loss, defined as that point in time when appreciable damage occurs and is or should be known to the insured"
+
+**lg51** (both, insurance). Blue Shield rescinded the Haileys' health plan, saying their application misstated Steve's health. What must a plan show to rescind?
+- Choices: Any error at all on the form / **Willful lies or real checks** / A late premium payment
+- Fix: Answer every health question fully and keep a copy. If rescinded, ask whether the plan checked your form before it signed you up.
+- Source: `hailey` (https://www.courtlistener.com/opinion/2244781/hailey-v-california-physicians-service/) quote: "Here, in contrast, Blue Shield rescinded based on a \"genuine dispute\" over whether Cindy deliberately omitted Steve's medical history from the health care application."
+
+**lg52** (both, insurance). When Blue Shield rescinded the Haileys' plan, what did the trial court order the family to pay back?
+- Choices: Nothing at all, ever / **About $104,000** / A single month of premiums
+- Fix: Rescission can mean paying back past claims. Get help fast from the state regulator or a lawyer.
+- Source: `hailey` (https://www.courtlistener.com/opinion/2244781/hailey-v-california-physicians-service/) quote: "awarded $104,194.12 in damages to Blue Shield on its cross-complaint for rescission"
 
 ## Field Survival: Water, Food and Knots (`survive`)
 

@@ -29,7 +29,8 @@ LSA.SECTIONS = ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field S
 LSA.SECTION_NOTES = { 'Big Debates': 'Facts only. On faith and moral questions we show what each side teaches, not who is right.', 'Street Smart': 'Real cases and real laws. Learn to spot the trap and get out safe. Every card cites its source.' };
 // Street Smart rules (STREET-SMART-SPEC.md). Every card cites a law, case or account; 'none' cards (no safe choice was left)
 // stay a small minority so they are not a tell; banned words keep it recognition and defense only, never gore or how-to.
-LSA.STREET = 'Street Smart'; LSA.MAX_NONE_SHARE = 0.15;
+LSA.STREET = 'Street Smart'; LSA.MAX_NONE_SHARE = 0.15; LSA.MAX_ABS_SOLO = 0.15;
+LSA.RX_ABS = /\b(always|never|nothing|any|all|ever|only|whatsoever)\b/i;
 LSA.RX_BANNED = /\b(gore|gory|disembowel|decapitat\w*|dismember\w*|how to (make|build|cook|spike|stalk|launder)|step[- ]by[- ]step (attack|bomb))\b/i;
 LSA.sectionsOf = function (ids) {
   var names = LSA.SECTIONS.slice();
@@ -148,6 +149,13 @@ LSA.checkDeck = function (d) {
     // A "None of these" choice must also show up as a wrong choice, so it is never a sure tell.
     var nw = d.cards.filter(function (c) { return c.kind !== 'none' && (c.c || []).some(function (x, k) { return k !== 1 && /^None of these\b/.test(x); }); }).length;
     if (nn && nw < nn) errs.push(d.id + ': "None of these" is right on ' + nn + ' cards but a wrong choice on only ' + nw);
+    // Absolute words (QA v13 m4): myths love "always" and "never", so they must not mark the wrong choices. Wrong choices with
+    // one may be at most 3x the right ones (or 3), and cards solvable by dropping the lone absolute-worded choice stay at or under 15%.
+    var ab = d.cards.filter(function (c) { return Array.isArray(c.c) && c.c.length === 3; }), hasA = function (x) { return LSA.RX_ABS.test(x); };
+    var ar = ab.filter(function (c) { return hasA(c.c[1]); }).length, aw = ab.filter(function (c) { return hasA(c.c[0]) || hasA(c.c[2]); }).length;
+    var solo = ab.filter(function (c) { return !hasA(c.c[1]) && c.c.filter(hasA).length === 1; }).length;
+    if (ab.length && aw > Math.max(3, 3 * ar)) errs.push(d.id + ': absolute words are in ' + aw + ' wrong choices but only ' + ar + ' right ones');
+    if (ab.length && solo / ab.length > LSA.MAX_ABS_SOLO) errs.push(d.id + ': ' + solo + ' cards can be solved by dropping the lone absolute-worded choice (max ' + Math.round(LSA.MAX_ABS_SOLO * 100) + '%)');
   }
   var ls = LSA.lengthStats(d);
   if (ls.rightLongest > LSA.MAX_RIGHT_LONGEST) errs.push(d.id + ': right answer is the longest on ' + Math.round(ls.rightLongest * 100) + '% of cards');

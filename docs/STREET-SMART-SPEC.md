@@ -24,7 +24,7 @@ Short, real case studies that teach a player to spot danger, tricks, and legal o
 | 2 | streetcues | Street Safety | NEW Red Flags (multi-select) | 60 cue sets (6 cues each) |
 | 3 | legal | Legal Traps (CA + federal) | Gut Check (3 choices) | 70 cards (40 both + 15 ya + 15 adult) |
 | 4 | power | Power Plays | Gut Check + step diagram fix | 60 cards |
-| 5 | estate | Estate Planning (CA) | Gut Check (3 choices) | 60 cards (mostly adult; 15 ya such as first beneficiary form, POA at 18) |
+| 5 | estate | Estate Planning (CA) | Gut Check (3 choices) | 54 cards as built in v16 (51 both + 3 adult only; 51 per ya, 54 per adult), each on a named case plus statute |
 Total: about 550 scored items.
 
 ### 1. Hard Reads (Passage mode, new)
@@ -82,13 +82,14 @@ Legal and estate cards are the normal card shape plus `cite: 'Cal. Veh. Code 231
 - Passage: all Gut Check tells apply per question (length, longest, first word, negation, classifier). Plus: each passage has 5 to 7 questions and at least 4 types; no type has the right answer in one slot over 45%; "passage-free" test: a classifier trained on question plus choices only (no passage) must stay at or under 45% (stops questions answerable without reading); every q has a `line` that exists.
 - Red Flags: each set has exactly 6 cues and 2 to 4 flags; flag count spread (no single count over 50% of sets); flag cues may not be longer on average than safe cues by over 1.2x; first-word and punctuation tells per cue at or under 45%; a "pick the pushiest-sounding words" keyword classifier stays at or under 45% cue accuracy above the base rate; flag positions are shuffled by the seeded RNG.
 - Power: `steps` 3 to 4 items, each under 6 words; tactic name in the allowed list; banned phrase list (Greene law titles) must not appear.
+- Absolute words (Legal and Estate, v16): wrong choices with always/never/nothing/any/all/ever/only/whatsoever may be at most 3x the right ones (or 3), and at most 15% of cards may be solvable by dropping the lone absolute-worded choice.
 - Legal and estate: every card has `cite`, and every case cite is in a reviewed list file (docs/street/LEGAL-SOURCES.md for Legal, docs/street/ESTATE-SOURCES.md for Estate) with a checked URL.
 - Guardrails: banned-word list (gore and how-to terms) fails the build; adult-rated decks must have `rating: 'adult'`; a passage tagged `quotesExtremism` must also be tagged `rebutted`.
 
 ## Build order (vertical slices)
 1. Legal Traps first: uses the existing Gut Check mode, so it proves the section, opt-in, `cite`, and the "not legal advice" line with no new UI. (10 cards, then 70.)
 2. Street Safety: builds the Red Flags mode and its checker. (10 sets, then 60.)
-3. Estate Planning: Gut Check mode, reuses the legal cite list. (60.)
+3. Estate Planning: Gut Check mode, reuses the legal cite pattern; cites in docs/street/ESTATE-SOURCES.md. (54 in v16.)
 4. Power Plays: adds step diagram on the fix screen. (60.)
 5. Hard Reads last: biggest new mode, most writing, most guardrail review. (5 passages, then 50.)
 Each slice ships with its tests, checker rules, and Tom's review list before the next starts.

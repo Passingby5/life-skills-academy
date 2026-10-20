@@ -314,7 +314,7 @@ t('v6-5 img field: checker accepts img/name.svg, rejects others; alt text defaul
   c.img = keep; delete c.img;
   assert(/burns/.test(L.imgAlt(c))); eq(L.imgAlt({ imgAlt: 'A leg with a band', topic: 'x' }), 'A leg with a band');
   eq(L.sectionsOf(L.knowDecks()).map(g => g.name), ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living', 'Big Debates', 'Street Smart']); eq(L.sectionsOf(L.knowDecks())[0].ids, ['firstaid', 'kitchen', 'money', 'scams']);
-  eq(L.defaultDecks(), ['firstaid', 'kitchen', 'money', 'scams']); eq(L.knowDecks().length, 14);
+  eq(L.defaultDecks(), ['firstaid', 'kitchen', 'money', 'scams']); eq(L.knowDecks().length, 15);
 });
 
 // ---------- v8 tests ----------
@@ -521,6 +521,20 @@ t('v15 QA v13 fixes: Hailey superseded, 1799.102(b)(2), 1954(d)(2), 1719 limits,
   const solo = d.cards.filter(c => c.c.filter(x => abs.test(x)).length === 1 && !abs.test(c.c[1])).length;
   assert(right >= 4, 'absolute right answers ' + right); assert(solo <= 8, 'solvable by dropping the absolute ' + solo);
   assert(!d.cards.some(c => /^Nothing\b/.test(c.c[0]) || /^Nothing\b/.test(c.c[2])), 'Nothing is no longer a decoy opener');
+});
+t('v16 estate deck: Street Smart, opt-in, every card a named case plus law, saved quotes, ages, absolute-word rule', () => {
+  const d = L.decks.estate; eq(d.section, 'Street Smart'); eq(d.rating, 'teen'); eq(d.format || 'gutcheck', 'gutcheck');
+  assert(L.defaultDecks().indexOf('estate') < 0); assert(/not legal advice/i.test(d.notice));
+  assert(d.cards.every(c => /^es\d\d$/.test(c.id) && c.cite && d.sources[c.src] && c.c.length === 3));
+  ['ya', 'adult'].forEach(a => assert(L.cardsFor(a, ['estate']).length >= 50, a));
+  const statute = k => /^(prob|fam|usc|irs)-/.test(k);
+  d.cards.forEach(c => { assert([c.src].concat(c.also || []).some(k => !statute(k)), c.id + ' has no case source');
+    assert(/ v\. |Estate of|Marriage of|Franklin|Prince/.test(c.cite), c.id + ' names no case'); });
+  const X = require('./fixtures/street-excerpts.json'), Q = require('../tools/quotes-new.json');
+  d.cards.forEach(c => [[c.id, c.src]].concat((c.also || []).map(k => [c.id + '@' + k, k])).forEach(([key, k]) => { const q = JSON.parse(Q[key]); assert(X[k] && X[k].some(e => e.includes(q)), key); }));
+  // The absolute-word rule now lives in the deck checker; a deck that leans on "always/never" in wrong choices fails.
+  const bad = { id: 'zz', section: 'Street Smart', rating: 'teen', notice: 'n', sources: { a: ['A', 'u'] }, cards: Array.from({ length: 10 }, (_, i) => ({ id: 'z' + i, deck: 'zz', topic: 't', ages: 'both', s: 's', c: ['It always works ' + i, 'Right one ' + i, 'Some other ' + i], m: 'm', f: 'f', w: 'w', src: 'a', cite: 'x' })) };
+  assert(L.checkDeck(bad).some(e => /absolute/.test(e)) && L.checkDeck(bad).some(e => /lone absolute/.test(e)));
 });
 t('v12 Street Smart checker: cite, rating, notice, none-card share and tell, banned words', () => {
   const mk = (n, extra) => Array.from({ length: n }, (_, i) => Object.assign({ id: 'z' + i, deck: 'zz', topic: 't', ages: 'both', s: 's', c: ['aaaa' + i, 'b' + i, 'cccc' + i], m: 'm', f: 'f', w: 'w', src: 'a', cite: 'x' }, extra && extra(i)));

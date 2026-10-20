@@ -2416,6 +2416,308 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Fix: Let it lie on the water a few minutes to be sure it floats. Don't drag it on the ground.
 - Source: `atp-3-50-21` (https://armypubs.army.mil/epubs/DR_pubs/DR_a/pdf/web/ARN12086_ATP%203-50x21%20FINAL%20WEB%202.pdf) quote: "let the raft lay on the water a few minutes to ensure that it floats."
 
+## Estate Planning (`estate`)
+
+**es01** (both, beneficiary). David Egelhoff named his wife Donna on his Boeing life insurance. They divorced, and two months later he died. A Washington law cancels an ex-spouse's designation at divorce. Who got the $46,000?
+- Choices: His kids, by state law / **Donna, his ex** / Split between the two
+- Fix: After a divorce, file a new beneficiary form with every work plan. A work plan pays the name on its form.
+- Source: `egelhoff` (https://www.courtlistener.com/opinion/118416/egelhoff-v-egelhoff-ex-rel-breiner/) quote: "In April 1994, the Egelhoffs divorced. Just over two months later, Mr. Egelhoff died intestate"
+- Also: `usc-29-1144` (https://www.law.cornell.edu/uscode/text/29/1144) quote: "shall supersede any and all State laws"
+
+**es02** (both, beneficiary). William Kennedy named his wife Liv on his DuPont savings plan. Their 1994 divorce decree said she gave up rights to his retirement plans, but he never changed the form. Who got the $400,000?
+- Choices: His estate, per the decree / **Liv, per the form** / DuPont kept it
+- Fix: Divorce papers are not enough. Send each plan its own change form and keep the confirmation.
+- Source: `kennedy` (https://www.courtlistener.com/opinion/145914/kennedy-v-plan-administrator-for-dupont-savings-investment-plan/) quote: "DuPont, instead, relied on William's designation form and paid the balance of some $400,000 to Liv"
+
+**es03** (both, beneficiary). In Kennedy, the estate said the divorce decree should control. What did the Supreme Court say a plan administrator must pay by?
+- Choices: The court decree / **The plan documents** / What the family wants
+- Fix: Check every account's beneficiary on the plan's own website or form after a marriage, divorce or birth.
+- Source: `kennedy` (https://www.courtlistener.com/opinion/145914/kennedy-v-plan-administrator-for-dupont-savings-investment-plan/) quote: "in conformity with the plan documents"
+
+**es04** (both, beneficiary). Warren Hillman named his wife Judy Maretta on his federal life insurance in 1996. They divorced in 1998 and he remarried. He died in 2008 without changing the form. Who keeps the money?
+- Choices: Jacqueline, his widow / **Judy, the ex** / His estate, for the kids
+- Fix: Federal workers: update the life insurance beneficiary form after a divorce or marriage.
+- Source: `hillman` (https://www.courtlistener.com/opinion/873660/hillman-v-maretta/) quote: "In 1996, Warren named Maretta as the beneficiary of his FEGLI policy. Warren and Maretta divorced in 1998"
+- Also: `usc-5-8705` (https://www.law.cornell.edu/uscode/text/5/8705) quote: "First, to the beneficiary or beneficiaries designated by the employee"
+
+**es05** (both, beneficiary). Per Hillman, how must a federal worker name a life insurance beneficiary for it to count?
+- Choices: In a will or a trust / **On a signed, witnessed form** / By telling the HR office
+- Fix: Fill out the plan's own form, have it signed and witnessed as required, and make sure it is received.
+- Source: `hillman` (https://www.courtlistener.com/opinion/873660/hillman-v-maretta/) quote: "in a signed and witnessed writing received before death"
+- Also: `usc-5-8705` (https://www.law.cornell.edu/uscode/text/5/8705) quote: "signed and witnessed writing received before death"
+
+**es06** (both, beneficiary). Mark Sveen named his wife Kaye Melin on a life policy, with his two kids as backups. They divorced in 2007. A later Minnesota law cancels an ex's designation at divorce. Could it apply to his older policy?
+- Choices: No, the old contract wins / **Yes, it could apply** / Her consent was needed
+- Fix: Do not rely on any default law. After a divorce, name who you want, in writing, on every policy.
+- Source: `sveen` (https://www.courtlistener.com/opinion/4505999/sveen-v-melin/) quote: "The retroactive application of Minnesota's statute does not vio"
+
+**es07** (both, beneficiary). Like the Minnesota law in Sveen, California has a rule for nonprobate transfers to an ex. If you die after a divorce with your ex still named, what happens in most cases?
+- Choices: The ex still gets it / **It fails for the ex** / The state takes it
+- Fix: Still update the form. The rule has exceptions, such as a court order, and work plans can follow federal law.
+- Source: `prob-5040` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=5040) quote: "a nonprobate transfer to the transferor's former spouse, in an instrument executed by the transferor before or during the marriage or registered domestic partnership, fails"
+- Also: `sveen` (https://www.courtlistener.com/opinion/4505999/sveen-v-melin/) quote: "revokes any revocable"
+
+**es08** (both, beneficiary). Heidi Heffron-Clark inherited her mother's IRA. Years later she filed for bankruptcy and tried to shield $300,000 left in it as "retirement funds." Did that work?
+- Choices: Yes, every IRA is shielded / **No, inherited ones are not** / Part of it was shielded
+- Fix: Know that an inherited IRA follows different rules from your own. Ask a tax pro before you spend or move it.
+- Source: `clark` (https://supreme.justia.com/cases/federal/us/573/122/) quote: "funds in inherited IRAs are not \"retirement funds\""
+- Also: `usc-11-522` (https://www.law.cornell.edu/uscode/text/11/522) quote: "retirement funds"
+
+**es09** (both, beneficiary). In Clark v. Rameker, what did the Court say makes an inherited IRA different from your own IRA?
+- Choices: It gets a lower tax rate / **You must withdraw money** / A spouse signs
+- Fix: Learn the withdrawal rules for an inherited account before the deadline, not after.
+- Source: `clark` (https://supreme.justia.com/cases/federal/us/573/122/) quote: "is required to withdraw money from the account, no matter how far the holder is from retirement"
+
+**es10** (both, wills). After Aretha Franklin died, family found a 2010 will in a locked cabinet and 2014 handwritten pages in a notebook under couch cushions. Which did the jury accept?
+- Choices: The 2010 will in the cabinet / **The 2014 couch pages** / Neither of the two
+- Fix: Keep one clear, signed and dated will, and tell your executor where it is.
+- Source: `ap-aretha` (https://apnews.com/article/aretha-franklin-will-dispute-d7aba286b05ea0d0e6318ce6abc887d5) quote: "papers dated 2014 should override a 2010 will that was discovered around the same time in a locked cabinet"
+
+**es11** (both, wills). Like Aretha Franklin, a Californian writes a will by hand, signs it, and has no witnesses. Can it be valid in California?
+- Choices: No, two witnesses are required / **Yes, if in her handwriting** / A notary must also sign
+- Fix: If you write a will by hand, write the key parts and the signature yourself, and date it.
+- Source: `prob-6111` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=6111) quote: "if the signature and the material provisions are in the handwriting of the testator"
+- Also: `ap-aretha` (https://apnews.com/article/aretha-franklin-will-dispute-d7aba286b05ea0d0e6318ce6abc887d5) quote: "A document handwritten by singer Aretha Franklin and found in her couch after her 2018 death is a valid Michigan will"
+
+**es12** (both, wills). Aretha Franklin's older 2010 will set a condition for two of her sons to benefit. What was it?
+- Choices: Live in her home / **Take business classes** / Sign a family pact
+- Fix: When you make a new will, say it revokes earlier ones, so old drafts do not spark a fight.
+- Source: `ap-aretha` (https://apnews.com/article/aretha-franklin-will-dispute-d7aba286b05ea0d0e6318ce6abc887d5) quote: "must take business classes and get a certificate or a degree"
+
+**es13** (both, wills). A lawyer drafted a new estate plan for Alexandra Turner naming her friend Carlyle Hall. She died in 2007 before it was executed. Could Hall sue the lawyer?
+- Choices: Yes, the lawyer owed him / **No, there was no duty** / A share of the estate
+- Fix: Sign your will or trust as soon as it is ready. A draft that is never signed does nothing.
+- Source: `hall` (https://www.courtlistener.com/opinion/5809883/hall-v-kalfayan/) quote: "a prospective beneficiary of a will cannot maintain a cause of action for legal malpractice against the attorney who drafted the will but did not have it executed before the death of the testator"
+
+**es14** (both, wills). After Hall v. Kalfayan, Rosa wants her typed will to count. What does California law require?
+- Choices: A notary stamp alone / **Signed, plus two witnesses** / A single witness and a date
+- Fix: Sign with two adult witnesses present at the same time, and have them sign too.
+- Source: `prob-6110` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=6110) quote: "by at least two persons each of whom (A) being present at the same time"
+- Also: `hall` (https://www.courtlistener.com/opinion/5809883/hall-v-kalfayan/) quote: "did not have it executed before the death of the testator"
+
+**es15** (both, wills). Clyde Smith changed his estate plan in June 2000 and died later that month. His children said he lacked capacity and sued his lawyers for not checking. Did the lawyers owe the children that duty?
+- Choices: Yes, to check his capacity / **No duty to the kids** / The kids had to pay
+- Fix: If capacity may be questioned later, raise it while the person is alive. A lawsuit after death is too late.
+- Source: `moore` (https://www.courtlistener.com/opinion/2268651/moore-v-anderson-zeigler-disharoon-gallagher-gray-pc/) quote: "strongly militate against imposition on the testator's lawyer of a duty to nonclient beneficiaries to investigate, evaluate and ascertain the testator's capacity"
+
+**es16** (both, intestacy). Prince died in 2016 with no will, no spouse and no children. Who were his heirs?
+- Choices: The state of Minnesota / **His six siblings** / His record company
+- Fix: Make a will or trust. Without one, state law, not you, picks your heirs.
+- Source: `ap-prince` (https://apnews.com/article/entertainment-business-minnesota-personal-taxes-internal-revenue-service-e46d73374aea6bac533cb9225fa02451) quote: "Two of Prince's six sibling heirs"
+- Also: `prob-6402` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=6402) quote: "To the issue of the decedent"
+
+**es17** (both, intestacy). Prince's estate took six years to settle. What did AP say lawyers and consultants were paid to run it?
+- Choices: A small flat fee / **Tens of millions** / No pay until the end
+- Fix: A plan you sign now can save your family years of court time and big fees.
+- Source: `ap-prince` (https://apnews.com/article/entertainment-business-minnesota-personal-taxes-internal-revenue-service-e46d73374aea6bac533cb9225fa02451) quote: "lawyers and consultants have been paid tens of millions of dollars to administer his estate"
+
+**es18** (both, intestacy). Like Prince, Dev dies in California with no will, no spouse and no kids. Both of his parents are alive. Who inherits?
+- Choices: His best friend / **His own parents** / His siblings first
+- Fix: If you want a partner or friend to inherit, put it in a signed will or trust.
+- Source: `prob-6402` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=6402) quote: "If there is no surviving issue, to the decedent's parent or parents equally"
+- Also: `ap-prince` (https://apnews.com/article/entertainment-business-minnesota-personal-taxes-internal-revenue-service-e46d73374aea6bac533cb9225fa02451) quote: "did not leave a will"
+
+**es19** (both, intestacy). Halvard Heggstad signed a will and trust, then married Nancy a month later. Neither document mentioned her. What did she get?
+- Choices: None, she was left out / **One-third of it** / The whole estate
+- Fix: Update your will and trust after you marry, divorce or have a child.
+- Source: `heggstad` (https://www.courtlistener.com/opinion/2253427/heggstad-v-heggstad/) quote: "she is entitled to one-third of the decedent's estate (her intestate share)"
+- Also: `prob-21610` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=21610) quote: "the omitted spouse shall receive a share in the decedent's estate"
+
+**es20** (both, trusts). Halvard Heggstad listed a Menlo Park property on his trust's Schedule A but never signed a deed moving it to the trust. Was it in the trust?
+- Choices: No, a deed was needed / **Yes, the schedule did it** / Part of it was
+- Fix: Fund your trust: deed real estate to the trustee and retitle accounts. Do not count on a court fix later.
+- Source: `heggstad` (https://www.courtlistener.com/opinion/2253427/heggstad-v-heggstad/) quote: "there is no requirement that the settlor/trustee execute a separate writing conveying the property to the trust"
+- Also: `prob-850` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=850) quote: "The personal representative or any interested person"
+
+**es21** (both, trusts). Larry Mabee's trust said he assigned all his real property to it, but it did not name two parcels. Were those parcels trust assets?
+- Choices: No, unnamed means not in / **Yes, it covered them** / Following a full probate
+- Fix: List and retitle each property anyway. A court petition costs time and money even when you win.
+- Source: `ukkestad` (https://www.courtlistener.com/opinion/2786377/ukkestad-v-rbs-asset-finance-inc/) quote: "we accordingly reverse the probate court's order and remand with directions that the probate court enter an order granting the petition"
+- Also: `prob-850` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=850) quote: "The personal representative or any interested person"
+
+**es22** (both, trusts). Mabee's trust said its assignment took effect right away. What did the same sentence admit?
+- Choices: No more steps were needed / **Other papers may be needed** / A judge must sign first
+- Fix: After signing a trust, do the follow-up: deeds, account forms and titles.
+- Source: `ukkestad` (https://www.courtlistener.com/opinion/2786377/ukkestad-v-rbs-asset-finance-inc/) quote: "even though other documents may be necessary to perfect title"
+
+**es23** (both, trusts). Mauri Barefoot was a beneficiary of her mother's trust until late amendments cut her out. She said they came from undue influence. Could she challenge them in probate court?
+- Choices: No, she was cut out of it / **Yes, she had standing** / Five years later
+- Fix: If late changes cut you out and something seems wrong, see a probate lawyer quickly. Deadlines can be short.
+- Source: `barefoot` (https://www.courtlistener.com/opinion/4714805/barefoot-v-jennings/) quote: "should be decided by the probate court"
+
+**es24** (both, trusts). A helper drafts Grandma's trust amendment that leaves the helper her house. What does California law presume?
+- Choices: It is a normal gift / **It was undue influence** / Grandma had dementia
+- Fix: Use an independent lawyer to draft. A gift to the drafter or a caregiver is presumed suspect.
+- Source: `prob-21380` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=21380) quote: "The person who drafted the instrument"
+- Also: `barefoot` (https://www.courtlistener.com/opinion/4714805/barefoot-v-jennings/) quote: "transfers to the drafter of the trust or to the settlor's caregiver"
+
+**es25** (both, trusts). Carmel Bosco amended her trust seven times. The last one left her estate to two friends who cared for her at the end. Could friends count as "care custodians"?
+- Choices: No, friends never count / **Yes, they could** / Paid nurses alone
+- Fix: If a caregiver will inherit, have an independent lawyer review the plan first.
+- Source: `bernard` (https://www.courtlistener.com/opinion/2600573/bernard-v-foley/) quote: "We conclude that when an unrelated person renders substantial, ongoing health services to a dependent adult, that person may be a care custodian"
+- Also: `prob-21380` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=21380) quote: "A care custodian of a transferor who is a dependent adult"
+
+**es26** (both, trusts). Bernard was decided under an older law; today's rule is Probate Code 21380. When is a gift to a dependent adult's care custodian presumed suspect?
+- Choices: Gifts over $1 million / **During care or 90 days** / A relative must object
+- Fix: Check the timing. A will or trust signed while a caregiver is helping is the riskiest.
+- Source: `prob-21380` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=21380) quote: "or within 90 days before or after that period"
+- Also: `bernard` (https://www.courtlistener.com/opinion/2600573/bernard-v-foley/) quote: "care custodians"
+
+**es27** (both, abuse). Lynelle Goodreau said her uncle Sheldon abused and isolated her grandmother, Laura Lowrie, and got her to change her trust. Could a granddaughter bring the elder abuse case?
+- Choices: No, the trustee had to / **Yes, she had standing** / Her parents did
+- Fix: If you suspect elder abuse in your family, report it and get a lawyer. A grandchild may be able to act.
+- Source: `lowrie` (https://www.courtlistener.com/opinion/2251837/in-re-estate-of-lowrie/) quote: "the granddaughter has standing to bring this elder abuse civil lawsuit"
+
+**es28** (both, abuse). Lynelle asked the court, under Probate Code 259, to treat Sheldon as if he had died before his mother. What is that rule for?
+- Choices: Speeding up probate / **Abusers losing inheritance** / Cutting estate taxes
+- Fix: Abuse can cost an heir the inheritance. Keep records and report it.
+- Source: `prob-259` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=259) quote: "shall be deemed to have predeceased a decedent"
+- Also: `lowrie` (https://www.courtlistener.com/opinion/2251837/in-re-estate-of-lowrie/) quote: "a finding pursuant to Probate Code section 259 that Sheldon was deemed to have predeceased decedent"
+
+**es29** (both, abuse). In Lowrie, what did the petition say Sheldon did that is a classic elder abuse warning sign?
+- Choices: Moved her abroad / **Cut her off from family** / Paid her bills late
+- Fix: Watch for a helper who blocks visits and calls. Isolation is a red flag; report it.
+- Source: `lowrie` (https://www.courtlistener.com/opinion/2251837/in-re-estate-of-lowrie/) quote: "Sheldon isolated Decedent from her two other children, her five grandchildren"
+
+**es30** (both, poa). The day after doctors said Nancy Powell could not act for herself, her son Jeffrey used her power of attorney to give her partnership interest to a charitable trust. Was the gift valid?
+- Choices: Yes, a POA allows gifts / **No, it was not allowed** / With a notary, yes
+- Fix: If you want your agent to make gifts, say so in the document, with limits. Otherwise the agent cannot.
+- Source: `powell` (https://www.courtlistener.com/opinion/4563430/estate-of-powell-v-commr/) quote: "did not authorize J to make gifts in excess of the annual Federal gift tax exclusion"
+- Also: `prob-4264` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=4264) quote: "Make or revoke a gift of the principal's property in trust or otherwise"
+
+**es31** (both, poa). Under California Probate Code 4264, when may an agent under a power of attorney make a gift of your property?
+- Choices: When the family agrees / **If the POA says so** / A bank says so
+- Fix: Read the POA before you sign it. Gift powers should be spelled out, or left out on purpose.
+- Source: `prob-4264` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=4264) quote: "only if the power of attorney expressly grants that authority to the attorney-in-fact"
+- Also: `powell` (https://www.courtlistener.com/opinion/4563430/estate-of-powell-v-commr/) quote: "did not have authority under the POA to make gifts"
+
+**es32** (both, poa). Your aunt makes you her agent under a power of attorney. What duty does California law put on you?
+- Choices: Share it with family / **Act only for her** / Follow the heirs' wishes
+- Fix: Keep her money separate, keep receipts, and use it only for her.
+- Source: `prob-4232` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=4232) quote: "has a duty to act solely in the interest of the principal and to avoid conflicts of interest"
+- Also: `powell` (https://www.courtlistener.com/opinion/4563430/estate-of-powell-v-commr/) quote: "purportedly acting on behalf of decedent under a power of attorney"
+
+**es33** (adult, business). As Albert Strangi's health failed, about $10 million of his assets went into a family limited partnership. His estate then paid tax only on his partnership interest. Did that work?
+- Choices: Yes, the discount held / **No, assets were included** / The house alone counted
+- Fix: A family entity needs a real business purpose and must be run like one. Get tax advice before you set one up.
+- Source: `strangi` (https://www.courtlistener.com/opinion/791260/albert-strangi-deceased-rosalie-gulig-independent-v-commissioner-of/) quote: "lacked a substantial non-tax purpose"
+- Also: `usc-26-2036` (https://www.law.cornell.edu/uscode/text/26/2036) quote: "the possession or enjoyment of, or the right to the income from, the property"
+
+**es34** (adult, business). In Strangi, which exception to section 2036 could have kept the partnership assets out of the estate?
+- Choices: An LLC name / **A bona fide sale** / Filing it out of state
+- Fix: Ask what real reason, besides tax, the entity serves. Without one, the IRS can pull assets back in.
+- Source: `strangi` (https://www.courtlistener.com/opinion/791260/albert-strangi-deceased-rosalie-gulig-independent-v-commissioner-of/) quote: "bona fide sale"
+- Also: `usc-26-2036` (https://www.law.cornell.edu/uscode/text/26/2036) quote: "except in case of a bona fide sale for an adequate and full consideration"
+
+**es35** (adult, business). Like Nancy Powell, a parent moves assets into a family partnership but keeps the right, with others, to dissolve it. What does federal estate tax law do?
+- Choices: It leaves her estate / **It counts in her estate** / It becomes tax free
+- Fix: Keeping control or the income usually keeps the assets in your estate. Plan with a tax pro.
+- Source: `powell` (https://www.courtlistener.com/opinion/4563430/estate-of-powell-v-commr/) quote: "justified the application of section 2036(a)(2)"
+- Also: `usc-26-2036` (https://www.law.cornell.edu/uscode/text/26/2036) quote: "the right, either alone or in conjunction with any person, to designate the persons who shall possess or enjoy the property"
+
+**es36** (both, property). Frankie Valli used community funds to buy a $3.75 million life policy, naming his wife Randy as sole owner and beneficiary. At divorce, whose was it?
+- Choices: Randy's; her name is on it / **It is community property** / Frankie alone owns it
+- Fix: If you mean to change who owns something in a marriage, sign a clear written agreement.
+- Source: `valli` (https://www.courtlistener.com/opinion/2674462/marr-of-valli/) quote: "unless the statutory transmutation requirements have been met, the life insurance policy is community property"
+- Also: `fam-852` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=FAM&sectionNum=852) quote: "is not valid unless made in writing by an express declaration"
+
+**es37** (both, property). After Valli, what does it take in California to turn community property into one spouse's separate property?
+- Choices: Putting it in one name / **An express writing** / A spoken promise
+- Fix: Write it down, state the change plainly, and have the spouse who loses out sign.
+- Source: `fam-852` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=FAM&sectionNum=852) quote: "is not valid unless made in writing by an express declaration"
+- Also: `valli` (https://www.courtlistener.com/opinion/2674462/marr-of-valli/) quote: "naming wife as the sole owner and beneficiary"
+
+**es38** (both, property). When a married Californian dies, how much of the couple's community property already belongs to the surviving spouse?
+- Choices: It goes to the kids / **One-half of it** / One-quarter of it
+- Fix: Your will controls only your half of community property. Plan with your spouse.
+- Source: `prob-100` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=100) quote: "one-half of the community property belongs to the surviving spouse and the other one-half belongs to the decedent"
+- Also: `valli` (https://www.courtlistener.com/opinion/2674462/marr-of-valli/) quote: "community property"
+
+**es39** (both, property). Frances Riddle owned a home in joint tenancy with her husband. She wanted her half to pass by her will instead. She signed a deed from herself to herself and died 20 days later. Did it work?
+- Choices: No, he had to sign too / **Yes, it ended it** / Yes, but a year later
+- Fix: Know how each property is titled. Joint tenancy passes to the survivor unless it is ended first.
+- Source: `riddle` (https://www.courtlistener.com/opinion/2109417/riddle-v-harmon/) quote: "Mrs. Riddle died 20 days later"
+
+**es40** (both, property). In Riddle, the trial court first gave the whole house to Frances's husband. Why does joint tenancy usually do that?
+- Choices: Wills cover all property / **The survivor takes it** / Probate splits it
+- Fix: Check your deed. A will does not control joint tenancy property unless the joint tenancy was ended first.
+- Source: `riddle` (https://www.courtlistener.com/opinion/2109417/riddle-v-harmon/) quote: "the right of survivorship by conveyance of his or her joint tenancy interest"
+
+**es41** (both, wills). Like the beneficiary rule in Sveen, California has a will rule. After a divorce, what happens to gifts to your ex in a will you signed while married?
+- Choices: The ex still gets them / **They are all revoked** / They pass to the state
+- Fix: Make a new will after a divorce anyway, so there is no doubt who you want.
+- Source: `prob-6122` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=6122) quote: "Any disposition or appointment of property made by the will to the former spouse"
+- Also: `sveen` (https://www.courtlistener.com/opinion/4505999/sveen-v-melin/) quote: "revokes any revocable"
+
+**es42** (both, trusts). Barefoot involved late changes to a revocable trust. If the trust is silent on how to revoke it, what does California law allow?
+- Choices: A phone call / **A signed writing** / A new will, by itself
+- Fix: Follow the method in your trust, in writing. If it names one exclusive method, use that one.
+- Source: `prob-15401` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=15401) quote: "By a writing, other than a will, signed by the settlor"
+- Also: `barefoot` (https://www.courtlistener.com/opinion/4714805/barefoot-v-jennings/) quote: "trust provisions or amendments"
+
+**es43** (both, probate). Prince's estate spent years in court. In California, what can heirs use for a small estate instead of full probate?
+- Choices: Full probate is a must / **A small estate affidavit** / A note from the bank
+- Fix: Ask about the small estate affidavit. Check today's dollar limit and wait the required 40 days.
+- Source: `prob-13100` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=13100) quote: "if 40 days have elapsed since the death of the decedent"
+- Also: `ap-prince` (https://apnews.com/article/entertainment-business-minnesota-personal-taxes-internal-revenue-service-e46d73374aea6bac533cb9225fa02451) quote: "The six-year legal battle over pop superstar Prince's estate has ended"
+
+**es44** (both, wills). Aretha Franklin's wills turned up only after a niece searched the house. In California, if a will last kept by the person cannot be found after death, what is presumed?
+- Choices: It never existed / **She revoked it** / A lawyer has the original
+- Fix: Keep the original will somewhere safe that your executor knows about.
+- Source: `prob-6124` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=6124) quote: "it is presumed that the testator destroyed the will with intent to revoke it"
+- Also: `ap-aretha` (https://apnews.com/article/aretha-franklin-will-dispute-d7aba286b05ea0d0e6318ce6abc887d5) quote: "emerged in 2019 when a niece scoured the home for records"
+
+**es45** (both, beneficiary). Mark Sveen named his two children as backup beneficiaries. Under Minnesota's divorce rule, who takes the money when the ex is removed?
+- Choices: The ex, anyway / **The backup beneficiaries** / The insurance company
+- Fix: Always name a backup beneficiary on every policy and account.
+- Source: `sveen` (https://www.courtlistener.com/opinion/4505999/sveen-v-melin/) quote: "will instead go to the contingent beneficiary"
+
+**es46** (both, wills). Frances Black wrote her will by hand on three pages of a store-bought printed will form, using bits of its printed words. Probate was denied over the printed parts. What did the California Supreme Court do?
+- Choices: Agreed; the printed words void it / **Reversed; it was a valid will** / Sent it to a jury
+- Fix: If you use a form, write every gift and your signature in your own hand, and date it.
+- Source: `black` (https://www.courtlistener.com/opinion/1222943/estate-of-black/) quote: "none of the incorporated material is either material to the substance of the will or essential to its validity"
+- Also: `prob-6111` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=6111) quote: "as part of a commercially printed form will"
+
+**es47** (both, wills). In Estate of Black, who wrote the handwriting on the form, including the date and her name?
+- Choices: A lawyer, for her / **Frances Black herself** / Her neighbor, as witness
+- Fix: For a handwritten will, write it yourself. Your hand on the key parts is what counts.
+- Source: `black` (https://www.courtlistener.com/opinion/1222943/estate-of-black/) quote: "all of the handwriting, including the date and her name, is that of the testatrix"
+
+**es48** (both, wills). On a charity donor card, Dorothy Southworth wrote that her whole estate should go to the charity, then signed and dated it. Was the card her will?
+- Choices: Yes, it was signed and dated / **No, it was not a will** / Part went to charity
+- Fix: Put your wishes in a real will or trust. A card or letter about a future gift may not count.
+- Source: `southworth` (https://www.courtlistener.com/opinion/2257204/estate-of-southworth/) quote: "Does her handwriting on the donor card constitute a holographic will? No."
+
+**es49** (both, wills). Why did the Southworth court say the donor card failed as a will?
+- Choices: It had no witnesses / **It showed future intent** / It was not dated
+- Fix: Use words that make the gift now, at death, in a signed will. "I plan to" is not enough.
+- Source: `southworth` (https://www.courtlistener.com/opinion/2257204/estate-of-southworth/) quote: "an intent to make a future gift to the charity"
+
+**es50** (both, trusts). After a stroke, Wayne Andersen amended his trust to leave 60 percent to his partner, Pauline Hunt. The probate court judged his capacity by the contract standard. Was that the right test?
+- Choices: Yes, trusts are contracts / **No, the will standard applied** / No test is needed
+- Fix: For a simple trust change that works like a will, the will-making capacity test applies. Get a doctor's note if capacity may be questioned.
+- Source: `andersen` (https://www.courtlistener.com/opinion/5810338/andersen-v-hunt/) quote: "instead of the standard of testamentary capacity set out in Probate Code section 6100.5"
+
+**es51** (both, trusts). In Andersen v. Hunt, the appeals court upheld Wayne's trust amendments. What did it still let stand against Pauline?
+- Choices: The whole trust, as is / **The account and policy rulings** / A fine for undue influence
+- Fix: Opening joint accounts and changing a beneficiary can be judged by a stricter test. Make big changes while you are well.
+- Source: `andersen` (https://www.courtlistener.com/opinion/5810338/andersen-v-hunt/) quote: "lacked capacity to open joint tenancy accounts and to change the beneficiary of his life insurance policy"
+
+**es52** (both, beneficiary). David Egelhoff had a Boeing life policy and a pension plan, both naming his ex-wife. Which did the federal rule in Egelhoff cover?
+- Choices: The life policy alone / **Both of the plans** / The pension alone
+- Fix: Update the form on every plan: insurance, pension, 401(k) and IRA.
+- Source: `egelhoff` (https://www.courtlistener.com/opinion/118416/egelhoff-v-egelhoff-ex-rel-breiner/) quote: "Both plans were governed by ERISA"
+
+**es53** (both, beneficiary). A state law let Warren Hillman's widow sue his ex-wife to hand over the insurance money. What did the Supreme Court say about that remedy?
+- Choices: It worked as a backup / **It was pre-empted** / Part could be taken
+- Fix: Do not count on a lawsuit to fix an old form. Update it while you can.
+- Source: `hillman` (https://www.courtlistener.com/opinion/873660/hillman-v-maretta/) quote: "We hold that it is."
+
+**es54** (both, beneficiary). After his divorce, William Kennedy did file a new form naming his daughter Kari on one DuPont plan. Which one?
+- Choices: The savings plan (SIP) / **His pension plan** / His life policy
+- Fix: Make a list of every account with a beneficiary and update each one separately.
+- Source: `kennedy` (https://www.courtlistener.com/opinion/145914/kennedy-v-plan-administrator-for-dupont-savings-investment-plan/) quote: "as the beneficiary under DuPont's Pension and Retirement Plan"
+
 ## Legal Traps (`legal`)
 
 **lg01** (both, driving). Steven Spriggs, stuck in Fresno County traffic, held his phone to check a map. The court threw out his ticket. Could he do that today?

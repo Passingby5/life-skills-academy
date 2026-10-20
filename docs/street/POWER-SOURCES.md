@@ -44,6 +44,7 @@ Hand-saved from search excerpts (site blocked fetch, 403): dehav (Justia; case c
 | dehav | [De Haviland v. Warner Bros. Pictures (1944) 67 Cal.App.2d 225](https://law.justia.com/cases/california/court-of-appeal/2d/67/225.html) | pw43 |
 | brit-swift | [Britannica: Taylor Swift](https://www.britannica.com/biography/Taylor-Swift) | pw45 |
 | brit-jobs | [Britannica: Steve Jobs](https://www.britannica.com/biography/Steve-Jobs) | pw42 |
+| sec-jobs | [Apple press release, Sept. 16, 1997 (SEC 8-K)](https://www.sec.gov/Archives/edgar/data/320193/0000320193-97-000019.txt) | pw42 |
 | senate-welch | [U.S. Senate: "Have you no sense of decency?" (Army-McCarthy hearings, 1954)](https://www.senate.gov/about/powers-procedures/investigations/mccarthy-hearings/have-you-no-sense-of-decency.htm) | pw47 |
 | homeboy | [Homeboy Industries (home page)](https://homeboyindustries.org/) | pw48 |
 | brit-bulger | [Britannica: Whitey Bulger](https://www.britannica.com/biography/Whitey-Bulger) | pw49 |

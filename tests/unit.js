@@ -644,7 +644,7 @@ t('v18 power deck: adult-rated, our own tactics, step diagrams, none cards 10 to
   assert(d.cards.every(c => /^pw\d\d$/.test(c.id) && c.cite && d.sources[c.src] && T.indexOf(c.tactic) >= 0 && c.steps.length >= 3 && c.steps.length <= 4));
   T.forEach(k => assert(d.cards.some(c => c.tactic === k), 'tactic used: ' + k));
   const nn = d.cards.filter(c => c.kind === 'none').length / d.cards.length; assert(nn >= 0.1 && nn <= 0.15, 'none share ' + nn);
-  assert(d.cards.filter(c => c.kind === 'none').every(c => c.c[1] === 'None of these; it was already too deep'));
+  assert(d.cards.filter(c => c.kind === 'none').every(c => /^None of these; /.test(c.c[1])));
   const PB = require('../tools/powerban.js'); eq(PB.check(d, L.POWER_TACTICS), []);
   const bad = JSON.parse(JSON.stringify(d)); bad.cards[0].f += ' Never outshine the master.'; bad.cards[1].steps = ['Conceal your intentions'];
   const pe = PB.check(bad, L.POWER_TACTICS).join('|'); assert(/pw01: banned Greene phrase "outshine the master"/.test(pe) && /pw02: banned Greene phrase "conceal your intentions"/.test(pe), pe);
@@ -655,7 +655,7 @@ t('v18 power deck: adult-rated, our own tactics, step diagrams, none cards 10 to
   // Adult-only by default; a parent PIN unlock opens it for one young adult profile.
   const ya = prof('ya'), ad = prof('adult'); assert(!L.deckAllowed('power', ya) && L.deckAllowed('power', ad) && L.deckAllowed('estate', ya));
   eq(L.allowedDecks(['estate', 'power'], ya), ['estate']); ya.unlock = ['power']; assert(L.deckAllowed('power', ya));
-  assert(L.PIN_RX.test('1234') && !L.PIN_RX.test('12a4') && !L.PIN_RX.test('123')); assert(L.hashPin('1234') !== L.hashPin('1235') && /^h[0-9a-z]+$/.test(L.hashPin('1234')));
+  assert(L.PIN_RX.test('1234') && !L.PIN_RX.test('12a4') && !L.PIN_RX.test('123') && !L.PIN_RX.test('12345')); assert(L.hashPin('1234') !== L.hashPin('1235') && /^h[0-9a-z]+$/.test(L.hashPin('1234')));
   const sv = L.newSave(), id = L.addProfile(sv, 'Kid', 'ya'); sv.profiles[id].unlock = ['power', 'gone']; sv.pin = L.hashPin('2468');
   const ld = L.loadSave(L.dumpSave(sv)); eq(ld.save.profiles[id].unlock, ['power']); eq(ld.save.pin, L.hashPin('2468')); assert(ld.repaired);
   // Over 1,000 seeded rounds with every deck on, a locked young adult profile never gets a power card.
@@ -725,5 +725,22 @@ t('v20 every quoted phrase in a passage is in its saved source excerpt (tools/hr
   const X = require('./fixtures/hardreads-excerpts.json'), nm = s => s.replace(/[\u2018\u2019]/g, "'").replace(/[\u201c\u201d]/g, '"').replace(/\s+/g, ' ');
   let n = 0; L.decks.hardreads.cards.forEach(c => (nm(c.passage.join(' ')).match(/"[^"]+"/g) || []).forEach(q => { const s = q.slice(1, -1).replace(/[,.]$/, ''), e = X[c.id + ':' + s]; assert(e && nm(e).includes(s), c.id + ' quote ' + s); n++; }));
   assert(n >= 10);
+});
+t('v20.1 M1 "None of these" right wording varies, every tail is also used wrong, and no exact-text tell', () => {
+  const T = require('../tools/tellqa.js'), cs = L.decks.power.cards, tl = x => x.replace(/^None of these; /, '');
+  const right = cs.filter(c => c.kind === 'none').map(c => tl(c.c[1])), wrong = []; cs.forEach(c => c.c.forEach((x, k) => { if (k !== 1 && /^None of these; /.test(x)) wrong.push(tl(x)); }));
+  assert(new Set(right).size >= 3, 'right tails ' + right); right.forEach(x => assert(wrong.indexOf(x) >= 0, 'tail also used wrong: ' + x));
+  eq(T.textTells(cs), []); assert(T.textTells([{ id: 'a', c: ['x', 'None; z', 'y'] }, { id: 'b', c: ['x2', 'None; z', 'y2'] }, { id: 'c', c: ['x3', 'None; z', 'y3'] }]).length, 'catches a 3 of 3 text');
+});
+t('v20.1 QA fixes: es44 is about the testator, pw20 is recognition, pw42 has Sept 1997, Estate tell margin 40%', () => {
+  assert(/testator/i.test(L.cardIndex.es44.c[1]) && !/^She\b/.test(L.cardIndex.es44.c[1]));
+  const p20 = L.cardIndex.pw20; assert(!/stages|quiet|broker/i.test(p20.c.join(' ') + p20.f + p20.steps.join(' ')), 'pw20 no smuggling how-to');
+  assert(/September 1997/.test(L.cardIndex.pw42.w) && L.cardIndex.pw42.also.indexOf('sec-jobs') >= 0);
+  const T = require('../tools/tellqa.js'), sc = T.score(L.decks.estate.cards); assert(T.LIMITS.estate === 0.40 && sc.gbm <= 0.40 && sc.logreg <= 0.40, JSON.stringify(sc));
+});
+t('v20.1 B1/M2 PIN is 4 digits; a ya lock prompt can not set one', () => {
+  assert(L.PIN_RX.test('2468') && !L.PIN_RX.test('24680'));
+  const ui = fs.readFileSync(path.join(__dirname, '../src/ui/ui.js'), 'utf8'), pin = ui.slice(ui.indexOf('R.pin = '), ui.indexOf('R.parent = '));
+  assert(/Ask a parent to set this up/.test(pin) && !/pin2/.test(pin), 'lock prompt has no set-PIN'); assert(/speed bump, not real security/.test(ui));
 });
 console.log(n + ' unit tests passed');

@@ -87,9 +87,11 @@ exports.score = function (cards, seeds) {
   return out;
 };
 exports.LIMIT = 0.45;
+// v20.1: Estate sat near the line in QA's own folds, so it gets a wider margin.
+exports.LIMITS = { estate: 0.40 };
 exports.check = function (L, ids) {
   const errs = [], scores = {};
-  ids.forEach(id => { const s = exports.score(L.decks[id].cards); scores[id] = s; ['gbm', 'logreg'].forEach(k => { if (s[k] > exports.LIMIT) errs.push(id + ': QA ' + k + ' tell model picks the right answer ' + (s[k] * 100).toFixed(1) + '% of held-out cards (limit 45%)'); }); });
+  ids.forEach(id => { const s = exports.score(L.decks[id].cards); scores[id] = s; const lim = exports.LIMITS[id] || exports.LIMIT; ['gbm', 'logreg'].forEach(k => { if (s[k] > lim) errs.push(id + ': QA ' + k + ' tell model picks the right answer ' + (s[k] * 100).toFixed(1) + '% of held-out cards (limit ' + Math.round(lim * 100) + '%)'); }); });
   return { errs, scores };
 };
 // v20 Hard Reads passage-free check: the same two models trained on each question plus its choices, never the passage.
@@ -103,3 +105,14 @@ if (require.main === module) {
   const r = exports.check(L, ids); ids.forEach(id => console.log(id, 'gbm', (r.scores[id].gbm * 100).toFixed(1) + '%', 'logreg', (r.scores[id].logreg * 100).toFixed(1) + '%'));
   r.errs.forEach(e => console.log('FAIL', e)); process.exit(r.errs.length ? 1 : 0);
 }
+// v20.1 M1: exact-text tells. A choice text (or its tail after ";") that shows up on 3+ cards and is right on most of
+// them, or never right across 4+ cards, can be learned by sight. Also checks a whole "None of these" family.
+exports.textTells = function (cards) {
+  const g = {}, add = (k, right, id) => { (g[k] = g[k] || { n: 0, r: 0, ids: [] }); g[k].n++; if (right) g[k].r++; g[k].ids.push(id); };
+  const norm = x => String(x).toLowerCase().replace(/[^a-z0-9 ]+/g, ' ').replace(/\s+/g, ' ').trim();
+  cards.forEach(c => (c.c || []).forEach((x, k) => {
+    add('text: ' + norm(x), k === 1, c.id);
+    const t = String(x).split(';'); if (t.length > 1) add('tail: ' + norm(t.slice(1).join(';')), k === 1, c.id);
+  }));
+  return Object.keys(g).filter(k => g[k].n >= 3 && (g[k].r / g[k].n >= 0.75 || (g[k].r === 0 && g[k].n >= 4))).map(k => k + ' is right on ' + g[k].r + ' of ' + g[k].n + ' (' + g[k].ids.join(', ') + ')');
+};

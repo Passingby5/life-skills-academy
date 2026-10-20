@@ -2,7 +2,7 @@
 // Every field is checked deeply. Bad parts are fixed or reset; a save that cannot be used at all starts fresh.
 var LSA = typeof LSA !== 'undefined' ? LSA : {};
 LSA.SAVE_V = 2;
-LSA.SCREENS = ['home', 'menu', 'play', 'about', 'match', 'newprof', 'rf', 'pr'];
+LSA.SCREENS = ['home', 'menu', 'play', 'about', 'match', 'newprof', 'rf', 'pr', 'parent'];
 LSA.newStats = function () { return { rounds: 0, right: 0, seen: 0, wows: 0 }; };
 LSA.newProfile = function (name, age) { return { name: String(name || 'Player').slice(0, 20), age: age === 'ya' ? 'ya' : 'adult', boxes: {}, round: null, rf: null, pr: null, carry: [], stats: LSA.newStats() }; };
 LSA.newSave = function () { return { v: LSA.SAVE_V, active: null, next: 1, profiles: {}, decks: null }; };

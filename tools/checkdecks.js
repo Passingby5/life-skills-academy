@@ -16,6 +16,8 @@ L.deckOrder.filter(id => L.decks[id].power).forEach(id => PBAN.check(L.decks[id]
 const TQA = require('./tellqa.js'), sss = L.knowDecks().filter(id => L.decks[id].section === 'Street Smart');
 const tq = TQA.check(L, sss); tq.errs.forEach(e => errs.push(e));
 console.log('QA tell models (4 seeds, 10-fold x5): ' + sss.map(id => id + ' gbm ' + (tq.scores[id].gbm * 100).toFixed(1) + '% logreg ' + (tq.scores[id].logreg * 100).toFixed(1) + '%').join(' | '));
+// v20.1 M1 (frozen v6 decks are hash-locked, so skipped): exact-text tells (a choice text or its tail after ";" that is nearly always right, or never right).
+L.knowDecks().filter(id => L.decks[id].format === 'gutcheck' && L.FROZEN_DECKS.indexOf(id) < 0).forEach(id => TQA.textTells(L.decks[id].cards).forEach(e => errs.push(id + ': exact-text tell: ' + e)));
 // v20: passage-free tell check on Hard Reads (question plus choices only).
 const pds = L.passageDecks(), pq = TQA.checkPassage(L, pds); pq.errs.forEach(e => errs.push(e));
 if (pds.length) console.log('Passage-free models (4 seeds, 10-fold x5): ' + pds.map(id => id + ' gbm ' + (pq.scores[id].gbm * 100).toFixed(1) + '% logreg ' + (pq.scores[id].logreg * 100).toFixed(1) + '%').join(' | '));

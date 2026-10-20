@@ -49,3 +49,13 @@ Saved copies: sources/street/<id>.txt (gitignored), fetched in real Chrome by to
 | hr43 | An Order on Paper | abuse | [Oyez: Castle Rock v. Gonzales (2005)](https://www.oyez.org/cases/2004/04-278) |
 | hr44 | A Credible Threat | abuse | [Oyez: United States v. Rahimi (2024)](https://www.oyez.org/cases/2023/22-915); [Oyez: Castle Rock v. Gonzales (2005)](https://www.oyez.org/cases/2004/04-278) |
 | hr45 | The Concerned Relatives | cults | [Britannica: Jonestown](https://www.britannica.com/event/Jonestown) |
+| hr46 | The Fee | cartels | [U.S. Attorney, N.D. Okla.: Foreign national drug courier sentenced for conspiring with cartel](https://www.justice.gov/usao-ndok/pr/foreign-national-drug-courier-sentenced-conspiring-cartel-distribute-fentanyl-oklahoma) |
+| hr47 | Heavy Debt Before the Harvest | trafficking | [U.S. Department of Justice: Three defendants sentenced in racketeering conspiracy involving forced labor of H-2A workers](https://www.justice.gov/archives/opa/pr/three-defendants-sentenced-multi-state-racketeering-conspiracy-involving-forced-labor-mexican) |
+| hr48 | The Care of the Soul | philosophy | [Stanford Encyclopedia of Philosophy: Toleration](https://plato.stanford.edu/entries/toleration/) |
+| hr49 | Glowing but False | manipulation | [U.S. Attorney, N.D. Cal.: Elizabeth Holmes sentenced to more than 11 years](https://www.justice.gov/usao-ndca/pr/elizabeth-holmes-sentenced-more-11-years-defrauding-theranos-investors-hundreds) |
+| hr50 | From the Pulpit | religion | [Britannica: Martin Luther King, Jr.](https://www.britannica.com/biography/Martin-Luther-King-Jr) |
+| hr51 | One Person to Tell | trafficking | [U.S. Department of Justice (2025): New Jersey Woman Sentenced to Prison for Forced Labor](https://www.justice.gov/opa/pr/new-jersey-woman-sentenced-prison-forced-labor-and-other-federal-crimes); [U.S. Department of State: Understanding Human Trafficking](https://www.state.gov/what-is-trafficking-in-persons/) |
+| hr52 | Only Doing His Job | philosophy | [Britannica: Hannah Arendt](https://www.britannica.com/biography/Hannah-Arendt) |
+| hr53 | The Rule in Many Books | religion | [Britannica: Golden Rule](https://www.britannica.com/topic/golden-rule) |
+| hr54 | A Banned Feast | culture | [The Canadian Encyclopedia: Potlatch Ban](https://www.thecanadianencyclopedia.ca/en/article/potlatch-ban); [Britannica: Potlatch](https://www.britannica.com/topic/potlatch) |
+| hr55 | Total Devotion | cults | [Britannica: Aleph (AUM Shinrikyo)](https://www.britannica.com/topic/Aleph) |

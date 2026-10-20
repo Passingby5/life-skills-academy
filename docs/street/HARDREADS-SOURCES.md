@@ -39,3 +39,13 @@ Saved copies: sources/street/<id>.txt (gitignored), fetched in real Chrome by to
 | hr33 | The Job Offer on Facebook | cartels | [U.S. Attorney, S.D. Cal.: Woman pleads guilty in so-called blind mule case](https://www.justice.gov/usao-sdca/pr/woman-pleads-guilty-drug-trafficking-and-obstruction-justice-so-called-blind-mule-case) |
 | hr34 | Nobody Asked | religion | [USHMM Holocaust Encyclopedia: Le Chambon-sur-Lignon](https://encyclopedia.ushmm.org/content/en/article/le-chambon-sur-lignon) |
 | hr35 | Eight in Ten | religion | [Pew Research Center (2012): The Global Religious Landscape](https://www.pewresearch.org/religion/2012/12/18/global-religious-landscape-exec/) |
+| hr36 | Dig Up the Roots | genocide | [Documentation Center of Cambodia: History of Democratic Kampuchea, The Security System](https://d.dccam.org/Projects/Genocide/History%20of%20DK%20Part%202.pdf); [USHMM: Cambodia 1975-1979](https://www.ushmm.org/genocide-prevention/countries/cambodia/cambodia-1975) |
+| hr37 | The Pardon Loophole | honor | [Human Rights Watch (2019): Pakistan Should Not Again Fail 'Honor Killing' Victim](https://www.hrw.org/news/2019/08/22/pakistan-should-not-again-fail-honor-killing-victim) |
+| hr38 | Different, Not Lesser | culture | [Britannica: Cultural relativism](https://www.britannica.com/topic/cultural-relativism); [Britannica: Ethnocentrism](https://www.britannica.com/topic/ethnocentrism) |
+| hr39 | A Wall Facing Inward | economics | [Britannica: Berlin Wall](https://www.britannica.com/topic/Berlin-Wall) |
+| hr40 | Markets Without Votes | economics | [Britannica: Deng Xiaoping](https://www.britannica.com/biography/Deng-Xiaoping) |
+| hr41 | What the Gang Offers | gangs | [National Institute of Justice (2013): Changing Course, The Attraction of Gangs](https://www.ojp.gov/pdffiles1/nij/243466.pdf) |
+| hr42 | Getting Out, Staying Out | gangs | [OJJDP: Getting Out of Gangs, Staying Out of Gangs](https://www.ojjdp.ojp.gov/library/publications/getting-out-gangs-staying-out-gangs-gang-intervention-and-desistance); [Homeboy Industries (home page)](https://homeboyindustries.org/) |
+| hr43 | An Order on Paper | abuse | [Oyez: Castle Rock v. Gonzales (2005)](https://www.oyez.org/cases/2004/04-278) |
+| hr44 | A Credible Threat | abuse | [Oyez: United States v. Rahimi (2024)](https://www.oyez.org/cases/2023/22-915); [Oyez: Castle Rock v. Gonzales (2005)](https://www.oyez.org/cases/2004/04-278) |
+| hr45 | The Concerned Relatives | cults | [Britannica: Jonestown](https://www.britannica.com/event/Jonestown) |

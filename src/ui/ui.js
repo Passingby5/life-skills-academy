@@ -24,7 +24,7 @@
   function ageName(a) { return a === 'ya' ? 'Young adults (15 to 30)' : 'Adults (30+)'; }
   // Back button support: screens past the menu push a history entry, so Back returns to the menu.
   function go(s) {
-    var deep = ['about', 'match', 'newprof', 'play', 'rf'].indexOf(s) >= 0;
+    var deep = ['about', 'match', 'newprof', 'play', 'rf', 'pr'].indexOf(s) >= 0;
     try { if (deep && U.screen !== s) history.pushState({ s: s }, ''); else history.replaceState({ s: s }, ''); } catch (e) { }
     U.screen = s; S.screen = s; save(); render(); window.scrollTo(0, 0);
   }
@@ -74,6 +74,8 @@
     h += b('match', '🧩 Myth Match', 'alt', seen < 2 ? ' disabled' : '') + (seen < 2 ? '<p class="muted">Myth Match opens after you see a few cards.</p>' : '');
     // Red Flags shows once a Red Flags deck is on.
     if (LSA.setsFor(p.age, playDecks()).length) h += b('rfplay', p.rf && p.rf.stage !== 'done' ? '🚩 Resume Red Flags' : '🚩 Play Red Flags', 'alt', ' id="rfbtn"');
+    // v20: Hard Reads shows once a passage deck is on (and allowed for this player).
+    if (LSA.passagesFor(p.age, LSA.allowedDecks(decks(), p)).length) h += b('prplay', p.pr && p.pr.stage !== 'done' ? '📖 Resume Hard Reads' : '📖 Play Hard Reads', 'alt', ' id="prbtn"');
     h += '<h2>Decks</h2>' + (live ? '<p class="muted" id="decknote">Deck changes start with your next round. Your round in progress is kept.</p>' : '');
     h += picker();
     h += b('editage', 'Change age group', 'ghost') + b('about', 'About and sources', 'ghost') + b('home', 'Switch player', 'ghost') + b('delask', 'Delete this player', 'ghost danger');
@@ -160,6 +162,45 @@
     else { LSA.CONF.forEach(function (t, k) { h2 += b('rfconf', t, k === 2 ? 'main' : '', ' data-k="' + k + '"'); }); h2 += b('rfback', 'Change my picks', 'ghost'); }
     return top + h2 + '</div>';
   };
+  // v20 Hard Reads: the passage first, then one question at a time. "Show passage" works from any question.
+  function passageHtml(c, mark) {
+    return '<div class="passage" id="passage"><h2 id="ptitle">' + esc(c.title) + '</h2>' + c.passage.map(function (t, k) { return '<p class="para' + (mark === k + 1 ? ' mark' : '') + '" data-line="' + (k + 1) + '"><span class="pnum">' + (k + 1) + '</span> ' + esc(t) + '</p>'; }).join('') + '<p class="muted pcite">' + esc(c.cite) + '</p></div>';
+  }
+  R.pr = function () {
+    var p = P(), st = p.pr;
+    if (!st || st.stage === 'done') return R.prrecap();
+    var c = LSA.PR.passage(st), d = LSA.decks[c.deck];
+    if (st.stage === 'read') return '<div class="top"><span class="muted" id="prog">Read the passage</span>' + b('menu', 'Quit', 'ghost') + '</div>' + passageHtml(c) + b('prread', 'I read it', 'main', ' id="prread"');
+    var it = LSA.PR.cur(st), q = LSA.PR.question(st);
+    var top = '<div class="top"><span class="muted" id="prog">Question ' + (st.i + 1) + ' of ' + st.q.length + ' · ' + esc(LSA.PASSAGE_TYPES[q.type]) + '</span>' + b('menu', 'Quit', 'ghost') + '</div>';
+    var peek = b('prpeek', st.peek ? 'Hide passage' : 'Show passage', 'ghost', ' id="prpeek" aria-expanded="' + st.peek + '"') + (st.peek ? passageHtml(c, st.stage === 'fix' ? q.line : 0) : '');
+    if (st.stage === 'fix') {
+      var h = '<div class="card fix" id="fix">';
+      if (it.wow) h += '<div class="wow" id="wow">😮 Wow!</div><p class="muted">You were sure, but the passage says otherwise. Big surprises stick best.</p>';
+      h += '<p class="' + (it.right ? 'ok' : 'wrong') + '">' + (it.right ? '✅ You got it.' : '❌ Not this time.') + '</p>';
+      h += '<p class="qtext">' + esc(q.q) + '</p><p><span class="lab">Answer:</span> ' + esc(q.c[1]) + '</p><p id="why">' + esc(q.fix) + '</p>';
+      h += '<blockquote class="proof" id="proof"><span class="lab">Paragraph ' + q.line + ' says:</span> “' + esc(q.proof) + '”</blockquote>';
+      h += '<p class="cite"><span class="lab">Based on:</span> ' + esc(c.cite) + '</p>';
+      c.sourceIds.forEach(function (k, n) { var x = d.sources[k]; h += '<a class="src' + (n ? ' also' : '') + '" href="' + esc(x[1]) + '" target="_blank" rel="noopener">' + (n ? 'Also: ' : 'Source: ') + esc(x[0]) + '</a>'; });
+      if (d.notice) h += '<p class="muted notice" id="notice">' + esc(d.notice) + '</p>';
+      return top + h + '</div>' + b('prnext', st.i + 1 < st.q.length ? 'Next question' : 'Finish', 'main', ' id="prnext"') + peek;
+    }
+    var h2 = '<div class="play"><div class="card"><div class="scene" id="scene">' + esc(q.q) + '</div>';
+    if (st.stage === 'conf') h2 += '<p class="muted">How sure are you?</p>';
+    h2 += '</div><div>';
+    if (st.stage === 'ask') it.order.forEach(function (ci, pos) { h2 += b('prans', esc(q.c[ci]), 'ans', ' data-p="' + pos + '"'); });
+    else { h2 += '<button class="pick" disabled>' + esc(q.c[it.order[it.pick]]) + '</button>'; LSA.CONF.forEach(function (t, k) { h2 += b('prconf', t, k === 2 ? 'main' : '', ' data-k="' + k + '"'); }); h2 += b('prback', 'Change my answer', 'ghost'); }
+    return top + h2 + '</div></div>' + peek;
+  };
+  R.prrecap = function () {
+    var p = P(), st = p.pr;
+    if (!st) return R.menu();
+    var c = st.pid && LSA.cardIndex[st.pid];
+    var h = '<h1>Hard Reads done</h1><p id="prsum">' + (c ? esc(c.title) + ': ' : '') + st.right + ' of ' + st.q.length + ' questions right.</p><div class="card" id="recap"><h2>😮 Wow questions</h2>';
+    if (!st.wows.length) h += '<p class="muted">No sure-but-wrong answers.</p>';
+    else h += '<ul class="list">' + st.wows.map(function (id) { var q = LSA.cardIndex[id]; return '<li>' + esc(q.q) + '<br><b>Answer:</b> ' + esc(q.c[1]) + '</li>'; }).join('') + '</ul>';
+    return h + '</div>' + b('prplay', 'Read another', 'main') + b('menu', 'Menu', 'ghost');
+  };
   R.rfrecap = function () {
     var p = P(), st = p.rf;
     if (!st) return R.menu();
@@ -212,6 +253,7 @@
     var p = P(), st = p && p.round;
     if (U.screen === 'play' && st) return 'play:' + st.i + ':' + st.stage;
     if (U.screen === 'rf' && p && p.rf) return 'rf:' + p.rf.i + ':' + p.rf.stage;
+    if (U.screen === 'pr' && p && p.pr) return 'pr:' + p.pr.i + ':' + p.pr.stage;
     if (U.screen === 'match') return 'match:' + !!(U.mm && U.mm.done);
     return U.screen;
   }
@@ -266,6 +308,17 @@
       if (!p.rf || p.rf.stage === 'done') p.rf = LSA.RF.start(p, playDecks(), today(), (Date.now() ^ (Math.random() * 1e9)) >>> 0);
       go(p.rf.q.length ? 'rf' : 'menu');
     },
+    prplay: function () {
+      var p = P();
+      if (!p.pr || p.pr.stage === 'done') p.pr = LSA.PR.start(p, LSA.allowedDecks(decks(), p), today(), (Date.now() ^ (Math.random() * 1e9)) >>> 0);
+      go(p.pr.q.length ? 'pr' : 'menu');
+    },
+    prread: function () { LSA.PR.read(P().pr); save(); render(); window.scrollTo(0, 0); },
+    prpeek: function () { LSA.PR.togglePeek(P().pr); save(); render(); if (P().pr.peek) { var e = document.getElementById('passage'); if (e) e.scrollIntoView(); } },
+    prans: function (el) { LSA.PR.pick(P().pr, +el.dataset.p); save(); render(); },
+    prback: function () { LSA.PR.back(P().pr); save(); render(); },
+    prconf: function (el) { LSA.PR.confirm(P().pr, P(), +el.dataset.k); save(); render(); window.scrollTo(0, 0); },
+    prnext: function () { LSA.PR.next(P().pr, P()); go('pr'); },
     cue: function (el) { LSA.RF.toggle(P().rf, +el.dataset.p); save(); render(); },
     rfdone: function () { LSA.RF.done(P().rf); save(); render(); },
     rfback: function () { LSA.RF.back(P().rf); save(); render(); },
@@ -294,11 +347,11 @@
     try { if (A[act]) A[act](el); }
     catch (err) {
       // Never leave a blank page: drop the round that broke and go back to the menu.
-      var p = P(); if (p) { if (U.screen === 'rf') p.rf = null; else p.round = null; } U.notice = 'Something went wrong, so that round was reset.'; U.screen = p ? 'menu' : 'home'; save(); render();
+      var p = P(); if (p) { if (U.screen === 'rf') p.rf = null; else if (U.screen === 'pr') p.pr = null; else p.round = null; } U.notice = 'Something went wrong, so that round was reset.'; U.screen = p ? 'menu' : 'home'; save(); render();
     }
   });
   // Resume where we left off (also after an auto update reload).
-  if (P()) U.screen = ['play', 'about', 'rf'].indexOf(S.screen) >= 0 ? S.screen : 'menu';
+  if (P()) U.screen = ['play', 'about', 'rf', 'pr'].indexOf(S.screen) >= 0 ? S.screen : 'menu';
   LSA.UI = { save: save, S: function () { return S; }, U: U, render: render };
   // Any error at startup shows the fresh-start notice instead of a blank page.
   try { try { history.replaceState({ s: U.screen }, ''); } catch (e) { } render(); }

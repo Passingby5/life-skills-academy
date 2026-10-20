@@ -16,5 +16,8 @@ L.deckOrder.filter(id => L.decks[id].power).forEach(id => PBAN.check(L.decks[id]
 const TQA = require('./tellqa.js'), sss = L.knowDecks().filter(id => L.decks[id].section === 'Street Smart');
 const tq = TQA.check(L, sss); tq.errs.forEach(e => errs.push(e));
 console.log('QA tell models (4 seeds, 10-fold x5): ' + sss.map(id => id + ' gbm ' + (tq.scores[id].gbm * 100).toFixed(1) + '% logreg ' + (tq.scores[id].logreg * 100).toFixed(1) + '%').join(' | '));
+// v20: passage-free tell check on Hard Reads (question plus choices only).
+const pds = L.passageDecks(), pq = TQA.checkPassage(L, pds); pq.errs.forEach(e => errs.push(e));
+if (pds.length) console.log('Passage-free models (4 seeds, 10-fold x5): ' + pds.map(id => id + ' gbm ' + (pq.scores[id].gbm * 100).toFixed(1) + '% logreg ' + (pq.scores[id].logreg * 100).toFixed(1) + '%').join(' | '));
 if (errs.length) { console.error(errs.join('\n')); process.exit(1); }
 console.log('ok deck checker (strategies, classifier, counts, sources)');

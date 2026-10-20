@@ -101,7 +101,11 @@ LSA.lengthStats = function (d) {
 LSA.deck = function (d) {
   d.format = d.format || 'gutcheck';
   d.section = d.section || 'Everyday';
-  d.cards.forEach(function (c) { c.deck = d.id; LSA.cardIndex[c.id] = c; });
+  d.cards.forEach(function (c) {
+    c.deck = d.id; LSA.cardIndex[c.id] = c;
+    // v20 Hard Reads: each question is its own Leitner card (indexed by its id), tied back to its passage.
+    if (d.format === 'passage') (c.qs || []).forEach(function (q) { q.deck = d.id; q.p = c.id; q.ages = c.ages; q.topic = c.topic; LSA.cardIndex[q.id] = q; });
+  });
   if (!LSA.decks[d.id]) LSA.deckOrder.push(d.id);
   LSA.decks[d.id] = d;
   return d;
@@ -111,7 +115,14 @@ LSA.defaultDecks = function () { return LSA.knowDecks().filter(function (id) { r
 LSA.knowDecks = function () { return LSA.deckOrder.filter(function (id) { return LSA.decks[id].format === 'gutcheck'; }); };
 // Red Flags decks (multi-select cue sets). They show in the picker next to Gut Check decks but play in their own mode.
 LSA.flagDecks = function () { return LSA.deckOrder.filter(function (id) { return LSA.decks[id].format === 'redflags'; }); };
-LSA.pickerDecks = function () { return LSA.deckOrder.filter(function (id) { var f = LSA.decks[id].format; return f === 'gutcheck' || f === 'redflags'; }); };
+LSA.pickerDecks = function () { return LSA.deckOrder.filter(function (id) { var f = LSA.decks[id].format; return f === 'gutcheck' || f === 'redflags' || f === 'passage'; }); };
+// v20 Passage decks (Hard Reads): a passage, then its questions. They play in their own mode.
+LSA.passageDecks = function () { return LSA.deckOrder.filter(function (id) { return LSA.decks[id].format === 'passage'; }); };
+LSA.passagesFor = function (age, deckIds) {
+  var out = [];
+  (deckIds || LSA.passageDecks()).forEach(function (id) { var d = LSA.decks[id]; if (d && d.format === 'passage') d.cards.forEach(function (c) { if (LSA.visible(c, age)) out.push(c); }); });
+  return out;
+};
 LSA.setsFor = function (age, deckIds) {
   var out = [];
   (deckIds || LSA.flagDecks()).forEach(function (id) { var d = LSA.decks[id]; if (d && d.format === 'redflags') d.cards.forEach(function (c) { if (LSA.visible(c, age)) out.push(c); }); });
@@ -132,6 +143,7 @@ LSA.answerIndex = 1; // c[1] is always the right choice in the data; the engine 
 LSA.checkDeck = function (d) {
   var errs = [], seen = {};
   if (d.format === 'redflags') return LSA.checkFlagDeck(d);
+  if (d.format === 'passage') return LSA.checkPassageDeck(d);
   if (d.format === 'steps') {
     d.cards.forEach(function (c) { if (!c.id || !c.title || !Array.isArray(c.steps) || !c.steps.length) errs.push(d.id + ': bad step card ' + c.id); });
     return errs;
@@ -266,6 +278,75 @@ LSA.checkFlagDeck = function (d) {
     if (['teen', 'adult'].indexOf(d.rating) < 0) errs.push(d.id + ': rating must be teen or adult');
   }
   ['ya', 'adult'].forEach(function (a) { var n = d.cards.filter(function (c) { return LSA.visible(c, a); }).length; if (n < LSA.MIN_CARDS) errs.push(d.id + ': only ' + n + ' sets for ' + a); });
+  return errs;
+};
+// v20 Hard Reads checker (STREET-SMART-SPEC.md, Passage). Shape: 2 to 3 paragraphs of 150 to 300 words, a title, a cite,
+// known sources, 5 to 7 questions of at least 4 types, each with 3 different choices (c[1] right), a fix and a line
+// (1-based paragraph) whose proof text is in that paragraph. Guard tags: quotesExtremism needs rebutted.
+// Tells on the questions: every Gut Check guessing rule (question text as the scenario), length ratio and longest share,
+// absolute words, and no type has its right answer on one screen slot over 45% (seeded shuffles, as the engine does).
+// The passage-free classifier (tools/tellqa.js, question plus choices only) runs in tools/checkdecks.js.
+LSA.PASSAGE_TYPES = { mainIdea: 'Main idea', inference: 'Inference', purpose: 'Purpose', assumption: 'Assumption', strengthen: 'Strengthen', weaken: 'Weaken', tone: 'Tone' };
+LSA.PASSAGE_MIN_Q = 250; LSA.PASSAGE_TARGET = 50;
+LSA.passageWords = function (c) { return (c.passage || []).join(' ').trim().split(/\s+/).length; };
+LSA.passageQs = function (d) { var out = []; d.cards.forEach(function (c) { (c.qs || []).forEach(function (q) { out.push({ id: q.id, c: q.c, s: q.q, type: q.type }); }); }); return out; };
+LSA.checkPassageDeck = function (d) {
+  var errs = [], seen = {};
+  if (d.section === LSA.STREET) {
+    if (!d.notice) errs.push(d.id + ': Street Smart deck needs a notice line');
+    if (['teen', 'adult'].indexOf(d.rating) < 0) errs.push(d.id + ': rating must be teen or adult');
+  }
+  d.cards.forEach(function (c) {
+    var p = d.id + '/' + c.id + ': ';
+    ['id', 'deck', 'topic', 'ages', 'title', 'passage', 'sourceIds', 'cite', 'qs'].forEach(function (k) { if (!c[k]) errs.push(p + 'missing ' + k); });
+    if (seen[c.id]) errs.push(p + 'duplicate id'); seen[c.id] = 1;
+    if (['both', 'ya', 'adult'].indexOf(c.ages) < 0) errs.push(p + 'bad ages');
+    if (d.rating === 'adult' && c.rating !== 'adult') errs.push(p + 'passage in an adult-rated deck needs rating adult');
+    var paras = Array.isArray(c.passage) ? c.passage : [];
+    if (paras.length < 2 || paras.length > 3 || !paras.every(function (x) { return typeof x === 'string' && x.trim(); })) errs.push(p + 'passage must be 2 to 3 paragraphs');
+    var wn = LSA.passageWords(c); if (wn < 150 || wn > 300) errs.push(p + 'passage is ' + wn + ' words (150 to 300)');
+    if (!Array.isArray(c.sourceIds) || !c.sourceIds.length || !c.sourceIds.every(function (k) { return d.sources && d.sources[k]; })) errs.push(p + 'every sourceId must be a known source');
+    var g = Array.isArray(c.guard) ? c.guard : [];
+    if (g.indexOf('quotesExtremism') >= 0 && g.indexOf('rebutted') < 0) errs.push(p + 'quotesExtremism needs rebutted');
+    var qs = Array.isArray(c.qs) ? c.qs : [];
+    if (qs.length < 5 || qs.length > 7) errs.push(p + 'needs 5 to 7 questions, has ' + qs.length);
+    var types = {}; qs.forEach(function (q) { types[q.type] = 1; });
+    if (Object.keys(types).length < 4) errs.push(p + 'questions need at least 4 types');
+    var txt = [c.title].concat(paras);
+    qs.forEach(function (q, k) {
+      var qp = p + (q && q.id || 'q' + k) + ': ';
+      if (!q || !q.id || !q.q || !q.fix || !q.proof) { errs.push(qp + 'needs id, q, fix and proof'); return; }
+      if (seen[q.id]) errs.push(qp + 'duplicate id'); seen[q.id] = 1;
+      if (q.id.indexOf(c.id + '-') !== 0) errs.push(qp + 'question id must start with the passage id');
+      if (!LSA.PASSAGE_TYPES[q.type]) errs.push(qp + 'bad type ' + q.type);
+      if (!Array.isArray(q.c) || q.c.length !== 3 || new Set(q.c).size !== 3) errs.push(qp + 'needs 3 different choices');
+      else { var r = q.c[1].length, o = Math.max(q.c[0].length, q.c[2].length); if (r > LSA.MAX_RIGHT_RATIO * o) errs.push(qp + 'right answer is ' + (r / o).toFixed(2) + 'x the next longest'); }
+      if (!(typeof q.line === 'number' && q.line >= 1 && q.line <= paras.length)) errs.push(qp + 'line must be a paragraph number of the passage');
+      else if (paras[q.line - 1].indexOf(q.proof) < 0) errs.push(qp + 'proof text is not in paragraph ' + q.line);
+      txt = txt.concat([q.q, q.fix], q.c || []);
+    });
+    if (LSA.RX_BANNED.test(txt.join(' '))) errs.push(p + 'banned word (gore or how-to)');
+  });
+  var Q = LSA.passageQs(d), t = LSA.tellStats(Q).strat;
+  Object.keys(t).forEach(function (k) { if (t[k] > LSA.MAX_STRATEGY) errs.push(d.id + ': question strategy "' + k + '" scores ' + Math.round(t[k] * 100) + '%'); });
+  var lo = Q.filter(function (q) { return Array.isArray(q.c) && q.c.length === 3 && q.c[1].length >= Math.max(q.c[0].length, q.c[2].length); }).length;
+  if (Q.length && lo / Q.length > LSA.MAX_RIGHT_LONGEST) errs.push(d.id + ': right answer is the longest on ' + Math.round(100 * lo / Q.length) + '% of questions');
+  var hasA = function (x) { return LSA.RX_ABS.test(x); }, ab = Q.filter(function (q) { return Array.isArray(q.c) && q.c.length === 3; });
+  var ar = ab.filter(function (q) { return hasA(q.c[1]); }).length, aw = ab.filter(function (q) { return hasA(q.c[0]) || hasA(q.c[2]); }).length;
+  var solo = ab.filter(function (q) { return !hasA(q.c[1]) && q.c.filter(hasA).length === 1; }).length;
+  if (ab.length && aw > Math.max(3, 3 * ar)) errs.push(d.id + ': absolute words are in ' + aw + ' wrong choices but only ' + ar + ' right ones');
+  if (ab.length && solo / ab.length > LSA.MAX_ABS_SOLO) errs.push(d.id + ': ' + solo + ' questions can be solved by dropping the lone absolute-worded choice');
+  // Screen slot of the right answer per type, over seeded shuffles (the engine shuffles every question's choices).
+  var slot = {}, r = LSA.rng(20);
+  for (var rep = 0; rep < 30; rep++) Q.forEach(function (q) { var o = LSA.shuffle([0, 1, 2], r), s = slot[q.type] = slot[q.type] || [0, 0, 0]; s[o.indexOf(1)]++; });
+  Object.keys(slot).forEach(function (k) { var s = slot[k], n = s[0] + s[1] + s[2]; if (Math.max.apply(null, s) / n > LSA.MAX_STRATEGY) errs.push(d.id + ': type ' + k + ' has its right answer in one slot ' + Math.round(100 * Math.max.apply(null, s) / n) + '% of the time'); });
+  // Size: 50 passages and 250+ questions for Adult when done. A deck still being written sets building: n (passages so far).
+  ['ya', 'adult'].forEach(function (a) {
+    if (d.rating === 'adult' && a === 'ya') return;
+    var nq = 0, np = 0; d.cards.forEach(function (c) { if (LSA.visible(c, a)) { np++; nq += (c.qs || []).length; } });
+    if (d.building) { if (np !== d.building) errs.push(d.id + ': building count ' + d.building + ' does not match ' + np + ' passages'); }
+    else if (np < LSA.PASSAGE_TARGET || nq < LSA.PASSAGE_MIN_Q) errs.push(d.id + ': only ' + np + ' passages and ' + nq + ' questions for ' + a + ' (need 50 and 250)');
+  });
   return errs;
 };
 LSA.checkAll = function () {

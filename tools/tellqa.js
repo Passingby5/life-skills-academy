@@ -6,13 +6,19 @@ const NEG = /\b(not|never|no|don't|do not|isn't|can't|won't|none)\b/i, HED = /\b
 function rng(seed) { let s = seed >>> 0 || 1; return () => { s ^= s << 13; s >>>= 0; s ^= s >>> 17; s ^= s << 5; s >>>= 0; return s / 4294967296; }; }
 function shuffle(a, r) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
 const wc = s => s.trim().split(/\s+/).length;
-function feats(ch, i) {
+const qw = t => new Set(String(t).toLowerCase().replace(/[^a-z0-9' ]+/g, ' ').split(' ').filter(w => w.length > 3));
+function feats(ch, i, q) {
   const L = ch.map(x => x.length), W = ch.map(wc), x = ch[i];
   const rk = L.slice().sort((a, b) => a - b).indexOf(L[i]), wr = W.slice().sort((a, b) => a - b).indexOf(W[i]);
   const fw = x.split(/\s+/)[0].toLowerCase().replace(/[,;]/g, ''), negs = ch.filter(y => NEG.test(y)).length;
   return [rk === 0, rk === 1, rk === 2, wr === 0, wr === 2, NEG.test(x), /\d/.test(x), /[,;]/.test(x), HED.test(x),
     ['no', 'not', "don't", 'do'].indexOf(fw) >= 0, ['yes', 'always', 'only', 'usually', 'never'].indexOf(fw) >= 0,
-    (x.match(HEDG) || []).length, negs === 1 && NEG.test(x)].map(Number);
+    (x.match(HEDG) || []).length, negs === 1 && NEG.test(x)].map(Number).concat(q === undefined ? [] : qfeats(ch, i, q));
+}
+// v20 passage-free extras: how much a choice repeats the question's own words (most, least, any).
+function qfeats(ch, i, q) {
+  const Q = qw(q), ov = ch.map(x => [...qw(x)].filter(w => Q.has(w)).length), mx = Math.max(...ov), mn = Math.min(...ov);
+  return [ov[i] === mx && mx > mn, ov[i] === mn && mx > mn, ov[i] > 0].map(Number);
 }
 exports.feats = feats;
 // One depth-2 regression tree fit to residuals g with Newton leaf values (hess h).
@@ -62,9 +68,9 @@ function heldOut(cs, make) {
     const idx = shuffle(cs.map((_, i) => i), rng(seed + 101)); let hit = 0;
     for (let f = 0; f < 10; f++) {
       const te = idx.filter((_, j) => j % 10 === f).map(i => cs[i]), tr = idx.filter((_, j) => j % 10 !== f).map(i => cs[i]);
-      const X = [], y = []; tr.forEach(c => c.c.forEach((_, i) => { X.push(feats(c.c, i)); y.push(+(i === c.a)); }));
+      const X = [], y = []; tr.forEach(c => c.c.forEach((_, i) => { X.push(feats(c.c, i, c.q)); y.push(+(i === c.a)); }));
       const m = make(X, y);
-      te.forEach(c => { const s = c.c.map((_, i) => m(feats(c.c, i))); if (s.indexOf(Math.max(...s)) === c.a) hit++; });
+      te.forEach(c => { const s = c.c.map((_, i) => m(feats(c.c, i, c.q))); if (s.indexOf(Math.max(...s)) === c.a) hit++; });
     }
     accs.push(hit / cs.length);
   }
@@ -75,7 +81,7 @@ exports.SEEDS = [7, 11, 23, 42];
 exports.score = function (cards, seeds) {
   const out = { gbm: 0, logreg: 0 };
   (seeds || exports.SEEDS).forEach(sd => {
-    const r = rng(sd * 7919), cs = cards.map(c => { const o = shuffle([0, 1, 2], r); return { c: o.map(k => c.c[k]), a: o.indexOf(1) }; });
+    const r = rng(sd * 7919), cs = cards.map(c => { const o = shuffle([0, 1, 2], r); return { c: o.map(k => c.c[k]), a: o.indexOf(1), q: c.q }; });
     out.gbm = Math.max(out.gbm, heldOut(cs, gbm)); out.logreg = Math.max(out.logreg, heldOut(cs, logreg));
   });
   return out;
@@ -84,6 +90,12 @@ exports.LIMIT = 0.45;
 exports.check = function (L, ids) {
   const errs = [], scores = {};
   ids.forEach(id => { const s = exports.score(L.decks[id].cards); scores[id] = s; ['gbm', 'logreg'].forEach(k => { if (s[k] > exports.LIMIT) errs.push(id + ': QA ' + k + ' tell model picks the right answer ' + (s[k] * 100).toFixed(1) + '% of held-out cards (limit 45%)'); }); });
+  return { errs, scores };
+};
+// v20 Hard Reads passage-free check: the same two models trained on each question plus its choices, never the passage.
+exports.checkPassage = function (L, ids) {
+  const errs = [], scores = {};
+  ids.forEach(id => { const qs = []; L.decks[id].cards.forEach(c => c.qs.forEach(q => qs.push({ c: q.c, q: q.q }))); const s = exports.score(qs); scores[id] = s; ['gbm', 'logreg'].forEach(k => { if (s[k] > exports.LIMIT) errs.push(id + ': passage-free ' + k + ' model picks the right answer ' + (s[k] * 100).toFixed(1) + '% of held-out questions without the passage (limit 45%)'); }); });
   return { errs, scores };
 };
 if (require.main === module) {

@@ -662,4 +662,68 @@ t('v18 power deck: adult-rated, our own tactics, step diagrams, none cards 10 to
   const kid = prof('ya'), all = L.allowedDecks(L.knowDecks(), kid);
   for (let s = 1; s <= 1000; s++) assert(!L.GC.start(kid, all, 0, s).q.some(it => L.cardIndex[it.id].deck === 'power'));
 });
+
+// ---------- v20 Hard Reads (passage mode) ----------
+t('v20 passage round: read, then each question with a confidence tap; Leitner per question; done counts a round', () => {
+  const s = L.newSave(), p = s.profiles[L.addProfile(s, 'A', 'adult')], st = L.PR.start(p, ['hardreads'], 0, 7);
+  const c = L.cardIndex[st.pid]; assert(c && c.deck === 'hardreads'); assert.strictEqual(st.stage, 'read'); assert.strictEqual(st.q.length, c.qs.length);
+  L.PR.pick(st, 0); assert.strictEqual(st.stage, 'read', 'no answer before I read it');
+  L.PR.read(st); assert.strictEqual(st.stage, 'ask');
+  L.PR.togglePeek(st); assert(st.peek); L.PR.togglePeek(st); assert(!st.peek);
+  st.q.forEach((it, k) => { const pos = k % 2 ? it.order.indexOf(0) : it.order.indexOf(1); L.PR.pick(st, pos); if (k === 0) { L.PR.back(st); assert.strictEqual(st.stage, 'ask'); L.PR.pick(st, pos); } L.PR.confirm(st, p, 2); assert.strictEqual(st.stage, 'fix'); L.PR.next(st, p); });
+  assert.strictEqual(st.stage, 'done'); assert.strictEqual(p.stats.rounds, 1); assert.strictEqual(st.right, Math.ceil(c.qs.length / 2));
+  c.qs.forEach((q, k) => { const e = p.boxes[q.id]; assert(e, 'box per question'); assert.strictEqual(e.b, k % 2 ? 1 : 2); assert.strictEqual(e.due, k % 2 ? 0 : 1); });
+  assert.strictEqual(st.wows.length, Math.floor(c.qs.length / 2), 'sure but wrong is a Wow');
+  // Same day: the missed questions are due now, so the passage comes back with only those questions.
+  const st2 = L.PR.start(p, ['hardreads'], 0, 9); assert.strictEqual(st2.pid, c.id, 'due passage first'); eq(st2.q.map(x => x.id), c.qs.filter((_, k) => k % 2).map(q => q.id));
+});
+t('v20 passage picking: due before new, new before not-yet-due; a passage is due when any question is due', () => {
+  const s = L.newSave(), p = s.profiles[L.addProfile(s, 'A', 'adult')], ps = L.passagesFor('adult', ['hardreads']);
+  ps.forEach(c => c.qs.forEach(q => { p.boxes[q.id] = { b: 3, due: 10, n: 1 }; }));
+  assert.strictEqual(L.PR.choose(ps, p.boxes, 0, L.rng(1)).id && L.PR.start(p, ['hardreads'], 0, 1).q.length, ps.find(c => c.id === L.PR.start(p, ['hardreads'], 0, 1).pid).qs.length, 'nothing due: the soonest passage, all its questions');
+  p.boxes[ps[3].qs[2].id] = { b: 2, due: 0, n: 1 };
+  for (let sd = 1; sd < 20; sd++) assert.strictEqual(L.PR.start(p, ['hardreads'], 0, sd).pid, ps[3].id);
+  delete p.boxes[ps[5].qs[0].id]; ps[5].qs.slice(1).forEach(q => delete p.boxes[q.id]);
+  p.boxes[ps[3].qs[2].id] = { b: 2, due: 4, n: 1 };
+  for (let sd = 1; sd < 20; sd++) assert.strictEqual(L.PR.start(p, ['hardreads'], 0, sd).pid, ps[5].id, 'new passage before not-yet-due');
+});
+t('v20 passage save: resumes mid-question (stage, pick, peek); a broken round is reset; a cut passage is dropped', () => {
+  const s = L.newSave(), k = L.addProfile(s, 'A', 'adult'), p = s.profiles[k]; p.pr = L.PR.start(p, ['hardreads'], 0, 3);
+  L.PR.read(p.pr); L.PR.pick(p.pr, 2); p.pr.peek = true; s.screen = 'pr';
+  let r = L.loadSave(L.dumpSave(s)); assert(!r.repaired && !r.broken); eq(r.save.profiles[k].pr, p.pr); assert.strictEqual(r.save.screen, 'pr');
+  const bad = JSON.parse(L.dumpSave(s)); bad.profiles[k].pr.q[0].order = [0, 0, 1];
+  r = L.loadSave(JSON.stringify(bad)); assert.strictEqual(r.save.profiles[k].pr, null); assert(r.repaired);
+  const bad2 = JSON.parse(L.dumpSave(s)); bad2.profiles[k].pr.stage = 'conf'; bad2.profiles[k].pr.q[0].pick = null;
+  assert.strictEqual(L.loadSave(JSON.stringify(bad2)).save.profiles[k].pr, null, 'conf needs a pick');
+  const cut = JSON.parse(L.dumpSave(s)); cut.profiles[k].pr.pid = 'hr999'; cut.profiles[k].boxes['hr01-q1'] = { b: 2, due: 1, n: 1 };
+  r = L.loadSave(JSON.stringify(cut)); assert.strictEqual(r.save.profiles[k].pr, null); assert(r.pruned); assert(r.save.profiles[k].boxes['hr01-q1'], 'boxes kept');
+});
+t('v20 Hard Reads is adult-rated: no passage reaches a young adult without the PIN unlock (start, load, 1,000 rounds)', () => {
+  assert.strictEqual(L.decks.hardreads.rating, 'adult'); assert(L.pickerDecks().indexOf('hardreads') >= 0);
+  const s = L.newSave(), k = L.addProfile(s, 'Kid', 'ya'), p = s.profiles[k];
+  for (let sd = 1; sd <= 1000; sd++) assert.strictEqual(L.PR.start(p, ['hardreads'], 0, sd).q.length, 0);
+  const a = L.newSave(), ka = L.addProfile(a, 'A', 'adult'); a.profiles[ka].pr = L.PR.start(a.profiles[ka], ['hardreads'], 0, 5); a.profiles[ka].age = 'ya';
+  assert.strictEqual(L.loadSave(L.dumpSave(a)).save.profiles[ka].pr, null, 'hand-edited save: dropped for ya');
+  a.profiles[ka].unlock = ['hardreads']; assert(L.loadSave(L.dumpSave(a)).save.profiles[ka].pr, 'kept after a PIN unlock');
+  p.unlock = ['hardreads']; assert(L.PR.start(p, ['hardreads'], 0, 1).q.length > 0, 'unlocked young adult can play');
+});
+t('v20 passage checker: shape, guard tags, proof lines, question types, and size are enforced', () => {
+  const d = L.decks.hardreads; eq(L.checkDeck(d), []);
+  const c = JSON.parse(JSON.stringify(d.cards[0])), mk = ch => { const x = JSON.parse(JSON.stringify(c)); ch(x); return L.checkPassageDeck(Object.assign({}, d, { cards: [x].concat(d.cards.slice(1)) })).join('\n'); };
+  assert(/quotesExtremism needs rebutted/.test(mk(x => { x.guard = ['quotesExtremism']; })));
+  assert(/2 to 3 paragraphs/.test(mk(x => { x.passage = [x.passage.join(' ')]; })));
+  assert(/5 to 7 questions/.test(mk(x => { x.qs = x.qs.slice(0, 4); })));
+  assert(/proof text is not in paragraph/.test(mk(x => { x.qs[0].proof = 'not in the passage at all'; })));
+  assert(/at least 4 types/.test(mk(x => { x.qs.forEach((q, k) => { q.type = ['tone', 'mainIdea', 'purpose'][k % 3]; }); })));
+  assert(/line must be/.test(mk(x => { x.qs[1].line = 9; })));
+  assert(/banned word/.test(mk(x => { x.qs[2].fix = 'Gory detail.'; })));
+  assert(/needs rating adult/.test(mk(x => { delete x.rating; })));
+  assert(/building count/.test(L.checkPassageDeck(Object.assign({}, d, { building: d.cards.length + 1 })).join('\n')));
+  assert(/need 50 and 250/.test(L.checkPassageDeck(Object.assign({}, d, { building: false })).join('\n')) === (d.cards.length < 50));
+});
+t('v20 every quoted phrase in a passage is in its saved source excerpt (tools/hr-facts.js fixture)', () => {
+  const X = require('./fixtures/hardreads-excerpts.json'), nm = s => s.replace(/[\u2018\u2019]/g, "'").replace(/[\u201c\u201d]/g, '"').replace(/\s+/g, ' ');
+  let n = 0; L.decks.hardreads.cards.forEach(c => (nm(c.passage.join(' ')).match(/"[^"]+"/g) || []).forEach(q => { const s = q.slice(1, -1).replace(/[,.]$/, ''), e = X[c.id + ':' + s]; assert(e && nm(e).includes(s), c.id + ' quote ' + s); n++; }));
+  assert(n >= 10);
+});
 console.log(n + ' unit tests passed');

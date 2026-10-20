@@ -31,7 +31,7 @@ async function runVp(b, vp) {
     // New decks start off; the 4 Everyday decks start on.
     const on0 = await page.evaluate(() => [...document.querySelectorAll('#picker [data-act=deck].on')].map(e => e.dataset.id));
     assert.deepStrictEqual(on0, ['firstaid', 'kitchen', 'money', 'scams'], 'default decks');
-    assert.strictEqual(await page.evaluate(() => document.querySelectorAll('#picker [data-act=deck]').length), 17);
+    assert.strictEqual(await page.evaluate(() => document.querySelectorAll('#picker [data-act=deck]').length), 18);
     let prev = on0;
     for (const id of NEW) {
       await page.evaluate(() => document.querySelectorAll('#picker details').forEach(d => d.open = true));
@@ -42,7 +42,7 @@ async function runVp(b, vp) {
       if (id === 'fieldcare') { await page.evaluate(() => document.querySelectorAll('#picker details').forEach(d => d.open = true)); await page.evaluate(() => document.getElementById('picker').scrollIntoView()); await shot('1-deck-picker.jpg'); await page.evaluate(() => window.scrollTo(0, 0)); }
       if (id === 'legal') {
         const ss = await page.evaluate(() => { const d = document.querySelector('#picker details[data-sect="Street Smart"]'); const nt = d && d.querySelector('.sectnote'); return d && { ids: [...d.querySelectorAll('[data-act=deck]')].map(e => e.dataset.id), note: nt && nt.textContent }; });
-        assert(ss, 'Street Smart section'); assert.deepStrictEqual(ss.ids, ['estate', 'legal', 'power', 'safety']); assert(/cites its source/.test(ss.note));
+        assert(ss, 'Street Smart section'); assert.deepStrictEqual(ss.ids, ['estate', 'hardreads', 'legal', 'power', 'safety']); assert(/cites its source/.test(ss.note));
         if (shots && vp.name === 'portrait') { fs.mkdirSync(path.join(shots, 'street/legal'), { recursive: true }); await page.evaluate(() => { document.querySelectorAll('#picker details').forEach(d => d.open = d.dataset.sect === 'Street Smart'); document.querySelector('#picker details[data-sect="Street Smart"]').scrollIntoView(); }); await page.screenshot({ path: path.join(shots, 'street/legal/v12-picker.jpg'), type: 'jpeg', quality: 85 }); await page.evaluate(() => window.scrollTo(0, 0)); }
       }
       if (id === 'controversy') {

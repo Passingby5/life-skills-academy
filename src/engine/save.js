@@ -2,9 +2,9 @@
 // Every field is checked deeply. Bad parts are fixed or reset; a save that cannot be used at all starts fresh.
 var LSA = typeof LSA !== 'undefined' ? LSA : {};
 LSA.SAVE_V = 2;
-LSA.SCREENS = ['home', 'menu', 'play', 'about', 'match', 'newprof', 'rf'];
+LSA.SCREENS = ['home', 'menu', 'play', 'about', 'match', 'newprof', 'rf', 'pr'];
 LSA.newStats = function () { return { rounds: 0, right: 0, seen: 0, wows: 0 }; };
-LSA.newProfile = function (name, age) { return { name: String(name || 'Player').slice(0, 20), age: age === 'ya' ? 'ya' : 'adult', boxes: {}, round: null, rf: null, carry: [], stats: LSA.newStats() }; };
+LSA.newProfile = function (name, age) { return { name: String(name || 'Player').slice(0, 20), age: age === 'ya' ? 'ya' : 'adult', boxes: {}, round: null, rf: null, pr: null, carry: [], stats: LSA.newStats() }; };
 LSA.newSave = function () { return { v: LSA.SAVE_V, active: null, next: 1, profiles: {}, decks: null }; };
 LSA.addProfile = function (s, name, age) {
   var id; do { id = 'p' + (s.next++); } while (s.profiles[id]);
@@ -48,6 +48,20 @@ LSA.checkRfRound = function (r) {
     return true;
   });
 };
+// v20: a Hard Reads round (profile.pr) is one passage and its questions, each with 3 shuffled choices.
+LSA.checkPrRound = function (r) {
+  if (!isObj(r) || r.mode !== 'pr' || !Array.isArray(r.q) || !r.q.length || !isInt(r.i, 0, r.q.length)) return false;
+  if (['read', 'ask', 'conf', 'fix', 'done'].indexOf(r.stage) < 0 || (r.stage !== 'done' && r.i >= r.q.length)) return false;
+  var c = typeof r.pid === 'string' && LSA.cardIndex[r.pid];
+  if (!c || !Array.isArray(c.qs) || typeof r.peek !== 'boolean') return false;
+  if (typeof r.today !== 'number' || !isFinite(r.today) || !isInt(r.right, 0, 1e6) || !Array.isArray(r.wows) || !r.wows.every(known)) return false;
+  return r.q.every(function (it) {
+    if (!isObj(it) || !known(it.id) || LSA.cardIndex[it.id].p !== r.pid || !Array.isArray(it.order) || it.order.slice().sort().join() !== '0,1,2') return false;
+    if (it.pick !== null && it.pick !== undefined && !isInt(it.pick, 0, 2)) return false;
+    if (it.conf !== null && it.conf !== undefined && !isInt(it.conf, 0, 2)) return false;
+    return true;
+  }) && (r.stage !== 'conf' || isInt(r.q[r.i].pick, 0, 2));
+};
 // v9: cards cut in a later version leave their ids behind. Drop only those ids from a saved round and keep the rest.
 // If the current card was cut, the next card becomes current, fresh (stage 'ask'). Returns true if anything changed.
 LSA.pruneRound = function (r) {
@@ -90,6 +104,11 @@ LSA.loadSave = function (text) {
         if (isObj(p.rf) && Array.isArray(p.rf.q) && p.rf.q.some(function (it) { return isObj(it) && typeof it.id === 'string' && !known(it.id); })) pruned = true;
         else if (LSA.checkRfRound(p.rf)) q.rf = p.rf; else fixed = true;
       }
+      if (p.pr !== null && p.pr !== undefined) {
+        // A Hard Reads round whose passage or a question was cut is dropped (it is one passage); the boxes are kept.
+        if (isObj(p.pr) && ((typeof p.pr.pid === 'string' && !known(p.pr.pid)) || (Array.isArray(p.pr.q) && p.pr.q.some(function (it) { return isObj(it) && typeof it.id === 'string' && !known(it.id); })))) pruned = true;
+        else if (LSA.checkPrRound(p.pr)) q.pr = p.pr; else fixed = true;
+      }
       if (Array.isArray(p.carry)) { q.carry = p.carry.filter(known).slice(0, 10); if (q.carry.length !== p.carry.length) pruned = true; } else if (p.carry !== undefined) fixed = true;
       if (isObj(p.stats)) Object.keys(q.stats).forEach(function (st) { if (isInt(p.stats[st], 0, 1e9)) q.stats[st] = p.stats[st]; });
       else fixed = true;
@@ -97,7 +116,7 @@ LSA.loadSave = function (text) {
       if (Array.isArray(p.unlock)) { var ul = p.unlock.filter(function (d) { return typeof d === 'string' && LSA.decks && LSA.decks[d]; }); if (ul.length) q.unlock = ul; if (ul.length !== p.unlock.length) fixed = true; } else if (p.unlock !== undefined) fixed = true;
       // v19: age filter on load. A hand-edited save cannot put a card this profile may not see (wrong age, or an
       // adult-rated deck that is not unlocked) in front of it; such a round is dropped, the boxes are kept.
-      ['round', 'rf'].forEach(function (rk) {
+      ['round', 'rf', 'pr'].forEach(function (rk) {
         var r = q[rk]; if (!r || !Array.isArray(r.q)) return;
         var bad = r.q.some(function (it) { var c = LSA.cardIndex && LSA.cardIndex[it && it.id]; return c && (!LSA.visible(c, q.age) || !LSA.deckAllowed(c.deck, q)); });
         if (bad) { q[rk] = null; fixed = true; }
@@ -109,7 +128,7 @@ LSA.loadSave = function (text) {
     if (s.next !== o.next) fixed = true;
     s.active = typeof o.active === 'string' && s.profiles[o.active] ? o.active : null;
     if (o.decks !== null && o.decks !== undefined) {
-      var ds = Array.isArray(o.decks) ? o.decks.filter(function (d) { return typeof d === 'string' && LSA.decks && LSA.decks[d] && (LSA.decks[d].format === 'gutcheck' || LSA.decks[d].format === 'redflags'); }) : [];
+      var ds = Array.isArray(o.decks) ? o.decks.filter(function (d) { return typeof d === 'string' && LSA.decks && LSA.decks[d] && ['gutcheck', 'redflags', 'passage'].indexOf(LSA.decks[d].format) >= 0; }) : [];
       if (ds.length && Array.isArray(o.decks) && ds.length === o.decks.length) s.decks = ds; else { fixed = true; s.decks = ds.length ? ds : null; }
     }
     if (typeof o.pin === 'string' && /^h[0-9a-z]{1,8}$/.test(o.pin)) s.pin = o.pin; else if (o.pin !== undefined && o.pin !== null) fixed = true;

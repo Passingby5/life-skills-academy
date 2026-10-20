@@ -91,7 +91,7 @@ Legal and estate cards are the normal card shape plus `cite: 'Cal. Veh. Code 231
 2. Street Safety: builds the Red Flags mode and its checker. (10 sets, then 52.)
 3. Estate Planning: Gut Check mode, reuses the legal cite pattern; cites in docs/street/ESTATE-SOURCES.md. (54 in v16.)
 4. Power Plays: adds step diagram on the fix screen. (60.) Built in v18 with 53 sourced cards (5 drafted cases cut for weak sources); see docs/street/POWER-SOURCES.md.
-5. Hard Reads last: biggest new mode, most writing, most guardrail review. (5 passages, then 50.)
+5. Hard Reads last: biggest new mode, most writing, most guardrail review. (5 passages, then 50.) v20 builds the Passage mode and adds passages in batches (deck field `building` = passages so far, which waives the 50-passage / 250-question minimum until the last batch); see docs/street/HARDREADS-SOURCES.md. Passages use ages "both" with rating "adult", so the parent PIN gate (not the age filter) keeps them from young adults. The "pull up weeds by the roots" line is not used: no credible source was found for its wording; hr01 uses the USHMM-recorded "To keep you is no gain; to lose you is no loss."
 Each slice ships with its tests, checker rules, and Tom's review list before the next starts.
 
 ## QA scope

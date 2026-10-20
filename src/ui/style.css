@@ -75,3 +75,10 @@ input{width:100%;min-height:52px;font:inherit;padding:8px 12px;border-radius:12p
 .steps .arr { flex: 0 0 auto; align-self: center; font-size: 1rem; color: #9fd3ff; }
 .tactic { font-weight: 600; }
 .faith { font-size: .85rem; font-style: italic; }
+.passage{background:#132a3b;border-radius:14px;padding:12px 14px;margin:8px 0;line-height:1.55}
+.passage h2{margin:4px 0 8px}
+.passage .para{margin:0 0 12px;font-size:1.05rem}
+.passage .para.mark{background:#2b4a2f;border-radius:8px;padding:4px 6px}
+.passage .pnum{display:inline-block;min-width:1.4em;font-weight:700;color:#ffd257}
+.proof{margin:10px 0;padding:8px 12px;border-left:4px solid #ffd257;background:#132a3b;border-radius:6px}
+.qtext{font-weight:600}

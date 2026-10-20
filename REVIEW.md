@@ -262,7 +262,7 @@ Reviewed by: ________  Date: ________
 - [ ] **fd24** (adult) Myth: A runny yolk is always safe. Fix: Cook eggs until both the yolk and white are firm. Source: [FoodSafety.gov: Safe Minimum Internal Temperatures](https://www.foodsafety.gov/food-safety-charts/safe-minimum-internal-temperatures)
 - [ ] **fd25** (both) Myth: Rinsing chicken makes it cleaner. Fix: Raw chicken does not need washing. Washing spreads germs to the sink and counter. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
 - [ ] **fd26** (both) Myth: A quick wipe makes the board clean. Fix: Use one board for raw meat and a separate one for foods that won't be cooked. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
-- [ ] **fd27** (both) Myth: Rinsing a few seconds gets hands clean. Fix: Wash for at least 20 seconds with soap and warm or cold water. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
+- [ ] **fd27** (both) Myth: Only hot water gets your hands clean. Fix: Wash for at least 20 seconds with soap and warm or cold water. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
 - [ ] **fd28** (ya) Myth: Eggless cookie dough is safe raw. Fix: Raw dough or batter made with uncooked flour is risky. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
 - [ ] **fd29** (adult) Myth: Sprouts are a safe health food. Fix: Raw or undercooked sprouts are a known food safety risk. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
 - [ ] **fd30** (adult) Myth: Fresh, raw cider is always safe. Fix: Unpasteurized milk, juice, cider and soft cheese can carry germs. Source: [CDC: Four Steps to Food Safety](https://www.cdc.gov/food-safety/prevention/index.html)
@@ -484,7 +484,7 @@ Reviewed by: ________  Date: ________
 - [ ] **md19** (both) Myth: Keep going no matter what. Fix: If a medicine doesn't help or causes problems, stop it and ask a health worker. Source: [Hesperian, Where There Is No Doctor (2025), ch. 6 (reworded)](https://hesperian.org/wp-content/uploads/pdf/en_wtnd_2025/en_wtnd_2025_06.pdf)
 - [ ] **md20** (adult) Myth: Growth tonics help kids grow. Fix: Growth tonics with steroids can make a child end up shorter. Spend the money on food. Source: [Hesperian, Where There Is No Doctor (2025), ch. 6 (reworded)](https://hesperian.org/wp-content/uploads/pdf/en_wtnd_2025/en_wtnd_2025_06.pdf)
 - [ ] **md21** (both) Myth: Everyone needs vitamin pills. Fix: A person who eats a variety of good food usually gets enough vitamins. Source: [Hesperian, Where There Is No Doctor (2025), ch. 6 (reworded)](https://hesperian.org/wp-content/uploads/pdf/en_wtnd_2025/en_wtnd_2025_06.pdf)
-- [ ] **md22** (both) Myth: Mixed cough medicines work best. Fix: Avoid cough medicines that both stop a cough and loosen mucus. Most cough medicines are a waste of money. Source: [Hesperian, Where There Is No Doctor (2025), ch. 6 (reworded)](https://hesperian.org/wp-content/uploads/pdf/en_wtnd_2025/en_wtnd_2025_06.pdf)
+- [ ] **md22** (both) Myth: Mixed cough medicines work best. Fix: It is best to avoid cough medicines that both quiet a cough and loosen mucus. Where There Is No Doctor says cough medicines rarely help much. Source: [Hesperian, Where There Is No Doctor (2025), ch. 6 (reworded)](https://hesperian.org/wp-content/uploads/pdf/en_wtnd_2025/en_wtnd_2025_06.pdf)
 - [ ] **md23** (both) Myth: Food and juice never change how a medicine works. Fix: Grapefruit juice can cause too much or too little of some medicines in your body. Read the label and ask your doctor or pharmacist. Source: [FDA: Grapefruit Juice and Some Drugs Don't Mix](https://www.fda.gov/consumers/consumer-updates/grapefruit-juice-and-some-drugs-dont-mix)
 - [ ] **md24** (both) Myth: A mild reaction means it is safe. Fix: After any allergic reaction, even mild, stop and never take that medicine again. Source: [Hesperian, Where There Is No Doctor (2025), ch. 6 (reworded)](https://hesperian.org/wp-content/uploads/pdf/en_wtnd_2025/en_wtnd_2025_06.pdf)
 - [ ] **md25** (adult) Myth: Aspirin is gentle on the stomach. Fix: Aspirin and ibuprofen can make ulcers worse. Acetaminophen does not irritate the stomach. Source: [Hesperian, Where There Is No Doctor (2025), ch. 6 (reworded)](https://hesperian.org/wp-content/uploads/pdf/en_wtnd_2025/en_wtnd_2025_06.pdf)
@@ -1716,8 +1716,8 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Fix: Use one board for raw meat and a separate one for foods that won't be cooked.
 - Source: `cdc-foodsafety` (https://www.cdc.gov/food-safety/prevention/index.html) quote: "a separate cutting board or plate for produce, bread, and other foods that won't be cooked."
 
-**fd27** (both, prep). How long should you scrub your hands with soap at home?
-- Choices: About 5 seconds / **At least 20 seconds** / About 2 minutes, hard
+**fd27** (both, prep). Before you cook, does the water for washing hands need to be hot?
+- Choices: Yes, as hot as you can stand / **No, warm or cold works** / Yes, or the soap won't work
 - Fix: Wash for at least 20 seconds with soap and warm or cold water.
 - Source: `cdc-foodsafety` (https://www.cdc.gov/food-safety/prevention/index.html) quote: "Wash for at least 20 seconds with soap and warm or cold water."
 
@@ -2366,8 +2366,8 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Source: `wtnd` (https://hesperian.org/wp-content/uploads/pdf/en_wtnd_2025/en_wtnd_2025_06.pdf) quote: "A person who eats well does not need extra vitamins."
 
 **md22** (both, general). A cough syrup mixes a cough stopper with a mucus loosener. Good buy?
-- Choices: Yes, two in one is best / **No, avoid that kind of mix** / Only if the bottle is big
-- Fix: Avoid cough medicines that both stop a cough and loosen mucus. Most cough medicines are a waste of money.
+- Choices: Yes, two in one is best / **It is best to skip that mix** / Only if the bottle is big
+- Fix: It is best to avoid cough medicines that both quiet a cough and loosen mucus. Where There Is No Doctor says cough medicines rarely help much.
 - Source: `wtnd` (https://hesperian.org/wp-content/uploads/pdf/en_wtnd_2025/en_wtnd_2025_06.pdf) quote: "cough medicines which contain medicines both to suppress a cough and also to get rid of mucus (cough medicines are almost always useless and a waste of money, whether or not they combine medicines)"
 
 **md23** (both, general). Can grapefruit juice change how some medicines work?
@@ -3265,7 +3265,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Source: `poison-plant` (https://www.poison.org/articles/plant) quote: "only eat wild plants if you know FOR CERTAIN what they are. People have died after mistaking hemlock for wild carrots."
 
 **sv74** (both, food). Is a plant that is not poisonous always safe for a toddler to chew?
-- Choices: Yes, it is totally safe to chew / **It can still make them choke** / No, unless it has thorns on it
+- Choices: Yes, it is totally safe to chew / **No, it could still choke them** / No, unless it has thorns on it
 - Fix: Even plants that are not poisonous can make someone choke. Watch young children closely outdoors.
 - Source: `poison-plant` (https://www.poison.org/articles/plant) quote: "Even non-poisonous plants can cause choking if someone tries to eat them." "Watch young children carefully when they play outdoors."
 

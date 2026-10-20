@@ -192,7 +192,7 @@ LSA.deck({
       c: ['Yes, wild carrot is safe to eat', 'Only if you know it for certain', 'No, unless you cook it first'],
       m: 'If it looks like wild carrot, it is wild carrot.', f: 'Only eat a wild plant if you know for certain what it is. People have died mistaking hemlock for wild carrot.', w: 'Look-alikes fool even careful people.', src: 'poison-plant' },
     { id: 'sv74', ages: 'both', topic: 'food', s: 'Is a plant that is not poisonous always safe for a toddler to chew?',
-      c: ['Yes, it is totally safe to chew', 'It can still make them choke', 'No, unless it has thorns on it'],
+      c: ['Yes, it is totally safe to chew', 'No, it could still choke them', 'No, unless it has thorns on it'],
       m: 'If a plant is not poisonous, a toddler can chew it.', f: 'Even plants that are not poisonous can make someone choke. Watch young children closely outdoors.', w: 'Small kids put things in their mouths.', src: 'poison-plant' },
     { id: 'sv75', ages: 'both', topic: 'food', s: 'A child took a bite of a wild mushroom from the yard. What now?',
       c: ['Wait, since most are harmless', 'Phone Poison Control now', 'Have them drink milk, then wait'],

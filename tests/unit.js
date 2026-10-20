@@ -410,4 +410,45 @@ t('v8 mn65 test uses the vendored excerpt, not the gitignored sources folder', (
   const u = fs.readFileSync(__filename, 'utf8'); assert(!u.includes("'../sources/" + "ftc-lostcard.txt'"));
   assert(fs.existsSync(path.join(__dirname, 'fixtures/ftc-lostcard-excerpt.txt')));
 });
+
+// v9
+const jeq = (x, y) => assert.strictEqual(JSON.stringify(x), JSON.stringify(y));
+function v7save() {
+  const o = [0, 1, 2];
+  return { v: 2, active: 'p1', next: 2, decks: ['triage', 'survive'], profiles: { p1: { name: 'Tom', age: 'adult',
+    boxes: { tr01: { b: 2, due: 5, n: 1 }, tr33: { b: 1, due: 5, n: 1 }, sv25: { b: 3, due: 9, n: 2 }, sv01: { b: 1, due: 5, n: 1 } },
+    carry: ['tr33', 'sv25', 'tr02'], stats: { rounds: 3, right: 4, seen: 5, wows: 0 },
+    round: { rs: 7, today: 5, i: 1, stage: 'conf', right: 1, wows: [], again: { tr33: 1 },
+      q: [{ id: 'tr01', order: o, pick: 0, conf: 1 }, { id: 'tr34', order: o, pick: 2, conf: null }, { id: 'tr02', order: o, pick: null, conf: null }, { id: 'sv01', order: o, pick: null, conf: null }] } } } };
+}
+t('v9 v7 save: cut tr34 is current, tr33 and sv25 carried; only those ids go, the round stays', () => {
+  ['tr33', 'tr34', 'sv25'].forEach(id => assert(!L.cardIndex[id], id + ' should be cut'));
+  const r = L.loadSave(JSON.stringify(v7save())); assert(!r.broken); assert(r.repaired);
+  const p = r.save.profiles.p1, st = p.round;
+  assert(st, 'round kept'); jeq(st.q.map(x => x.id), ['tr01', 'tr02', 'sv01']);
+  assert.strictEqual(st.i, 1); assert.strictEqual(st.stage, 'ask'); assert.strictEqual(st.q[1].pick, null);
+  assert.strictEqual(st.q[0].pick, 0); assert.strictEqual(st.right, 1); jeq(st.again, {});
+  jeq(p.carry, ['tr02']); assert(L.checkRound(st));
+});
+t('v9 cut card before the current one shifts the index; a round of only cut cards is dropped', () => {
+  const s = v7save(), R = s.profiles.p1.round; R.q[0].id = 'tr33'; R.i = 2; R.stage = 'ask';
+  const st = L.loadSave(JSON.stringify(s)).save.profiles.p1.round;
+  jeq(st.q.map(x => x.id), ['tr02', 'sv01']); assert.strictEqual(st.i, 0);
+  const s2 = v7save(); s2.profiles.p1.round.q = s2.profiles.p1.round.q.slice(1, 2); s2.profiles.p1.round.i = 0;
+  assert.strictEqual(L.loadSave(JSON.stringify(s2)).save.profiles.p1.round, null);
+});
+t('v9 unknown ids are pruned from Leitner boxes so cards seen is right', () => {
+  const p = L.loadSave(JSON.stringify(v7save())).save.profiles.p1;
+  jeq(Object.keys(p.boxes).sort(), ['sv01', 'tr01']);
+  assert.strictEqual(L.MM.seenCards(p, ['triage', 'survive']).length, 2);
+  const clean = L.loadSave(L.dumpSave(L.loadSave(JSON.stringify(v7save())).save)); assert(!clean.repaired);
+});
+t('v9 fd27 no longer asks the kf24 question', () => {
+  const a = L.cardIndex.fd27, k = L.cardIndex.kf24;
+  assert(!/how long/i.test(a.s) && /hot/i.test(a.s)); assert.notStrictEqual(a.m, k.m);
+});
+t('v9 md22 soft wording, sv74 answers the "always safe" question', () => {
+  const m = L.cardIndex.md22; assert(!/waste of money|avoid that/i.test(m.f + m.c.join()));
+  assert(/^No, /.test(L.cardIndex.sv74.c[1]));
+});
 console.log(n + ' unit tests passed');

@@ -35,6 +35,23 @@ LSA.checkRound = function (r) {
     return true;
   });
 };
+// v9: cards cut in a later version leave their ids behind. Drop only those ids from a saved round and keep the rest.
+// If the current card was cut, the next card becomes current, fresh (stage 'ask'). Returns true if anything changed.
+LSA.pruneRound = function (r) {
+  if (!isObj(r) || !Array.isArray(r.q)) return false;
+  var ch = false, i0 = isInt(r.i, 0, r.q.length) ? r.i : 0, i = i0, q = [];
+  r.q.forEach(function (it, j) {
+    if (isObj(it) && typeof it.id === 'string' && !known(it.id)) { ch = true; if (j < i0) i--; else if (j === i0 && r.stage !== 'done') { r.stage = 'ask'; } return; }
+    q.push(it);
+  });
+  if (!ch && !(Array.isArray(r.wows) && !r.wows.every(known))) return false;
+  r.q = q; r.i = Math.min(i, q.length);
+  if (r.stage !== 'done' && r.i >= q.length) r.stage = 'done';
+  if (r.stage === 'ask' && q[r.i]) { q[r.i].pick = null; q[r.i].conf = null; }
+  if (Array.isArray(r.wows)) r.wows = r.wows.filter(known);
+  if (isObj(r.again)) Object.keys(r.again).forEach(function (k) { if (!known(k)) delete r.again[k]; });
+  return true;
+};
 // Returns { save, broken, repaired } and never throws.
 LSA.loadSave = function (text) {
   if (!text) return { save: LSA.newSave(), broken: false, repaired: false };
@@ -49,11 +66,13 @@ LSA.loadSave = function (text) {
       if (q.name !== p.name || q.age !== p.age) fixed = true;
       if (isObj(p.boxes)) Object.keys(p.boxes).forEach(function (id) {
         var e = p.boxes[id];
+        if (!known(id)) { fixed = true; return; } // v9: forget boxes for cards that no longer exist
         if (isObj(e) && isInt(e.b, 1, 5) && typeof e.due === 'number' && isFinite(e.due)) q.boxes[id] = { b: e.b, due: e.due, n: isInt(e.n, 0, 1e9) ? e.n : 1 };
         else fixed = true;
       }); else fixed = true;
+      if (p.round !== null && p.round !== undefined) { if (LSA.pruneRound(p.round)) fixed = true; if (p.round.q && !p.round.q.length) p.round = null; }
       if (p.round !== null && p.round !== undefined) { if (LSA.checkRound(p.round)) q.round = p.round; else fixed = true; }
-      if (Array.isArray(p.carry)) q.carry = p.carry.filter(known).slice(0, 10); else if (p.carry !== undefined) fixed = true;
+      if (Array.isArray(p.carry)) { q.carry = p.carry.filter(known).slice(0, 10); if (q.carry.length !== p.carry.length) fixed = true; } else if (p.carry !== undefined) fixed = true;
       if (isObj(p.stats)) Object.keys(q.stats).forEach(function (st) { if (isInt(p.stats[st], 0, 1e9)) q.stats[st] = p.stats[st]; });
       else fixed = true;
       s.profiles[k] = q;

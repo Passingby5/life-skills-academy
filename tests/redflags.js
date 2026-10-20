@@ -46,6 +46,7 @@ const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.sp
         assert.strictEqual(fx.cues, 6); assert.strictEqual(fx.whys, 6); assert(fx.flags >= 2 && fx.flags <= 4);
         assert(/^Case: \S/.test(fx.cite) && fx.src && /911/.test(fx.note), 'case, source and notice'); assert(fx.sw <= vp.width, 'fix fits');
         assert(sets % 2 ? /of 6 right|All 6/.test(fx.score) : /All 6 right/.test(fx.score), 'score line: ' + fx.score);
+        if (/All 6 right/.test(fx.score)) assert(!/partial/i.test(fx.score), 'a perfect score is not labeled partial credit: ' + fx.score); else assert(/partial credit/.test(fx.score), 'partial label: ' + fx.score);
         if (sets === 0) await shot('fix-exact'); if (sets === 1) await shot('fix-partial');
         sets++; await tap('[data-act=rfnext]');
       }

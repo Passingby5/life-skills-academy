@@ -124,7 +124,7 @@
       var sc = LSA.RF.score(st), s = d.sources[c.src];
       var h = '<div class="card fix" id="fix">';
       if (it.wow) h += '<div class="wow" id="wow">😮 Wow!</div><p class="muted">You were sure, but you missed some. Big surprises stick best.</p>';
-      h += '<p class="' + (sc.exact ? 'ok' : 'wrong') + '" id="rfscore">' + (sc.exact ? '✅ All 6 right.' : '❌ ' + sc.n + ' of 6 right.') + ' <span class="muted">(partial credit: ' + sc.n + ' points)</span></p><ul class="cues" id="cuelist">';
+      h += '<p class="' + (sc.exact ? 'ok' : 'wrong') + '" id="rfscore">' + (sc.exact ? '✅ All 6 right.' : '❌ ' + sc.n + ' of 6 right.') + (sc.exact ? '' : ' <span class="muted">(partial credit: ' + sc.n + ' points)</span>') + '</p><ul class="cues" id="cuelist">';
       LSA.RF.marks(st).forEach(function (m) {
         h += '<li class="cue ' + (m.cue.flag ? 'flag' : 'fine') + (m.ok ? '' : ' miss') + '"><b>' + (m.cue.flag ? '🚩 Red flag' : '✓ Fine') + (m.ok ? '' : (m.picked ? ' (you tapped it)' : ' (you missed it)')) + ':</b> ' + esc(m.cue.t) + '<br><span class="muted">' + esc(m.cue.why) + '</span></li>';
       });

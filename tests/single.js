@@ -3,6 +3,7 @@ const { chromium } = require('playwright-core'), fs = require('fs'), path = requ
 const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lsa-single-')), out = path.join(dir, 'test.html');
 execSync('node ' + path.join(__dirname, '../tools/testhtml.js') + ' ' + out, { stdio: 'ignore' });
 assert.deepStrictEqual(fs.readdirSync(dir), ['test.html'], 'only the one file');
+assert(!/href="icons\//.test(fs.readFileSync(out, 'utf8')), 'v17: page icons are inlined, so the single file requests no icons/*.png');
 (async () => {
   const b = await chromium.launch({ executablePath: '/usr/bin/google-chrome', args: ['--no-sandbox'] });
   const page = await (await b.newContext({ viewport: { width: 390, height: 844 } })).newPage(), wait = () => page.waitForTimeout(450);

@@ -274,6 +274,26 @@ t('v4-5 a carried retry is kept while its deck is off and comes back when it is 
   assert(s2.q.slice(0, 3).some(x => x.id === id)); eq(back.carry, []);
 });
 
+t('v17 QA v15 Red Flags fixes: real names, charged wording, no quote tell, trusted safe cues, polish', () => {
+  const d = L.decks.safety, g = id => d.cards.find(c => c.id === id), all = c => [c.s].concat(c.cues.map(q => q.t + ' ' + q.why)).join(' ');
+  assert(/Roshard Andrew Carty/.test(g('sf05').s) && !/Kevin/.test(g('sf05').s));
+  assert(/Charmmorro Vijay Strothers/.test(g('sf13').s) && !/Jonathan/.test(g('sf13').s));
+  assert(/Davyd George Brand Jimenez/.test(g('sf14').s) && !/Pedro/.test(g('sf14').s));
+  ['sf14', 'sf15'].forEach(id => assert(/is charged|was charged/.test(g(id).s) && /[Pp]rosecutors say/.test(g(id).s), id));
+  assert(/indictment/.test(g('sf30').s) && /said to have taken/.test(g('sf30').s) && /said to have taken/.test(g('sf23').s));
+  d.cards.forEach(c => c.cues.forEach(q => assert(!L.cueQuoted(q.t), c.id + ' quoted cue: ' + q.t)));
+  ['sf01', 'sf17', 'sf21', 'sf27', 'sf28'].forEach(id => g(id).cues.filter(q => !q.flag).forEach(q => assert(!/^They\b/.test(q.t), id + ' ' + q.t)));
+  assert(/falsely said a rapper co-owned/.test(all(g('sf37'))) && !/had no role\./.test(all(g('sf37'))));
+  assert(/over \$15,000/.test(all(g('sf43'))) && !/10,000/.test(all(g('sf43'))));
+  assert(/Gulf of Mexico/.test(g('sf29').cues.map(q => q.t).join(' ')) && !/oil rig overseas/.test(all(g('sf29'))));
+  assert(/Daren Li/.test(g('sf34').s) && g('sf34').src === 'doj-daren-li' && !d.sources['doj-pig-ndny']);
+  // Quote rule: separate from punct; a deck whose quoted tiles are all flags fails.
+  assert('quote' in L.cueTells(d.cards));
+  const bad = Object.assign({}, d, { cards: d.cards.map(c => Object.assign({}, c, { cues: c.cues.map(q => q.flag ? Object.assign({}, q, { t: '"' + q.t + '"' }) : q) })) });
+  assert(L.checkFlagDeck(bad).some(e => /quoted cues/.test(e)));
+  assert(L.checkFlagDeck(d).every(e => !/quote/.test(e)));
+});
+
 // ---------- v5 regression tests ----------
 t('v5-1 negation, number, and comma/semicolon strategies exist and stay at 45% or less on every deck', () => {
   L.knowDecks().forEach(id => { const t = L.tellStats(L.decks[id].cards).strat; ['negation', 'number', 'punct'].forEach(k => { assert(k in t); assert(t[k] <= L.tellLimit(id, k), id + ' ' + k + ' ' + t[k]); }); });

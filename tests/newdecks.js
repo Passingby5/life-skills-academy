@@ -3,15 +3,25 @@
 // SHOTS=dir saves 4 portrait screenshots: the grouped picker, a field care question with a picture,
 // a knot fix screen, and a homestead card with a picture.
 const { chromium } = require('playwright-core'), http = require('http'), fs = require('fs'), path = require('path'), assert = require('assert');
-const SITE = path.join(__dirname, '../site'), shots = process.env.SHOTS;
+let base; const SITE = path.join(__dirname, '../site'), shots = process.env.SHOTS;
 const T = { html: 'text/html', js: 'text/javascript', json: 'application/json', png: 'image/png', svg: 'image/svg+xml', webmanifest: 'application/manifest+json' };
 const NEW = ['fieldcare', 'triage', 'foodsafe', 'medsafe', 'navgear', 'survive', 'canning', 'homestead', 'controversy', 'legal', 'estate'];
 const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.split('?')[0]); if (p.endsWith('/')) p += 'index.html'; const f = path.join(SITE, p); if (!f.startsWith(SITE) || !fs.existsSync(f)) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'Content-Type': T[f.split('.').pop()] || 'application/octet-stream' }); r.end(fs.readFileSync(f)); });
 (async () => {
-  await new Promise(r => server.listen(0, r)); const base = 'http://127.0.0.1:' + server.address().port + '/';
-  const b = await chromium.launch({ executablePath: '/usr/bin/google-chrome', args: ['--no-sandbox'] });
+  await new Promise(r => server.listen(0, r)); base = 'http://127.0.0.1:' + server.address().port + '/';
   if (shots) fs.mkdirSync(path.join(shots, 'v11'), { recursive: true });
+  // v17 (QA P5): each viewport gets its own fresh browser, and a run that dies with a closed or crashed target is retried once.
   for (const vp of [{ width: 390, height: 844, name: 'portrait' }, { width: 844, height: 390, name: 'landscape' }]) {
+    for (let attempt = 1; ; attempt++) {
+      const b = await chromium.launch({ executablePath: '/usr/bin/google-chrome', args: ['--no-sandbox', '--disable-dev-shm-usage'] });
+      try { await runVp(b, vp); await b.close(); break; }
+      catch (e) { await b.close().catch(() => {}); if (attempt < 2 && /closed|crash/i.test(e.message)) { console.log('retry ' + vp.name + ' after: ' + e.message.split('\n')[0]); continue; } throw e; }
+    }
+  }
+  server.close(); console.log('ok new deck tests passed');
+})().catch(e => { console.error(e); process.exit(1); });
+async function runVp(b, vp) {
+  {
     const ctx = await b.newContext({ viewport: vp, deviceScaleFactor: 2, isMobile: true, hasTouch: true }), page = await ctx.newPage(), errs = [];
     page.on('console', m => { if (['error', 'warning'].includes(m.type())) errs.push(m.text()); }); page.on('pageerror', e => errs.push(e.message));
     const tap = async s => { await page.click(s); await page.waitForTimeout(400); };
@@ -77,5 +87,4 @@ const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.sp
     if (vp.name === 'portrait') console.log('shots taken: ' + [...done].join(', '));
     await ctx.close();
   }
-  await b.close(); server.close(); console.log('ok new deck tests passed');
-})().catch(e => { console.error('FAIL', e.message); server.close(); process.exit(1); });
+}

@@ -171,6 +171,7 @@ LSA.checkDeck = function (d) {
 LSA.CUE_MAX_LIFT = 0.45; LSA.CUE_LEN_RATIO = 1.2; LSA.CUE_MAX_COUNT_SHARE = 0.5;
 LSA.cueWords = function (t) { return t.toLowerCase().replace(/[^a-z0-9' ]+/g, ' ').split(' ').filter(function (w) { return w.length > 2; }); };
 // Lift over the base rate: 0 means no better than always guessing the more common label, 1 means perfect.
+LSA.cueQuoted = function (t) { return /["\u201c\u201d\u2018]|(^|[\s(])'|'([\s.,;:!?)]|$)/.test(t); };
 LSA.cueTells = function (cards) {
   var all = [], base = 0;
   cards.forEach(function (c, si) { (c.cues || []).forEach(function (q) { all.push({ si: si, t: q.t, flag: !!q.flag }); if (q.flag) base++; }); });
@@ -207,6 +208,7 @@ LSA.cueTells = function (cards) {
   return {
     firstWord: feat('firstWord', function (t) { return LSA.firstWord(t).toLowerCase(); }),
     punct: feat('punct', function (t) { return (/[,;:"']/.test(t) ? 'p' : '') + (/\d/.test(t) ? 'd' : ''); }),
+    quote: feat('quote', function (t) { return LSA.cueQuoted(t) ? 'q' : ''; }),
     length: feat('length', function (t) { return Math.floor(t.length / 8); }),
     keywords: words()
   };
@@ -233,6 +235,10 @@ LSA.checkFlagDeck = function (d) {
   });
   Object.keys(counts).forEach(function (k) { if (counts[k] / d.cards.length > LSA.CUE_MAX_COUNT_SHARE) errs.push(d.id + ': ' + Math.round(100 * counts[k] / d.cards.length) + '% of sets have ' + k + ' flags (max 50%)'); });
   if (fl[1] && fi[1] && (fl[0] / fl[1]) > LSA.CUE_LEN_RATIO * (fi[0] / fi[1])) errs.push(d.id + ': flag cues are ' + ((fl[0] / fl[1]) / (fi[0] / fi[1])).toFixed(2) + 'x longer than fine cues');
+  // Quote rule: quotation marks on tiles must not mark one side. With 2+ quoted cues, at most 75% may share a side.
+  var qc = [];
+  d.cards.forEach(function (c) { (c.cues || []).forEach(function (q) { if (q && q.t && LSA.cueQuoted(q.t)) qc.push(!!q.flag); }); });
+  if (qc.length >= 2) { var qf = qc.filter(Boolean).length / qc.length; if (qf > 0.75 || qf < 0.25) errs.push(d.id + ': quoted cues are ' + Math.round(100 * qf) + '% red flags (quote tell, keep 25% to 75%)'); }
   var t = LSA.cueTells(d.cards);
   Object.keys(t).forEach(function (k) { if (t[k] > LSA.CUE_MAX_LIFT) errs.push(d.id + ': cue tell "' + k + '" lift ' + Math.round(100 * t[k]) + '%'); });
   if (d.section === LSA.STREET) {

@@ -44,7 +44,7 @@ Flag counts: {"2":20,"3":24,"4":8}. Cue tells (lift over base rate, max 45%): {"
 | doj-ndtx-romance | U.S. Attorney, N.D. Tex. (Mar. 19, 2024): Romance Scammer Sentenced to 10 Years in Federal Prison, Ordered to Pay $2.2M in Restitution | https://www.justice.gov/usao-ndtx/pr/romance-scammer-sentenced-10-years-federal-prison-ordered-pay-22m-restitution | sf31 |
 | doj-stl-romance | U.S. Attorney, E.D. Mo. (Dec. 19, 2022): Texas Man Admits $1.2 Million Romance Scam Targeting St. Louis Woman | https://www.justice.gov/usao-edmo/pr/texas-man-admits-12-million-romance-scam-targeting-st-louis-woman | sf32 |
 | doj-nj-romance | U.S. Attorney, D.N.J. (Apr. 14, 2023): Essex County Man Convicted of Conspiracy to Commit Wire Fraud and Wire Fraud in Connection with Romance Scam | https://www.justice.gov/usao-nj/pr/essex-county-man-convicted-conspiracy-commit-wire-fraud-and-wire-fraud-connection | sf33 |
-| doj-pig-ndny | U.S. Attorney, N.D.N.Y. (Apr. 8, 2025): Secret Service Seizes Another Web Domain Used in Furtherance of a Cryptocurrency “Pig Butchering” Scheme | https://www.justice.gov/usao-ndny/pr/secret-service-seizes-another-web-domain-used-furtherance-cryptocurrency-pig | sf34 |
+| doj-daren-li | DOJ Office of Public Affairs (Feb. 9, 2026): Man Sentenced to 20 Years in Prison for Role in $73 Million Global Cryptocurrency Investment Scam | https://www.justice.gov/opa/pr/man-sentenced-20-years-prison-role-73-million-global-cryptocurrency-investment-scam | sf34 |
 | doj-pig-wdmo | U.S. Attorney, W.D. Mo. (Sept. 25, 2026): Vietnamese National Charged for Role in Massive “Pig Butchering” Cryptocurrency Scam | https://www.justice.gov/usao-wdmo/pr/vietnamese-national-charged-role-massive-pig-butchering-cryptocurrency-scam | sf35 |
 | doj-mcelhiney | U.S. Attorney, E.D. Wash. (June 26, 2024): Man Pleads Guilty to Operating a Cryptocurrency Investment Scheme and Defrauding Investors of More than $350,000 | https://www.justice.gov/usao-edwa/pr/man-pleads-guilty-operating-cryptocurrency-investment-scheme-and-defrauding-investors | sf36 |
 | doj-felton | U.S. Attorney, N.D. Ga. (July 21, 2022): Atlanta film producer pleads guilty for $2.5 million cryptocurrency-based investment scams | https://www.justice.gov/usao-ndga/pr/atlanta-film-producer-pleads-guilty-25-million-cryptocurrency-based-investment-scams | sf37 |
@@ -89,3 +89,11 @@ Flag counts: {"2":20,"3":24,"4":8}. Cue tells (lift over base rate, max 45%): {"
 
 - Names checked against each release: Kari Morales, Emily Zawacki, Viraj Patel, Sharon Dolisi, Robert Cirillo, Ijeoma Okoro, Jorge Vasquez, Ryan Felton, Jonas Saunders (a former classmate, not an ex), Brett Dadig.
 - Victoria Carmona: her job story was a planned cover story, and she pleaded guilty. The set says so.
+
+## v17 changes (QA v15)
+- Names fixed to match the DOJ releases: sf05 Roshard Andrew Carty, sf13 Charmmorro Vijay Strothers, sf14 Davyd George Brand Jimenez. tools/street-quotes.js now fails if any capitalized word in a scenario is missing from its saved source.
+- Charged-only wording: sf14 and sf15 say "is charged" / "prosecutors say"; sf23 and sf30 say "said to have taken" and name the indictment. sf30 uses the legal name Frederick Kumi (known as Abu Trica).
+- No quotation marks on any cue tile; the checker has a separate quote rule (quoted cues must be 25% to 75% flags) and a quote cue-tell feature.
+- Safe cues that said "They" now name a trusted party (sf01, sf17, sf21, sf27, sf28).
+- sf34 now uses the named Daren Li case (doj-daren-li) instead of the unnamed N.D.N.Y. domain seizure.
+- sf37: the rapper line now says Felton falsely said a rapper co-owned FLiK. sf43: over $15,000. sf29: oil rigs in the Gulf of Mexico.

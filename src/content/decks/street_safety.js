@@ -43,7 +43,7 @@ LSA.deck({
     'doj-ndtx-romance': ['U.S. Attorney, N.D. Tex. (Mar. 19, 2024): Romance Scammer Sentenced to 10 Years in Federal Prison, Ordered to Pay $2.2M in Restitution', 'https://www.justice.gov/usao-ndtx/pr/romance-scammer-sentenced-10-years-federal-prison-ordered-pay-22m-restitution'],
     'doj-stl-romance': ['U.S. Attorney, E.D. Mo. (Dec. 19, 2022): Texas Man Admits $1.2 Million Romance Scam Targeting St. Louis Woman', 'https://www.justice.gov/usao-edmo/pr/texas-man-admits-12-million-romance-scam-targeting-st-louis-woman'],
     'doj-nj-romance': ['U.S. Attorney, D.N.J. (Apr. 14, 2023): Essex County Man Convicted of Conspiracy to Commit Wire Fraud and Wire Fraud in Connection with Romance Scam', 'https://www.justice.gov/usao-nj/pr/essex-county-man-convicted-conspiracy-commit-wire-fraud-and-wire-fraud-connection'],
-    'doj-pig-ndny': ['U.S. Attorney, N.D.N.Y. (Apr. 8, 2025): Secret Service Seizes Another Web Domain Used in Furtherance of a Cryptocurrency “Pig Butchering” Scheme', 'https://www.justice.gov/usao-ndny/pr/secret-service-seizes-another-web-domain-used-furtherance-cryptocurrency-pig'],
+    'doj-daren-li': ['DOJ Office of Public Affairs (Feb. 9, 2026): Man Sentenced to 20 Years in Prison for Role in $73 Million Global Cryptocurrency Investment Scam', 'https://www.justice.gov/opa/pr/man-sentenced-20-years-prison-role-73-million-global-cryptocurrency-investment-scam'],
     'doj-pig-wdmo': ['U.S. Attorney, W.D. Mo. (Sept. 25, 2026): Vietnamese National Charged for Role in Massive “Pig Butchering” Cryptocurrency Scam', 'https://www.justice.gov/usao-wdmo/pr/vietnamese-national-charged-role-massive-pig-butchering-cryptocurrency-scam'],
     'doj-mcelhiney': ['U.S. Attorney, E.D. Wash. (June 26, 2024): Man Pleads Guilty to Operating a Cryptocurrency Investment Scheme and Defrauding Investors of More than $350,000', 'https://www.justice.gov/usao-edwa/pr/man-pleads-guilty-operating-cryptocurrency-investment-scheme-and-defrauding-investors'],
     'doj-felton': ['U.S. Attorney, N.D. Ga. (July 21, 2022): Atlanta film producer pleads guilty for $2.5 million cryptocurrency-based investment scams', 'https://www.justice.gov/usao-ndga/pr/atlanta-film-producer-pleads-guilty-25-million-cryptocurrency-based-investment-scams'],
@@ -69,9 +69,9 @@ LSA.deck({
         { t: 'A stranger on Facebook says you can earn pay driving cash', flag: true, why: 'Real firms do not hire strangers to haul cash.' },
         { t: 'Your car must be left with them for a while first', flag: true, why: 'Time alone with your car lets them hide drugs in it.' },
         { t: 'The dealer says you must show a license to test drive', flag: false, why: 'Normal check before a test drive.' },
-        { t: 'They say a GPS unit will be put in for "security"', flag: true, why: 'A tracker lets them follow the load, not keep you safe.' },
+        { t: 'They say a GPS unit will be put in to keep the car secure', flag: true, why: 'A tracker lets them follow the load, not keep you safe.' },
         { t: 'Your new boss says pay comes by direct deposit', flag: false, why: 'Normal payroll.' },
-        { t: 'They ask you to pass a background check first', flag: false, why: 'Real employers often check.' }
+        { t: 'A trucking firm you applied to runs a background check', flag: false, why: 'Real employers often check.' }
       ],
       doThis: 'Never drive a car or carry a bag someone else packed or had alone. Say no and report the offer at tips.fbi.gov.', src: 'doj-carmona', also: ['ftc-reshipping'] },
     { id: 'sf02', ages: 'both', topic: 'courier', cite: 'U.S. Attorney, W.D. Wash., June 23, 2025', s: 'Martin Peinado Torres said a Facebook post promised construction work. After he filled out the forms, he was told the job was moving drugs. Which signs are red flags?',
@@ -104,7 +104,7 @@ LSA.deck({
         { t: 'A friend\'s parent offers to get you a ticket for a game', flag: false, why: 'A known adult doing a normal favor.' }
       ],
       doThis: 'Never carry anything across a border for someone else. Tell a parent, teacher or school officer about any offer.', src: 'doj-teens', also: ['polaris-recruit'] },
-    { id: 'sf05', ages: 'both', topic: 'scams', cite: 'U.S. Attorney, W.D. Wash., May 15, 2026', s: 'A Washington retiree was told she won $22 million from Publishers Clearing House. Kevin Carty took more than $600,000 in "fees" and pushed her to sell her home. Which signs are red flags?',
+    { id: 'sf05', ages: 'both', topic: 'scams', cite: 'U.S. Attorney, W.D. Wash., May 15, 2026', s: 'A Washington retiree was told she won $22 million from Publishers Clearing House. Roshard Andrew Carty took more than $600,000 in "fees" and pushed her to sell her home. Which signs are red flags?',
       cues: [
         { t: 'Before you get the prize, you must pay fees', flag: true, why: 'Real prizes never charge you first.' },
         { t: 'The caller asks you to tell no one about the win', flag: true, why: 'Secrecy keeps family from stopping the scam.' },
@@ -121,7 +121,7 @@ LSA.deck({
         { t: 'Your bank says it must ask why you need so much cash', flag: false, why: 'Banks ask to protect you. Answer honestly.' },
         { t: 'A friend you know pays you back with a check', flag: false, why: 'A known person paying a known debt is fine.' },
         { t: 'Your bank says you must sign loan papers at a branch', flag: false, why: 'A normal step for a loan you asked for.' },
-        { t: 'A bill for money you owe comes to your home', flag: false, why: 'Ordinary mail from a company you use.' }
+        { t: 'A caller from your gym says your class moved to noon', flag: false, why: 'Ordinary call from a place you use.' }
       ],
       doThis: 'Never let strangers send money through your account. If you already did, stop, keep records and report at ic3.gov.', src: 'doj-dolisi', also: ['ftc-fake-check'] },
     { id: 'sf07', ages: 'both', topic: 'moneyMule', cite: 'U.S. Attorney, E.D. Pa., Aug. 10, 2026', s: 'Emily Zawacki of Chester County took about $2 million in wires and mailed cash for a man called "David Thomas" she had never met. Which signs are red flags?',
@@ -140,17 +140,17 @@ LSA.deck({
         { t: 'The caller says bail will be picked up at your door', flag: true, why: 'Courts never send someone to collect bail at home.' },
         { t: 'A court clerk gives you a case number you can check', flag: false, why: 'You can call the court yourself to confirm.' },
         { t: 'Your grandson says he will call you back on his own phone', flag: false, why: 'His known number is a safe way to check.' },
-        { t: 'The money goes to a "bondsman" you have never met', flag: true, why: 'That stranger is the scam\'s courier.' },
+        { t: 'The money goes to a bail bondsman you have never met', flag: true, why: 'That stranger is the scam\'s courier.' },
         { t: 'A lawyer you know says you must come in to sign papers', flag: false, why: 'A known office with an address you can visit.' }
       ],
       doThis: 'Hang up and call your grandchild or a parent directly. Never hand cash to a courier. Call 911 if one shows up.', src: 'doj-canada-mule' },
     { id: 'sf09', ages: 'both', topic: 'scams', cite: 'U.S. Attorney, N.D. Ohio, July 27, 2021', s: 'John Pla and Johnny Palmer of Tampa drove to Ohio homes to collect "bail" from grandparents told a relative was arrested. Which signs are red flags?',
       cues: [
         { t: 'A caller says he is your grandchild\'s lawyer', flag: true, why: 'Fake lawyers make the story sound official.' },
-        { t: 'The caller says a "courier" must pick up the money', flag: true, why: 'A courier at the door is the scam crew.' },
+        { t: 'The caller says a courier must pick up the money', flag: true, why: 'A courier at the door is the scam crew.' },
         { t: 'You call your grandchild\'s mom on her own number to check', flag: false, why: 'Checking with family is the right move.' },
         { t: 'A neighbor says they will keep an eye on your home for you', flag: false, why: 'Ordinary kindness.' },
-        { t: 'The police station says you can call its main number', flag: false, why: 'You can call the station and confirm.' },
+        { t: 'A caller from the police station tells you to hang up and call its main number', flag: false, why: 'Being told to check for yourself is a good sign.' },
         { t: 'Your grandchild says the game money came from a job', flag: false, why: 'Normal family talk.' }
       ],
       doThis: 'Call your grandchild or their parent on a number you know. Never hand cash to a courier. Report at ic3.gov.', src: 'doj-pla' },
@@ -166,7 +166,7 @@ LSA.deck({
       doThis: 'Hang up. Call your grandchild or a parent on a number you know. Set a family code word.', src: 'doj-ky-grand' },
     { id: 'sf11', ages: 'both', topic: 'scams', cite: 'U.S. Attorney, D.R.I., Nov. 4, 2024', s: 'Two men in Rhode Island were charged as couriers in grandparent scams. Callers posed as a grandchild, a lawyer or the police and sent couriers for cash. Which signs are red flags?',
       cues: [
-        { t: 'A "police officer" says your bail must be paid in cash', flag: true, why: 'Real police do not collect bail by phone or at your door.' },
+        { t: 'A caller who says he is a police officer wants bail in cash', flag: true, why: 'Real police do not collect bail by phone or at your door.' },
         { t: 'You hang up and call the police department\'s main number', flag: false, why: 'The right way to check a story.' },
         { t: 'You are told to meet a courier at a drop-off spot', flag: true, why: 'A parking lot handoff is a courier scam.' },
         { t: 'A bank teller says they must ask what the cash is for', flag: false, why: 'Tellers are trained to spot this. Tell them.' },
@@ -184,7 +184,7 @@ LSA.deck({
         { t: 'The bank says it will hold a large wire and call you', flag: false, why: 'A safety step, not a red flag.' }
       ],
       doThis: 'Stop and verify with family and the court directly. Ask your bank to hold any big wire. Report at ic3.gov.', src: 'doj-cirillo' },
-    { id: 'sf13', ages: 'both', topic: 'impostor', cite: 'U.S. Attorney, E.D. Wash., Sept. 4, 2024', s: 'A woman in Yakima was told she had a warrant and must pay a $14,000 bond in a jail parking lot. Jonathan Strothers, posing as a U.S. Marshal, took the cash. Which signs are red flags?',
+    { id: 'sf13', ages: 'both', topic: 'impostor', cite: 'U.S. Attorney, E.D. Wash., Sept. 4, 2024', s: 'A woman in Yakima was told she had a warrant and must pay a $14,000 bond in a jail parking lot. Charmmorro Vijay Strothers, posing as a U.S. Marshal, took the cash. Which signs are red flags?',
       cues: [
         { t: 'A caller says you have a warrant and can pay to clear it', flag: true, why: 'Warrants are not cleared by paying on the phone.' },
         { t: 'The caller stays on the phone with you at the bank', flag: true, why: 'Keeping you on the phone stops you from checking.' },
@@ -194,20 +194,20 @@ LSA.deck({
         { t: 'A deputy says you must come inside to the front desk', flag: false, why: 'Real offices meet you inside.' }
       ],
       doThis: 'Hang up. Call the court or police on a number you look up yourself. Report impostors at ReportFraud.ftc.gov.', src: 'doj-strothers' },
-    { id: 'sf14', ages: 'both', topic: 'impostor', cite: 'U.S. Attorney, C.D. Cal., May 25, 2023', s: 'Pedro Brand Jimenez flashed a fake ICE badge and promised Latino immigrants green cards and work permits for money. Which signs are red flags?',
+    { id: 'sf14', ages: 'both', topic: 'impostor', cite: 'U.S. Attorney, C.D. Cal., May 25, 2023', s: 'Davyd George Brand Jimenez is charged with posing as an ICE agent. Prosecutors say he showed a fake badge and promised Latino immigrants green cards and work permits for money. Which signs are red flags?',
       cues: [
-        { t: 'An "agent" says he can get you a green card for a fee', flag: true, why: 'No federal agent sells immigration status.' },
-        { t: 'He says his title is "G-18" official', flag: true, why: 'Odd titles hide that he is not real.' },
+        { t: 'A man who says he is a federal agent can get you a green card for a fee', flag: true, why: 'No federal agent sells immigration status.' },
+        { t: 'He says his title is G-18 official', flag: true, why: 'Odd titles hide that he is not real.' },
         { t: 'A nonprofit says they never charge for help with forms', flag: false, why: 'You can check DOJ-accredited helpers.' },
         { t: 'USCIS mails you a receipt notice with a case number', flag: false, why: 'Real government mail.' },
         { t: 'He shows a badge, then asks for your cash', flag: true, why: 'A badge is easy to fake; cash is the giveaway.' },
         { t: 'A lawyer gives a state bar number you can check', flag: false, why: 'A licensed lawyer you can verify.' }
       ],
       doThis: 'Use only a licensed lawyer or a DOJ-accredited helper. Report fake agents at ReportFraud.ftc.gov.', src: 'doj-brand-ice' },
-    { id: 'sf15', ages: 'both', topic: 'impostor', cite: 'U.S. Attorney, W.D. Mich., May 14, 2024', s: 'Kari Morales drove to Grand Rapids to swap a fake "FBI WARRANT OF ARREST" for $60,000 in cash for a man she met online. She was told she could keep $2,500. Which signs are red flags?',
+    { id: 'sf15', ages: 'both', topic: 'impostor', cite: 'U.S. Attorney, W.D. Mich., May 14, 2024', s: 'Kari Morales was charged by a grand jury. Prosecutors say she drove to Grand Rapids to swap a fake "FBI WARRANT OF ARREST" for $60,000 in cash for a man she met online, and was told she could keep $2,500. Which signs are red flags?',
       cues: [
         { t: 'A friend you met online gives you a cash pickup job', flag: true, why: 'You become the courier, and you get charged.' },
-        { t: 'You print "FBI" papers to trade for cash', flag: true, why: 'Real agencies never trade papers for cash.' },
+        { t: 'You print FBI papers to trade for cash', flag: true, why: 'Real agencies never trade papers for cash.' },
         { t: 'A delivery driver says you must sign for a package', flag: false, why: 'Normal delivery step.' },
         { t: 'Your boss gives you cash for supplies and asks for the receipt', flag: false, why: 'An ordinary errand for a known boss.' },
         { t: 'They say you can keep $2,500 for one errand', flag: true, why: 'Easy cash for a pickup is a mule hook.' },
@@ -218,18 +218,18 @@ LSA.deck({
       cues: [
         { t: 'A caller says you will be arrested unless you pay', flag: true, why: 'Arrest threats are a scare tactic.' },
         { t: 'They say you will be arrested if you tell anyone', flag: true, why: 'A gag order keeps help away.' },
-        { t: 'Cash and gold will "close the case," they claim', flag: true, why: 'Police do not take gold.' },
+        { t: 'Cash and gold will close the case, the caller claims', flag: true, why: 'Police do not take gold.' },
         { t: 'A real officer gives you a card with a station number', flag: false, why: 'You can call the station.' },
         { t: 'Your bank says you must come in about a large check', flag: false, why: 'A real bank check.' },
-        { t: 'Your daughter says she will come by your home tonight', flag: false, why: 'Normal family contact.' }
+        { t: 'A caller from your pharmacy says your refill is ready', flag: false, why: 'Normal call that asks for nothing.' }
       ],
       doThis: 'Hang up and tell someone you trust. Police never ask for cash or gold. Report at ReportFraud.ftc.gov.', src: 'doj-mohammed' },
     { id: 'sf17', ages: 'both', topic: 'impostor', cite: 'U.S. Attorney, W.D. Tex., Nov. 13, 2025', s: 'Dhruv Mangukiya, a student in Texas, picked up cash and gold from seniors told by "Treasury officials" to make a deposit to end an investigation. Which signs are red flags?',
       cues: [
-        { t: 'A "Treasury official" wants your cash deposited with them', flag: true, why: 'The Treasury does not collect cash from you.' },
+        { t: 'A Treasury official on the phone wants your cash deposited with him', flag: true, why: 'The Treasury does not collect cash from you.' },
         { t: 'The IRS mails a letter that says how to pay on IRS.gov', flag: false, why: 'Real IRS contact starts by mail.' },
         { t: 'They say a courier will meet you in a store parking lot', flag: true, why: 'A lot handoff is a scam pickup.' },
-        { t: 'They ask if you need help with the machine at the store', flag: false, why: 'Normal store help.' },
+        { t: 'A store worker asks if you need help with the machine', flag: false, why: 'Normal store help.' },
         { t: 'Your credit union says you must visit a branch', flag: false, why: 'Going in person is safe.' },
         { t: 'A neighbor offers to drive you to the bank with your cash', flag: false, why: 'A known helper.' }
       ],
@@ -248,7 +248,7 @@ LSA.deck({
       cues: [
         { t: 'A pop-up says your bank accounts are compromised', flag: true, why: 'Pop-ups cannot see your bank.' },
         { t: 'Your computer says it will install a system update tonight', flag: false, why: 'A normal update from the system.' },
-        { t: 'A "Federal Reserve" rep says to wire funds from your bank', flag: true, why: 'The Federal Reserve has no accounts for people.' },
+        { t: 'A Federal Reserve rep says to wire funds from your bank', flag: true, why: 'The Federal Reserve has no accounts for people.' },
         { t: 'Your bank texts a code you just asked for', flag: false, why: 'A code you requested is fine.' },
         { t: 'A store clerk asks if someone told you to buy gift cards', flag: false, why: 'Clerks are trained to warn you.' },
         { t: 'The library says they will give free tech help for seniors', flag: false, why: 'Real local help.' }
@@ -267,8 +267,8 @@ LSA.deck({
     { id: 'sf21', ages: 'both', topic: 'scams', cite: 'U.S. Attorney, S.D. Tex., Sept. 30, 2021', s: 'Sumit Kumar Singh admitted his part in a tech support refund ring. It took fees, then said victims were "overpaid" and must mail cash back by FedEx or UPS. Which signs are red flags?',
       cues: [
         { t: 'They say they refunded you too much by mistake', flag: true, why: 'The "overpayment" trick is a classic.' },
-        { t: 'The "extra" must go back as cash in a box', flag: true, why: 'Mailing cash is a scam tell.' },
-        { t: 'They say your return will go back to your card', flag: false, why: 'Normal refund to the same card.' },
+        { t: 'The extra must go back as cash in a box', flag: true, why: 'Mailing cash is a scam tell.' },
+        { t: 'The store clerk says your return will go back to your card', flag: false, why: 'Normal refund to the same card.' },
         { t: 'They ask for remote access to fix the refund', flag: true, why: 'Remote access lets them fake your balance.' },
         { t: 'The company emails a receipt you can check', flag: false, why: 'A record you can verify.' },
         { t: 'You check your balance yourself in your own bank app', flag: false, why: 'Good check.' }
@@ -276,7 +276,7 @@ LSA.deck({
       doThis: 'Check your balance yourself. Never mail cash or let a caller in your computer. Report at ReportFraud.ftc.gov.', src: 'doj-refund' },
     { id: 'sf22', ages: 'both', topic: 'scams', cite: 'U.S. Attorney, D. Ariz., Dec. 30, 2024', s: 'In an Arizona case against Ahmed Syed and Rupesh Chintakindi, pop-ups said computers were hacked. Victims were told to buy gold and gift cards that "government reps" would collect. Which signs are red flags?',
       cues: [
-        { t: 'The caller says "government reps" will come get your gold', flag: true, why: 'No agency picks up gold or cash.' },
+        { t: 'The caller says government reps will come get your gold', flag: true, why: 'No agency picks up gold or cash.' },
         { t: 'You read gift card numbers to the caller over the phone', flag: true, why: 'Gift card numbers are as good as cash to thieves.' },
         { t: 'You buy a gift card at a store you trust as a gift', flag: false, why: 'Buying a gift card as a gift is fine.' },
         { t: 'The store has a sign that says never pay a caller with gift cards', flag: false, why: 'A helpful warning.' },
@@ -284,7 +284,7 @@ LSA.deck({
         { t: 'A pop-up ad shows shoes you looked at', flag: false, why: 'Annoying, but normal ads.' }
       ],
       doThis: 'Never pay anyone with gift cards or gold. Hang up and call your bank. Report at ReportFraud.ftc.gov.', src: 'doj-tech-az', also: ['ftc-fake-check'] },
-    { id: 'sf23', ages: 'both', topic: 'scams', cite: 'U.S. Attorney, E.D. Mo., Oct. 7, 2024', s: 'Five people, including Dariona Lambert, were arrested in a St. Louis case that took at least $8 million from seniors. Callers said savings were compromised. Couriers picked up gold bars. Which signs are red flags?',
+    { id: 'sf23', ages: 'both', topic: 'scams', cite: 'U.S. Attorney, E.D. Mo., Oct. 7, 2024', s: 'Five people, including Dariona Lambert, were arrested in a St. Louis case said to have taken at least $8 million from seniors. The indictment says callers said savings were compromised. Couriers picked up gold bars. Which signs are red flags?',
       cues: [
         { t: 'A caller says your retirement account is at risk', flag: true, why: 'A fear hook to get you to act.' },
         { t: 'The caller says to move your bank funds to keep them secure', flag: true, why: 'Real banks never ask this.' },
@@ -311,12 +311,12 @@ LSA.deck({
         { t: 'Your $300 refund shows up as $3,000', flag: true, why: 'They faked your balance to demand "payback."' },
         { t: 'Your streaming app shows your plan in settings', flag: false, why: 'Check plans in the real app.' },
         { t: 'A caller from a store you used asks you to rate your visit', flag: false, why: 'A survey asks for no money.' },
-        { t: '"Brian" asks you to open your bank app with him', flag: true, why: 'A caller in your bank app is a big red flag.' }
+        { t: 'The support agent asks you to open your bank app with him', flag: true, why: 'A caller in your bank app is a big red flag.' }
       ],
       doThis: 'Check subscriptions in the real app or account. Never open your bank while a stranger guides you. Report at ReportFraud.ftc.gov.', src: 'doj-chen' },
     { id: 'sf26', ages: 'both', topic: 'scams', cite: 'U.S. Attorney, C.D. Cal., Sept. 26, 2023', s: 'An LA County trio was convicted of laundering Target gift cards that scam callers, posing as police or government workers, got victims to buy. Which signs are red flags?',
       cues: [
-        { t: 'A "police officer" says gift cards can clear your warrant', flag: true, why: 'No warrant is paid with gift cards.' },
+        { t: 'A caller from the police says gift cards can clear your warrant', flag: true, why: 'No warrant is paid with gift cards.' },
         { t: 'They say your identity was stolen and gift cards can fix it', flag: true, why: 'Gift cards never fix identity theft.' },
         { t: 'The cashier asks who the gift cards are for', flag: false, why: 'Cashiers are trained to stop scams.' },
         { t: 'Your city mails a parking ticket you can look up', flag: false, why: 'Real notice you can verify.' },
@@ -328,7 +328,7 @@ LSA.deck({
       cues: [
         { t: 'A job email asks you to deposit a check and wire it on', flag: true, why: 'Fake checks bounce days later; you owe the bank.' },
         { t: 'Most of the money goes on by wire to someone else', flag: true, why: 'Sending most of it on is the fake check trick.' },
-        { t: 'They say they will pay you to rate the store\'s service', flag: false, why: 'Real shopper jobs pay you; you do not pay them.' },
+        { t: 'A store you shop at emails a survey with no money asked', flag: false, why: 'A real survey never asks you to send money.' },
         { t: 'You check the company on its official website', flag: false, why: 'Good check.' },
         { t: 'Your name is on a check you never asked for', flag: true, why: 'They put your name on fake checks.' },
         { t: 'A survey company says it will pay $5 after you finish', flag: false, why: 'Small pay after the work is normal.' }
@@ -339,25 +339,25 @@ LSA.deck({
         { t: 'A money order comes with a note to wire funds', flag: true, why: 'Wiring money from a deposit is the scam.' },
         { t: 'A survey site says it will pay you after you finish', flag: false, why: 'Normal.' },
         { t: 'They say all next steps will come by email only', flag: true, why: 'They avoid a real office or phone.' },
-        { t: 'They say a deposit must stay on hold a few days', flag: false, why: 'A normal hold. Wait.' },
+        { t: 'Your bank says a deposit must stay on hold a few days', flag: false, why: 'A normal hold. Wait.' },
         { t: 'A new job says you must fill out a W-4 form', flag: false, why: 'Real tax paperwork.' },
         { t: 'A shop pays you cash for the hours on your time sheet', flag: false, why: 'Pay for work you did is normal.' }
       ],
       doThis: 'Wait for any check to clear fully, and never send money back. Report at ReportFraud.ftc.gov.', src: 'doj-pgh-shopper', also: ['ftc-fake-check'] },
-    { id: 'sf29', ages: 'both', topic: 'romance', cite: 'U.S. Attorney, D.R.I., Oct. 8, 2024', s: 'Wisdom Onyobeno\'s ring used fake profiles on Words with Friends and dating apps. They claimed to be soldiers overseas or oil rig workers who needed money. Which signs are red flags?',
+    { id: 'sf29', ages: 'both', topic: 'romance', cite: 'U.S. Attorney, D.R.I., Oct. 8, 2024', s: 'Wisdom Onyobeno\'s ring used fake profiles on Words with Friends and dating apps. They claimed to be soldiers overseas or workers on oil rigs in the Gulf of Mexico who needed money. Which signs are red flags?',
       cues: [
         { t: 'A friend from a word game soon asks for money', flag: true, why: 'Money asks from online-only friends are a top scam sign.' },
-        { t: 'They say they work on an oil rig overseas', flag: true, why: 'A common cover story in romance scams.' },
+        { t: 'They say they work on an oil rig in the Gulf of Mexico', flag: true, why: 'A common cover story in romance scams.' },
         { t: 'They ask for cash to ship their things home', flag: true, why: 'A fake crisis to make you pay.' },
         { t: 'They say they will meet you at a busy cafe', flag: false, why: 'A public first meet is safe.' },
         { t: 'They video chat, and their face matches the photos', flag: false, why: 'A real live video is a good sign.' },
         { t: 'Cashier\'s checks go to a P.O. box they give you', flag: true, why: 'A P.O. box hides who gets the money.' }
       ],
       doThis: 'Never send money to someone you have not met in person. Report romance scams at ic3.gov.', src: 'doj-onyobeno', also: ['doj-cupid'] },
-    { id: 'sf30', ages: 'both', topic: 'romance', cite: 'U.S. Attorney, N.D. Ohio, Dec. 11, 2025', s: 'Abu Trica of Ghana was charged with romance scams that took over $8 million from seniors. Fake suitors asked for money for "urgent medical needs" and travel. Which signs are red flags?',
+    { id: 'sf30', ages: 'both', topic: 'romance', cite: 'U.S. Attorney, N.D. Ohio, Dec. 11, 2025', s: 'Frederick Kumi of Ghana, known as Abu Trica, was charged in an indictment over romance scams said to have taken over $8 million from seniors. Fake suitors asked for money for "urgent medical needs" and travel. Which signs are red flags?',
       cues: [
         { t: 'Your match says they need money for a medical bill', flag: true, why: 'Urgent medical asks are a common hook.' },
-        { t: 'They say their "lawyer" will collect the money', flag: true, why: 'Third parties hide who is behind it.' },
+        { t: 'Your match says their lawyer will collect the money', flag: true, why: 'Third parties hide who is behind it.' },
         { t: 'They tell you their real full name and job, and it checks out', flag: false, why: 'Info you can check is a good sign.' },
         { t: 'They say they will pay their own way on dates', flag: false, why: 'Normal.' },
         { t: 'They say they will meet at a public place with friends', flag: false, why: 'A safe plan.' },
@@ -394,16 +394,16 @@ LSA.deck({
         { t: 'They say they will meet you with friends around', flag: false, why: 'A safe step.' }
       ],
       doThis: 'Never send money to someone you have not met. Report at ic3.gov.', src: 'doj-nj-romance', also: ['doj-cupid'] },
-    { id: 'sf34', ages: 'both', topic: 'romance', cite: 'U.S. Attorney, N.D.N.Y., Apr. 8, 2025', s: 'The Secret Service seized a website used in a "pig butchering" scam. Victims were met through dating apps or "wrong number" texts, then steered to a fake crypto site. Which signs are red flags?',
+    { id: 'sf34', ages: 'both', topic: 'romance', cite: 'DOJ Office of Public Affairs, Feb. 9, 2026', s: 'Daren Li admitted helping launder over $73 million for scam centers in Cambodia. His co-schemers met victims through social media, texts and dating apps, then steered them to fake crypto trading sites. Which signs are red flags?',
       cues: [
-        { t: 'A "wrong number" text turns into a friendship', flag: true, why: 'Random texts are a common opener.' },
-        { t: 'Your new friend wants you to use their crypto site', flag: true, why: 'The site is fake; your "gains" are not real.' },
+        { t: 'A text from a stranger turns into a friendship', flag: true, why: 'Random texts and messages are a common opener.' },
+        { t: 'Your new friend wants you to use their crypto site', flag: true, why: 'The sites only looked like real trading platforms.' },
         { t: 'You buy crypto yourself on a well-known exchange', flag: false, why: 'Your own choice on a known platform.' },
         { t: 'You read the exchange\'s rules before you sign up', flag: false, why: 'Smart.' },
         { t: 'A fee-only adviser says they will give a second opinion', flag: false, why: 'Smart step.' },
         { t: 'Your bank asks if someone told you to send crypto', flag: false, why: 'A real safety question.' }
       ],
-      doThis: 'Never invest on a site someone you met online sends you. Report at ic3.gov.', src: 'doj-pig-ndny', also: ['doj-cupid'] },
+      doThis: 'Never invest on a site someone you met online sends you. Report at ic3.gov.', src: 'doj-daren-li', also: ['doj-cupid'] },
     { id: 'sf35', ages: 'both', topic: 'romance', cite: 'U.S. Attorney, W.D. Mo., Sept. 25, 2026', s: 'Trung Nguyen Van was charged with laundering money from "pig butchering" victims who met someone online. The chat turned romantic, then turned to a crypto "opportunity." Which signs are red flags?',
       cues: [
         { t: 'A random message turns romantic within days', flag: true, why: 'Fast romance with a stranger is a setup.' },
@@ -427,7 +427,7 @@ LSA.deck({
     { id: 'sf37', ages: 'both', topic: 'scams', cite: 'U.S. Attorney, N.D. Ga., July 21, 2022', s: 'Atlanta producer Ryan Felton promised his FLiK coin would beat Netflix and that Spark coin buyers would get 25% of profits. He spent the money on a Ferrari and a house. Which signs are red flags?',
       cues: [
         { t: 'The founder says a new app will beat Netflix', flag: true, why: 'Huge promises are a warning.' },
-        { t: 'Before you buy, the only proof is a celebrity post', flag: true, why: 'Celebrity posts are not proof. The rapper had no role.' },
+        { t: 'Before you buy, the only proof is a celebrity post', flag: true, why: 'Celebrity posts are not proof. He falsely said a rapper co-owned it.' },
         { t: 'The pitch says buyers will get 25% of trading profits', flag: true, why: 'A set profit share is a pitch, not a promise.' },
         { t: 'The company files reports with the SEC you can read', flag: false, why: 'Filings you can check.' },
         { t: 'Fake names in forums say the coin will soar', flag: true, why: 'He posed as investors under fake names.' },
@@ -456,7 +456,7 @@ LSA.deck({
       doThis: 'Never pay a recruiter for a visa job. Call the trafficking hotline at 1-888-373-7888 or the Labor Department.', src: 'doj-lvh', also: ['dhs-blue-signs'] },
     { id: 'sf40', ages: 'both', topic: 'labor', cite: 'U.S. Attorney, D.S.C., June 15, 2023', s: 'Enrique and Elizabeth Balcazar took 55 Mexican farmworkers\' passports and visas the day they arrived and made them work up to 90 hours a week. Which signs are red flags?',
       cues: [
-        { t: 'The boss asks for your passport "for safekeeping"', flag: true, why: 'Taking IDs is a crime and a trafficking sign.' },
+        { t: 'The boss asks to keep your passport for safekeeping', flag: true, why: 'Taking IDs is a crime and a trafficking sign.' },
         { t: 'You work almost twice the hours you were promised', flag: true, why: 'Promised 40, they got up to 90.' },
         { t: 'They say you must pay for your own visa and tools', flag: true, why: 'Illegal cost-shifting under the H-2A rules.' },
         { t: 'The boss makes a copy of your ID for payroll, and you keep it', flag: false, why: 'A copy is fine; you keep the original.' },
@@ -484,9 +484,9 @@ LSA.deck({
         { t: 'A neighbor offers a ride to the clinic', flag: false, why: 'Kind help.' }
       ],
       doThis: 'Keep your own pay and papers. Call 1-888-373-7888 for help.', src: 'doj-diego', also: ['polaris-recruit'] },
-    { id: 'sf43', ages: 'both', topic: 'labor', cite: 'U.S. Attorney, D. Guam and N. Mariana Is., Mar. 9, 2018', s: 'Muksedur Rahman and others charged Bangladeshi men over $10,000 each for U.S. jobs and green cards on Saipan. When they arrived, there was no work. Which signs are red flags?',
+    { id: 'sf43', ages: 'both', topic: 'labor', cite: 'U.S. Attorney, D. Guam and N. Mariana Is., Mar. 9, 2018', s: 'Muksedur Rahman and others charged Bangladeshi men over $15,000 each for U.S. jobs and green cards on Saipan. When they arrived, there was no work. Which signs are red flags?',
       cues: [
-        { t: 'A recruiter asks you to sign and pay over $10,000 for a job abroad', flag: true, why: 'Big upfront fees for jobs are a scam sign.' },
+        { t: 'A recruiter asks you to sign and pay over $15,000 for a job abroad', flag: true, why: 'Big upfront fees for jobs are a scam sign.' },
         { t: 'The recruiter says a green card comes with the job', flag: true, why: 'No recruiter can promise a green card.' },
         { t: 'You are coached to lie at the visa interview', flag: true, why: 'Being coached to lie means the job is not real.' },
         { t: 'The embassy asks about your job offer', flag: false, why: 'Normal interview question.' },
@@ -529,7 +529,7 @@ LSA.deck({
         { t: 'Someone from your past contacts you on many apps', flag: true, why: 'Contact across many apps is a stalking pattern.' },
         { t: 'They say your new partner and family will pay', flag: true, why: 'Threats to others are serious. Report them.' },
         { t: 'Someone you know likes your post once', flag: false, why: 'Normal.' },
-        { t: 'They ask a "hacker" to sign in to your accounts', flag: true, why: 'Account break-ins are cyberstalking.' },
+        { t: 'They pay a hacker to sign in to your accounts', flag: true, why: 'Account break-ins are cyberstalking.' },
         { t: 'A classmate asks for notes from class', flag: false, why: 'Normal.' },
         { t: 'Your mom texts to check in', flag: false, why: 'Normal.' }
       ],
@@ -559,7 +559,7 @@ LSA.deck({
         { t: 'Hundreds of emails come after you end a deal', flag: true, why: 'Floods of messages are harassment.' },
         { t: 'They keep writing to you despite a court order', flag: true, why: 'Ignoring an order is a crime. Report every one.' },
         { t: 'A partner sends a formal end-of-deal letter', flag: false, why: 'Normal.' },
-        { t: 'Your lawyer asks to set up a call', flag: false, why: 'Normal.' },
+        { t: 'A caller from your lawyer\'s office asks to set up a meeting', flag: false, why: 'Normal.' },
         { t: 'A coworker copies you on a project email', flag: false, why: 'Normal.' },
         { t: 'Your bank sends a security alert you expect', flag: false, why: 'Normal.' }
       ],

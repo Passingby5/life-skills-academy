@@ -14,6 +14,11 @@ d.cards.forEach(c => [[c.id, c.src]].concat((c.also || []).map(k => [c.id + '@' 
   all[key] = JSON.stringify(norm(q)); X[src] = X[src] || []; const ex = t.slice(Math.max(0, at - 120), at + q.length + 120);
   if (!X[src].some(e => e.includes(norm(q)))) X[src].push(ex);
 }));
+// Name rule: every capitalized word in a scenario must appear in its saved source (catches made-up first names).
+const COMMON = new Set('Which A An The In If It He She They His Her Its Their After Before When Real Fake Callers Couriers Scammers Victims Recruits Recruiter Pop-ups Co-schemers Years LA Filipino IDs Americans New Yorkers Publishers Clearing House Chen\'s Onyobeno\'s Prosecutors'.split(' '));
+d.cards.forEach(c => { if (typeof c.s !== 'string') return; const t = norm(fs.readFileSync(path.join(__dirname, '../sources/street/' + c.src + '.txt'), 'utf8'));
+  const miss = [...new Set(c.s.match(/\b[A-Z][A-Za-z'\-]+/g) || [])].filter(w => !COMMON.has(w) && !t.includes(w) && !t.toUpperCase().includes(w.toUpperCase()));
+  if (miss.length) { console.log('NAME NOT IN SOURCE', c.id, c.src, miss.join(' ')); bad++; } });
 if (bad) process.exit(1);
 fs.writeFileSync(QF, '{\n' + Object.keys(all).map(k => JSON.stringify(k) + ': ' + JSON.stringify(all[k]).replace(/[\u007f-\uffff]/g, ch => '\\u' + ch.charCodeAt(0).toString(16).padStart(4, '0'))).join(',\n') + '\n}\n');
 fs.writeFileSync(XF, JSON.stringify(X, null, 1)); console.log('ok', id, 'quotes checked and saved');

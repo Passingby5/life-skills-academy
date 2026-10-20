@@ -2449,7 +2449,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Also: `veh-12500` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=VEH&sectionNum=12500) quote: "(a) A person may not drive a motor vehicle upon a highway, unless the person then holds a valid driver's license issued under this code, except those persons who are expressly exempted under this code."
 
 **lg06** (both, fault). Nga Li turned left across traffic and was hit by a speeding Yellow Cab. She was partly at fault too. What did the California Supreme Court decide?
-- Choices: Any fault of hers bars recovery / **Damages split by share of fault** / The cab pays all, no matter what
+- Choices: Her own fault bars recovery / **Damages split by share of fault** / The cab pays the full bill
 - Fix: Even if you made a mistake, you can still recover. Your award is cut by your share of the fault.
 - Source: `li-yellowcab` (https://www.courtlistener.com/opinion/1139343/nga-li-v-yellow-cab-co/) quote: "As we have indicated, this reexamination leads us to the conclusion that the \"all-or-nothing\" rule of contributory negligence can be and ought to be superseded by a rule which assesses liability in proportion to fault."
 
@@ -2459,24 +2459,24 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Source: `li-yellowcab` (https://www.courtlistener.com/opinion/1139343/nga-li-v-yellow-cab-co/) quote: "The first of these, the so-called \"pure\" form of comparative negligence, apportions liability in direct proportion to fault in all cases."
 
 **lg08** (both, fault). Lisa Torti pulled her friend Alexandra Van Horn from a crashed car. Van Horn said the move left her paralyzed and sued. What did the court rule in 2008?
-- Choices: Rescuers are always immune / **Shield was for medical care only** / She had committed a crime
+- Choices: Rescuers are immune / **Shield was for medical care only** / She had committed a crime
 - Fix: Call 911 first. Move a person only if there is real danger, like fire or traffic.
 - Source: `vanhorn` (https://www.courtlistener.com/opinion/2627382/van-horn-v-watson/) quote: "Torti does not contend that she rendered emergency medical care and she may not, therefore, claim the immunity in section 1799.102."
 
 **lg09** (both, fault). After the Van Horn ruling against rescuer Lisa Torti, what did the Legislature change in the Good Samaritan law?
-- Choices: Nothing changed whatsoever / **It now covers nonmedical help** / Rescuing became mandatory
-- Fix: Today, unpaid good faith help at the scene, medical or nonmedical, is shielded from civil damages.
-- Source: `hsc-1799-102` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1799.102) quote: "(a) No person who in good faith, and not for compensation, renders emergency medical or nonmedical care at the scene of an emergency shall be liable for any civil damages resulting from any act or omission."
+- Choices: Lawmakers left it just the same / **It now covers nonmedical help** / Rescuing became mandatory
+- Fix: Today, unpaid good faith help at the scene, medical or nonmedical, is shielded from civil damages, except for gross negligence or willful or wanton misconduct.
+- Source: `hsc-1799-102` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1799.102) quote: "other than an act or omission constituting gross negligence or willful or wanton misconduct"
 - Also: `vanhorn` (https://www.courtlistener.com/opinion/2627382/van-horn-v-watson/) quote: "Disposition In light of the foregoing reasons, we conclude that the Legislature intended for section 1799.102 to immunize from liability for civil damages only those persons who in good faith render emergency medical care at the scene of a medical emergency."
 
 **lg10** (both, fault). Bradley Johnson was on a ladder fixing a swamp cooler when the owners' puppy jumped and its jaws closed on his trousers. No wound. Does the dog bite law apply?
-- Choices: No, there must be a wound / **Yes, a bite is a bite** / For a vicious dog only
+- Choices: No, there must be a wound / **Yes, a bite is a bite** / For a known vicious dog
 - Fix: Report it and get checked. A bite without a wound can still fall under the strict liability statute.
 - Source: `johnson-mcmahan` (https://www.courtlistener.com/opinion/2302331/johnson-v-mcmahan/) quote: "The sole issue in this case is whether the California dog bite statute, Civil Code section 3342, applies when the bitee does not suffer a wound."
 - Also: `civ-3342` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=3342) quote: "(a) The owner of any dog is liable for the damages suffered by any person who is bitten by the dog while in a public place or lawfully in a private place, including the property of the owner of the dog, regardless of the former viciousness of the dog or the owner's knowledge of such viciousness."
 
 **lg11** (both, fault). Marta Priebe, a kennel worker, was badly bitten by a boarded dog. She sued its owner under the strict dog bite law. Did it apply?
-- Choices: Yes, the owner is always liable / **Not for a kennel worker** / When the dog bit before, yes
+- Choices: Yes, the owner is liable / **Not for a kennel worker** / When the dog bit before, yes
 - Fix: If you work with dogs for pay, know the risk is mostly yours. Ask about the dog's history and use safe handling.
 - Source: `priebe` (https://www.courtlistener.com/opinion/2599903/priebe-v-nelson/) quote: "The Court of Appeal concluded the doctrine should apply, finding Priebe assumed the risk of being bitten by dogs boarded at the kennel by virtue of the nature of her occupation as a kennel worker."
 
@@ -2492,9 +2492,10 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Also: `pen-632` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632) quote: "(d) Except as proof in an action or prosecution for violation of this section, evidence obtained as a result of eavesdropping upon or recording a confidential communication in violation of this section is not admissible in any judicial, administrative, legislative, or other proceeding."
 
 **lg14** (both, privacy). Per Flanagan v. Flanagan, what can a person secretly taped on a confidential call ask for in civil court?
-- Choices: Nothing; criminal penalties / **$5,000 or 3x damages** / A formal apology letter
+- Choices: Criminal penalties alone / **$5,000 or 3x damages** / A formal apology letter
 - Fix: Save proof of the recording and talk to a lawyer. Civil penalties are available on top of the crime.
 - Source: `flanagan` (https://www.courtlistener.com/opinion/2600714/flanagan-v-flanagan/) quote: "(a).) 1 Violation of the law is a misdemeanor (ibid.) and may entail a civil penalty of $5,000 or three times the actual damages, whichever is greater (§ 637.2)."
+- Also: `pen-637-2` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=637.2) quote: "Five thousand dollars ($5,000) per violation"
 
 **lg15** (both, privacy). Kamila Malinowski had dash cam videos of her ex with their kids at custody exchanges. The trial court threw them out as illegal recordings. Was that right?
 - Choices: Yes, they were secret tapes / **No, they were not confidential** / Audio alone was banned
@@ -2502,7 +2503,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Source: `malinowski` (https://www.courtlistener.com/opinion/10050351/malinowski-v-martin/) quote: "(2) no \"confidential communications\" were captured given the public nature of the exchange location;"
 
 **lg16** (both, privacy). In 2010 Jason and Jolynn May drove around grabbing packages off porches and from community mailboxes. What crime did they plead to?
-- Choices: Municipal infraction fine / **Federal mail theft** / Nothing, porches are public
+- Choices: Municipal infraction fine / **Federal mail theft** / No crime, porches are public
 - Fix: Never take a package that is not yours. If one lands at your door by mistake, return it or hand it to the carrier.
 - Source: `us-may` (https://www.courtlistener.com/opinion/820330/united-states-v-jolynn-may/) quote: "they looked for packages on porches, in doorways, or in community mailboxes"
 - Also: `usc-18-1708` (https://www.law.cornell.edu/uscode/text/18/1708) quote: "Code § 1708 - Theft or receipt of stolen mail matter gen­erally U.S."
@@ -2514,7 +2515,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Also: `civ-1950-5` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1950.5) quote: "No later than 21 calendar days after the tenant has vacated the premises"
 
 **lg18** (both, renting). In Granberry, the landlord missed the deposit deadline in good faith. Could it still sue the tenants for real unpaid rent and repairs?
-- Choices: No, it forfeits all claims / **Yes, it can still sue** / For half the amount
+- Choices: No, it forfeits its claims / **Yes, it can still sue** / For half the amount
 - Fix: Do not count on a missed deadline. Pay what you truly owe, and keep move-out photos and receipts.
 - Source: `granberry` (https://www.courtlistener.com/opinion/1436586/granberry-v-islay-investments/) quote: "We conclude that a good faith failure to comply with section 1950.5, subdivision (f), does not bar a landlord from recovering damages for unpaid *742rent, repairs, and cleaning, and we agree with the Court of Appeal to the extent that it so held."
 
@@ -2525,19 +2526,19 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Also: `civ-1954` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1954) quote: "(d) (1) Except as provided in subdivision (e), or as provided in paragraph (2) or (3), the landlord shall give the tenant reasonable notice in writing of his or her intent to enter and enter only during normal business hours."
 
 **lg20** (both, renting). In Dromy, the landlord won the right to show the condo. What must a landlord still give a tenant before entering for a showing?
-- Choices: Nothing, he owns the place / **Written notice of the entry** / A key for the new owner
-- Fix: Ask for written notice with date, time and purpose. 24 hours is presumed reasonable.
-- Source: `civ-1954` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1954) quote: "(d) (1) Except as provided in subdivision (e), or as provided in paragraph (2) or (3), the landlord shall give the tenant reasonable notice in writing of his or her intent to enter and enter only during normal business hours."
+- Choices: No notice, he owns the place / **Written or 24-hour oral notice** / A key for the new owner
+- Fix: Expect written notice with date, time and purpose. For a showing to buyers, a call 24 hours ahead is enough if you got a written for-sale notice in the last 120 days.
+- Source: `civ-1954` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1954) quote: "the notice may be given orally, in person or by telephone, if the landlord or his or her agent has notified the tenant in writing within 120 days"
 - Also: `dromy` (https://www.courtlistener.com/opinion/1039474/dromy-v-lukovsky/) quote: "Thus when a landlord seeks to exhibit a leased dwelling unit to prospective or actual purchasers, he or she may only enter the property during reasonable hours, unless the tenant consents to another time."
 
 **lg21** (both, work). Colin Cochran had to use his own cell phone for work calls. His plan had unlimited minutes. Did the company owe him anything?
-- Choices: No, unlimited costs nothing extra / **A fair share of the bill** / Overseas calls only
+- Choices: No, unlimited plans are free / **A fair share of the bill** / Overseas calls only
 - Fix: Ask in writing for a reasonable share of your phone bill if your job needs your phone.
 - Source: `cochran` (https://www.courtlistener.com/opinion/2717454/cochran-v-schwans-home-service-inc/) quote: "Whether the employees have cell phone plans with unlimited minutes or limited minutes, the reimbursement owed is a reasonable percentage of their cell phone bills."
 - Also: `lab-2802` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=LAB&sectionNum=2802) quote: "(c) For purposes of this section, the term \"necessary expenditures or losses\" shall include all reasonable costs, including, but not limited to, attorney's fees incurred by the employee enforcing the rights granted by this section."
 
 **lg22** (both, work). Frank Gattuso and other sales reps drove their own cars and got no mileage pay, only commissions. Can a higher commission count as repayment?
-- Choices: Never, mileage checks only / **Yes, if the extra can be traced** / Yes, any commission counts
+- Choices: Never, mileage checks only / **Yes, if the extra can be traced** / Yes, commissions count
 - Fix: Ask your employer to show which part of your pay is for car costs. If they cannot, ask to be repaid.
 - Source: `gattuso` (https://www.courtlistener.com/opinion/2625135/gattuso-v-harte-hanks-shoppers-inc/) quote: "provided there is a means or method to apportion the enhanced compensation to determine what amount is being paid for labor performed and what amount is reimbursement for business expenses"
 
@@ -2560,7 +2561,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Also: `smith-loreal` (https://www.courtlistener.com/opinion/2633518/smith-v-superior-court/) quote: "Under section 203, an employer's willful failure to pay wages to a \"discharged\" employee in accordance with section 201 subjects the employer to penalties."
 
 **lg26** (both, work). Raymond Edwards signed a deal at Arthur Andersen barring him from serving certain clients after he left. Was it valid in California?
-- Choices: Yes, because it was narrow / **No, it was void** / Yes, for one year
+- Choices: Yes, because it was narrow / **No, it was never valid** / Yes, for one year
 - Fix: Protect real trade secrets, but a noncompete itself will not hold in California.
 - Source: `edwards` (https://www.courtlistener.com/opinion/5608069/edwards-v-arthur-andersen-llp/) quote: "Andersen would not release Edwards, or any other employee, from the noncompetition agreement unless that employee signed the TONC."
 - Also: `bpc-16600` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=BPC&sectionNum=16600) quote: "Arthur Andersen LLP (2008) 44 Cal.4th 937, to void the application of any noncompete agreement in an employment context, or any noncompete clause in an employment contract, no matter how narrowly tailored, that does not satisfy an exception in this chapter."
@@ -2572,7 +2573,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Also: `edwards` (https://www.courtlistener.com/opinion/5608069/edwards-v-arthur-andersen-llp/) quote: "the noncompetition agreement did not violate section 16600 because it was narrowly tailored"
 
 **lg28** (both, consumer). Raul Figueroa's new Dodge Ram kept overheating. He took it back six to eight times, and the maker refused to buy it back. What did the jury find?
-- Choices: Keep fixing; that is all / **A willful lemon law violation** / He had to pay for the repairs
+- Choices: Keep fixing it, that is it / **A willful lemon law violation** / He had to pay for the repairs
 - Fix: Keep every repair order and ask the maker in writing for a buyback or replacement.
 - Source: `figueroa` (https://www.courtlistener.com/opinion/8434997/figueroa-v-fca-us/) quote: "Figueroa took his truck back to the dealership another six to eight times complaining of overheating."
 - Also: `civ-1793-2` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1793.2) quote: "(A) In the case of replacement, the manufacturer shall replace the buyer's vehicle with a new motor vehicle substantially identical to the vehicle replaced."
@@ -2589,14 +2590,14 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 
 **lg31** (both, consumer). Wajeeh Mughrabi's Santa Ana market cashed 35 payroll checks that all bounced. The trial court gave him only the face amount. Was that right?
 - Choices: Yes, the face amount of the checks / **No, treble damages are owed** / The bank fees only
-- Fix: Send a written demand. If unpaid in 30 days, you can seek damages of up to 3 times the check.
+- Fix: Send a written demand. If unpaid in 30 days, you can seek 3 times the check, at least $100 and at most $1,500 per check, unless the writer stopped payment over a good faith dispute.
 - Source: `mughrabi` (https://www.courtlistener.com/opinion/2116109/mughrabi-v-suzuki/) quote: "3, ante.) Mughrabi's request for treble damages pursuant to the mandatory directive of section 1719 should have been granted."
-- Also: `civ-1719` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1719) quote: "When a person becomes liable for treble damages for a check that is the subject of a written demand, that person shall no longer be liable for any service charge for that check and any costs to mail the written demand."
+- Also: `civ-1719` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1719) quote: "which shall not be less than one hundred dollars ($100) nor more than one thousand five hundred dollars ($1,500)"
 
 **lg32** (both, consumer). Bill Toomey's company phoned people to sell $25 to $30 casino coupon books "worth hundreds." Buyers were not told they could cancel. What did the court order?
-- Choices: Nothing; all sales were final / **Refunds and $150,000 penalties** / A warning letter, nothing more
+- Choices: Sales stood, with no refunds owed / **Refunds and $300,000 penalties** / A warning letter, no more
 - Fix: Cancel in writing within the cancel window and keep proof. Report sellers who hide it to the Attorney General.
-- Source: `toomey` (https://www.courtlistener.com/opinion/2121705/people-v-toomey/) quote: "The casino packages were priced at $25 to $30, and were generally represented by solicitations or advertisements to be worth hundreds of dollars."
+- Source: `toomey` (https://www.courtlistener.com/opinion/2121705/people-v-toomey/) quote: "$150,000 in penalties was assessed for violation of the preliminary injunction"
 - Also: `civ-1689-6` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1689.6) quote: "(4) The five-day right to cancel added by the act that amended paragraphs (1) and (2) shall apply to contracts entered into, or offers to purchase conveyed, on or after January 1, 2021."
 
 **lg33** (both, consumer). The FTC said Amazon signed people up for Prime without clear consent and made it very hard to cancel. How did it end in 2025?
@@ -2605,7 +2606,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Source: `ftc-amazon-prime` (https://www.ftc.gov/news-events/news/press-releases/2025/09/ftc-secures-historic-25-billion-settlement-against-amazon) quote: "Additionally, the settlement requires Amazon to stop their unlawful practices and make meaningful changes to the Prime enrollment and cancellation flows by: including a clear and conspicuous button for customers to decline Prime."
 
 **lg34** (both, consumer). Kyle Kimoto's companies sold "credit cards" that were really debit offers, then enrolled buyers in "free trials" that started billing. What did the FTC win?
-- Choices: Nothing; the fine print covers it / **A court win against him** / A warning letter only
+- Choices: The fine print covered him / **A court win against him** / A warning letter only
 - Fix: Read before you click. Check your statement every month and dispute charges you never agreed to.
 - Source: `ftc-grant-connect` (https://www.courtlistener.com/opinion/2718331/federal-trade-commission-v-grant-connect-llc/) quote: "SMITH, Circuit Judge: Kyle Kimoto (Kimoto) appeals from the district court's grant of summary judgment to the Federal Trade Commission (FTC), and its order permanently enjoining Kimoto from engaging in a variety of marketing tactics, and ordering him to pay restitution."
 
@@ -2616,7 +2617,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Also: `pen-484e` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=484e) quote: "(d) Every person who acquires or retains possession of access card account information with respect to an access card validly issued to another person, without the cardholder's or issuer's consent, with the intent to use it fraudulently, is guilty of grand theft."
 
 **lg36** (both, money). Adedayo John directed others to open bank accounts and receive money sent by romance scam victims, many older. What happened to him?
-- Choices: Nothing; transfers aren't crimes / **Seven years in prison** / A modest fine
+- Choices: Probation, no prison time / **Seven years in prison** / A modest fine
 - Fix: Never open accounts or receive money for someone you met online. Report the ask at ic3.gov.
 - Source: `usss-john` (https://www.secretservice.gov/newsroom/releases/2024/06/leader-money-laundering-and-bank-fraud-ring-sentenced-seven-years-prison) quote: "JOHN directed other members of the conspiracy to open new bank accounts and/or to be ready to receive money that was going to be sent from others, and he assisted members with procuring fake passports and other identification documents in order to open fraudulent bank accounts."
 
@@ -2632,18 +2633,18 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Also: `usc-15-1693g` (https://www.law.cornell.edu/uscode/text/15/1693g) quote: "(d)Restriction on liability Nothing in this section imposes liability upon a consumer for an unauthorized electronic fund transfer in excess of his liability for such a transfer under other applicable law or under any agreement with the consumer's financial institution."
 
 **lg39** (both, money). John Gorman disputed a credit card charge for a satellite TV system he was unhappy with. What must the card bank do after a dispute through the credit bureaus?
-- Choices: Nothing; it can ignore the dispute / **A reasonable investigation** / Erase the whole debt
+- Choices: It can ignore the dispute / **A reasonable investigation** / Erase the whole debt
 - Fix: Dispute in writing with both the card issuer and the credit bureaus, and keep copies.
 - Source: `gorman` (https://www.courtlistener.com/opinion/3054308/gorman-v-wolpoff-abramson-llp/) quote: "a furnisher's obligation to conduct a reasonable investigation under § 1681s-2(b)(l)(A) arises when it receives a notice of dispute from a CRA"
 
 **lg40** (both, money). Maria Hernandez's debt passed to a second collector, which never sent its own validation notice. Did it have to?
-- Choices: No, the first one did / **Yes, each collector must** / When she asked, yes
+- Choices: No, the first one did / **Yes, all collectors must** / When she asked, yes
 - Fix: Wait for each collector's notice and dispute in writing within 30 days if anything looks wrong.
 - Source: `hernandez-wzp` (https://www.courtlistener.com/opinion/4240209/maria-hernandez-v-williams-zinman-parham-pc/) quote: "According to WZP, under this definition, it was not obligated to send a validation notice because, as the second collector to attempt to collect the debt, it did not send Hernandez the very first (i.e., \"the initial\") communication about the debt."
 - Also: `usc-15-1692g` (https://www.law.cornell.edu/uscode/text/15/1692g) quote: "(3)a statement that unless the consumer, within thirty days after receipt of the notice, disputes the validity of the debt, or any portion thereof, the debt will be assumed to be valid by the debt collector;"
 
 **lg41** (both, tax). Frank Ahlgren sold about $3.7 million in bitcoin in 2017 to buy a house and claimed fake high purchase prices. What happened?
-- Choices: Nothing; crypto is untraceable / **Two years in prison** / A warning letter from the IRS
+- Choices: The charges were dropped / **Two years in prison** / A warning letter from the IRS
 - Fix: Report every crypto sale and keep records of what you paid.
 - Source: `doj-ahlgren` (https://www.justice.gov/archives/opa/pr/early-bitcoin-investor-sentenced-filing-tax-returns-falsely-reported-his-cryptocurrency) quote: "In October 2017, Ahlgren sold approximately 640 bitcoins trading at approximately $5,807.53 per bitcoin for a total of $3.7 million, and used the proceeds to purchase a house in Park City, Utah."
 - Also: `irs-crypto` (https://www.irs.gov/filing/digital-assets) quote: "Income from digital assets is taxable."
@@ -2671,7 +2672,7 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Source: `egan` (https://www.courtlistener.com/opinion/1217902/egan-v-mutual-of-omaha-insurance/) quote: "The trial court, in directing a verdict against defendants, ruled as a matter of law that defendants' failure to have plaintiff examined by a doctor of their choice or to consult with plaintiff's treating physicians and surgeon violated the covenant of good faith and fair dealing."
 
 **lg46** (both, insurance). Egan won at trial against Mutual of Omaha and two of its claims staff. What did the California Supreme Court keep?
-- Choices: The whole verdict, as is / **Compensatory damages vs. Mutual** / Nothing at all was kept
+- Choices: The whole verdict, as is / **Compensatory damages vs. Mutual** / The jury verdict was voided
 - Fix: Keep every letter and note. Appeals can change parts of a verdict, so a strong record matters.
 - Source: `egan` (https://www.courtlistener.com/opinion/1217902/egan-v-mutual-of-omaha-insurance/) quote: "We conclude *815the judgment should be affirmed insofar as it awards compensatory damages against defendant Mutual of Omaha Insurance Company (Mutual) but reversed in all other respects."
 
@@ -2696,15 +2697,20 @@ Each card: choices (myth / RIGHT / decoy), the fix, the source, and the source q
 - Fix: Report damage as soon as you notice it, and keep the date in writing.
 - Source: `prudential-lmi` (https://www.courtlistener.com/opinion/1258604/prudential-lmi-commercial-insurance-v-superior-court/) quote: "we hold that the one-year suit provision begins to run on the date of inception of the loss, defined as that point in time when appreciable damage occurs and is or should be known to the insured"
 
-**lg51** (both, insurance). Blue Shield rescinded the Haileys' health plan, saying their application misstated Steve's health. What must a plan show to rescind?
-- Choices: Any error at all on the form / **Willful lies or real checks** / A late premium payment
-- Fix: Answer every health question fully and keep a copy. If rescinded, ask whether the plan checked your form before it signed you up.
-- Source: `hailey` (https://www.courtlistener.com/opinion/2244781/hailey-v-california-physicians-service/) quote: "Here, in contrast, Blue Shield rescinded based on a \"genuine dispute\" over whether Cindy deliberately omitted Steve's medical history from the health care application."
+**lg51** (both, insurance). In the 2007 Hailey case, Blue Shield could rescind a plan if it had checked the health form. Newer laws replaced that rule. Today, when may a plan rescind?
+- Choices: If the form has any mistake / **Only for fraud or lies** / After a late premium payment
+- Fix: Today a plan may rescind only for fraud or an intentional lie about a material fact, with 30 days written notice and a right to appeal. Plans can no longer turn you down or charge more for past health.
+- Source: `hsc-1389-21` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1389.21) quote: "made an intentional misrepresentation of material fact"
+- Also: `usc-42-300gg-12` (https://www.law.cornell.edu/uscode/text/42/300gg-12) quote: "makes an intentional misrepresentation of material fact"
+- Also: `hailey` (https://www.courtlistener.com/opinion/2244781/hailey-v-california-physicians-service/) quote: "Blue Shield"
+- Also: `hsc-1389-3` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1389.3) quote: "No health care service plan shall engage in the practice of postclaims underwriting"
+- Also: `hc-preexisting` (https://www.healthcare.gov/coverage/pre-existing-conditions/) quote: "No insurance plan can reject you, charge you more"
 
-**lg52** (both, insurance). When Blue Shield rescinded the Haileys' plan, what did the trial court order the family to pay back?
-- Choices: Nothing at all, ever / **About $104,000** / A single month of premiums
-- Fix: Rescission can mean paying back past claims. Get help fast from the state regulator or a lawyer.
-- Source: `hailey` (https://www.courtlistener.com/opinion/2244781/hailey-v-california-physicians-service/) quote: "awarded $104,194.12 in damages to Blue Shield on its cross-complaint for rescission"
+**lg52** (both, insurance). After Blue Shield rescinded their plan, a trial court, on summary judgment, ordered the Haileys to repay $104,194.12. What did the Court of Appeal do?
+- Choices: Raised it to add fees / **It reversed the judgment** / Upheld the award in full
+- Fix: A trial loss can be undone on appeal. And under today's rules, ask the state regulator to review any rescission.
+- Source: `hailey` (https://www.courtlistener.com/opinion/2244781/hailey-v-california-physicians-service/) quote: "The judgment is reversed"
+- Also: `hsc-1389-21` (https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1389.21) quote: "at least 30 days prior to the effective date of the rescission"
 
 ## Field Survival: Water, Food and Knots (`survive`)
 

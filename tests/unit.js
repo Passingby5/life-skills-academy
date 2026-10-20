@@ -506,6 +506,22 @@ t('v13 legal deck: 52 cards in Street Smart, opt-in, every card cites a law or c
   const X = require('./fixtures/street-excerpts.json'), Q = require('../tools/quotes-new.json');
   d.cards.forEach(c => [[c.id, c.src]].concat((c.also || []).map(k => [c.id + '@' + k, k])).forEach(([key, k]) => { const q = JSON.parse(Q[key]); assert(X[k] && X[k].some(e => e.includes(q)), key); }));
 });
+t('v15 QA v13 fixes: Hailey superseded, 1799.102(b)(2), 1954(d)(2), 1719 limits, 637.2, Toomey total, absolute-word tell', () => {
+  const d = L.decks.legal, g = id => d.cards.find(c => c.id === id), all = c => [c.f, c.w].join(' ');
+  assert.strictEqual(d.cards.length, 52);
+  assert(/superseded/.test(g('lg51').cite) && /fraud/.test(g('lg51').c[1]) && g('lg51').src === 'hsc-1389-21' && g('lg51').also.includes('usc-42-300gg-12'));
+  assert(/reversed/.test(g('lg52').c[1]) && /reversed/.test(g('lg52').w));
+  assert(/gross negligence/.test(all(g('lg09'))) && /\(b\)\(2\)/.test(g('lg09').w));
+  assert(/oral/.test(g('lg20').c[1]) && /120 days/.test(all(g('lg20'))));
+  assert(/\$100/.test(g('lg31').f) && /\$1,500/.test(g('lg31').f) && /good faith dispute/.test(g('lg31').f));
+  assert(g('lg14').also.includes('pen-637-2') && d.sources['pen-637-2']);
+  assert(/\$300,000/.test(g('lg32').c[1]));
+  const abs = /\b(always|never|nothing|any|all|ever|only|whatsoever)\b/i;
+  const right = d.cards.filter(c => abs.test(c.c[1])).length, wrong = d.cards.filter(c => abs.test(c.c[0]) || abs.test(c.c[2])).length;
+  const solo = d.cards.filter(c => c.c.filter(x => abs.test(x)).length === 1 && !abs.test(c.c[1])).length;
+  assert(right >= 4, 'absolute right answers ' + right); assert(solo <= 8, 'solvable by dropping the absolute ' + solo);
+  assert(!d.cards.some(c => /^Nothing\b/.test(c.c[0]) || /^Nothing\b/.test(c.c[2])), 'Nothing is no longer a decoy opener');
+});
 t('v12 Street Smart checker: cite, rating, notice, none-card share and tell, banned words', () => {
   const mk = (n, extra) => Array.from({ length: n }, (_, i) => Object.assign({ id: 'z' + i, deck: 'zz', topic: 't', ages: 'both', s: 's', c: ['aaaa' + i, 'b' + i, 'cccc' + i], m: 'm', f: 'f', w: 'w', src: 'a', cite: 'x' }, extra && extra(i)));
   const base = { id: 'zz', format: 'gutcheck', section: 'Street Smart', rating: 'teen', notice: 'n', sources: { a: ['A', 'u'] } };

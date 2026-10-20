@@ -82,7 +82,7 @@ Legal and estate cards are the normal card shape plus `cite: 'Cal. Veh. Code 231
 - Passage: all Gut Check tells apply per question (length, longest, first word, negation, classifier). Plus: each passage has 5 to 7 questions and at least 4 types; no type has the right answer in one slot over 45%; "passage-free" test: a classifier trained on question plus choices only (no passage) must stay at or under 45% (stops questions answerable without reading); every q has a `line` that exists.
 - Red Flags: each set has exactly 6 cues and 2 to 4 flags; flag count spread (no single count over 50% of sets); flag cues may not be longer on average than safe cues by over 1.2x; first-word and punctuation tells per cue at or under 45%; a "pick the pushiest-sounding words" keyword classifier stays at or under 45% cue accuracy above the base rate; flag positions are shuffled by the seeded RNG.
 - Power: `steps` 3 to 4 items, each under 6 words; tactic name in the allowed list; banned phrase list (Greene law titles) must not appear.
-- Legal and estate: every card has `cite`, and every case cite is in a reviewed list file (docs/STREET-SMART-CITES.md) with a checked URL.
+- Legal and estate: every card has `cite`, and every case cite is in a reviewed list file (docs/street/LEGAL-SOURCES.md for Legal, docs/street/ESTATE-SOURCES.md for Estate) with a checked URL.
 - Guardrails: banned-word list (gore and how-to terms) fails the build; adult-rated decks must have `rating: 'adult'`; a passage tagged `quotesExtremism` must also be tagged `rebutted`.
 
 ## Build order (vertical slices)
@@ -119,7 +119,7 @@ Each slice ships with its tests, checker rules, and Tom's review list before the
 17. Cue order and choice order are shuffled by the seeded RNG; each flag position is used within 5 points of even over 3,000 seeded sets.
 18. Build fails if any banned gore or how-to term appears, or a `quotesExtremism` passage lacks `rebutted`.
 19. Build fails if any Greene law title from the banned list appears in the Power deck.
-20. Every case cite in Legal and Estate appears in docs/STREET-SMART-CITES.md with a working link (link check passes).
+20. Every case cite in Legal and Estate appears in its deck file under docs/street/ (LEGAL-SOURCES.md, ESTATE-SOURCES.md) with a working link (link check passes; some sites such as the FTC and leginfo return 403 or 404 to plain curl, so check those in a browser fetch).
 21. Every sourceId resolves, and the About page lists every Street Smart source with a working link.
 22. No image of a real person is in any Street Smart deck (checker: img paths only from src/img/ icons list).
 23. Playwright phone click-through of Passage and Red Flags rounds ends with zero console errors; all targets at least 48x48 px.

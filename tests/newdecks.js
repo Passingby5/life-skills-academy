@@ -59,8 +59,8 @@ const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.sp
         if (id === 'controversy' && shots && vp.name === 'portrait' && !done.has('ct' + st.stage) && (st.stage === 'ask' || st.stage === 'fix')) { done.add('ct' + st.stage); await page.evaluate(() => window.scrollTo(0, 0)); await page.screenshot({ path: path.join(shots, st.stage === 'ask' ? 'v11/2-ct-question.jpg' : 'v11/3-ct-fix.jpg'), type: 'jpeg', quality: 85 }); }
         if (id === 'legal' && st.stage === 'fix') {
           // v12 Street Smart: every Legal fix shows the law or case and the not-legal-advice line, and fits the width.
-          const fx = await page.evaluate(() => ({ cite: (document.querySelector('#fix .cite') || {}).textContent || '', note: (document.getElementById('notice') || {}).textContent || '', sw: document.documentElement.scrollWidth }));
-          assert(/^Law or case: \S/.test(fx.cite), 'legal cite ' + st.id); assert(/not legal advice/i.test(fx.note), 'legal notice ' + st.id); assert(fx.sw <= vp.width, 'legal fix fits');
+          const fx = await page.evaluate(() => ({ cite: (document.querySelector('#fix .cite') || {}).textContent || '', src0: (document.querySelector('#fix a.src') || {}).textContent || '', note: (document.getElementById('notice') || {}).textContent || '', sw: document.documentElement.scrollWidth }));
+          assert(/^Law or case: \S/.test(fx.cite) || /^Source: \S/.test(fx.src0), 'legal cite or source ' + st.id); assert(/not legal advice/i.test(fx.note), 'legal notice ' + st.id); assert(fx.sw <= vp.width, 'legal fix fits');
         }
         if (id === 'legal' && shots && !done.has('lg' + vp.name + st.stage) && (st.stage === 'ask' || st.stage === 'fix')) { done.add('lg' + vp.name + st.stage); fs.mkdirSync(path.join(shots, 'street/legal'), { recursive: true }); await page.evaluate(() => window.scrollTo(0, 0)); await page.screenshot({ path: path.join(shots, 'street/legal', 'v12-legal-' + st.stage + '-' + vp.name + '.jpg'), type: 'jpeg', quality: 85, fullPage: true }); }
         if (await page.$('[data-act=ans]')) { await tap('[data-act=ans][data-p="' + (n % 3) + '"]'); n++; }

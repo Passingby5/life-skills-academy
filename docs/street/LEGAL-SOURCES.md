@@ -1,5 +1,7 @@
 # Legal Traps (deck legal): sources
 
+v15 (Oct 19, 2026): QA v13 fixes. lg51 now teaches today's rescission rule (HSC 1389.21, 42 U.S.C. 300gg-12: fraud or intentional misrepresentation only, 30 days notice; HSC 1389.3 bars postclaims underwriting; HealthCare.gov on pre-existing conditions) and marks Hailey (2007) as superseded. lg52 now asks what the Court of Appeal did with the $104,194.12 summary judgment (reversed). lg09 adds the 1799.102(b)(2) gross negligence and willful misconduct exception. lg20 adds 1954(d)(2) oral notice for buyer showings. lg31 adds the 1719 $100 to $1,500 limits and the good faith dispute defense. lg14 cites Penal Code 637.2 directly. lg32 now says $300,000 ($150,000 civil plus $150,000 for the injunction). Absolute words (always, never, nothing...) were taken out of 16 myths and decoys and put in 3 more right answers. Note: the FTC Amazon URL and leginfo pages can return 404 or 403 to plain curl; they load in a browser.
+
 v13 (Oct 19, 2026): every card is built on a real, named case: a court opinion, an enforcement action (FTC, DOJ, U.S. Attorney via Secret Service) or the statute it applies, cited together. 52 cards, all ages both (52 per age group). Each source was loaded and its text saved to sources/street/<id>.txt (kept out of git). Quotes checked by tools/street-quotes.js; excerpts in tests/fixtures/street-excerpts.json.
 
 | id | Source | URL | Cards |
@@ -64,6 +66,11 @@ v13 (Oct 19, 2026): every card is built on a real, named case: a court opinion, 
 | gruenberg | Gruenberg v. Aetna Ins. Co. (1973) 9 Cal.3d 566 | https://www.courtlistener.com/opinion/1117033/gruenberg-v-aetna-insurance/ | lg47, lg48 |
 | prudential-lmi | Prudential-LMI Com. Ins. v. Superior Court (1990) 51 Cal.3d 674 | https://www.courtlistener.com/opinion/1258604/prudential-lmi-commercial-insurance-v-superior-court/ | lg49, lg50 |
 | ins-2071 | California Insurance Code 2071: Standard fire policy | https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=INS&sectionNum=2071 | lg49 |
+| usc-42-300gg-12 | 42 U.S.C. 300gg-12: Prohibition on rescissions (ACA) | https://www.law.cornell.edu/uscode/text/42/300gg-12 | lg51 |
+| hsc-1389-21 | California Health and Safety Code 1389.21: Rescission only for fraud | https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1389.21 | lg51, lg52 |
+| hsc-1389-3 | California Health and Safety Code 1389.3: No postclaims underwriting | https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=HSC&sectionNum=1389.3 | lg51 |
+| hc-preexisting | HealthCare.gov: Coverage for pre-existing conditions | https://www.healthcare.gov/coverage/pre-existing-conditions/ | lg51 |
+| pen-637-2 | California Penal Code 637.2: Civil action for illegal recording | https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=637.2 | lg14 |
 | hailey | Hailey v. California Physicians' Service (2007) 158 Cal.App.4th 452 | https://www.courtlistener.com/opinion/2244781/hailey-v-california-physicians-service/ | lg51, lg52 |
 
 ## Cut in v13 (no real case we could tie the card to)

@@ -19,3 +19,13 @@ Saved copies: sources/street/<id>.txt (gitignored), fetched in real Chrome by to
 | hr13 | The Square | communism | [Britannica: Tiananmen Square incident](https://www.britannica.com/event/Tiananmen-Square-incident) |
 | hr14 | Ten Million Members | communism | [Britannica: Solidarity](https://www.britannica.com/topic/Solidarity) |
 | hr15 | The Doctor Who Said He Drove a Taxi | escape | [Britannica: Haing S. Ngor](https://www.britannica.com/biography/Haing-S-Ngor) |
+| hr16 | The Radio Said Cockroach | rwanda | [USHMM Holocaust Encyclopedia: The Rwanda Genocide](https://encyclopedia.ushmm.org/content/en/article/the-rwanda-genocide); [United Nations: Rwanda, a brief history of the country](https://www.un.org/en/preventgenocide/rwanda/historical-background.shtml) |
+| hr17 | Two Thousand to Two Hundred Seventy | rwanda | [United Nations: Rwanda, a brief history of the country](https://www.un.org/en/preventgenocide/rwanda/historical-background.shtml); [USHMM Holocaust Encyclopedia: The Rwanda Genocide](https://encyclopedia.ushmm.org/content/en/article/the-rwanda-genocide) |
+| hr18 | Far From the Front | armenia | [USHMM Holocaust Encyclopedia: The Armenian Genocide (1915-16), Overview](https://encyclopedia.ushmm.org/content/en/article/the-armenian-genocide-1915-16-overview) |
+| hr19 | Not About Honor | honor | [Britannica: Honor killing](https://www.britannica.com/topic/honor-killing) |
+| hr20 | Why Didn't She Just Leave? | abuse | [Britannica: Domestic violence](https://www.britannica.com/topic/domestic-violence) |
+| hr21 | The Record of Markets | economics | [Britannica Money: Capitalism](https://www.britannica.com/money/capitalism) |
+| hr22 | New Harmony | economics | [Britannica: Socialism](https://www.britannica.com/money/socialism) |
+| hr23 | The Examined Life | philosophy | [Britannica: Socrates](https://www.britannica.com/biography/Socrates) |
+| hr24 | Mirror, Mirror | manipulation | [Britannica: Narcissism](https://www.britannica.com/science/narcissism) |
+| hr25 | A Novel Passed Hand to Hand | armenia | [USHMM Holocaust Encyclopedia: The Armenian Genocide (1915-16), Overview](https://encyclopedia.ushmm.org/content/en/article/the-armenian-genocide-1915-16-overview) |

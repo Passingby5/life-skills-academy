@@ -31,6 +31,25 @@ LSA.SECTION_NOTES = { 'Big Debates': 'Facts only. On faith and moral questions w
 // stay a small minority so they are not a tell; banned words keep it recognition and defense only, never gore or how-to.
 LSA.STREET = 'Street Smart'; LSA.MAX_NONE_SHARE = 0.15; LSA.MAX_ABS_SOLO = 0.15;
 LSA.RX_ABS = /\b(always|never|nothing|any|all|ever|only|whatsoever)\b/i;
+// Power Plays (v18): our own tactic names (never Greene's laws, list, wording or order; tools/power-banned.json is the
+// banned list the node checker scans). A power card names one tactic and has a 3 to 4 step "way out" diagram, each step under 6 words.
+LSA.POWER_TACTICS = { flattery: 'The Flattery Hook', splitRule: 'Split and Rule', fakeDeadline: 'The Fake Deadline', borrowedCredit: 'Borrowed Credit',
+  freezeOut: 'The Freeze Out', debtTrap: 'The Debt Trap', slowSqueeze: 'The Slow Squeeze', madeEnemy: 'The Made-Up Enemy',
+  loyaltyTest: 'The Loyalty Test', rewrite: 'The Rewritten Record', cutOff: 'The Cut-Off', falseSafety: 'The Hollow Promise' };
+LSA.checkPowerCard = function (c) {
+  var e = [];
+  if (!Array.isArray(c.steps) || c.steps.length < 3 || c.steps.length > 4) e.push('steps must have 3 to 4 items');
+  else c.steps.forEach(function (x) { if (typeof x !== 'string' || !x.trim() || x.trim().split(/\s+/).length >= 6) e.push('step "' + x + '" must be 1 to 5 words'); });
+  if (!Object.prototype.hasOwnProperty.call(LSA.POWER_TACTICS, c.tactic)) e.push('tactic ' + c.tactic + ' is not in the allowed list');
+  if (c.faith !== undefined && !(typeof c.faith === 'string' && c.faith.trim() && c.faith.length <= 120)) e.push('faith note must be a short line');
+  return e;
+};
+// Adult-rated decks (rating 'adult') play only on Adult profiles, unless a parent PIN unlocked that deck on a young adult profile.
+LSA.deckAllowed = function (id, p) { var d = LSA.decks[id]; return !d || d.rating !== 'adult' || !p || p.age === 'adult' || (Array.isArray(p.unlock) && p.unlock.indexOf(id) >= 0); };
+LSA.allowedDecks = function (ids, p) { return (ids || []).filter(function (id) { return LSA.deckAllowed(id, p); }); };
+// The parent PIN is kept only as a hash (it is a speed bump for a shared family phone, not a lock).
+LSA.hashPin = function (pin) { var h = 2166136261; String(pin).split('').forEach(function (ch) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619) >>> 0; }); return 'h' + h.toString(36); };
+LSA.PIN_RX = /^\d{4,8}$/;
 LSA.RX_BANNED = /\b(gore|gory|disembowel|decapitat\w*|dismember\w*|how to (make|build|cook|spike|stalk|launder)|step[- ]by[- ]step (attack|bomb))\b/i;
 LSA.sectionsOf = function (ids) {
   var names = LSA.SECTIONS.slice();
@@ -131,8 +150,9 @@ LSA.checkDeck = function (d) {
       if (!c.cite || typeof c.cite !== 'string') errs.push(p + 'Street Smart card needs a cite');
       if (c.kind !== undefined && c.kind !== 'none') errs.push(p + 'bad kind');
       if (c.kind === 'none' && !/^None of these\b/.test(c.c && c.c[1] || '')) errs.push(p + 'a none card must have "None of these..." as its right choice');
-      if (LSA.RX_BANNED.test([c.s && (c.s.ya || c.s), c.s && c.s.adult, c.f, c.w, c.m].concat(c.c || []).join(' '))) errs.push(p + 'banned word (gore or how-to)');
+      if (LSA.RX_BANNED.test([c.s && (c.s.ya || c.s), c.s && c.s.adult, c.f, c.w, c.m].concat(c.c || [], c.steps || [], c.faith || []).join(' '))) errs.push(p + 'banned word (gore or how-to)');
     }
+    if (d.power) LSA.checkPowerCard(c).forEach(function (x) { errs.push(p + x); });
     if (c.also !== undefined && !(Array.isArray(c.also) && c.also.length && c.also.every(function (k) { return k !== c.src && d.sources && d.sources[k]; }))) errs.push(p + 'also must list other known sources');
   });
   // Length must give no clue: the right answer may not be much longer than the others, or the longest too often.

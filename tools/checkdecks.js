@@ -9,5 +9,8 @@ L.knowDecks().forEach(id => { const t = L.tellStats(L.decks[id].cards).strat, to
 console.log('classifier pooled (10-fold): non-frozen decks', (sc._pooledNew * 100).toFixed(1) + '% (limit 45%) | all decks', (sc._pooled * 100).toFixed(1) + '% (limit ' + L.TELL_POOLED_ALL * 100 + '%)');
 console.log('frozen-deck exceptions:', JSON.stringify(L.TELL_EXCEPTIONS));
 const errs = L.checkAll().concat(G.check(L, sc));
+// v18 Power Plays: banned Greene law titles (tools/powerban.js).
+const PBAN = require('./powerban.js');
+L.deckOrder.filter(id => L.decks[id].power).forEach(id => PBAN.check(L.decks[id], L.POWER_TACTICS).forEach(e => errs.push(e)));
 if (errs.length) { console.error(errs.join('\n')); process.exit(1); }
 console.log('ok deck checker (strategies, classifier, counts, sources)');

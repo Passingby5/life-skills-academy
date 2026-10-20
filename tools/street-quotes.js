@@ -15,7 +15,7 @@ d.cards.forEach(c => [[c.id, c.src]].concat((c.also || []).map(k => [c.id + '@' 
   if (!X[src].some(e => e.includes(norm(q)))) X[src].push(ex);
 }));
 // Name rule: every capitalized word in a scenario must appear in its saved source (catches made-up first names).
-const COMMON = new Set('Which A An The In If It He She They His Her Its Their After Before When Real Fake Callers Couriers Scammers Victims Recruits Recruiter Pop-ups Co-schemers Years LA Filipino IDs Americans New Yorkers Publishers Clearing House Chen\'s Onyobeno\'s Prosecutors'.split(' '));
+const COMMON = new Set('What Former Signing Leaving My Get Inside Coworkers Carmakers TV Which A An The In If It He She They His Her Its Their After Before When Real Fake Callers Couriers Scammers Victims Recruits Recruiter Pop-ups Co-schemers Years LA Filipino IDs Americans New Yorkers Publishers Clearing House Chen\'s Onyobeno\'s Prosecutors'.split(' '));
 d.cards.forEach(c => { if (typeof c.s !== 'string') return; const t = norm(fs.readFileSync(path.join(__dirname, '../sources/street/' + c.src + '.txt'), 'utf8'));
   const miss = [...new Set(c.s.match(/\b[A-Z][A-Za-z'\-]+/g) || [])].filter(w => !COMMON.has(w) && !t.includes(w) && !t.toUpperCase().includes(w.toUpperCase()));
   if (miss.length) { console.log('NAME NOT IN SOURCE', c.id, c.src, miss.join(' ')); bad++; } });

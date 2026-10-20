@@ -93,6 +93,8 @@ LSA.loadSave = function (text) {
       if (Array.isArray(p.carry)) { q.carry = p.carry.filter(known).slice(0, 10); if (q.carry.length !== p.carry.length) pruned = true; } else if (p.carry !== undefined) fixed = true;
       if (isObj(p.stats)) Object.keys(q.stats).forEach(function (st) { if (isInt(p.stats[st], 0, 1e9)) q.stats[st] = p.stats[st]; });
       else fixed = true;
+      // v18: decks a parent PIN unlocked on this profile (adult-rated decks for a young adult).
+      if (Array.isArray(p.unlock)) { var ul = p.unlock.filter(function (d) { return typeof d === 'string' && LSA.decks && LSA.decks[d]; }); if (ul.length) q.unlock = ul; if (ul.length !== p.unlock.length) fixed = true; } else if (p.unlock !== undefined) fixed = true;
       s.profiles[k] = q;
       var m = /^p(\d+)$/.exec(k); if (m) maxN = Math.max(maxN, +m[1]);
     });
@@ -103,6 +105,7 @@ LSA.loadSave = function (text) {
       var ds = Array.isArray(o.decks) ? o.decks.filter(function (d) { return typeof d === 'string' && LSA.decks && LSA.decks[d] && (LSA.decks[d].format === 'gutcheck' || LSA.decks[d].format === 'redflags'); }) : [];
       if (ds.length && Array.isArray(o.decks) && ds.length === o.decks.length) s.decks = ds; else { fixed = true; s.decks = ds.length ? ds : null; }
     }
+    if (typeof o.pin === 'string' && /^h[0-9a-z]{1,8}$/.test(o.pin)) s.pin = o.pin; else if (o.pin !== undefined && o.pin !== null) fixed = true;
     if (LSA.SCREENS.indexOf(o.screen) >= 0) s.screen = o.screen;
     return { save: s, broken: false, repaired: fixed, pruned: pruned };
   } catch (e) { return { save: LSA.newSave(), broken: true, repaired: false }; }

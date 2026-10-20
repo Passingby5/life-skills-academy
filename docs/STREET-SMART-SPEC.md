@@ -90,7 +90,7 @@ Legal and estate cards are the normal card shape plus `cite: 'Cal. Veh. Code 231
 1. Legal Traps first: uses the existing Gut Check mode, so it proves the section, opt-in, `cite`, and the "not legal advice" line with no new UI. (10 cards, then 70.)
 2. Street Safety: builds the Red Flags mode and its checker. (10 sets, then 52.)
 3. Estate Planning: Gut Check mode, reuses the legal cite pattern; cites in docs/street/ESTATE-SOURCES.md. (54 in v16.)
-4. Power Plays: adds step diagram on the fix screen. (60.)
+4. Power Plays: adds step diagram on the fix screen. (60.) Built in v18 with 53 sourced cards (5 drafted cases cut for weak sources); see docs/street/POWER-SOURCES.md.
 5. Hard Reads last: biggest new mode, most writing, most guardrail review. (5 passages, then 50.)
 Each slice ships with its tests, checker rules, and Tom's review list before the next starts.
 

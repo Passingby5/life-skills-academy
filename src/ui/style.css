@@ -68,3 +68,10 @@ input{width:100%;min-height:52px;font:inherit;padding:8px 12px;border-radius:12p
 .cue.fine{border-left-color:#2f8f5b}
 .cue.miss{outline:2px dashed #ffd257}
 @media (orientation:landscape) and (max-height:500px){.cuegrid{grid-template-columns:1fr 1fr 1fr}.cuegrid button.cuet{min-height:52px}}
+
+/* v18 Power Plays: way-out diagram, 3 to 4 boxes with arrows, fits 390 px wide with no side scroll. */
+.steps { display: flex; align-items: stretch; gap: 4px; margin: .6rem 0; }
+.steps .step { flex: 1 1 0; min-width: 0; border: 2px solid #9fd3ff; border-radius: 10px; padding: .45rem .2rem; font-size: .8rem; line-height: 1.2; text-align: center; overflow-wrap: break-word; hyphens: auto; -webkit-hyphens: auto; display: flex; align-items: center; justify-content: center; }
+.steps .arr { flex: 0 0 auto; align-self: center; font-size: 1rem; color: #9fd3ff; }
+.tactic { font-weight: 600; }
+.faith { font-size: .85rem; font-style: italic; }

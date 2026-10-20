@@ -5,7 +5,7 @@
 const { chromium } = require('playwright-core'), http = require('http'), fs = require('fs'), path = require('path'), assert = require('assert');
 let base; const SITE = path.join(__dirname, '../site'), shots = process.env.SHOTS;
 const T = { html: 'text/html', js: 'text/javascript', json: 'application/json', png: 'image/png', svg: 'image/svg+xml', webmanifest: 'application/manifest+json' };
-const NEW = ['fieldcare', 'triage', 'foodsafe', 'medsafe', 'navgear', 'survive', 'canning', 'homestead', 'controversy', 'legal', 'estate'];
+const NEW = ['fieldcare', 'triage', 'foodsafe', 'medsafe', 'navgear', 'survive', 'canning', 'homestead', 'controversy', 'legal', 'estate', 'power'];
 const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.split('?')[0]); if (p.endsWith('/')) p += 'index.html'; const f = path.join(SITE, p); if (!f.startsWith(SITE) || !fs.existsSync(f)) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'Content-Type': T[f.split('.').pop()] || 'application/octet-stream' }); r.end(fs.readFileSync(f)); });
 (async () => {
   await new Promise(r => server.listen(0, r)); base = 'http://127.0.0.1:' + server.address().port + '/';
@@ -31,7 +31,7 @@ async function runVp(b, vp) {
     // New decks start off; the 4 Everyday decks start on.
     const on0 = await page.evaluate(() => [...document.querySelectorAll('#picker [data-act=deck].on')].map(e => e.dataset.id));
     assert.deepStrictEqual(on0, ['firstaid', 'kitchen', 'money', 'scams'], 'default decks');
-    assert.strictEqual(await page.evaluate(() => document.querySelectorAll('#picker [data-act=deck]').length), 16);
+    assert.strictEqual(await page.evaluate(() => document.querySelectorAll('#picker [data-act=deck]').length), 17);
     let prev = on0;
     for (const id of NEW) {
       await page.evaluate(() => document.querySelectorAll('#picker details').forEach(d => d.open = true));
@@ -42,7 +42,7 @@ async function runVp(b, vp) {
       if (id === 'fieldcare') { await page.evaluate(() => document.querySelectorAll('#picker details').forEach(d => d.open = true)); await page.evaluate(() => document.getElementById('picker').scrollIntoView()); await shot('1-deck-picker.jpg'); await page.evaluate(() => window.scrollTo(0, 0)); }
       if (id === 'legal') {
         const ss = await page.evaluate(() => { const d = document.querySelector('#picker details[data-sect="Street Smart"]'); const nt = d && d.querySelector('.sectnote'); return d && { ids: [...d.querySelectorAll('[data-act=deck]')].map(e => e.dataset.id), note: nt && nt.textContent }; });
-        assert(ss, 'Street Smart section'); assert.deepStrictEqual(ss.ids, ['estate', 'legal', 'safety']); assert(/cites its source/.test(ss.note));
+        assert(ss, 'Street Smart section'); assert.deepStrictEqual(ss.ids, ['estate', 'legal', 'power', 'safety']); assert(/cites its source/.test(ss.note));
         if (shots && vp.name === 'portrait') { fs.mkdirSync(path.join(shots, 'street/legal'), { recursive: true }); await page.evaluate(() => { document.querySelectorAll('#picker details').forEach(d => d.open = d.dataset.sect === 'Street Smart'); document.querySelector('#picker details[data-sect="Street Smart"]').scrollIntoView(); }); await page.screenshot({ path: path.join(shots, 'street/legal/v12-picker.jpg'), type: 'jpeg', quality: 85 }); await page.evaluate(() => window.scrollTo(0, 0)); }
       }
       if (id === 'controversy') {

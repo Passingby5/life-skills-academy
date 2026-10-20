@@ -334,7 +334,7 @@ t('v6-5 img field: checker accepts img/name.svg, rejects others; alt text defaul
   c.img = keep; delete c.img;
   assert(/burns/.test(L.imgAlt(c))); eq(L.imgAlt({ imgAlt: 'A leg with a band', topic: 'x' }), 'A leg with a band');
   eq(L.sectionsOf(L.knowDecks()).map(g => g.name), ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living', 'Big Debates', 'Street Smart']); eq(L.sectionsOf(L.knowDecks())[0].ids, ['firstaid', 'kitchen', 'money', 'scams']);
-  eq(L.defaultDecks(), ['firstaid', 'kitchen', 'money', 'scams']); eq(L.knowDecks().length, 15);
+  eq(L.defaultDecks(), ['firstaid', 'kitchen', 'money', 'scams']); eq(L.knowDecks().length, 16);
 });
 
 // ---------- v8 tests ----------
@@ -623,5 +623,31 @@ t('v14 Red Flags checker fails bad sets: cue count, flag count, why, count sprea
   e = L.checkDeck(Object.assign({}, base, { cards: mk(60, i => ({ cues: mk(1, () => ({}))[0].cues.map((q, k) => Object.assign({}, cue(i, k, k < 2 + (i % 3)), k < 2 + (i % 3) ? { t: 'urgent secret wire now ' + W[(i + k) % 12] + ' ' + W[k] + ' extra long words here' } : {})) })) })).join('|');
   assert(/flag cues are .*x longer/.test(e) && /cue tell "keywords"/.test(e), e);
   e = L.checkDeck(Object.assign({}, base, { rating: 'x', cards: mk(40) })).join('|'); assert(/rating/.test(e) && /only 40 sets for ya/.test(e), e);
+});
+t('v18 power deck: adult-rated, our own tactics, step diagrams, none cards 10 to 15%, real-case cites, Greene ban, PIN unlock', () => {
+  const d = L.decks.power; eq(d.section, 'Street Smart'); eq(d.rating, 'adult'); eq(d.format, 'gutcheck'); assert(d.power && d.cover && d.notice);
+  assert(L.defaultDecks().indexOf('power') < 0); eq(L.checkDeck(d), []);
+  ['ya', 'adult'].forEach(a => assert(L.cardsFor(a, ['power']).length >= 50, a));
+  const T = Object.keys(L.POWER_TACTICS); assert(T.length >= 10 && T.length <= 14, 'about 12 tactics');
+  assert(d.cards.every(c => /^pw\d\d$/.test(c.id) && c.cite && d.sources[c.src] && T.indexOf(c.tactic) >= 0 && c.steps.length >= 3 && c.steps.length <= 4));
+  T.forEach(k => assert(d.cards.some(c => c.tactic === k), 'tactic used: ' + k));
+  const nn = d.cards.filter(c => c.kind === 'none').length / d.cards.length; assert(nn >= 0.1 && nn <= 0.15, 'none share ' + nn);
+  assert(d.cards.filter(c => c.kind === 'none').every(c => c.c[1] === 'None of these; it was already too deep'));
+  const PB = require('../tools/powerban.js'); eq(PB.check(d, L.POWER_TACTICS), []);
+  const bad = JSON.parse(JSON.stringify(d)); bad.cards[0].f += ' Never outshine the master.'; bad.cards[1].steps = ['Conceal your intentions'];
+  const pe = PB.check(bad, L.POWER_TACTICS).join('|'); assert(/pw01: banned Greene phrase "outshine the master"/.test(pe) && /pw02: banned Greene phrase "conceal your intentions"/.test(pe), pe);
+  const c0 = Object.assign({}, d.cards[0]);
+  assert(/3 to 4/.test(L.checkPowerCard(Object.assign({}, c0, { steps: ['a', 'b'] })).join()));
+  assert(/1 to 5 words/.test(L.checkPowerCard(Object.assign({}, c0, { steps: ['one two three four five six', 'b', 'c'] })).join()));
+  assert(/allowed list/.test(L.checkPowerCard(Object.assign({}, c0, { tactic: 'crushTotally' })).join()));
+  // Adult-only by default; a parent PIN unlock opens it for one young adult profile.
+  const ya = prof('ya'), ad = prof('adult'); assert(!L.deckAllowed('power', ya) && L.deckAllowed('power', ad) && L.deckAllowed('estate', ya));
+  eq(L.allowedDecks(['estate', 'power'], ya), ['estate']); ya.unlock = ['power']; assert(L.deckAllowed('power', ya));
+  assert(L.PIN_RX.test('1234') && !L.PIN_RX.test('12a4') && !L.PIN_RX.test('123')); assert(L.hashPin('1234') !== L.hashPin('1235') && /^h[0-9a-z]+$/.test(L.hashPin('1234')));
+  const sv = L.newSave(), id = L.addProfile(sv, 'Kid', 'ya'); sv.profiles[id].unlock = ['power', 'gone']; sv.pin = L.hashPin('2468');
+  const ld = L.loadSave(L.dumpSave(sv)); eq(ld.save.profiles[id].unlock, ['power']); eq(ld.save.pin, L.hashPin('2468')); assert(ld.repaired);
+  // Over 1,000 seeded rounds with every deck on, a locked young adult profile never gets a power card.
+  const kid = prof('ya'), all = L.allowedDecks(L.knowDecks(), kid);
+  for (let s = 1; s <= 1000; s++) assert(!L.GC.start(kid, all, 0, s).q.some(it => L.cardIndex[it.id].deck === 'power'));
 });
 console.log(n + ' unit tests passed');

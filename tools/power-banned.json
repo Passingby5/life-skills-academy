@@ -1,0 +1,29 @@
+{
+  "note": "v18: phrases from the 48 law titles of Robert Greene's The 48 Laws of Power (1998), lower case, kept only so the checker can make sure the Power Plays deck never uses them. Not shipped in the app.",
+  "phrases": [
+    "48 laws", "laws of power", "robert greene",
+    "outshine the master", "never put too much trust in friends", "learn how to use enemies",
+    "conceal your intentions", "always say less than necessary", "say less than necessary",
+    "so much depends on reputation", "guard it with your life", "court attention at all costs",
+    "get others to do the work for you", "but always take the credit", "make other people come to you",
+    "use bait if necessary", "win through your actions", "never through argument",
+    "infection: avoid the unhappy", "avoid the unhappy and unlucky", "learn to keep people dependent on you",
+    "use selective honesty", "selective honesty and generosity", "disarm your victim",
+    "appeal to people's self-interest", "never to their mercy or gratitude", "pose as a friend, work as a spy",
+    "crush your enemy totally", "use absence to increase respect", "keep others in suspended terror",
+    "cultivate an air of unpredictability", "do not build fortresses to protect yourself", "isolation is dangerous",
+    "know who you're dealing with", "do not offend the wrong person", "do not commit to anyone",
+    "play a sucker to catch a sucker", "seem dumber than your mark", "use the surrender tactic",
+    "transform weakness into power", "concentrate your forces", "play the perfect courtier",
+    "re-create yourself", "keep your hands clean", "play on people's need to believe",
+    "create a cultlike following", "enter action with boldness", "plan all the way to the end",
+    "master the art of timing", "disdain things you cannot have", "ignoring them is the best revenge",
+    "create compelling spectacles", "think as you like but behave like others", "stir up waters to catch fish",
+    "despise the free lunch", "avoid stepping into a great man's shoes", "strike the shepherd and the sheep will scatter",
+    "work on the hearts and minds of others", "disarm and infuriate with the mirror effect", "preach the need for change",
+    "but never reform too much at once", "never appear too perfect", "do not go past the mark you aimed for",
+    "in victory, learn when to stop", "assume formlessness", "control the options",
+    "get others to play with the cards you deal", "play to people's fantasies", "discover each man's thumbscrew",
+    "be royal in your own fashion", "act like a king to be treated like one"
+  ]
+}

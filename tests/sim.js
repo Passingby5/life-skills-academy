@@ -43,3 +43,36 @@ console.log('ok 10 no cross-age cards; ok 21 due first and interleaved; ok v3-2 
   assert.strictEqual(at5, all.length);
 });
 console.log('ok 29 sim ran with no errors; perfect Sure player gets every card to box 5');
+// v14: Red Flags sim. 1,000 seeded players x 60 days, Red Flags plus all Gut Check decks on; no errors, no cross-age sets,
+// due sets first, save round-trips, and a perfect Sure player gets every set to box 5.
+{
+  const ids = L.pickerDecks(); let rr = 0, rs = 0, rdue = 0, rcross = 0;
+  for (let i = 0; i < 1000; i++) {
+    const r = L.rng(5000 + i), p = L.newProfile('R' + i, i % 2 ? 'ya' : 'adult'), skill = r.next();
+    for (let day = 0; day < 60; day += 1 + r.int(3)) {
+      const before = JSON.parse(JSON.stringify(p.boxes)), st = L.RF.start(p, ids, day, r.int(1e9));
+      const inR = st.q.map(x => x.id), due = L.setsFor(p.age, ids).filter(c => before[c.id] && before[c.id].due <= day).map(c => c.id);
+      if (inR.some(id => !before[id]) && due.some(id => !inR.includes(id))) rdue++;
+      p.rf = st;
+      while (st.stage !== 'done') {
+        const it = L.RF.cur(st), c = L.cardIndex[it.id]; if (!L.visible(c, p.age)) rcross++;
+        it.order.forEach((ci, pos) => { if ((r.next() < skill) === c.cues[ci].flag) L.RF.toggle(st, pos); });
+        L.RF.done(st); L.RF.confirm(st, p, r.int(3)); L.RF.next(st, p); rs++;
+      }
+      rr++;
+    }
+    const s = L.loadSave(L.dumpSave({ v: 2, active: 'a', next: 2, profiles: { a: p } })); assert(!s.broken && !s.repaired, 'rf save');
+  }
+  assert.strictEqual(rcross, 0, 'cross-age sets'); assert.strictEqual(rdue, 0, 'due sets first');
+  ['ya', 'adult'].forEach(age => {
+    const p = L.newProfile('Perfect', age), r = L.rng(9);
+    for (let day = 0; day < 60; day++) for (let g = 0; g < 30; g++) {
+      const st = L.RF.start(p, ['safety'], day, r.int(1e9)); if (!st.q.length) break;
+      if (!st.q.some(x => !p.boxes[x.id] || p.boxes[x.id].due <= day)) break;
+      while (st.stage !== 'done') { const it = L.RF.cur(st), c = L.cardIndex[it.id]; it.order.forEach((ci, pos) => { if (c.cues[ci].flag) L.RF.toggle(st, pos); }); L.RF.done(st); L.RF.confirm(st, p, 2); L.RF.next(st, p); }
+    }
+    const all = L.setsFor(age, ['safety']), at5 = all.filter(c => p.boxes[c.id] && p.boxes[c.id].b === 5).length;
+    assert.strictEqual(at5, all.length, 'perfect rf ' + age + ' ' + at5 + '/' + all.length);
+  });
+  console.log('ok v14 Red Flags sim: ' + rr + ' rounds, ' + rs + ' sets, no cross-age sets, due first, saves load; perfect player gets all ' + L.setsFor('ya', ['safety']).length + ' sets to box 5');
+}

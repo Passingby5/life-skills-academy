@@ -98,7 +98,7 @@ const results = {}; const pass = (k, m) => { results[k] = 'PASS'; console.log('o
     await page.reload({ waitUntil: 'load' }); assert((await page.textContent('#app')).includes('Adults (30+)')); pass('9 age pick changed and saved');
     // About
     await tap('[data-act=about]'); await checkLayout('about');
-    const want = await page.evaluate(() => LSA.knowDecks().reduce((s, id) => s + Object.keys(LSA.decks[id].sources).length, 0) + LSA.RESEARCH.length);
+    const want = await page.evaluate(() => LSA.pickerDecks().reduce((s, id) => s + Object.keys(LSA.decks[id].sources).length, 0) + LSA.RESEARCH.length);
     assert.strictEqual(await page.$$eval('a.src', l => l.length), want); pass('31 About lists ' + want + ' links');
     await tap('[data-act=menu]');
     // family: second player

@@ -2,9 +2,9 @@
 // Every field is checked deeply. Bad parts are fixed or reset; a save that cannot be used at all starts fresh.
 var LSA = typeof LSA !== 'undefined' ? LSA : {};
 LSA.SAVE_V = 2;
-LSA.SCREENS = ['home', 'menu', 'play', 'about', 'match', 'newprof'];
+LSA.SCREENS = ['home', 'menu', 'play', 'about', 'match', 'newprof', 'rf'];
 LSA.newStats = function () { return { rounds: 0, right: 0, seen: 0, wows: 0 }; };
-LSA.newProfile = function (name, age) { return { name: String(name || 'Player').slice(0, 20), age: age === 'ya' ? 'ya' : 'adult', boxes: {}, round: null, carry: [], stats: LSA.newStats() }; };
+LSA.newProfile = function (name, age) { return { name: String(name || 'Player').slice(0, 20), age: age === 'ya' ? 'ya' : 'adult', boxes: {}, round: null, rf: null, carry: [], stats: LSA.newStats() }; };
 LSA.newSave = function () { return { v: LSA.SAVE_V, active: null, next: 1, profiles: {}, decks: null }; };
 LSA.addProfile = function (s, name, age) {
   var id; do { id = 'p' + (s.next++); } while (s.profiles[id]);
@@ -31,6 +31,19 @@ LSA.checkRound = function (r) {
   return r.q.every(function (it) {
     if (!isObj(it) || !known(it.id) || !Array.isArray(it.order) || it.order.slice().sort().join() !== '0,1,2') return false;
     if (it.pick !== null && it.pick !== undefined && !isInt(it.pick, 0, 2)) return false;
+    if (it.conf !== null && it.conf !== undefined && !isInt(it.conf, 0, 2)) return false;
+    return true;
+  });
+};
+// v14: a Red Flags round is kept apart from the Gut Check round (profile.rf). Same rules, 6 cue tiles per set.
+LSA.checkRfRound = function (r) {
+  if (!isObj(r) || r.mode !== 'rf' || !Array.isArray(r.q) || !r.q.length || !isInt(r.i, 0, r.q.length)) return false;
+  if (['ask', 'conf', 'fix', 'done'].indexOf(r.stage) < 0 || (r.stage !== 'done' && r.i >= r.q.length)) return false;
+  if (typeof r.today !== 'number' || !isFinite(r.today) || !isInt(r.right, 0, 1e6) || !isInt(r.points, 0, 1e6) || !isInt(r.max, 0, 1e6)) return false;
+  if (!Array.isArray(r.wows) || !r.wows.every(known)) return false;
+  return r.q.every(function (it) {
+    if (!isObj(it) || !known(it.id) || !Array.isArray(it.order) || it.order.slice().sort().join() !== '0,1,2,3,4,5') return false;
+    if (!Array.isArray(it.on) || it.on.length !== 6 || !it.on.every(function (x) { return typeof x === 'boolean'; })) return false;
     if (it.conf !== null && it.conf !== undefined && !isInt(it.conf, 0, 2)) return false;
     return true;
   });
@@ -72,6 +85,11 @@ LSA.loadSave = function (text) {
       }); else fixed = true;
       if (p.round !== null && p.round !== undefined) { if (LSA.pruneRound(p.round)) pruned = true; if (p.round.q && !p.round.q.length) p.round = null; }
       if (p.round !== null && p.round !== undefined) { if (LSA.checkRound(p.round)) q.round = p.round; else fixed = true; }
+      if (p.rf !== null && p.rf !== undefined) {
+        // A Red Flags round with a cut set is simply dropped (it is at most 5 sets); the boxes are kept.
+        if (isObj(p.rf) && Array.isArray(p.rf.q) && p.rf.q.some(function (it) { return isObj(it) && typeof it.id === 'string' && !known(it.id); })) pruned = true;
+        else if (LSA.checkRfRound(p.rf)) q.rf = p.rf; else fixed = true;
+      }
       if (Array.isArray(p.carry)) { q.carry = p.carry.filter(known).slice(0, 10); if (q.carry.length !== p.carry.length) pruned = true; } else if (p.carry !== undefined) fixed = true;
       if (isObj(p.stats)) Object.keys(q.stats).forEach(function (st) { if (isInt(p.stats[st], 0, 1e9)) q.stats[st] = p.stats[st]; });
       else fixed = true;
@@ -82,7 +100,7 @@ LSA.loadSave = function (text) {
     if (s.next !== o.next) fixed = true;
     s.active = typeof o.active === 'string' && s.profiles[o.active] ? o.active : null;
     if (o.decks !== null && o.decks !== undefined) {
-      var ds = Array.isArray(o.decks) ? o.decks.filter(function (d) { return typeof d === 'string' && LSA.decks && LSA.decks[d] && LSA.decks[d].format === 'gutcheck'; }) : [];
+      var ds = Array.isArray(o.decks) ? o.decks.filter(function (d) { return typeof d === 'string' && LSA.decks && LSA.decks[d] && (LSA.decks[d].format === 'gutcheck' || LSA.decks[d].format === 'redflags'); }) : [];
       if (ds.length && Array.isArray(o.decks) && ds.length === o.decks.length) s.decks = ds; else { fixed = true; s.decks = ds.length ? ds : null; }
     }
     if (LSA.SCREENS.indexOf(o.screen) >= 0) s.screen = o.screen;

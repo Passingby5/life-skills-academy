@@ -59,3 +59,12 @@ input{width:100%;min-height:52px;font:inherit;padding:8px 12px;border-radius:12p
 .sectnote { margin: .2rem .2rem .5rem; font-size: .9rem; }
 .cite { font-size: .95rem; }
 .notice { font-size: .85rem; margin-top: .6rem; }
+.cuegrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cuegrid button.cuet{min-height:72px;margin:0;font-size:.9rem;font-weight:500;background:#24435c}
+.cuegrid button.cuet.on{background:#7a2d2d;outline:3px solid #ffd257}
+.cues{list-style:none;padding:0;margin:8px 0}
+.cue{padding:8px 10px;margin:6px 0;border-radius:10px;background:#1d3346;border-left:6px solid #3b5b74}
+.cue.flag{border-left-color:#d9534f}
+.cue.fine{border-left-color:#2f8f5b}
+.cue.miss{outline:2px dashed #ffd257}
+@media (orientation:landscape) and (max-height:500px){.cuegrid{grid-template-columns:1fr 1fr 1fr}.cuegrid button.cuet{min-height:52px}}

@@ -517,4 +517,61 @@ t('v12 Street Smart checker: cite, rating, notice, none-card share and tell, ban
   e = L.checkDeck(Object.assign({}, base, { cards: mk(60, i => i === 0 ? { kind: 'none' } : i === 1 ? { f: 'Here is how to make it' } : {}) })).join('|');
   assert(/must have "None of these/.test(e) && /banned word/.test(e), e);
 });
+t('v14 safety deck: 52 Red Flags sets from real DOJ cases, opt-in, cited, quotes in the saved sources', () => {
+  const d = L.decks.safety; eq(d.cards.length, 52); eq(d.format, 'redflags'); eq(d.section, 'Street Smart'); eq(d.rating, 'teen');
+  assert(L.defaultDecks().indexOf('safety') < 0 && L.knowDecks().indexOf('safety') < 0 && L.pickerDecks().indexOf('safety') >= 0);
+  assert(/911/.test(d.notice) && /real court cases/.test(d.notice));
+  eq(L.checkDeck(d), []);
+  ['ya', 'adult'].forEach(a => assert(L.setsFor(a, ['safety']).length >= 50));
+  eq(L.cardsFor('adult', ['safety']).length, 0);
+  d.cards.forEach(c => { assert(/^sf\d\d$/.test(c.id) && c.cite && c.cues.length === 6, c.id);
+    assert(/^doj-/.test(c.src) && /^https:\/\/www\.justice\.gov\//.test(d.sources[c.src][1]), c.id + ' main source is a DOJ release');
+    assert(/[A-Z][a-z]+ [A-Z]/.test(c.s), c.id + ' names the case'); });
+  const X = require('./fixtures/street-excerpts.json'), Q = require('../tools/quotes-new.json');
+  d.cards.forEach(c => [[c.id, c.src]].concat((c.also || []).map(k => [c.id + '@' + k, k])).forEach(([key, k]) => { const q = JSON.parse(Q[key]); assert(X[k] && X[k].some(e => e.includes(q)), key); }));
+});
+t('v14 Red Flags mode: toggle, Done, confidence; partial credit per cue; Leitner only on an exact match', () => {
+  const p = prof('ya'), st = L.RF.start(p, ['safety'], 100, 7);
+  eq(st.q.length, 5); assert(st.q.every(it => it.order.slice().sort().join() === '0,1,2,3,4,5'));
+  eq(L.RF.start(prof('ya'), ['safety'], 100, 7).q, st.q); // seeded
+  eq(L.RF.start(prof('ya'), ['firstaid'], 100, 7).stage, 'done'); // no sets on
+  const flagsAt = k => { const it = st.q[k], c = L.cardIndex[it.id]; return it.order.map((ci, pos) => c.cues[ci].flag ? pos : -1).filter(x => x >= 0); };
+  // Set 1: exact.
+  L.RF.confirm(st, p, 2); eq(st.stage, 'ask'); // confirm before Done does nothing
+  flagsAt(0).forEach(pos => L.RF.toggle(st, pos)); L.RF.done(st); L.RF.toggle(st, 0); // no toggles after Done
+  L.RF.confirm(st, p, 2); eq(st.stage, 'fix'); eq(L.RF.score(st, 0), { n: 6, of: 6, exact: true });
+  eq(p.boxes[st.q[0].id], L.grade(undefined, true, 2, 100)); assert(p.boxes[st.q[0].id].b > 1); eq(st.right, 1); eq(st.points, 6); assert(!st.q[0].wow);
+  L.RF.next(st, p); eq(st.stage, 'ask');
+  // Set 2: tap one wrong fine cue only and say Sure -> partial credit, box 1, Wow.
+  const f2 = flagsAt(1), fine = [0, 1, 2, 3, 4, 5].find(x => f2.indexOf(x) < 0);
+  L.RF.toggle(st, fine); L.RF.toggle(st, fine); L.RF.toggle(st, fine); L.RF.done(st); L.RF.back(st); eq(st.stage, 'ask'); L.RF.done(st);
+  L.RF.confirm(st, p, 2); const sc = L.RF.score(st, 1);
+  eq(sc.n, 6 - f2.length - 1); assert(!sc.exact); eq(p.boxes[st.q[1].id].b, 1); assert(st.q[1].wow); eq(st.wows, [st.q[1].id]);
+  eq(st.points, 6 + sc.n); eq(st.max, 12);
+  const m = L.RF.marks(st, 1); eq(m.length, 6); assert(m.every(x => typeof x.ok === 'boolean' && x.cue.why));
+  for (let k = 2; k < 5; k++) { L.RF.next(st, p); L.RF.done(st); L.RF.confirm(st, p, 0); }
+  L.RF.next(st, p); eq(st.stage, 'done'); eq(p.stats.rounds, 1); eq(p.stats.seen, 5);
+});
+t('v14 Red Flags save: a round round-trips; a broken one is reset; one with a cut set is dropped and boxes kept', () => {
+  const s = L.newSave(), id = L.addProfile(s, 'Sam', 'ya'), p = s.profiles[id];
+  s.decks = ['firstaid', 'safety']; p.rf = L.RF.start(p, ['safety'], 0, 3); L.RF.toggle(p.rf, 2); p.boxes.sf01 = { b: 2, due: 3, n: 1 };
+  let r = L.loadSave(L.dumpSave(s)); assert(!r.repaired && !r.broken, J(r)); eq(r.save.profiles[id].rf, p.rf); eq(r.save.decks, ['firstaid', 'safety']);
+  const bad = JSON.parse(L.dumpSave(s)); bad.profiles[id].rf.q[0].on = [1, 0]; r = L.loadSave(J(bad)); assert(r.repaired); eq(r.save.profiles[id].rf, null);
+  const cut = JSON.parse(L.dumpSave(s)); cut.profiles[id].rf.q[1].id = 'sf99'; r = L.loadSave(J(cut)); assert(r.pruned); eq(r.save.profiles[id].rf, null); eq(r.save.profiles[id].boxes.sf01.b, 2);
+});
+t('v14 Red Flags checker fails bad sets: cue count, flag count, why, count spread, length and keyword tells', () => {
+  const W = ['apple', 'river', 'stone', 'cloud', 'maple', 'tiger', 'piano', 'lemon', 'house', 'grape', 'chair', 'ocean'];
+  const cue = (i, k, flag) => ({ t: W[(i + k) % 12] + ' ' + W[(i * 5 + k * 7) % 12] + ' item ' + k, flag, why: 'w' });
+  const mk = (n, f) => Array.from({ length: n }, (_, i) => Object.assign({ id: 'r' + i, deck: 'rr', topic: 't', ages: 'both', s: 'Case Name v. X', doThis: 'd', src: 'a', cite: 'c',
+    cues: [0, 1, 2, 3, 4, 5].map(k => cue(i, k, k < 2 + (i % 3))) }, f && f(i)));
+  const base = { id: 'rr', format: 'redflags', section: 'Street Smart', rating: 'teen', notice: 'n', sources: { a: ['A', 'u'] } };
+  eq(L.checkDeck(Object.assign({}, base, { cards: mk(60) })), []);
+  let e = L.checkDeck(Object.assign({}, base, { cards: mk(60, i => i === 0 ? { cues: mk(1)[0].cues.slice(0, 5) } : i === 1 ? { cues: mk(1)[0].cues.map((q, k) => Object.assign({}, q, { flag: k === 0 })) } : i === 2 ? { cues: mk(1)[0].cues.map((q, k) => k ? q : Object.assign({}, q, { why: '' })) } : {}) })).join('|');
+  assert(/r0: needs exactly 6 cues/.test(e) && /r1: needs 2 to 4 red flags, has 1/.test(e) && /r2: cue 0 needs t, flag and why/.test(e), e);
+  e = L.checkDeck(Object.assign({}, base, { cards: mk(60, i => ({ cues: mk(1)[0].cues.map((q, k) => Object.assign({}, q, { flag: k < 3 })) })) })).join('|');
+  assert(/100% of sets have 3 flags/.test(e), e);
+  e = L.checkDeck(Object.assign({}, base, { cards: mk(60, i => ({ cues: mk(1, () => ({}))[0].cues.map((q, k) => Object.assign({}, cue(i, k, k < 2 + (i % 3)), k < 2 + (i % 3) ? { t: 'urgent secret wire now ' + W[(i + k) % 12] + ' ' + W[k] + ' extra long words here' } : {})) })) })).join('|');
+  assert(/flag cues are .*x longer/.test(e) && /cue tell "keywords"/.test(e), e);
+  e = L.checkDeck(Object.assign({}, base, { rating: 'x', cards: mk(40) })).join('|'); assert(/rating/.test(e) && /only 40 sets for ya/.test(e), e);
+});
 console.log(n + ' unit tests passed');

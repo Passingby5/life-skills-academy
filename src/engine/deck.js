@@ -89,6 +89,14 @@ LSA.deck = function (d) {
 // Decks that are on for a new save: the Everyday section. Every player can turn the others on in the picker.
 LSA.defaultDecks = function () { return LSA.knowDecks().filter(function (id) { return LSA.decks[id].section === 'Everyday'; }); };
 LSA.knowDecks = function () { return LSA.deckOrder.filter(function (id) { return LSA.decks[id].format === 'gutcheck'; }); };
+// Red Flags decks (multi-select cue sets). They show in the picker next to Gut Check decks but play in their own mode.
+LSA.flagDecks = function () { return LSA.deckOrder.filter(function (id) { return LSA.decks[id].format === 'redflags'; }); };
+LSA.pickerDecks = function () { return LSA.deckOrder.filter(function (id) { var f = LSA.decks[id].format; return f === 'gutcheck' || f === 'redflags'; }); };
+LSA.setsFor = function (age, deckIds) {
+  var out = [];
+  (deckIds || LSA.flagDecks()).forEach(function (id) { var d = LSA.decks[id]; if (d && d.format === 'redflags') d.cards.forEach(function (c) { if (LSA.visible(c, age)) out.push(c); }); });
+  return out;
+};
 LSA.visible = function (c, age) { return c.ages === 'both' || c.ages === age; };
 LSA.cardsFor = function (age, deckIds) {
   var out = [];
@@ -103,6 +111,7 @@ LSA.answerIndex = 1; // c[1] is always the right choice in the data; the engine 
 // Returns a list of problems. Empty list means the deck is good.
 LSA.checkDeck = function (d) {
   var errs = [], seen = {};
+  if (d.format === 'redflags') return LSA.checkFlagDeck(d);
   if (d.format === 'steps') {
     d.cards.forEach(function (c) { if (!c.id || !c.title || !Array.isArray(c.steps) || !c.steps.length) errs.push(d.id + ': bad step card ' + c.id); });
     return errs;
@@ -146,6 +155,83 @@ LSA.checkDeck = function (d) {
     var n = d.cards.filter(function (c) { return LSA.visible(c, a); }).length;
     if (n < LSA.MIN_CARDS) errs.push(d.id + ': only ' + n + ' cards for ' + a);
   });
+  return errs;
+};
+// Red Flags checker. Each set: 6 cues, 2 to 4 flags, a why on every cue, doThis, a cite and a known source.
+// Tells: no flag count on over half the sets; flag cues not over 1.2x longer than fine cues on average; and the
+// first-word, punctuation and keyword guessers (tools/cuetell.js logic, leave-one-set-out) stay at or under 45% lift.
+LSA.CUE_MAX_LIFT = 0.45; LSA.CUE_LEN_RATIO = 1.2; LSA.CUE_MAX_COUNT_SHARE = 0.5;
+LSA.cueWords = function (t) { return t.toLowerCase().replace(/[^a-z0-9' ]+/g, ' ').split(' ').filter(function (w) { return w.length > 2; }); };
+// Lift over the base rate: 0 means no better than always guessing the more common label, 1 means perfect.
+LSA.cueTells = function (cards) {
+  var all = [], base = 0;
+  cards.forEach(function (c, si) { (c.cues || []).forEach(function (q) { all.push({ si: si, t: q.t, flag: !!q.flag }); if (q.flag) base++; }); });
+  var n = all.length; if (!n) return {};
+  var bp = Math.max(base, n - base) / n;
+  function lift(acc) { return bp >= 1 ? 0 : Math.max(0, (acc - bp) / (1 - bp)); }
+  function feat(name, f) {
+    // Per set held out: learn flag rate per feature value from the other sets, guess the majority.
+    var ok = 0;
+    all.forEach(function (x) {
+      var v = f(x.t), a = 0, b = 0;
+      all.forEach(function (y) { if (y.si !== x.si && f(y.t) === v) { if (y.flag) a++; else b++; } });
+      var g = a + b ? a > b : base * 2 > n; if (g === x.flag) ok++;
+    });
+    return lift(ok / n);
+  }
+  function words() {
+    // Naive Bayes on words, leave one set out.
+    var ok = 0, sets = {};
+    all.forEach(function (x) { sets[x.si] = 1; });
+    Object.keys(sets).forEach(function (si) {
+      var cf = {}, cn = {}, nf = 0, nn = 0, tf = 0, tn = 0, V = {};
+      all.forEach(function (y) { if (String(y.si) === si) return; LSA.cueWords(y.t).forEach(function (w) { V[w] = 1; if (y.flag) { cf[w] = (cf[w] || 0) + 1; tf++; } else { cn[w] = (cn[w] || 0) + 1; tn++; } }); if (y.flag) nf++; else nn++; });
+      var v = Object.keys(V).length;
+      all.forEach(function (x) {
+        if (String(x.si) !== si) return;
+        var sf = Math.log(nf / (nf + nn)), sn = Math.log(nn / (nf + nn));
+        LSA.cueWords(x.t).forEach(function (w) { if (!V[w]) return; sf += Math.log(((cf[w] || 0) + 1) / (tf + v)); sn += Math.log(((cn[w] || 0) + 1) / (tn + v)); });
+        if ((sf > sn) === x.flag) ok++;
+      });
+    });
+    return lift(ok / n);
+  }
+  return {
+    firstWord: feat('firstWord', function (t) { return LSA.firstWord(t).toLowerCase(); }),
+    punct: feat('punct', function (t) { return (/[,;:"']/.test(t) ? 'p' : '') + (/\d/.test(t) ? 'd' : ''); }),
+    length: feat('length', function (t) { return Math.floor(t.length / 8); }),
+    keywords: words()
+  };
+};
+LSA.checkFlagDeck = function (d) {
+  var errs = [], seen = {}, counts = {}, fl = [0, 0], fi = [0, 0];
+  d.cards.forEach(function (c) {
+    var p = d.id + '/' + c.id + ': ';
+    ['id', 'deck', 'topic', 'ages', 's', 'cues', 'doThis', 'src', 'cite'].forEach(function (k) { if (!c[k]) errs.push(p + 'missing ' + k); });
+    if (seen[c.id]) errs.push(p + 'duplicate id'); seen[c.id] = 1;
+    if (['both', 'ya', 'adult'].indexOf(c.ages) < 0) errs.push(p + 'bad ages');
+    if (c.s && typeof c.s === 'object' && (!c.s.ya || !c.s.adult)) errs.push(p + 'two-line scenario needs ya and adult');
+    if (c.src && !(d.sources && d.sources[c.src])) errs.push(p + 'unknown source ' + c.src);
+    if (c.also !== undefined && !(Array.isArray(c.also) && c.also.length && c.also.every(function (k) { return k !== c.src && d.sources && d.sources[k]; }))) errs.push(p + 'also must list other known sources');
+    var cues = Array.isArray(c.cues) ? c.cues : [];
+    if (cues.length !== 6) errs.push(p + 'needs exactly 6 cues');
+    if (new Set(cues.map(function (q) { return q.t; })).size !== cues.length) errs.push(p + 'cues must differ');
+    cues.forEach(function (q, k) { if (!q || !q.t || !q.why || typeof q.flag !== 'boolean') errs.push(p + 'cue ' + k + ' needs t, flag and why'); else { var a = q.flag ? fl : fi; a[0] += q.t.length; a[1]++; } });
+    var nf = cues.filter(function (q) { return q && q.flag; }).length;
+    if (nf < 2 || nf > 4) errs.push(p + 'needs 2 to 4 red flags, has ' + nf);
+    counts[nf] = (counts[nf] || 0) + 1;
+    var txt = [LSA.scenario(c, 'ya'), LSA.scenario(c, 'adult'), c.doThis].concat(cues.map(function (q) { return q.t + ' ' + q.why; })).join(' ');
+    if (LSA.RX_BANNED.test(txt)) errs.push(p + 'banned word (gore or how-to)');
+  });
+  Object.keys(counts).forEach(function (k) { if (counts[k] / d.cards.length > LSA.CUE_MAX_COUNT_SHARE) errs.push(d.id + ': ' + Math.round(100 * counts[k] / d.cards.length) + '% of sets have ' + k + ' flags (max 50%)'); });
+  if (fl[1] && fi[1] && (fl[0] / fl[1]) > LSA.CUE_LEN_RATIO * (fi[0] / fi[1])) errs.push(d.id + ': flag cues are ' + ((fl[0] / fl[1]) / (fi[0] / fi[1])).toFixed(2) + 'x longer than fine cues');
+  var t = LSA.cueTells(d.cards);
+  Object.keys(t).forEach(function (k) { if (t[k] > LSA.CUE_MAX_LIFT) errs.push(d.id + ': cue tell "' + k + '" lift ' + Math.round(100 * t[k]) + '%'); });
+  if (d.section === LSA.STREET) {
+    if (!d.notice) errs.push(d.id + ': Street Smart deck needs a notice line');
+    if (['teen', 'adult'].indexOf(d.rating) < 0) errs.push(d.id + ': rating must be teen or adult');
+  }
+  ['ya', 'adult'].forEach(function (a) { var n = d.cards.filter(function (c) { return LSA.visible(c, a); }).length; if (n < LSA.MIN_CARDS) errs.push(d.id + ': only ' + n + ' sets for ' + a); });
   return errs;
 };
 LSA.checkAll = function () {

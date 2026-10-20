@@ -15,14 +15,14 @@
   function save() { try { localStorage.setItem(KEY, LSA.dumpSave(S)); } catch (e) { } }
   function today() { var d = new Date(); return Math.floor((d.getTime() - d.getTimezoneOffset() * 60000) / 86400000); }
   function P() { return S.active ? S.profiles[S.active] : null; }
-  function decks() { var all = LSA.knowDecks(); return (S.decks || LSA.defaultDecks()).filter(function (d) { return all.indexOf(d) >= 0; }); }
+  function decks() { var all = LSA.pickerDecks(); return (S.decks || LSA.defaultDecks()).filter(function (d) { return all.indexOf(d) >= 0; }); }
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function b(act, label, cls, extra) { return '<button data-act="' + act + '"' + (cls ? ' class="' + cls + '"' : '') + (extra || '') + '>' + label + '</button>'; }
   function ver() { return '<div class="ver" id="ver">' + esc(LSA_BUILD.label) + '</div>'; }
   function ageName(a) { return a === 'ya' ? 'Young adults (15 to 30)' : 'Adults (30+)'; }
   // Back button support: screens past the menu push a history entry, so Back returns to the menu.
   function go(s) {
-    var deep = ['about', 'match', 'newprof', 'play'].indexOf(s) >= 0;
+    var deep = ['about', 'match', 'newprof', 'play', 'rf'].indexOf(s) >= 0;
     try { if (deep && U.screen !== s) history.pushState({ s: s }, ''); else history.replaceState({ s: s }, ''); } catch (e) { }
     U.screen = s; S.screen = s; save(); render(); window.scrollTo(0, 0);
   }
@@ -36,7 +36,7 @@
   // A section the player opened or closed stays that way while the app is open (U.open), even after its last deck is turned off.
   function picker() {
     var on = decks(), h = '<div class="picker" id="picker">';
-    LSA.sectionsOf(LSA.knowDecks()).forEach(function (g) {
+    LSA.sectionsOf(LSA.pickerDecks()).forEach(function (g) {
       var n = g.ids.filter(function (id) { return on.indexOf(id) >= 0; }).length, k = U.open && U.open[g.name], open = k !== undefined ? k : (g.name === 'Everyday' || n > 0);
       h += '<details class="sect"' + (open ? ' open' : '') + ' data-sect="' + esc(g.name) + '"><summary>' + esc(g.name) + ' <span class="muted">' + n + ' of ' + g.ids.length + ' on</span></summary>' + (LSA.SECTION_NOTES && LSA.SECTION_NOTES[g.name] ? '<p class="muted sectnote">' + esc(LSA.SECTION_NOTES[g.name]) + '</p>' : '') + '<div class="decks">';
       g.ids.forEach(function (id) { var d = LSA.decks[id], k = on.indexOf(id) >= 0; h += b('deck', d.icon + ' ' + esc(d.name) + (k ? ' ✓' : ''), k ? 'on' : 'ghost', ' data-id="' + id + '" aria-pressed="' + k + '"'); });
@@ -70,6 +70,8 @@
     var h = (U.notice ? '<p class="note">' + esc(U.notice) + '</p>' : '') + '<h1>Hi, ' + esc(p.name) + '</h1><p class="muted">' + ageName(p.age) + ' · ' + Object.keys(p.boxes).length + ' cards seen · ' + p.stats.rounds + ' rounds</p>';
     h += b('play', live ? '▶ Resume round' : '▶ Play Gut Check', 'main');
     h += b('match', '🧩 Myth Match', 'alt', seen < 2 ? ' disabled' : '') + (seen < 2 ? '<p class="muted">Myth Match opens after you see a few cards.</p>' : '');
+    // Red Flags shows once a Red Flags deck is on.
+    if (LSA.setsFor(p.age, decks()).length) h += b('rfplay', p.rf && p.rf.stage !== 'done' ? '🚩 Resume Red Flags' : '🚩 Play Red Flags', 'alt', ' id="rfbtn"');
     h += '<h2>Decks</h2>' + (live ? '<p class="muted" id="decknote">Deck changes start with your next round. Your round in progress is kept.</p>' : '');
     h += picker();
     h += b('editage', 'Change age group', 'ghost') + b('about', 'About and sources', 'ghost') + b('home', 'Switch player', 'ghost') + b('delask', 'Delete this player', 'ghost danger');
@@ -110,6 +112,44 @@
     h += '</div>';
     return h + b('next', 'Next', 'main');
   }
+  // Red Flags: scenario, 6 cue tiles to toggle, Done, then the confidence tap. Fix screen marks every cue.
+  R.rf = function () {
+    var p = P(), st = p.rf;
+    if (!st || st.stage === 'done') return R.rfrecap();
+    var it = LSA.RF.cur(st), c = LSA.RF.set(st), d = LSA.decks[c.deck];
+    var top = '<div class="top"><span class="muted" id="prog">Case ' + (st.i + 1) + ' of ' + st.q.length + '</span>' + b('menu', 'Quit', 'ghost') + '</div>';
+    if (st.stage === 'fix') {
+      var sc = LSA.RF.score(st), s = d.sources[c.src];
+      var h = '<div class="card fix" id="fix">';
+      if (it.wow) h += '<div class="wow" id="wow">😮 Wow!</div><p class="muted">You were sure, but you missed some. Big surprises stick best.</p>';
+      h += '<p class="' + (sc.exact ? 'ok' : 'wrong') + '" id="rfscore">' + (sc.exact ? '✅ All 6 right.' : '❌ ' + sc.n + ' of 6 right.') + ' <span class="muted">(partial credit: ' + sc.n + ' points)</span></p><ul class="cues" id="cuelist">';
+      LSA.RF.marks(st).forEach(function (m) {
+        h += '<li class="cue ' + (m.cue.flag ? 'flag' : 'fine') + (m.ok ? '' : ' miss') + '"><b>' + (m.cue.flag ? '🚩 Red flag' : '✓ Fine') + (m.ok ? '' : (m.picked ? ' (you tapped it)' : ' (you missed it)')) + ':</b> ' + esc(m.cue.t) + '<br><span class="muted">' + esc(m.cue.why) + '</span></li>';
+      });
+      h += '</ul><p><span class="lab">Do this:</span> ' + esc(c.doThis) + '</p>';
+      h += '<p class="cite"><span class="lab">Case:</span> ' + esc(c.cite) + '</p>';
+      h += '<a class="src" href="' + esc(s[1]) + '" target="_blank" rel="noopener">Source: ' + esc(s[0]) + '</a>';
+      (c.also || []).forEach(function (k) { var x = d.sources[k]; h += '<a class="src also" href="' + esc(x[1]) + '" target="_blank" rel="noopener">Also: ' + esc(x[0]) + '</a>'; });
+      if (d.notice) h += '<p class="muted notice" id="notice">' + esc(d.notice) + '</p>';
+      return top + h + '</div>' + b('rfnext', 'Next', 'main');
+    }
+    var h2 = '<div class="play"><div class="card"><div class="scene" id="scene">' + esc(LSA.scenario(c, p.age)) + '</div>';
+    h2 += '<p class="muted">' + (st.stage === 'ask' ? 'Tap every red flag, then Done.' : 'How sure are you?') + '</p></div><div class="cuegrid" id="cues">';
+    it.order.forEach(function (ci, pos) { h2 += b('cue', esc(c.cues[ci].t), 'cuet' + (it.on[pos] ? ' on' : ''), ' data-p="' + pos + '" aria-pressed="' + it.on[pos] + '"' + (st.stage === 'ask' ? '' : ' disabled')); });
+    h2 += '</div>';
+    if (st.stage === 'ask') h2 += b('rfdone', 'Done', 'main', ' id="rfdone"');
+    else { LSA.CONF.forEach(function (t, k) { h2 += b('rfconf', t, k === 2 ? 'main' : '', ' data-k="' + k + '"'); }); h2 += b('rfback', 'Change my picks', 'ghost'); }
+    return top + h2 + '</div>';
+  };
+  R.rfrecap = function () {
+    var p = P(), st = p.rf;
+    if (!st) return R.menu();
+    var pct = st.max ? Math.round(100 * st.points / st.max) : 0;
+    var h = '<h1>Red Flags done</h1><p id="rfsum">You called ' + st.points + ' of ' + st.max + ' cues right (' + pct + '%). ' + st.right + ' of ' + st.q.length + ' cases were all right.</p><div class="card" id="recap"><h2>😮 Wow cases</h2>';
+    if (!st.wows.length) h += '<p class="muted">No Wow cases this round.</p>';
+    else h += '<ul class="list">' + st.wows.map(function (id) { var c = LSA.cardIndex[id]; return '<li>' + esc(c.cite) + '<br>' + esc(c.doThis) + '</li>'; }).join('') + '</ul>';
+    return h + '</div>' + b('rfplay', 'Play another round', 'main') + b('menu', 'Menu', 'ghost');
+  };
   R.recap = function () {
     var p = P(), st = p.round;
     if (!st) return R.menu();
@@ -138,7 +178,7 @@
     h += '<h2>Why it works</h2><ul class="list" id="research">';
     LSA.RESEARCH.forEach(function (r) { h += '<li>' + esc(r[0]) + '<br><span class="muted">' + esc(r[1]) + '</span><a class="src" href="' + r[2] + '" target="_blank" rel="noopener">' + r[2] + '</a></li>'; });
     h += '</ul><p class="muted">The real life scene format is our design choice. We did not find one strong review that proves scenes beat plain questions.</p><h2>Card sources</h2>';
-    LSA.knowDecks().forEach(function (id) {
+    LSA.pickerDecks().forEach(function (id) {
       var d = LSA.decks[id]; h += '<h2>' + d.icon + ' ' + esc(d.name) + '</h2><ul class="list">';
       Object.keys(d.sources).forEach(function (k) { h += '<li><a class="src" data-sid="' + k + '" href="' + esc(d.sources[k][1]) + '" target="_blank" rel="noopener">' + esc(d.sources[k][0]) + '</a></li>'; });
       h += '</ul>';
@@ -152,6 +192,7 @@
   function screenKey() {
     var p = P(), st = p && p.round;
     if (U.screen === 'play' && st) return 'play:' + st.i + ':' + st.stage;
+    if (U.screen === 'rf' && p && p.rf) return 'rf:' + p.rf.i + ':' + p.rf.stage;
     if (U.screen === 'match') return 'match:' + !!(U.mm && U.mm.done);
     return U.screen;
   }
@@ -179,7 +220,9 @@
     deck: function (el) {
       var cur = decks(), id = el.dataset.id, i = cur.indexOf(id);
       U.open = U.open || {}; U.open[LSA.decks[id].section] = true;
-      if (i >= 0) { if (cur.length > 1) cur.splice(i, 1); } else cur.push(id);
+      // Keep at least one Gut Check deck on, so a Gut Check round always has cards.
+      var gc = function (x) { return LSA.decks[x].format === 'gutcheck'; };
+      if (i >= 0) { if (cur.filter(function (x) { return x !== id && gc(x); }).length) cur.splice(i, 1); } else cur.push(id);
       S.decks = cur; save(); render();
     },
     delask: function () { go('delask'); },
@@ -189,6 +232,16 @@
       if (!p.round || p.round.stage === 'done') p.round = LSA.GC.start(p, decks(), today(), (Date.now() ^ (Math.random() * 1e9)) >>> 0);
       go('play');
     },
+    rfplay: function () {
+      var p = P();
+      if (!p.rf || p.rf.stage === 'done') p.rf = LSA.RF.start(p, decks(), today(), (Date.now() ^ (Math.random() * 1e9)) >>> 0);
+      go(p.rf.q.length ? 'rf' : 'menu');
+    },
+    cue: function (el) { LSA.RF.toggle(P().rf, +el.dataset.p); save(); render(); },
+    rfdone: function () { LSA.RF.done(P().rf); save(); render(); },
+    rfback: function () { LSA.RF.back(P().rf); save(); render(); },
+    rfconf: function (el) { LSA.RF.confirm(P().rf, P(), +el.dataset.k); save(); render(); window.scrollTo(0, 0); },
+    rfnext: function () { LSA.RF.next(P().rf, P()); go('rf'); },
     ans: function (el) { LSA.GC.pick(P().round, +el.dataset.p); save(); render(); },
     conf: function (el) { LSA.GC.confirm(P().round, P(), +el.dataset.k); save(); render(); window.scrollTo(0, 0); },
     next: function () { LSA.GC.next(P().round, P()); go('play'); },
@@ -212,11 +265,11 @@
     try { if (A[act]) A[act](el); }
     catch (err) {
       // Never leave a blank page: drop the round that broke and go back to the menu.
-      var p = P(); if (p) p.round = null; U.notice = 'Something went wrong, so that round was reset.'; U.screen = p ? 'menu' : 'home'; save(); render();
+      var p = P(); if (p) { if (U.screen === 'rf') p.rf = null; else p.round = null; } U.notice = 'Something went wrong, so that round was reset.'; U.screen = p ? 'menu' : 'home'; save(); render();
     }
   });
   // Resume where we left off (also after an auto update reload).
-  if (P()) U.screen = ['play', 'about'].indexOf(S.screen) >= 0 ? S.screen : 'menu';
+  if (P()) U.screen = ['play', 'about', 'rf'].indexOf(S.screen) >= 0 ? S.screen : 'menu';
   LSA.UI = { save: save, S: function () { return S; }, U: U, render: render };
   // Any error at startup shows the fresh-start notice instead of a blank page.
   try { try { history.replaceState({ s: U.screen }, ''); } catch (e) { } render(); }

@@ -69,8 +69,8 @@ async function imgOk(page, vp, where) {
     console.log('ok ' + tag + ' picture works offline');
     // Home screen picker shows too, grouped the same way.
     await ctx.setOffline(false); await page.click('[data-act=menu]'); await wait(page); await page.click('[data-act=home]'); await wait(page);
-    assert.strictEqual(await page.evaluate(() => document.querySelectorAll('#picker details').length), 5);
-    console.log('ok ' + tag + ' home screen deck picker grouped in 5 sections');
+    assert.strictEqual(await page.evaluate(() => document.querySelectorAll('#picker details').length), 6);
+    console.log('ok ' + tag + ' home screen deck picker grouped in 6 sections');
     assert.deepStrictEqual(errs, []); await ctx.close();
   }
   console.log('ok img and picker tests passed'); await b.close(); server.close(); fs.rmSync(dir, { recursive: true, force: true });

@@ -29,3 +29,13 @@ Saved copies: sources/street/<id>.txt (gitignored), fetched in real Chrome by to
 | hr23 | The Examined Life | philosophy | [Britannica: Socrates](https://www.britannica.com/biography/Socrates) |
 | hr24 | Mirror, Mirror | manipulation | [Britannica: Narcissism](https://www.britannica.com/science/narcissism) |
 | hr25 | A Novel Passed Hand to Hand | armenia | [USHMM Holocaust Encyclopedia: The Armenian Genocide (1915-16), Overview](https://encyclopedia.ushmm.org/content/en/article/the-armenian-genocide-1915-16-overview) |
+| hr26 | She Said She Had Erred | cults | [Britannica: Branch Davidian](https://www.britannica.com/topic/Branch-Davidian) |
+| hr27 | When the Spaceship Did Not Come | cults | [Britannica: Heaven's Gate](https://www.britannica.com/topic/Heavens-Gate-religious-group) |
+| hr28 | Gaslight | manipulation | [Britannica: Gaslighting](https://www.britannica.com/topic/gaslighting) |
+| hr29 | Superficial Charm | manipulation | [Britannica: Psychopathy](https://www.britannica.com/science/psychopathy) |
+| hr30 | A Good Life, They Promised | trafficking | [U.S. Department of Justice: Two Guatemalan nationals sentenced in labor trafficking scheme](https://www.justice.gov/archives/opa/pr/two-guatemalan-nationals-sentenced-connection-labor-trafficking-scheme-and-forced-labor-other) |
+| hr31 | Prison-Like Compounds | trafficking | [U.S. Department of Justice: Chairman of Prince Group indicted for Cambodian forced labor scam compounds](https://www.justice.gov/opa/pr/chairman-prince-group-indicted-operating-cambodian-forced-labor-scam-compounds-engaged) |
+| hr32 | A Cadre of Couriers | cartels | [U.S. Attorney, S.D. Cal.: Drug trafficker who used teens as couriers sentenced](https://www.justice.gov/usao-sdca/pr/drug-trafficker-who-used-teens-couriers-sentenced-85-months) |
+| hr33 | The Job Offer on Facebook | cartels | [U.S. Attorney, S.D. Cal.: Woman pleads guilty in so-called blind mule case](https://www.justice.gov/usao-sdca/pr/woman-pleads-guilty-drug-trafficking-and-obstruction-justice-so-called-blind-mule-case) |
+| hr34 | Nobody Asked | religion | [USHMM Holocaust Encyclopedia: Le Chambon-sur-Lignon](https://encyclopedia.ushmm.org/content/en/article/le-chambon-sur-lignon) |
+| hr35 | Eight in Ten | religion | [Pew Research Center (2012): The Global Religious Landscape](https://www.pewresearch.org/religion/2012/12/18/global-religious-landscape-exec/) |

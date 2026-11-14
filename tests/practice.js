@@ -313,10 +313,12 @@ function serve() {
     const ctx = await browser.newContext({ viewport: { width: 320, height: 568 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
     const page = await ctx.newPage();
     await page.goto(base, { waitUntil: 'load' });
-    await page.click('[data-act=newprof]');
-    await page.fill('#nm', 'Alex');
-    await page.click('[data-act=age][data-a=adult]');
-    await page.click('[data-act=saveprof]');
+    await page.evaluate(() => {
+      var S = LSA.newSave();
+      LSA.addProfile(S, 'Alex', 'adult');
+      localStorage.setItem('lsa_save', LSA.dumpSave(S));
+    });
+    await page.reload({ waitUntil: 'load' });
     await page.waitForTimeout(200);
     const ids = await page.evaluate(() => LSA.practiceDecks().reduce((a, id) => a.concat(LSA.decks[id].cards.map(c => c.id)), []));
     const overflows = [];
@@ -325,6 +327,7 @@ function serve() {
         const S = LSA.UI.S(), p = S.profiles[S.active];
         p.ep = { mode: 'ep', rs: 1, today: 1, q: [{ id: id, order: [0, 1, 2, 3], pick: stage === 'fix' ? 1 : null, conf: stage === 'fix' ? 1 : null, again: false, right: stage === 'fix' }], i: 0, stage: stage, again: {}, wows: [], right: 0 };
         S.screen = 'ep';
+        LSA.UI.U.screen = 'ep';
         LSA.UI.render();
       }, { id, stage });
       await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
@@ -358,6 +361,7 @@ function serve() {
         { id: 'fe002', order: [0, 1, 2, 3], pick: 0, conf: 1, right: true, again: true }
       ], i: 0, stage: 'done', again: {}, wows: ['fe001'], right: 1, carried: [] };
       S.screen = 'ep';
+      LSA.UI.U.screen = 'ep';
       LSA.UI.render();
     });
     const recap = await page.evaluate(() => ({

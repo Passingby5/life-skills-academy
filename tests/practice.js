@@ -29,6 +29,21 @@ assert.strictEqual(L.decks.cbet.cards.length, 100);
 });
 assert.strictEqual(L.checkDeck(L.decks.fecivil).join('\n'), '', 'fecivil checker');
 assert.strictEqual(L.checkDeck(L.decks.cbet).join('\n'), '', 'cbet checker');
+
+(function phraseRule() {
+  const baseCard = (id, c) => ({ id, deck: 'fecivil', topic: 'math', ages: 'both', s: 'A short stem for the phrase test.', c, f: 'A worked explanation that is long enough to pass the minimum length check.', src: 'ncees-fe' });
+  const d = Object.assign({}, L.decks.fecivil, { cards: L.decks.fecivil.cards.slice() });
+  d.cards = d.cards.slice(0, 50).map((c, i) => Object.assign({}, c));
+  // A choice that repeats a 4-word phrase inside itself.
+  d.cards[0] = baseCard('ph01', ['The same four word phrase the same four word phrase again', 'Right choice one here', 'Wrong two is short enough', 'Wrong three is also fine']);
+  const inner = L.checkPracticeDeck(d).join('\n');
+  assert(/choice repeats the phrase/.test(inner), 'inner repeat should fail, got ' + inner);
+  // The same 4-word phrase in more than 3 choices across the deck.
+  const phrase = 'under all field conditions today';
+  d.cards = d.cards.map((c, i) => i < 4 ? baseCard('ph' + i, [i === 0 ? phrase : 'Wrong A ' + i, i === 1 ? phrase : 'Right B ' + i, i === 2 ? phrase : 'Wrong C ' + i, i === 3 ? phrase : 'Wrong D ' + i]) : c);
+  const across = L.checkPracticeDeck(d).join('\n');
+  assert(/appears in 4 choices/.test(across), 'cross-choice repeat should fail, got ' + across);
+})();
 assert(L.decks.fecivil.notice && /not (real|official)|not a license/i.test(L.decks.fecivil.notice));
 assert(L.decks.cbet.notice && /not (real|official)|not a license/i.test(L.decks.cbet.notice));
 L.decks.fecivil.cards.concat(L.decks.cbet.cards).forEach(c => {
@@ -170,9 +185,25 @@ function serve() {
     await checkLayout('picker one deck');
 
     if (vp.name === 'portrait') {
-      await page.evaluate(() => { const d = document.querySelector('#picker details[data-sect="Engineer Fundamentals"]'); if (d) d.open = true; window.scrollTo(0, 0); });
-      await page.waitForTimeout(200);
+      await page.evaluate(() => document.querySelectorAll('#picker details').forEach(d => d.open = true));
+      const have = await page.evaluate(() => JSON.parse(localStorage.lsa_save).decks || []);
+      if (have.indexOf('cbet') < 0) await tap('#picker [data-act=deck][data-id=cbet]');
+      await page.evaluate(() => {
+        const sect = document.querySelector('#picker details[data-sect="Engineer Fundamentals"]');
+        if (sect) { sect.open = true; sect.scrollIntoView({ block: 'start' }); }
+      });
+      await page.waitForTimeout(250);
+      const vis = await page.evaluate(() => {
+        const inView = el => { if (!el) return false; const r = el.getBoundingClientRect(); return r.bottom > 0 && r.top < window.innerHeight && r.right > 0 && r.left < window.innerWidth; };
+        return {
+          fe: inView(document.querySelector('#picker [data-act=deck][data-id=fecivil]')),
+          cb: inView(document.querySelector('#picker [data-act=deck][data-id=cbet]'))
+        };
+      });
+      assert(vis.fe && vis.cb, 'picker shot should show FE Civil and CBET tiles, got ' + JSON.stringify(vis));
       await page.screenshot({ path: path.join(shotDir, '1-picker.jpg'), type: 'jpeg', quality: 85 });
+      const now = await page.evaluate(() => JSON.parse(localStorage.lsa_save).decks || []);
+      if (now.indexOf('cbet') >= 0) await tap('#picker [data-act=deck][data-id=cbet]');
     }
 
     // About notice

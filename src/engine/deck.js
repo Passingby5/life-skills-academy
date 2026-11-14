@@ -387,6 +387,26 @@ LSA.checkPracticeDeck = function (d) {
   });
   var ls = LSA.practiceLengthStats(d);
   if (ls.rightLongest > LSA.MAX_RIGHT_LONGEST) errs.push(d.id + ': right answer is the longest on ' + Math.round(ls.rightLongest * 100) + '% of cards');
+  var phraseHits = {};
+  d.cards.forEach(function (c) {
+    if (!Array.isArray(c.c)) return;
+    c.c.forEach(function (ch) {
+      var words = String(ch || '').toLowerCase().match(/[a-z0-9]+/g) || [];
+      var seen = {};
+      for (var i = 0; i + 4 <= words.length; i++) {
+        var g = words.slice(i, i + 4).join(' ');
+        if (seen[g]) {
+          errs.push(d.id + '/' + c.id + ': choice repeats the phrase "' + g + '"');
+          break;
+        }
+        seen[g] = 1;
+        (phraseHits[g] = phraseHits[g] || []).push(c.id);
+      }
+    });
+  });
+  Object.keys(phraseHits).forEach(function (g) {
+    if (phraseHits[g].length > 3) errs.push(d.id + ': phrase "' + g + '" appears in ' + phraseHits[g].length + ' choices');
+  });
   ['ya', 'adult'].forEach(function (a) {
     var n = d.cards.filter(function (c) { return LSA.visible(c, a); }).length;
     if (n < LSA.MIN_CARDS) errs.push(d.id + ': only ' + n + ' cards for ' + a);

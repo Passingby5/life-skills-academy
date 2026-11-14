@@ -187,6 +187,8 @@ def _stretch(text, target, used):
 
 
 def balance_choices(cards, keep_longest_frac=0.35):
+    raise SystemExit("balance_choices is retired: do not pad choices with stock tails. Use tools/engineer_rewrites.py and rewrite by hand.")
+    # unreachable leftover, kept only so the file still parses if someone greps the old name
     # Fix ratio first, then force a wrong to be strictly longer on enough cards.
     for c in cards:
         ch = c["c"]
@@ -233,6 +235,23 @@ def balance_choices(cards, keep_longest_frac=0.35):
         check_text(*ch)
         c["c"] = ch
 
+
+
+def apply_hand_rewrites(cards):
+    # Hand-written choices and explanations from tools/engineer_rewrites.py replace generated text.
+    from engineer_rewrites import REWRITES
+    for c in cards:
+        rw = REWRITES.get(c["id"])
+        if not rw:
+            continue
+        if "c" in rw:
+            if len(rw["c"]) != 4 or len(set(rw["c"])) != 4:
+                raise SystemExit(f"{c['id']}: rewrite needs 4 distinct choices")
+            c["c"] = list(rw["c"])
+        if "f" in rw:
+            c["f"] = rw["f"]
+        if "s" in rw:
+            c["s"] = rw["s"]
 
 def make_svgs():
     # Shared style: 14px labels, 320x240, black strokes, no answer values on ask-critical figures except given data.
@@ -2461,8 +2480,8 @@ def main():
     for c in cards_cb:
         if c["src"] not in CB_SOURCES:
             raise SystemExit(f"{c['id']} unknown source {c['src']}")
-    balance_choices(cards_fe)
-    balance_choices(cards_cb)
+    apply_hand_rewrites(cards_fe)
+    apply_hand_rewrites(cards_cb)
     length_ok(cards_fe, "FE")
     length_ok(cards_cb, "CBET")
     emit_deck(OUT_FE, {

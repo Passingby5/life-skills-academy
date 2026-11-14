@@ -24,9 +24,9 @@ LSA.tellLimit = function (id, k) { var e = LSA.FROZEN_DECKS.indexOf(id) >= 0 && 
 LSA.firstWord = function (x) { return x.split(/[ ,;:]/)[0]; };
 // Answer tells. words: first word -> [uses, right]. strat: expected score of simple guessing rules (ties split evenly).
 // Deck sections, in picker order. A deck without a section is Everyday.
-LSA.SECTIONS = ['Everyday', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living', 'Big Debates', 'Street Smart'];
+LSA.SECTIONS = ['Everyday', 'Engineer Fundamentals', 'Health and Safety', 'Tactical Field Care', 'Field Survival', 'Country Living', 'Big Debates', 'Street Smart'];
 // Short intro shown at the top of a section in the picker.
-LSA.SECTION_NOTES = { 'Big Debates': 'Facts only. On faith and moral questions we show what each side teaches, not who is right.', 'Street Smart': 'Real cases and real laws. Learn to spot the trap and get out safe. Every card cites its source.' };
+LSA.SECTION_NOTES = { 'Big Debates': 'Facts only. On faith and moral questions we show what each side teaches, not who is right.', 'Street Smart': 'Real cases and real laws. Learn to spot the trap and get out safe. Every card cites its source.', 'Engineer Fundamentals': 'Original practice questions written to official outlines. Not real exam items and not an official NCEES or AAMI exam. Not a license to practice.' };
 // Street Smart rules (STREET-SMART-SPEC.md). Every card cites a law, case or account; 'none' cards (no safe choice was left)
 // stay a small minority so they are not a tell; banned words keep it recognition and defense only, never gore or how-to.
 LSA.STREET = 'Street Smart'; LSA.MAX_NONE_SHARE = 0.15; LSA.MAX_ABS_SOLO = 0.15;
@@ -117,7 +117,7 @@ LSA.defaultDecks = function () { return LSA.knowDecks().filter(function (id) { r
 LSA.knowDecks = function () { return LSA.deckOrder.filter(function (id) { return LSA.decks[id].format === 'gutcheck'; }); };
 // Red Flags decks (multi-select cue sets). They show in the picker next to Gut Check decks but play in their own mode.
 LSA.flagDecks = function () { return LSA.deckOrder.filter(function (id) { return LSA.decks[id].format === 'redflags'; }); };
-LSA.pickerDecks = function () { return LSA.deckOrder.filter(function (id) { var f = LSA.decks[id].format; return f === 'gutcheck' || f === 'redflags' || f === 'passage'; }); };
+LSA.pickerDecks = function () { return LSA.deckOrder.filter(function (id) { var f = LSA.decks[id].format; return f === 'gutcheck' || f === 'redflags' || f === 'passage' || f === 'practice'; }); };
 // v20 Passage decks (Hard Reads): a passage, then its questions. They play in their own mode.
 LSA.passageDecks = function () { return LSA.deckOrder.filter(function (id) { return LSA.decks[id].format === 'passage'; }); };
 LSA.passagesFor = function (age, deckIds) {
@@ -146,6 +146,7 @@ LSA.checkDeck = function (d) {
   var errs = [], seen = {};
   if (d.format === 'redflags') return LSA.checkFlagDeck(d);
   if (d.format === 'passage') return LSA.checkPassageDeck(d);
+  if (d.format === 'practice') return LSA.checkPracticeDeck(d);
   if (d.format === 'steps') {
     d.cards.forEach(function (c) { if (!c.id || !c.title || !Array.isArray(c.steps) || !c.steps.length) errs.push(d.id + ': bad step card ' + c.id); });
     return errs;
@@ -348,6 +349,47 @@ LSA.checkPassageDeck = function (d) {
     var nq = 0, np = 0; d.cards.forEach(function (c) { if (LSA.visible(c, a)) { np++; nq += (c.qs || []).length; } });
     if (d.building) { if (np !== d.building) errs.push(d.id + ': building count ' + d.building + ' does not match ' + np + ' passages'); }
     else if (np < LSA.PASSAGE_TARGET || nq < LSA.PASSAGE_MIN_Q) errs.push(d.id + ': only ' + np + ' passages and ' + nq + ' questions for ' + a + ' (need 50 and 250)');
+  });
+  return errs;
+};
+
+// Engineer Practice checker. 4 different choices, c[1] right, a worked explanation, a known source.
+// Length must give no clue: same ratio and longest-share limits as Gut Check, compared with the other 3 choices.
+LSA.practiceLengthStats = function (d) {
+  var n = 0, l = 0;
+  d.cards.forEach(function (c) {
+    if (!Array.isArray(c.c) || c.c.length !== 4) return; n++;
+    var r = c.c[1].length, o = Math.max(c.c[0].length, c.c[2].length, c.c[3].length);
+    if (r >= o) l++;
+  });
+  return { cards: n, rightLongest: n ? l / n : 0 };
+};
+LSA.checkPracticeDeck = function (d) {
+  var errs = [], seen = {};
+  if (d.section !== 'Engineer Fundamentals') errs.push(d.id + ': practice decks belong in Engineer Fundamentals');
+  if (!d.notice) errs.push(d.id + ': practice deck needs a notice line');
+  d.cards.forEach(function (c) {
+    var p = d.id + '/' + c.id + ': ';
+    ['id', 'deck', 'topic', 'ages', 's', 'c', 'f', 'src'].forEach(function (k) { if (!c[k]) errs.push(p + 'missing ' + k); });
+    if (seen[c.id]) errs.push(p + 'duplicate id'); seen[c.id] = 1;
+    if (['both', 'ya', 'adult'].indexOf(c.ages) < 0) errs.push(p + 'bad ages');
+    if (!Array.isArray(c.c) || c.c.length !== 4 || new Set(c.c).size !== 4) errs.push(p + 'needs 4 different choices');
+    if (c.s && typeof c.s === 'object' && (!c.s.ya || !c.s.adult)) errs.push(p + 'two-line scenario needs ya and adult');
+    if (c.img !== undefined && !(typeof c.img === 'string' && LSA.IMG_RX.test(c.img))) errs.push(p + 'img must be a path like img/name.svg');
+    if (c.imgAlt !== undefined && !(typeof c.imgAlt === 'string' && c.imgAlt.trim())) errs.push(p + 'imgAlt must be text');
+    if (c.src && !(d.sources && d.sources[c.src])) errs.push(p + 'unknown source ' + c.src);
+    if (c.also !== undefined && !(Array.isArray(c.also) && c.also.length && c.also.every(function (k) { return k !== c.src && d.sources && d.sources[k]; }))) errs.push(p + 'also must list other known sources');
+    if (typeof c.f === 'string' && c.f.trim().length < 40) errs.push(p + 'explanation is too short');
+    if (Array.isArray(c.c) && c.c.length === 4) {
+      var r = c.c[1].length, o = Math.max(c.c[0].length, c.c[2].length, c.c[3].length);
+      if (r > LSA.MAX_RIGHT_RATIO * o) errs.push(p + 'right answer is ' + (r / o).toFixed(2) + 'x the next longest');
+    }
+  });
+  var ls = LSA.practiceLengthStats(d);
+  if (ls.rightLongest > LSA.MAX_RIGHT_LONGEST) errs.push(d.id + ': right answer is the longest on ' + Math.round(ls.rightLongest * 100) + '% of cards');
+  ['ya', 'adult'].forEach(function (a) {
+    var n = d.cards.filter(function (c) { return LSA.visible(c, a); }).length;
+    if (n < LSA.MIN_CARDS) errs.push(d.id + ': only ' + n + ' cards for ' + a);
   });
   return errs;
 };

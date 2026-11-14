@@ -1,7 +1,8 @@
 // Deck checker (also run by build.js). Prints counts per deck per age group and every tell score. Exits 1 on any problem,
 // including any guessing rule or the surface classifier over 45% (frozen v6 decks: see LSA.TELL_EXCEPTIONS in deck.js).
 const L = require('../tests/load.js').load(), G = require('./tellgate.js');
-L.deckOrder.forEach(id => { const d = L.decks[id]; if (d.format !== 'gutcheck') { console.log(id, '(' + d.format + ')', d.cards.length, 'cards'); return; }
+L.deckOrder.forEach(id => { const d = L.decks[id]; if (d.format === 'practice') { const topics = {}; d.cards.forEach(c => { topics[c.topic] = (topics[c.topic] || 0) + 1; }); console.log(id, '(practice)', d.cards.length, 'cards | ya', L.practiceCardsFor('ya', [id]).length, '| adult', L.practiceCardsFor('adult', [id]).length, '| topics', JSON.stringify(topics)); return; }
+  if (d.format !== 'gutcheck') { console.log(id, '(' + d.format + ')', d.cards.length, 'cards'); return; }
   console.log(id, 'total', d.cards.length, '| ya sees', L.cardsFor('ya', [id]).length, '| adult sees', L.cardsFor('adult', [id]).length, '| sources', Object.keys(d.sources).length); });
 const sc = G.scores(L);
 L.knowDecks().forEach(id => { const t = L.tellStats(L.decks[id].cards).strat, top = Object.entries(t).sort((a, b) => b[1] - a[1]).slice(0, 4);

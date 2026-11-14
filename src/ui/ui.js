@@ -17,14 +17,45 @@
   function P() { return S.active ? S.profiles[S.active] : null; }
   function decks() { var all = LSA.pickerDecks(); return (S.decks || LSA.defaultDecks()).filter(function (d) { return all.indexOf(d) >= 0; }); }
   // v18: decks this player may play now (an adult-rated deck needs an Adult profile or a parent PIN unlock).
-  function playDecks() { var ok = LSA.allowedDecks(decks(), P()); return ok.some(function (x) { return LSA.decks[x].format === 'gutcheck'; }) ? ok : ok.concat(LSA.defaultDecks()); }
+  function playDecks() { return LSA.allowedDecks(decks(), P()); }
+  function hasFormat(fmt) { return playDecks().some(function (x) { return LSA.decks[x].format === fmt; }); }
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  // Render $...$ and $$...$$ with bundled KaTeX when it is present. Everything else is escaped.
+  // Used only in Engineer Practice, never in Gut Check (those decks use $ for money).
+  function rich(s) {
+    s = String(s == null ? '' : s);
+    var out = '', i = 0;
+    function math(tex, display) {
+      try {
+        if (typeof katex !== 'undefined') return katex.renderToString(tex, { displayMode: !!display, throwOnError: false, strict: 'ignore', output: 'html' });
+      } catch (e) { }
+      return '<span class="tex' + (display ? ' tex-display' : '') + '">' + esc(tex) + '</span>';
+    }
+    while (i < s.length) {
+      if (s.slice(i, i + 2) === '$$') {
+        var j = s.indexOf('$$', i + 2);
+        if (j < 0) { out += esc(s.slice(i)); break; }
+        out += '<div class="mathd">' + math(s.slice(i + 2, j), true) + '</div>';
+        i = j + 2;
+      } else if (s.charAt(i) === '$') {
+        var j = s.indexOf('$', i + 1);
+        if (j < 0) { out += esc(s.slice(i)); break; }
+        out += '<span class="math">' + math(s.slice(i + 1, j), false) + '</span>';
+        i = j + 1;
+      } else {
+        var n = s.indexOf('$', i);
+        out += esc(n < 0 ? s.slice(i) : s.slice(i, n));
+        i = n < 0 ? s.length : n;
+      }
+    }
+    return out;
+  }
   function b(act, label, cls, extra) { return '<button data-act="' + act + '"' + (cls ? ' class="' + cls + '"' : '') + (extra || '') + '>' + label + '</button>'; }
   function ver() { return '<div class="ver" id="ver">' + esc(LSA_BUILD.label) + '</div>'; }
   function ageName(a) { return a === 'ya' ? 'Young adults (15 to 30)' : 'Adults (30+)'; }
   // Back button support: screens past the menu push a history entry, so Back returns to the menu.
   function go(s) {
-    var deep = ['about', 'match', 'newprof', 'play', 'rf', 'pr', 'parent'].indexOf(s) >= 0;
+    var deep = ['about', 'match', 'newprof', 'play', 'rf', 'pr', 'ep', 'parent'].indexOf(s) >= 0;
     try { if (deep && U.screen !== s) history.pushState({ s: s }, ''); else history.replaceState({ s: s }, ''); } catch (e) { }
     U.screen = s; S.screen = s; save(); render(); window.scrollTo(0, 0);
   }
@@ -38,6 +69,7 @@
   // A section the player opened or closed stays that way while the app is open (U.open), even after its last deck is turned off.
   function picker() {
     var on = decks(), h = '<div class="picker" id="picker">';
+    h += '<div class="row picker-tools" id="pickertools">' + b('decksall', 'Select all', 'ghost') + b('decksclear', 'Clear all', 'ghost') + '</div>';
     LSA.sectionsOf(LSA.pickerDecks()).forEach(function (g) {
       var n = g.ids.filter(function (id) { return on.indexOf(id) >= 0; }).length, k = U.open && U.open[g.name], open = k !== undefined ? k : (g.name === 'Everyday' || n > 0);
       h += '<details class="sect"' + (open ? ' open' : '') + ' data-sect="' + esc(g.name) + '"><summary>' + esc(g.name) + ' <span class="muted">' + n + ' of ' + g.ids.length + ' on</span></summary>' + (LSA.SECTION_NOTES && LSA.SECTION_NOTES[g.name] ? '<p class="muted sectnote">' + esc(LSA.SECTION_NOTES[g.name]) + '</p>' : '') + '<div class="decks">';
@@ -97,7 +129,12 @@
     // v20.4 P2: Hard Reads questions are counted on their own, not as cards.
     var bx = Object.keys(p.boxes), isQ = function (id) { var c = LSA.cardIndex && LSA.cardIndex[id], d = c && LSA.decks[c.deck]; return !!(d && d.format === 'passage'); }, nq = bx.filter(isQ).length;
     var h = (U.notice ? '<p class="note">' + esc(U.notice) + '</p>' : '') + '<h1>Hi, ' + esc(p.name) + '</h1><p class="muted">' + ageName(p.age) + ' · ' + (bx.length - nq) + ' cards seen · ' + (nq ? '<span id="hrseen">' + nq + ' Hard Reads questions</span> · ' : '') + p.stats.rounds + ' rounds</p>';
-    h += b('play', live ? '▶ Resume round' : '▶ Play Gut Check', 'main');
+    var canGC = hasFormat('gutcheck'), canEP = hasFormat('practice');
+    var epLive = p.ep && p.ep.stage !== 'done';
+    h += b('play', live ? '▶ Resume round' : '▶ Play Gut Check', 'main', canGC || live ? '' : ' disabled');
+    if (!canGC && !live) h += '<p class="muted" id="playnote">Turn on a Gut Check deck to play.</p>';
+    h += b('epplay', epLive ? '📐 Resume Engineer Practice' : '📐 Play Engineer Practice', 'alt', canEP || epLive ? ' id="epbtn"' : ' id="epbtn" disabled');
+    if (!canEP && !epLive) h += '<p class="muted" id="epnote">Turn on an Engineer Fundamentals deck to practice.</p>';
     h += b('match', '🧩 Myth Match', 'alt', seen < 2 ? ' disabled' : '') + (seen < 2 ? '<p class="muted">Myth Match opens after you see a few cards.</p>' : '');
     // Red Flags shows once a Red Flags deck is on.
     if (LSA.setsFor(p.age, playDecks()).length) h += b('rfplay', p.rf && p.rf.stage !== 'done' ? '🚩 Resume Red Flags' : '🚩 Play Red Flags', 'alt', ' id="rfbtn"');
@@ -249,6 +286,45 @@
     else h += '<ul class="list">' + st.wows.map(function (id) { var c = LSA.cardIndex[id]; return '<li>' + esc(c.cite) + '<br>' + esc(c.doThis) + '</li>'; }).join('') + '</ul>';
     return h + '</div>' + b('rfplay', 'Play another round', 'main') + b('menu', 'Menu', 'ghost');
   };
+
+  R.ep = function () {
+    var p = P(), st = p.ep;
+    if (!st || st.stage === 'done') return R.eprecap();
+    var it = LSA.EP.cur(st), c = LSA.EP.card(st), pr = LSA.EP.progress(st);
+    var top = '<div class="top"><span class="muted" id="prog">' + (pr.retry ? 'One more try (question ' + pr.n + ' of ' + pr.total + ')' : 'Question ' + pr.n + ' of ' + pr.total) + '</span>' + b('menu', 'Quit', 'ghost') + '</div>';
+    if (st.stage === 'fix') {
+      var d = LSA.decks[c.deck], s = d.sources[c.src];
+      var h = '<div class="card fix" id="fix">' + pic(c);
+      if (it.wow) h += '<div class="wow" id="wow">😮 Wow!</div><p class="muted">You were sure, but that was not the answer. Big surprises stick best.</p>';
+      h += '<p class="' + (it.right ? 'ok' : 'wrong') + '">' + (it.right ? '✅ You got it.' : '❌ Not this time.') + '</p>';
+      h += '<p class="qtext" id="qtext">' + rich(LSA.scenario(c, p.age)) + '</p>';
+      h += '<p><span class="lab">Answer:</span> ' + rich(c.c[1]) + '</p>';
+      h += '<div id="why"><span class="lab">Explanation:</span> ' + rich(c.f) + '</div>';
+      h += '<a class="src" href="' + esc(s[1]) + '" target="_blank" rel="noopener">Source: ' + esc(s[0]) + '</a>';
+      (c.also || []).forEach(function (k) { var x = d.sources[k]; h += '<a class="src also" href="' + esc(x[1]) + '" target="_blank" rel="noopener">Also: ' + esc(x[0]) + '</a>'; });
+      if (d.notice) h += '<p class="muted notice" id="notice">' + esc(d.notice) + '</p>';
+      h += '</div>';
+      return top + h + b('epnext', 'Next', 'main');
+    }
+    var h2 = '<div class="play"><div class="card">' + (c.imgAsk ? pic(c) : '') + '<div class="scene" id="scene">' + rich(LSA.scenario(c, p.age)) + '</div>';
+    if (st.stage === 'conf') h2 += '<p class="muted">How sure are you?</p>';
+    h2 += '</div><div>';
+    if (st.stage === 'ask') it.order.forEach(function (ci, pos) { h2 += b('epans', rich(c.c[ci]), 'ans', ' data-p="' + pos + '"'); });
+    else {
+      h2 += '<button class="pick" disabled>' + rich(c.c[it.order[it.pick]]) + '</button>';
+      LSA.CONF.forEach(function (lab, k) { h2 += b('epconf', lab, k === 2 ? 'main' : '', ' data-k="' + k + '"'); });
+    }
+    return top + h2 + '</div></div>';
+  };
+  R.eprecap = function () {
+    var p = P(), st = p.ep;
+    if (!st) return R.menu();
+    var h = '<h1>Practice done</h1><p id="epsum">You got ' + st.right + ' of ' + st.q.length + ' answers right.</p><div class="card" id="recap"><h2>😮 Wow questions</h2>';
+    if (!st.wows.length) h += '<p class="muted">No sure-but-wrong answers.</p>';
+    else h += '<ul class="list">' + st.wows.map(function (id) { var c = LSA.cardIndex[id]; return '<li>' + esc(LSA.scenario(c, p.age)) + '<br><b>Answer:</b> ' + esc(c.c[1]) + '</li>'; }).join('') + '</ul>';
+    if (st.carried && st.carried.length) h += '<p class="muted" id="carry">' + (st.carried.length === 1 ? '1 question you missed at the end comes back first next round.' : st.carried.length + ' questions you missed at the end come back first next round.') + '</p>';
+    return h + '</div>' + b('epplay', 'Practice again', 'main') + b('menu', 'Menu', 'ghost');
+  };
   R.recap = function () {
     var p = P(), st = p.round;
     if (!st) return R.menu();
@@ -283,6 +359,7 @@
       Object.keys(d.sources).forEach(function (k) { h += '<li><a class="src" data-sid="' + k + '" href="' + esc(d.sources[k][1]) + '" target="_blank" rel="noopener">' + esc(d.sources[k][0]) + '</a></li>'; });
       h += '</ul>';
     });
+    h += '<p class="muted" id="engnotice">Engineer Fundamentals questions are original practice items written to official outlines. They are not real past exam questions, not an official NCEES or AAMI practice exam, and not a license to practice.</p>';
     h += '<p class="muted">This is general info, not medical, legal or money advice. In an emergency call 911.</p>';
     return h + ver();
   };
@@ -294,6 +371,7 @@
     if (U.screen === 'play' && st) return 'play:' + st.i + ':' + st.stage;
     if (U.screen === 'rf' && p && p.rf) return 'rf:' + p.rf.i + ':' + p.rf.stage;
     if (U.screen === 'pr' && p && p.pr) return 'pr:' + p.pr.i + ':' + p.pr.stage;
+    if (U.screen === 'ep' && p && p.ep) return 'ep:' + p.ep.i + ':' + p.ep.stage;
     if (U.screen === 'match') return 'match:' + !!(U.mm && U.mm.done);
     return U.screen;
   }
@@ -343,11 +421,14 @@
       if (!LSA.deckAllowed(id, P())) { U.pinDeck = id; U.pinMsg = ''; go('pin'); return; }
       if (i < 0 && LSA.decks[id].cover) U.notice = LSA.decks[id].cover;
       U.open = U.open || {}; U.open[LSA.decks[id].section] = true;
-      // Keep at least one Gut Check deck on, so a Gut Check round always has cards.
-      var gc = function (x) { return LSA.decks[x].format === 'gutcheck'; };
-      if (i >= 0) { if (cur.filter(function (x) { return x !== id && gc(x); }).length) cur.splice(i, 1); } else cur.push(id);
+      if (i >= 0) cur.splice(i, 1); else cur.push(id);
       S.decks = cur; save(); render();
     },
+    decksall: function () {
+      var ids = LSA.pickerDecks().filter(function (id) { return LSA.deckAllowed(id, P()); });
+      S.decks = ids.slice(); save(); render();
+    },
+    decksclear: function () { S.decks = []; save(); render(); },
     pinok: function () {
       var p = P(), id = U.pinDeck, a = (document.getElementById('pin1') || {}).value || '', c = (document.getElementById('pin2') || {}).value || '';
       if (!p || !id) return go('menu');
@@ -360,9 +441,22 @@
     delyes: function () { LSA.deleteProfile(S, S.active); U.notice = ''; go('home'); },
     play: function () {
       var p = P();
-      if (!p.round || p.round.stage === 'done') p.round = LSA.GC.start(p, playDecks(), today(), (Date.now() ^ (Math.random() * 1e9)) >>> 0);
+      if (p.round && p.round.stage !== 'done') return go('play');
+      if (!hasFormat('gutcheck')) { render(); return; }
+      p.round = LSA.GC.start(p, playDecks(), today(), (Date.now() ^ (Math.random() * 1e9)) >>> 0);
+      if (!p.round.q.length) { p.round = null; render(); return; }
       go('play');
     },
+    epplay: function () {
+      var p = P();
+      if (p.ep && p.ep.stage !== 'done') return go('ep');
+      if (!hasFormat('practice')) { render(); return; }
+      p.ep = LSA.EP.start(p, playDecks(), today(), (Date.now() ^ (Math.random() * 1e9)) >>> 0);
+      go(p.ep.q.length ? 'ep' : 'menu');
+    },
+    epans: function (el) { LSA.EP.pick(P().ep, +el.dataset.p); save(); render(); },
+    epconf: function (el) { LSA.EP.confirm(P().ep, P(), +el.dataset.k); save(); render(); window.scrollTo(0, 0); },
+    epnext: function () { LSA.EP.next(P().ep, P()); go('ep'); },
     rfplay: function () {
       var p = P();
       if (!p.rf || p.rf.stage === 'done') p.rf = LSA.RF.start(p, playDecks(), today(), (Date.now() ^ (Math.random() * 1e9)) >>> 0);
@@ -407,11 +501,11 @@
     try { if (A[act]) A[act](el); }
     catch (err) {
       // Never leave a blank page: drop the round that broke and go back to the menu.
-      var p = P(); if (p) { if (U.screen === 'rf') p.rf = null; else if (U.screen === 'pr') p.pr = null; else p.round = null; } U.notice = 'Something went wrong, so that round was reset.'; U.screen = p ? 'menu' : 'home'; save(); render();
+      var p = P(); if (p) { if (U.screen === 'rf') p.rf = null; else if (U.screen === 'pr') p.pr = null; else if (U.screen === 'ep') p.ep = null; else p.round = null; } U.notice = 'Something went wrong, so that round was reset.'; U.screen = p ? 'menu' : 'home'; save(); render();
     }
   });
   // Resume where we left off (also after an auto update reload).
-  if (P()) U.screen = ['play', 'about', 'rf', 'pr'].indexOf(S.screen) >= 0 ? S.screen : 'menu';
+  if (P()) U.screen = ['play', 'about', 'rf', 'pr', 'ep'].indexOf(S.screen) >= 0 ? S.screen : 'menu';
   LSA.UI = { save: save, S: function () { return S; }, U: U, render: render };
   // Any error at startup shows the fresh-start notice instead of a blank page.
   try { try { history.replaceState({ s: U.screen }, ''); } catch (e) { } render(); }

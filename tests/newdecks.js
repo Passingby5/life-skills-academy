@@ -4,7 +4,7 @@
 // a knot fix screen, and a homestead card with a picture.
 const { chromium } = require('playwright-core'), http = require('http'), fs = require('fs'), path = require('path'), assert = require('assert');
 let base; const SITE = path.join(__dirname, '../site'), shots = process.env.SHOTS;
-const T = { html: 'text/html', js: 'text/javascript', json: 'application/json', png: 'image/png', svg: 'image/svg+xml', webmanifest: 'application/manifest+json' };
+const T = { html: 'text/html', js: 'text/javascript', json: 'application/json', png: 'image/png', svg: 'image/svg+xml', webmanifest: 'application/manifest+json', ttf: 'font/ttf', woff: 'font/woff', woff2: 'font/woff2', css: 'text/css' };
 const NEW = ['fieldcare', 'triage', 'foodsafe', 'medsafe', 'navgear', 'survive', 'canning', 'homestead', 'controversy', 'legal', 'estate', 'power'];
 const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.split('?')[0]); if (p.endsWith('/')) p += 'index.html'; const f = path.join(SITE, p); if (!f.startsWith(SITE) || !fs.existsSync(f)) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'Content-Type': T[f.split('.').pop()] || 'application/octet-stream' }); r.end(fs.readFileSync(f)); });
 (async () => {
@@ -31,7 +31,7 @@ async function runVp(b, vp) {
     // New decks start off; the 4 Everyday decks start on.
     const on0 = await page.evaluate(() => [...document.querySelectorAll('#picker [data-act=deck].on')].map(e => e.dataset.id));
     assert.deepStrictEqual(on0, ['firstaid', 'kitchen', 'money', 'scams'], 'default decks');
-    assert.strictEqual(await page.evaluate(() => document.querySelectorAll('#picker [data-act=deck]').length), 18);
+    assert.strictEqual(await page.evaluate(() => document.querySelectorAll('#picker [data-act=deck]').length), 20);
     let prev = on0;
     for (const id of NEW) {
       await page.evaluate(() => document.querySelectorAll('#picker details').forEach(d => d.open = true));

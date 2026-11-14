@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240" role="img">
+<rect width="320" height="240" fill="#ffffff"/>
+
+  <rect x="140" y="40" width="24" height="160" fill="none" stroke="#111" stroke-width="3"/>
+  <circle cx="152" cy="40" r="8" fill="none" stroke="#111" stroke-width="2"/>
+  <circle cx="152" cy="200" r="8" fill="none" stroke="#111" stroke-width="2"/>
+  <line x1="130" y1="208" x2="174" y2="208" stroke="#111" stroke-width="2"/>
+  <line x1="152" y1="16" x2="152" y2="32" stroke="#111" stroke-width="2"/>
+  <polygon points="152,32 146,20 158,20" fill="#111"/>
+  <text x="160" y="24" font-family="Arial, sans-serif" font-size="14" fill="#111">P</text>
+  <text x="180" y="120" font-family="Arial, sans-serif" font-size="14" fill="#111">length L</text>
+  <text x="40" y="50" font-family="Arial, sans-serif" font-size="14" fill="#111">pin</text>
+  <text x="40" y="210" font-family="Arial, sans-serif" font-size="14" fill="#111">pin</text>
+
+</svg>

@@ -6,3 +6,5 @@ site/version.json
 site/manifest.webmanifest
 site/.nojekyll
 site/img/
+
+site/vendor/

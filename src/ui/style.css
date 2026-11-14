@@ -82,3 +82,11 @@ input{width:100%;min-height:52px;font:inherit;padding:8px 12px;border-radius:12p
 .passage .pnum{display:inline-block;min-width:1.4em;font-weight:700;color:#ffd257}
 .proof{margin:10px 0;padding:8px 12px;border-left:4px solid #ffd257;background:#132a3b;border-radius:6px}
 .qtext{font-weight:600}
+
+/* v21 Engineer Practice and picker tools. */
+.picker-tools{margin:4px 0 8px}
+.picker-tools button{min-height:48px;margin:0}
+.math,.mathd,.katex{color:inherit}
+.mathd{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;margin:.4em 0}
+.tex{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.95em}
+#why{margin:.5em 0;line-height:1.45;overflow-wrap:anywhere}

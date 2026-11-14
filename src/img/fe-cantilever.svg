@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240" role="img">
+<rect width="320" height="240" fill="#ffffff"/>
+
+  <rect x="30" y="70" width="16" height="100" fill="#ccc" stroke="#111" stroke-width="2"/>
+  <line x1="46" y1="120" x2="280" y2="120" stroke="#111" stroke-width="3"/>
+  <line x1="280" y1="50" x2="280" y2="118" stroke="#111" stroke-width="2"/>
+  <polygon points="280,118 274,102 286,102" fill="#111"/>
+  <text x="268" y="44" font-family="Arial, sans-serif" font-size="14" fill="#111">P</text>
+  <text x="140" y="150" font-family="Arial, sans-serif" font-size="14" fill="#111">length L</text>
+  <text x="20" y="60" font-family="Arial, sans-serif" font-size="14" fill="#111">fixed</text>
+
+</svg>

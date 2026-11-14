@@ -17,9 +17,9 @@ if (missing.length) { console.error('Missing card pictures:\n' + missing.join('\
 let commit = process.env.COMMIT || '';
 if (!commit) { try { commit = execSync('git rev-parse HEAD', { cwd: __dirname, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); } catch (e) { commit = 'local'; } }
 commit = commit.slice(0, 7);
-const LABEL = 'v20.7 - Oct 20 - ' + commit;
+const LABEL = 'v21 - Nov 14 - ' + commit;
 const id = crypto.createHash('sha1').update(scripts.map(r).join('') + r('ui/style.css') + r('ui/body.html') + LABEL).digest('hex').slice(0, 8);
-const js = `<script>var LSA_BUILD = { label: ${JSON.stringify(LABEL)}, id: ${JSON.stringify(id)} };</script>\n` + scripts.map(f => `<script data-src="${f}">\n${r(f)}</script>`).join('\n');
+const js = `<script src="vendor/katex/katex.min.js"></script>\n<script>var LSA_BUILD = { label: ${JSON.stringify(LABEL)}, id: ${JSON.stringify(id)} };</script>\n` + scripts.map(f => `<script data-src="${f}">\n${r(f)}</script>`).join('\n');
 const reg = `
 <script>
 (function () {
@@ -55,6 +55,7 @@ const page = `<!DOCTYPE html>
 <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
 <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
 <title>Life Skills Academy</title>
+<link rel="stylesheet" href="vendor/katex/katex.min.css">
 <style>
 ${r('ui/style.css')}</style></head>
 <body>
@@ -77,12 +78,30 @@ fs.writeFileSync(S('manifest.webmanifest'), JSON.stringify({
   icons: [['icon-192', '192x192', 'any'], ['icon-512', '512x512', 'any'], ['maskable-192', '192x192', 'maskable'], ['maskable-512', '512x512', 'maskable']].map(([n, s, p]) => ({ src: 'icons/' + n + '.png', sizes: s, type: 'image/png', purpose: p }))
 }, null, 1));
 const icons = ['icon-192', 'icon-512', 'maskable-192', 'maskable-512', 'apple-touch-icon'];
-const assets = ['./', 'index.html', 'manifest.webmanifest'].concat(icons.map(n => 'icons/' + n + '.png'), imgs);
+// KaTeX (MIT): copy JS, a woff2-only CSS, and fonts so practice formulas work offline.
+const KATEX = path.join(__dirname, 'src/vendor/katex');
+function katexCss() {
+  let css = fs.readFileSync(path.join(KATEX, 'katex.min.css'), 'utf8');
+  // Keep only woff2 sources so we do not have to ship ttf and woff.
+  css = css.replace(/url\(fonts\/([^)]+?)\.woff2\) format\("woff2"\),url\(fonts\/[^)]+?\.woff\) format\("woff"\),url\(fonts\/[^)]+?\.ttf\) format\("truetype"\)/g, 'url(fonts/$1.woff2) format("woff2")');
+  return css;
+}
+const kdir = S('vendor/katex');
+fs.rmSync(path.join(OUT, 'vendor'), { recursive: true, force: true });
+fs.mkdirSync(path.join(kdir, 'fonts'), { recursive: true });
+fs.writeFileSync(path.join(kdir, 'katex.min.js'), fs.readFileSync(path.join(KATEX, 'katex.min.js')));
+fs.writeFileSync(path.join(kdir, 'katex.min.css'), katexCss());
+fs.copyFileSync(path.join(KATEX, 'LICENSE'), path.join(kdir, 'LICENSE'));
+const kfonts = fs.readdirSync(path.join(KATEX, 'fonts')).filter(f => f.endsWith('.woff2')).sort();
+kfonts.forEach(f => fs.copyFileSync(path.join(KATEX, 'fonts', f), path.join(kdir, 'fonts', f)));
+const katexAssets = ['vendor/katex/katex.min.js', 'vendor/katex/katex.min.css'].concat(kfonts.map(f => 'vendor/katex/fonts/' + f));
+const assets = ['./', 'index.html', 'manifest.webmanifest'].concat(icons.map(n => 'icons/' + n + '.png'), imgs, katexAssets);
 const h = crypto.createHash('sha1'); h.update(page); icons.forEach(n => h.update(fs.readFileSync(S('icons/' + n + '.png')))); imgs.forEach(p => h.update(p).update(fs.readFileSync(S(p))));
+katexAssets.forEach(p => h.update(p).update(fs.readFileSync(S(p))));
 const cache = 'lsa-' + h.digest('hex').slice(0, 10);
 fs.writeFileSync(S('version.json'), JSON.stringify({ label: LABEL, id, cache }));
 fs.writeFileSync(S('sw.js'), `// Service worker (${LABEL}, build ${id}). The page and version.json are NETWORK-FIRST so a new version shows up
-// right away; the cached copy is used only when offline. Icons, card pictures and the manifest are cache-first.
+// right away; the cached copy is used only when offline. Icons, card pictures, KaTeX files and the manifest are cache-first.
 const CACHE = '${cache}';
 const ASSETS = ${JSON.stringify(assets)};
 self.addEventListener('install', e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS.map(u => new Request(u, { cache: 'reload' })))).then(() => self.skipWaiting())); });

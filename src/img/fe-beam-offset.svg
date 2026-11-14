@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240" role="img">
+<rect width="320" height="240" fill="#ffffff"/>
+
+  <line x1="40" y1="120" x2="280" y2="120" stroke="#111" stroke-width="3"/>
+  <polygon points="40,120 32,140 48,140" fill="none" stroke="#111" stroke-width="2"/>
+  <circle cx="280" cy="128" r="8" fill="none" stroke="#111" stroke-width="2"/>
+  <line x1="272" y1="136" x2="288" y2="136" stroke="#111" stroke-width="2"/>
+  <line x1="120" y1="50" x2="120" y2="118" stroke="#111" stroke-width="2"/>
+  <polygon points="120,118 114,102 126,102" fill="#111"/>
+  <text x="110" y="44" font-family="Arial, sans-serif" font-size="14" fill="#111">P</text>
+  <text x="32" y="162" font-family="Arial, sans-serif" font-size="14" fill="#111">A</text>
+  <text x="272" y="162" font-family="Arial, sans-serif" font-size="14" fill="#111">B</text>
+  <text x="70" y="180" font-family="Arial, sans-serif" font-size="14" fill="#111">a</text>
+  <text x="180" y="180" font-family="Arial, sans-serif" font-size="14" fill="#111">b</text>
+  <line x1="40" y1="190" x2="280" y2="190" stroke="#111" stroke-width="1"/>
+  <line x1="40" y1="186" x2="40" y2="194" stroke="#111"/>
+  <line x1="120" y1="186" x2="120" y2="194" stroke="#111"/>
+  <line x1="280" y1="186" x2="280" y2="194" stroke="#111"/>
+
+</svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240" role="img">
+<rect width="320" height="240" fill="#ffffff"/>
+
+  <line x1="40" y1="180" x2="160" y2="60" stroke="#111" stroke-width="3"/>
+  <line x1="160" y1="60" x2="280" y2="180" stroke="#111" stroke-width="3"/>
+  <line x1="40" y1="180" x2="280" y2="180" stroke="#111" stroke-width="3"/>
+  <circle cx="40" cy="180" r="5" fill="#111"/>
+  <circle cx="160" cy="60" r="5" fill="#111"/>
+  <circle cx="280" cy="180" r="5" fill="#111"/>
+  <polygon points="40,180 32,200 48,200" fill="none" stroke="#111" stroke-width="2"/>
+  <circle cx="280" cy="188" r="8" fill="none" stroke="#111" stroke-width="2"/>
+  <line x1="272" y1="196" x2="288" y2="196" stroke="#111" stroke-width="2"/>
+  <line x1="160" y1="20" x2="160" y2="54" stroke="#111" stroke-width="2"/>
+  <polygon points="160,54 154,38 166,38" fill="#111"/>
+  <text x="150" y="18" font-family="Arial, sans-serif" font-size="14" fill="#111">P</text>
+  <text x="28" y="220" font-family="Arial, sans-serif" font-size="14" fill="#111">A</text>
+  <text x="166" y="58" font-family="Arial, sans-serif" font-size="14" fill="#111">C</text>
+  <text x="268" y="220" font-family="Arial, sans-serif" font-size="14" fill="#111">B</text>
+  <text x="90" y="130" font-family="Arial, sans-serif" font-size="14" fill="#111">AC</text>
+  <text x="200" y="130" font-family="Arial, sans-serif" font-size="14" fill="#111">BC</text>
+  <text x="150" y="200" font-family="Arial, sans-serif" font-size="14" fill="#111">AB</text>
+
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240" role="img">
+<rect width="320" height="240" fill="#ffffff"/>
+
+  <rect x="90" y="140" width="140" height="24" fill="#ccc" stroke="#111" stroke-width="2"/>
+  <rect x="140" y="40" width="40" height="100" fill="#ddd" stroke="#111" stroke-width="2"/>
+  <line x1="90" y1="180" x2="230" y2="180" stroke="#111" stroke-width="1"/>
+  <text x="140" y="210" font-family="Arial, sans-serif" font-size="14" fill="#111">width B</text>
+  <text x="186" y="90" font-family="Arial, sans-serif" font-size="14" fill="#111">column</text>
+  <text x="186" y="156" font-family="Arial, sans-serif" font-size="14" fill="#111">footing</text>
+
+</svg>

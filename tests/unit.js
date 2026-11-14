@@ -430,7 +430,7 @@ t('v8 question screen: no picture unless imgAsk, and an imgAsk picture holds no 
     const wrongHit = words(c.c[0] + ' ' + c.c[2]).filter(w => pictext.has(w));
     return hit.length && hit.length >= wrongHit.length ? hit : [];
   };
-  L.knowDecks().forEach(id => L.decks[id].cards.forEach(c => { if (c.imgAsk) eq(check(c), [], c.id + ' question picture gives the answer'); }));
+  L.knowDecks().concat(L.practiceDecks()).forEach(id => L.decks[id].cards.forEach(c => { if (c.imgAsk) eq(check(c), [], c.id + ' question picture gives the answer'); }));
   // The check does catch a picture that gives the answer away (fc02's tourniquet picture names "2 to 3 inches above the cut").
   assert(check(L.cardIndex.fc02).length > 0);
 });

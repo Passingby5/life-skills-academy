@@ -4,7 +4,7 @@
 // SHOTS=dir saves JPGs to dir/street/safety/.
 const { chromium } = require('playwright-core'), http = require('http'), fs = require('fs'), path = require('path'), assert = require('assert');
 const SITE = path.join(__dirname, '../site'), shots = process.env.SHOTS;
-const T = { html: 'text/html', js: 'text/javascript', json: 'application/json', png: 'image/png', svg: 'image/svg+xml', webmanifest: 'application/manifest+json' };
+const T = { html: 'text/html', js: 'text/javascript', json: 'application/json', png: 'image/png', svg: 'image/svg+xml', webmanifest: 'application/manifest+json', ttf: 'font/ttf', woff: 'font/woff', woff2: 'font/woff2', css: 'text/css' };
 const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.split('?')[0]); if (p.endsWith('/')) p += 'index.html'; const f = path.join(SITE, p); if (!f.startsWith(SITE) || !fs.existsSync(f)) { r.writeHead(404); return r.end(); } r.writeHead(200, { 'Content-Type': T[f.split('.').pop()] || 'application/octet-stream' }); r.end(fs.readFileSync(f)); });
 (async () => {
   await new Promise(r => server.listen(0, r)); const base = 'http://127.0.0.1:' + server.address().port + '/';
@@ -19,10 +19,12 @@ const server = http.createServer((q, r) => { let p = decodeURIComponent(q.url.sp
     assert(!(await page.$('#rfbtn')), 'no Red Flags button while the deck is off');
     await page.evaluate(() => document.querySelectorAll('#picker details').forEach(d => d.open = true));
     await tap('#picker [data-act=deck][data-id=safety]');
-    // The last Gut Check deck can not be turned off while only Red Flags is on.
+    // Any deck, including the last Gut Check deck, can be turned off. Red Flags can run on its own.
     for (const o of ['firstaid', 'kitchen', 'money', 'scams']) { await page.evaluate(() => document.querySelectorAll('#picker details').forEach(d => d.open = true)); await tap(`#picker [data-act=deck][data-id=${o}]`); }
     const on = await page.evaluate(() => JSON.parse(localStorage.lsa_save).decks);
-    assert(on.includes('safety') && on.filter(x => x !== 'safety').length === 1, 'one Gut Check deck stays on: ' + on);
+    assert(Array.isArray(on) && on.length === 1 && on[0] === 'safety', 'only Red Flags is on: ' + on);
+    assert(await page.$('[data-act=play][disabled]'), 'Play Gut Check is disabled with no Gut Check deck on');
+    assert(await page.$('#playnote'), 'a note explains why Play is disabled');
     if (vp.name === 'portrait' && dir) { await page.evaluate(() => { document.querySelectorAll('#picker details').forEach(d => d.open = d.dataset.sect === 'Street Smart'); document.querySelector('#picker details[data-sect="Street Smart"]').scrollIntoView(); }); await page.screenshot({ path: path.join(dir, 'v14-picker.jpg'), type: 'jpeg', quality: 85 }); }
     await tap('#rfbtn');
     let sets = 0, reloaded = false;

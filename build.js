@@ -17,7 +17,7 @@ if (missing.length) { console.error('Missing card pictures:\n' + missing.join('\
 let commit = process.env.COMMIT || '';
 if (!commit) { try { commit = execSync('git rev-parse HEAD', { cwd: __dirname, stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim(); } catch (e) { commit = 'local'; } }
 commit = commit.slice(0, 7);
-const LABEL = 'v21 - Nov 14 - ' + commit;
+const LABEL = 'v22 - Nov 14 - ' + commit;
 const id = crypto.createHash('sha1').update(scripts.map(r).join('') + r('ui/style.css') + r('ui/body.html') + LABEL).digest('hex').slice(0, 8);
 const js = `<script src="vendor/katex/katex.min.js"></script>\n<script>var LSA_BUILD = { label: ${JSON.stringify(LABEL)}, id: ${JSON.stringify(id)} };</script>\n` + scripts.map(f => `<script data-src="${f}">\n${r(f)}</script>`).join('\n');
 const reg = `
@@ -112,7 +112,7 @@ self.addEventListener('fetch', e => {
   const page = req.mode === 'navigate' || url.pathname.endsWith('/') || url.pathname.endsWith('index.html') || url.pathname.endsWith('version.json');
   if (page) {
     e.respondWith(fetch(req, { cache: 'no-store' }).then(res => {
-      if (res.ok && !url.pathname.endsWith('version.json')) { const copy = res.clone(); caches.open(CACHE).then(c => c.put('index.html', copy)); }
+      if (res.ok && !url.pathname.endsWith('version.json')) { const a = res.clone(), b = res.clone(); caches.open(CACHE).then(c => { c.put('index.html', a); c.put('./', b); }); }
       return res;
     }).catch(() => caches.match(req, { ignoreSearch: true }).then(hit => hit || caches.match('index.html'))));
     return;

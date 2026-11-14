@@ -113,6 +113,17 @@ L.decks.fecivil.cards.concat(L.decks.cbet.cards).forEach(c => {
   console.log('ok bundled KaTeX (MIT) is part of the build');
 }
 
+
+(function mathDelimiters() {
+  assert.strictEqual(L.checkPracticeMath('Cost is $50,000 and that $50,000 is sunk.').join(), '');
+  assert.strictEqual(L.checkPracticeMath('About 10% of the load is live.').join(), '');
+  assert(L.checkPracticeMath('Use $x=4$ in the formula.').some(function (e) { return /not \$/.test(e); }), 'bare $ math should fail');
+  assert(L.checkPracticeMath('\\(10%\\)').some(function (e) { return /unescaped %/.test(e); }), 'unescaped % should fail');
+  assert.strictEqual(L.checkPracticeMath('\\(10\\%\\) of PW is used.').join(), '');
+  assert(L.checkPracticeMath('\\(3x+2').some(function (e) { return /unbalanced/.test(e); }), 'unbalanced \\( should fail');
+  console.log('ok practice math delimiter checker');
+})();
+
 console.log('ok practice unit checks (picker save, counts, ages, 4-choice shuffle)');
 
 const SITE = path.join(__dirname, '../site');
@@ -296,6 +307,71 @@ function serve() {
     await ctx.close();
     console.log('ok practice browser', vp.name);
   }
+
+  // Every engineer card at 320x568, stem and explanation, without a reload per card.
+  {
+    const ctx = await browser.newContext({ viewport: { width: 320, height: 568 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true });
+    const page = await ctx.newPage();
+    await page.goto(base, { waitUntil: 'load' });
+    await page.click('[data-act=newprof]');
+    await page.fill('#nm', 'Alex');
+    await page.click('[data-act=age][data-a=adult]');
+    await page.click('[data-act=saveprof]');
+    await page.waitForTimeout(200);
+    const ids = await page.evaluate(() => LSA.practiceDecks().reduce((a, id) => a.concat(LSA.decks[id].cards.map(c => c.id)), []));
+    const overflows = [];
+    async function show(id, stage) {
+      await page.evaluate(({ id, stage }) => {
+        const S = LSA.UI.S(), p = S.profiles[S.active];
+        p.ep = { mode: 'ep', rs: 1, today: 1, q: [{ id: id, order: [0, 1, 2, 3], pick: stage === 'fix' ? 1 : null, conf: stage === 'fix' ? 1 : null, again: false, right: stage === 'fix' }], i: 0, stage: stage, again: {}, wows: [], right: 0 };
+        S.screen = 'ep';
+        LSA.UI.render();
+      }, { id, stage });
+      await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
+    }
+    function measure() {
+      return page.evaluate(() => {
+        const w = window.innerWidth;
+        const bad = [];
+        if (document.documentElement.scrollWidth > w + 1) bad.push('doc:' + document.documentElement.scrollWidth);
+        ['#scene', '#why', '#fix', '.qtext', '.card'].forEach(sel => {
+          document.querySelectorAll(sel).forEach(el => {
+            const r = el.getBoundingClientRect();
+            if (r.right > w + 2 || r.left < -2) bad.push((el.id || sel) + '@' + Math.round(r.right));
+          });
+        });
+        return bad;
+      });
+    }
+    for (const id of ids) {
+      await show(id, 'ask');
+      let bad = await measure();
+      if (bad.length) overflows.push(id + ' ask ' + bad.join(','));
+      await show(id, 'fix');
+      bad = await measure();
+      if (bad.length) overflows.push(id + ' fix ' + bad.join(','));
+    }
+    await page.evaluate(() => {
+      const S = LSA.UI.S(), p = S.profiles[S.active];
+      p.ep = { mode: 'ep', rs: 1, today: 1, q: [
+        { id: 'fe001', order: [0, 1, 2, 3], pick: 1, conf: 1, right: true, again: false },
+        { id: 'fe002', order: [0, 1, 2, 3], pick: 0, conf: 1, right: true, again: true }
+      ], i: 0, stage: 'done', again: {}, wows: ['fe001'], right: 1, carried: [] };
+      S.screen = 'ep';
+      LSA.UI.render();
+    });
+    const recap = await page.evaluate(() => ({
+      sum: (document.getElementById('epsum') || {}).innerText,
+      math: !!document.querySelector('#recap .katex, #recap .math, #recap .tex')
+    }));
+    assert(/first try/i.test(recap.sum || ''), 'recap should say first try: ' + recap.sum);
+    assert(/second try/i.test(recap.sum || ''), 'recap should label second tries: ' + recap.sum);
+    assert(recap.math, 'recap should render formulas');
+    assert.deepStrictEqual(overflows, [], 'overflow at 320x568:\n' + overflows.join('\n'));
+    await ctx.close();
+    console.log('ok practice overflow 320x568 for', ids.length, 'cards, stem+explanation; recap math and first-try score');
+  }
+
   await browser.close();
   server.close();
   console.log('ok practice Playwright (390x844, 844x390, 320x568) and screenshots in shots/');

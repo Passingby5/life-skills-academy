@@ -90,3 +90,8 @@ input{width:100%;min-height:52px;font:inherit;padding:8px 12px;border-radius:12p
 .mathd{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch;margin:.4em 0}
 .tex{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.95em}
 #why{margin:.5em 0;line-height:1.45;overflow-wrap:anywhere}
+
+/* Keep practice math from overflowing a narrow phone screen. */
+.scene, .qtext, #why, .card, .pick, button.ans { max-width: 100%; overflow-wrap: anywhere; }
+.scene, .qtext, #why { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.katex-display, .mathd { overflow-x: auto; max-width: 100%; }

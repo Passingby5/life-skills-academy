@@ -364,6 +364,21 @@ LSA.practiceLengthStats = function (d) {
   });
   return { cards: n, rightLongest: n ? l / n : 0 };
 };
+
+// Engineer Practice math must use \(...\) or \[...\]. A bare $ is money, and % inside math must be \%.
+LSA.checkPracticeMath = function (text, p) {
+  var errs = [];
+  p = p || '';
+  var stripped = String(text).replace(/\\\([\s\S]*?\\\)/g, ' ').replace(/\\\[[\s\S]*?\\\]/g, ' ');
+  if (/\\[\(\)\[\]]/.test(stripped)) errs.push(p + 'unbalanced math delimiter');
+  if (/(^|[^\\])\$[A-Za-z\\{]/.test(text)) errs.push(p + 'use \\( \\) for math, not $');
+  var re = /\\\(([\s\S]*?)\\\)|\\\[([\s\S]*?)\\\]/g, m;
+  while ((m = re.exec(text))) {
+    var tex = m[1] != null ? m[1] : m[2];
+    if (/(^|[^\\])%/.test(tex)) errs.push(p + 'unescaped % inside math');
+  }
+  return errs;
+};
 LSA.checkPracticeDeck = function (d) {
   var errs = [], seen = {};
   if (d.section !== 'Engineer Fundamentals') errs.push(d.id + ': practice decks belong in Engineer Fundamentals');
@@ -380,6 +395,10 @@ LSA.checkPracticeDeck = function (d) {
     if (c.src && !(d.sources && d.sources[c.src])) errs.push(p + 'unknown source ' + c.src);
     if (c.also !== undefined && !(Array.isArray(c.also) && c.also.length && c.also.every(function (k) { return k !== c.src && d.sources && d.sources[k]; }))) errs.push(p + 'also must list other known sources');
     if (typeof c.f === 'string' && c.f.trim().length < 40) errs.push(p + 'explanation is too short');
+    ['s', 'f'].concat((c.c || []).map(function (_, i) { return 'c' + i; })).forEach(function (field) {
+      var text = field.charAt(0) === 'c' ? (c.c && c.c[Number(field.slice(1))]) : c[field];
+      LSA.checkPracticeMath(String(text || ''), p + field + ' ').forEach(function (e) { errs.push(e); });
+    });
     if (Array.isArray(c.c) && c.c.length === 4) {
       var r = c.c[1].length, o = Math.max(c.c[0].length, c.c[2].length, c.c[3].length);
       if (r > LSA.MAX_RIGHT_RATIO * o) errs.push(p + 'right answer is ' + (r / o).toFixed(2) + 'x the next longest');
@@ -391,7 +410,8 @@ LSA.checkPracticeDeck = function (d) {
   d.cards.forEach(function (c) {
     if (!Array.isArray(c.c)) return;
     c.c.forEach(function (ch) {
-      var words = String(ch || '').toLowerCase().match(/[a-z0-9]+/g) || [];
+      var prose = String(ch || '').replace(/\\\([\s\S]*?\\\)/g, ' ').replace(/\\\[[\s\S]*?\\\]/g, ' ');
+      var words = prose.toLowerCase().match(/[a-z0-9]+/g) || [];
       var seen = {};
       for (var i = 0; i + 4 <= words.length; i++) {
         var g = words.slice(i, i + 4).join(' ');

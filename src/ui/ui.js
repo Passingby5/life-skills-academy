@@ -20,8 +20,8 @@
   function playDecks() { return LSA.allowedDecks(decks(), P()); }
   function hasFormat(fmt) { return playDecks().some(function (x) { return LSA.decks[x].format === fmt; }); }
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  // Render $...$ and $$...$$ with bundled KaTeX when it is present. Everything else is escaped.
-  // Used only in Engineer Practice, never in Gut Check (those decks use $ for money).
+  // Render \\(...\\) and \\[...\\] with bundled KaTeX when it is present. Everything else is escaped,
+  // including $ and % used as money or percent, so those never start math. Engineer Practice only.
   function rich(s) {
     s = String(s == null ? '' : s);
     var out = '', i = 0;
@@ -31,25 +31,32 @@
       } catch (e) { }
       return '<span class="tex' + (display ? ' tex-display' : '') + '">' + esc(tex) + '</span>';
     }
+    function nextDelim(from) {
+      var a = s.indexOf('\\(', from), b = s.indexOf('\\[', from);
+      if (a < 0) return b;
+      if (b < 0) return a;
+      return Math.min(a, b);
+    }
     while (i < s.length) {
-      if (s.slice(i, i + 2) === '$$') {
-        var j = s.indexOf('$$', i + 2);
+      if (s.slice(i, i + 2) === '\\[') {
+        var j = s.indexOf('\\]', i + 2);
         if (j < 0) { out += esc(s.slice(i)); break; }
         out += '<div class="mathd">' + math(s.slice(i + 2, j), true) + '</div>';
         i = j + 2;
-      } else if (s.charAt(i) === '$') {
-        var j = s.indexOf('$', i + 1);
+      } else if (s.slice(i, i + 2) === '\\(') {
+        var j = s.indexOf('\\)', i + 2);
         if (j < 0) { out += esc(s.slice(i)); break; }
-        out += '<span class="math">' + math(s.slice(i + 1, j), false) + '</span>';
-        i = j + 1;
+        out += '<span class="math">' + math(s.slice(i + 2, j), false) + '</span>';
+        i = j + 2;
       } else {
-        var n = s.indexOf('$', i);
+        var n = nextDelim(i);
         out += esc(n < 0 ? s.slice(i) : s.slice(i, n));
         i = n < 0 ? s.length : n;
       }
     }
     return out;
   }
+  LSA.rich = rich;
   function b(act, label, cls, extra) { return '<button data-act="' + act + '"' + (cls ? ' class="' + cls + '"' : '') + (extra || '') + '>' + label + '</button>'; }
   function ver() { return '<div class="ver" id="ver">' + esc(LSA_BUILD.label) + '</div>'; }
   function ageName(a) { return a === 'ya' ? 'Young adults (15 to 30)' : 'Adults (30+)'; }
@@ -126,9 +133,11 @@
   };
   R.menu = function () {
     var p = P(), live = p.round && p.round.stage !== 'done', seen = LSA.MM.seenCards(p, playDecks()).length;
-    // v20.4 P2: Hard Reads questions are counted on their own, not as cards.
-    var bx = Object.keys(p.boxes), isQ = function (id) { var c = LSA.cardIndex && LSA.cardIndex[id], d = c && LSA.decks[c.deck]; return !!(d && d.format === 'passage'); }, nq = bx.filter(isQ).length;
-    var h = (U.notice ? '<p class="note">' + esc(U.notice) + '</p>' : '') + '<h1>Hi, ' + esc(p.name) + '</h1><p class="muted">' + ageName(p.age) + ' · ' + (bx.length - nq) + ' cards seen · ' + (nq ? '<span id="hrseen">' + nq + ' Hard Reads questions</span> · ' : '') + p.stats.rounds + ' rounds</p>';
+    // Gut Check "cards seen" excludes Hard Reads questions and Engineer Practice items.
+    var bx = Object.keys(p.boxes), fmt = function (id) { var c = LSA.cardIndex && LSA.cardIndex[id]; return c && LSA.decks[c.deck] && LSA.decks[c.deck].format; };
+    var nq = bx.filter(function (id) { return fmt(id) === 'passage'; }).length;
+    var nCards = bx.filter(function (id) { var f = fmt(id); return f !== 'passage' && f !== 'practice'; }).length;
+    var h = (U.notice ? '<p class="note">' + esc(U.notice) + '</p>' : '') + '<h1>Hi, ' + esc(p.name) + '</h1><p class="muted">' + ageName(p.age) + ' · ' + nCards + ' cards seen · ' + (nq ? '<span id="hrseen">' + nq + ' Hard Reads questions</span> · ' : '') + p.stats.rounds + ' rounds</p>';
     var canGC = hasFormat('gutcheck'), canEP = hasFormat('practice');
     var epLive = p.ep && p.ep.stage !== 'done';
     h += b('play', live ? '▶ Resume round' : '▶ Play Gut Check', 'main', canGC || live ? '' : ' disabled');
@@ -319,9 +328,15 @@
   R.eprecap = function () {
     var p = P(), st = p.ep;
     if (!st) return R.menu();
-    var h = '<h1>Practice done</h1><p id="epsum">You got ' + st.right + ' of ' + st.q.length + ' answers right.</p><div class="card" id="recap"><h2>😮 Wow questions</h2>';
+    var first = st.q.filter(function (x) { return !x.again; });
+    var firstRight = first.filter(function (x) { return x.right; }).length;
+    var tries = st.q.length - first.length;
+    var sum = 'You got ' + firstRight + ' of ' + first.length + ' right on the first try';
+    if (tries === 1) sum += ' (1 was a second try)';
+    else if (tries) sum += ' (' + tries + ' were second tries)';
+    var h = '<h1>Practice done</h1><p id="epsum">' + sum + '.</p><div class="card" id="recap"><h2>😮 Wow questions</h2>';
     if (!st.wows.length) h += '<p class="muted">No sure-but-wrong answers.</p>';
-    else h += '<ul class="list">' + st.wows.map(function (id) { var c = LSA.cardIndex[id]; return '<li>' + esc(LSA.scenario(c, p.age)) + '<br><b>Answer:</b> ' + esc(c.c[1]) + '</li>'; }).join('') + '</ul>';
+    else h += '<ul class="list">' + st.wows.map(function (id) { var c = LSA.cardIndex[id]; return '<li>' + rich(LSA.scenario(c, p.age)) + '<br><b>Answer:</b> ' + rich(c.c[1]) + '</li>'; }).join('') + '</ul>';
     if (st.carried && st.carried.length) h += '<p class="muted" id="carry">' + (st.carried.length === 1 ? '1 question you missed at the end comes back first next round.' : st.carried.length + ' questions you missed at the end come back first next round.') + '</p>';
     return h + '</div>' + b('epplay', 'Practice again', 'main') + b('menu', 'Menu', 'ghost');
   };

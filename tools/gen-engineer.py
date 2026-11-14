@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Generate original FE Civil and CBET practice decks, SVGs, and numeric checks."""
 from __future__ import annotations
-import json, math, os, re, sys
+import json
+import math, os, re, sys
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -2484,6 +2485,10 @@ def main():
     apply_hand_rewrites(cards_cb)
     length_ok(cards_fe, "FE")
     length_ok(cards_cb, "CBET")
+    if "--emit-decks" not in sys.argv:
+        print("gen-engineer: decks are hand-maintained in v22+; passing --emit-decks would overwrite src/content/decks/eng_*.js. Stopping before emit.")
+        return
+
     emit_deck(OUT_FE, {
         "header": "// FE Civil practice deck (v21). Original exam-style items mapped to the NCEES FE Civil outline. Data only.",
         "id": "fecivil",

@@ -15,7 +15,11 @@ function ev(expr, inputs) {
 
 function numbers(s) {
   const out = [];
-  const t = String(s).replace(/,/g, '');
+  let t = String(s).replace(/,/g, '').replace(/\$/g, '');
+  // Turn TeX scientific notation into a plain JS number before scanning.
+  t = t.replace(/(-?\d+(?:\.\d+)?)\s*\\times\s*10\^\{?(-?\d+)\}?/g, function (_, a, b) {
+    return String(parseFloat(a) * Math.pow(10, parseFloat(b)));
+  });
   const re = /-?\d+(?:\.\d+)?(?:e[+\-]?\d+)?/ig;
   let m;
   while ((m = re.exec(t))) out.push(parseFloat(m[0]));
@@ -23,11 +27,9 @@ function numbers(s) {
 }
 
 function near(n, exp, tol) {
+  // Same sign and same displayed magnitude as the fixture (no sign flip, no silent x1000/x100 scale).
   const t = Math.max(tol, Math.abs(exp) * 0.02, 1e-9);
-  if (Math.abs(n - exp) <= t || Math.abs(n - Math.abs(exp)) <= t) return true;
-  // unit scales used in the decks: m vs mm, Pa vs MPa, raw vs percent
-  const scales = [1000, 0.001, 1e6, 1e-6, 100, 0.01];
-  return scales.some(s => Math.abs(n - exp * s) <= Math.max(tol, Math.abs(exp * s) * 0.02, 0.05));
+  return Math.abs(n - exp) <= t;
 }
 
 const skipNumericParse = new Set(['fe132', 'fe097']); // wording answers (determinate; 4 m in 100 m = 0.04)
@@ -56,5 +58,24 @@ calcs.forEach(c => {
   });
   d.cards.forEach(c => assert(d.sources[c.src], c.id + ' unknown source'));
 });
+
+
+assert.strictEqual(near(-4, 4, 0.01), false, 'near() must reject a sign flip');
+assert.strictEqual(near(190, 0.190, 0.003), false, 'near() must reject an x1000 unit error');
+assert.strictEqual(near(4e-3, 4, 0.01), false, 'near() must reject an x1000 scale the other way');
+assert.strictEqual(near(0.190, 0.1898, 0.003), true, 'near() still accepts the same displayed magnitude');
+
+let soleOutline = 0;
+['fecivil', 'cbet'].forEach(id => {
+  const d = L.decks[id];
+  d.cards.forEach(c => {
+    const outline = /^(ncees-spec|ncees-fe|aami-cbet|aami)$/.test(c.src);
+    if (outline && !(c.also && c.also.length)) {
+      soleOutline++;
+      assert.fail(c.id + ' cites only ' + c.src);
+    }
+  });
+});
+assert.strictEqual(soleOutline, 0, 'cards citing only an NCEES or AAMI outline should be near zero');
 
 console.log('ok engineer-numeric', calcs.length, 'calculations recomputed and matched to right answers');

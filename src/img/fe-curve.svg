@@ -1,16 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240" role="img">
 <rect width="320" height="240" fill="#ffffff"/>
-
-  <path d="M30 180 L100 180" stroke="#111" stroke-width="3" fill="none"/>
-  <path d="M100 180 Q200 180 230 80" stroke="#111" stroke-width="3" fill="none"/>
-  <path d="M230 80 L270 40" stroke="#111" stroke-width="3" fill="none"/>
-  <circle cx="100" cy="180" r="4" fill="#111"/>
-  <circle cx="230" cy="80" r="4" fill="#111"/>
-  <text x="70" y="200" font-family="Arial, sans-serif" font-size="14" fill="#111">PC</text>
-  <text x="236" y="100" font-family="Arial, sans-serif" font-size="14" fill="#111">PT</text>
-  <text x="150" y="130" font-family="Arial, sans-serif" font-size="14" fill="#111">R</text>
-  <text x="200" y="40" font-family="Arial, sans-serif" font-size="14" fill="#111">PI</text>
-  <line x1="100" y1="180" x2="250" y2="30" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
-  <line x1="230" y1="80" x2="250" y2="30" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
-
+  <!-- Horizontal back tangent through PC to PI; forward tangent at 60 degrees; circular arc PC-PT; R from center O to PC. -->
+  <line x1="20" y1="190" x2="70" y2="190" stroke="#111" stroke-width="3"/>
+  <line x1="70" y1="190" x2="151" y2="190" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="151" y1="190" x2="191" y2="120" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
+  <line x1="191" y1="120" x2="231" y2="51" stroke="#111" stroke-width="3"/>
+  <path d="M70 190 A 140 140 0 0 0 191 120" stroke="#111" stroke-width="3" fill="none"/>
+  <line x1="70" y1="50" x2="70" y2="190" stroke="#111" stroke-width="1.5"/>
+  <circle cx="70" cy="50" r="3" fill="#111"/>
+  <circle cx="70" cy="190" r="4" fill="#111"/>
+  <circle cx="191" cy="120" r="4" fill="#111"/>
+  <circle cx="151" cy="190" r="4" fill="#111"/>
+  <text x="78" y="208" font-family="Arial, sans-serif" font-size="14" fill="#111">PC</text>
+  <text x="200" y="118" font-family="Arial, sans-serif" font-size="14" fill="#111">PT</text>
+  <text x="156" y="208" font-family="Arial, sans-serif" font-size="14" fill="#111">PI</text>
+  <text x="50" y="120" font-family="Arial, sans-serif" font-size="14" fill="#111">R</text>
+  <text x="78" y="48" font-family="Arial, sans-serif" font-size="14" fill="#111">O</text>
 </svg>

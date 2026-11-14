@@ -16,7 +16,8 @@ from pathlib import Path
 
 import numpy as np
 from sklearn.linear_model import LogisticRegression
-from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import GradientBoostingClassifier, RandomForestClassifier
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 ROOT = Path(__file__).resolve().parents[1]
 STOP = set('a an the of to in on for and or is are be by with as at from that this which what it its your you their than into per when if not no any all'.split())
@@ -137,6 +138,8 @@ def strategies(c):
         bo = max(ov[i] for i in cand)
         cand = [i for i in cand if ov[i] == bo]
     R['combined'] = (1 / len(cand)) if 1 in cand else 0.0
+    ao = [len(re.findall(r'\b(and|or)\b', vis(x), re.I)) for x in ch]
+    R['most_and_or'] = pick_share(ao)
     return R
 
 
@@ -153,12 +156,27 @@ process.stdout.write(JSON.stringify(cards));
     return json.loads(raw)
 
 
-def cv_scores(cards, seeds=4):
+def _summarize_seeds(seed_scores):
+    """Return mean/min/max in percent for a dict of name -> list of per-seed accuracies."""
     out = {}
-    rng = np.random.default_rng(0)
+    for k, vals in seed_scores.items():
+        arr = np.array(vals, dtype=float)
+        out[k] = {
+            'mean': 100 * float(np.mean(arr)),
+            'min': 100 * float(np.min(arr)),
+            'max': 100 * float(np.max(arr)),
+            'seeds': [100 * float(v) for v in arr],
+        }
+    return out
+
+
+def cv_scores(cards, seeds=5):
+    seed_scores = {'logreg': [], 'gbm': []}
     for seed in range(seeds):
+        rng = np.random.default_rng(seed)
         idx = rng.permutation(len(cards))
         folds = np.array_split(idx, 10)
+        fold_logreg, fold_gbm = [], []
         for fold in folds:
             te_set = set(fold.tolist())
             tr = [cards[i] for i in idx if i not in te_set]
@@ -169,13 +187,15 @@ def cv_scores(cards, seeds=4):
             mdl.fit(X, y)
             for c in te:
                 pr = mdl.predict_proba(feats(c))[:, 1]
-                out.setdefault('logreg', []).append(1.0 if int(np.argmax(pr)) == 1 else 0.0)
+                fold_logreg.append(1.0 if int(np.argmax(pr)) == 1 else 0.0)
             gbm = GradientBoostingClassifier(n_estimators=80, max_depth=2, random_state=seed)
             gbm.fit(X, y)
             for c in te:
                 pr = gbm.predict_proba(feats(c))[:, 1]
-                out.setdefault('gbm', []).append(1.0 if int(np.argmax(pr)) == 1 else 0.0)
-    return {k: 100 * float(np.mean(v)) for k, v in out.items()}
+                fold_gbm.append(1.0 if int(np.argmax(pr)) == 1 else 0.0)
+        seed_scores['logreg'].append(float(np.mean(fold_logreg)))
+        seed_scores['gbm'].append(float(np.mean(fold_gbm)))
+    return _summarize_seeds(seed_scores)
 
 
 def cue_scores(cards):
@@ -189,18 +209,110 @@ def cue_scores(cards):
     return {k: 100 * sum(v) / len(v) for k, v in acc.items()}
 
 
+def share_pred(p):
+    best = max(p)
+    tied = [i for i, v in enumerate(p) if abs(v - best) < 1e-12]
+    return (1 / len(tied)) if 1 in tied else 0.0
+
+
+def token_list(t):
+    return [w for w in re.findall(r'[a-z][a-z0-9]*(?:-[a-z0-9]+)*', vis(t).lower()) if w not in STOP and len(w) > 2]
+
+
+def exclusive_tokens(cards, min_count=5):
+    from collections import Counter
+    keys, wrongs = Counter(), Counter()
+    where = {}
+    for c in cards:
+        for i, t in enumerate(c['c']):
+            for w in set(token_list(t)):
+                (keys if i == 1 else wrongs).update([w])
+                where.setdefault(w, []).append(f"{c['id']}c{i}")
+    bad = []
+    for w, n in sorted(keys.items()):
+        if n >= min_count and wrongs[w] == 0:
+            bad.append((w, n, 0, where[w]))
+    for w, n in sorted(wrongs.items()):
+        if n >= min_count and keys[w] == 0:
+            bad.append((w, 0, n, where[w]))
+    return bad
+
+
+def tfidf_cv(cards, seeds=5):
+    """Held-out 10-fold word-level tf-idf classifiers over several seeds.
+
+    Returns mean and range of the per-seed accuracies. Each seed is independently
+    reseeded so the five results are comparable draws, not one long RNG stream.
+    """
+    seed_scores = {'tfidf_logreg': [], 'tfidf_gbm': [], 'tfidf_rf': []}
+    for seed in range(seeds):
+        rng = np.random.default_rng(seed)
+        idx = rng.permutation(len(cards))
+        folds = np.array_split(idx, 10)
+        fold_hits = {k: [] for k in seed_scores}
+        for fold in folds:
+            te_set = set(fold.tolist())
+            tr = [cards[i] for i in idx if i not in te_set]
+            te = [cards[i] for i in fold]
+            txt = [vis(x) for c in tr for x in c['c']]
+            y = np.array([1 if i == 1 else 0 for c in tr for i in range(4)])
+            vec = TfidfVectorizer(
+                ngram_range=(1, 1),
+                min_df=2,
+                sublinear_tf=True,
+                lowercase=True,
+                token_pattern=r'(?u)\b[a-zA-Z][a-zA-Z0-9\-]*\b',
+            )
+            T = vec.fit_transform(txt)
+            models = {
+                'tfidf_logreg': LogisticRegression(max_iter=3000, C=2),
+                'tfidf_gbm': GradientBoostingClassifier(n_estimators=100, max_depth=2, random_state=seed),
+                'tfidf_rf': RandomForestClassifier(n_estimators=200, min_samples_leaf=3, random_state=seed),
+            }
+            for mdl in models.values():
+                mdl.fit(T, y)
+            for c in te:
+                Tt = vec.transform([vis(x) for x in c['c']])
+                for name, mdl in models.items():
+                    pr = mdl.predict_proba(Tt)[:, 1]
+                    fold_hits[name].append(share_pred(pr))
+        for name in seed_scores:
+            seed_scores[name].append(float(np.mean(fold_hits[name])))
+    return _summarize_seeds(seed_scores)
+
+
 def main():
     cards = load_cards()
     failed = []
     for deck in ('fecivil', 'cbet'):
         cs = [c for c in cards if c['deck'] == deck]
         cv = cv_scores(cs)
+        tf = tfidf_cv(cs)
         cues = cue_scores(cs)
-        print(f"{deck} logreg {cv['logreg']:.1f}%  gbm {cv['gbm']:.1f}%  n={len(cs)}")
+        def fmt(s):
+            return f"{s['mean']:.1f}% (range {s['min']:.1f}-{s['max']:.1f}%)"
+        print(
+            f"{deck} feat-logreg {fmt(cv['logreg'])}  feat-gbm {fmt(cv['gbm'])}  "
+            f"tfidf-logreg {fmt(tf['tfidf_logreg'])}  tfidf-gbm {fmt(tf['tfidf_gbm'])}  "
+            f"tfidf-rf {fmt(tf['tfidf_rf'])}  n={len(cs)}  seeds=5"
+        )
         for k, v in sorted(cues.items(), key=lambda kv: -kv[1]):
             print(f"  cue {k}: {v:.1f}%")
-        if cv['logreg'] > 35.0 + 1e-9:
-            failed.append(f"{deck} logreg {cv['logreg']:.1f}% exceeds 35%")
+        excl = exclusive_tokens(cs)
+        if excl:
+            print(f"  exclusive tokens (>=5 only in keys or only in distractors): {len(excl)}")
+            for w, k, wr, where in excl:
+                print(f"    {w} keys={k} wrongs={wr} {', '.join(where[:8])}")
+            failed.append(f"{deck} exclusive tokens: " + ', '.join(w for w, *_ in excl))
+        else:
+            print('  exclusive tokens: none')
+        if cv['logreg']['mean'] > 35.0 + 1e-9:
+            failed.append(f"{deck} feat-logreg {cv['logreg']['mean']:.1f}% exceeds 35%")
+        if cv['gbm']['mean'] > 35.0 + 1e-9:
+            failed.append(f"{deck} feat-gbm {cv['gbm']['mean']:.1f}% exceeds 35%")
+        for name, rec in tf.items():
+            if rec['mean'] > 35.0 + 1e-9:
+                failed.append(f"{deck} {name} {rec['mean']:.1f}% exceeds 35%")
         for k, v in cues.items():
             if k == 'combined':
                 continue
@@ -211,7 +323,7 @@ def main():
         for f in failed:
             print(' ', f)
         sys.exit(1)
-    print('ok engineer CV classifier (logreg <= 35%) and cue rules (<= 32%)')
+    print('ok engineer CV (tf-idf/GBM/RF <= 35%, cue and most-and/or <= 32%, no exclusive tokens)')
 
 
 if __name__ == '__main__':

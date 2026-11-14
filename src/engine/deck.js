@@ -392,7 +392,7 @@ LSA.checkPracticeMath = function (text, p) {
 // The right answer's core words (or displayed number) must appear in the explanation.
 // A card may be listed in LSA.practiceKeyAllow if the match is spelled out there instead.
 LSA.practiceKeyAllow = LSA.practiceKeyAllow || {};
-LSA.PRACTICE_KEY_STOP = 'a an the of to in on for and or is are be by with as at from that this which what it its than into per if not no'.split(' ');
+LSA.PRACTICE_KEY_STOP = 'a an the of to in on for and or is are be by with as at from that this which what it its than into per if you your they them their themself has have had did does doing how many then when can will would could should also both very often about under over where there these those such one two used use using called call may more most less some any all was were been being do so than thru via each'.split(' ');
 LSA.practicePlain = function (s) {
   return String(s || '')
     .replace(/\\mathrm\{([^}]*)\}/g, '$1')
@@ -413,28 +413,176 @@ LSA.practiceVis = function (s) {
     .replace(/[{}]/g, '');
 };
 
+// Compact stemmer used only to compare key and explanation content words.
+LSA.practiceStem = function (w) {
+  w = String(w || '').toLowerCase();
+  if (w.indexOf('-') > 0) {
+    return w.split('-').map(function (part) { return LSA.practiceStem(part); }).join('-');
+  }
+  if (w.length <= 3) return w;
+  if (/sses$/.test(w)) w = w.slice(0, -2);
+  else if (w.length > 5 && /ies$/.test(w)) w = w.slice(0, -3) + 'y';
+  else if (/ss$/.test(w)) { /* keep */ }
+  else if (/s$/.test(w) && !/[us]$/.test(w.slice(-2))) w = w.slice(0, -1);
+  if (w.length > 5 && /(ingly|edly)$/.test(w)) {
+    var b = w.replace(/(ingly|edly)$/, '');
+    if (b.length >= 3) w = b;
+  } else if (w.length > 4 && /(ing|ed)$/.test(w)) {
+    var b2 = w.replace(/(ing|ed)$/, '');
+    if (b2.length >= 3 && /[aeiouy]/.test(b2)) {
+      w = b2;
+      if (/(at|bl|iz)$/.test(w)) w += 'e';
+      else if (/(.)\1$/.test(w) && !/[lsz]$/.test(w)) w = w.slice(0, -1);
+    }
+  }
+  if (w.length > 6 && /ational$/.test(w)) w = w.replace(/ational$/, 'ate');
+  else if (w.length > 5 && /tional$/.test(w)) w = w.replace(/tional$/, 'tion');
+  else if (w.length > 6 && /ization$/.test(w)) w = w.replace(/ization$/, 'ize');
+  else if (w.length > 5 && /ation$/.test(w)) w = w.replace(/ation$/, 'ate');
+  else if (w.length > 4 && /ness$/.test(w)) w = w.slice(0, -4);
+  else if (w.length > 3 && /ly$/.test(w)) w = w.slice(0, -2);
+  return w;
+};
+
+LSA.PRACTICE_UNIT_ALIAS = {
+  m: 'm', meter: 'm', meters: 'm',
+  cm: 'cm',
+  mm: 'mm',
+  km: 'km',
+  s: 's', sec: 's', second: 's', seconds: 's',
+  h: 'h', hr: 'h', hour: 'h', hours: 'h',
+  day: 'day', days: 'day',
+  deg: 'deg', degree: 'deg', degrees: 'deg',
+  ohm: 'ohm', ohms: 'ohm',
+  w: 'w', watt: 'w', watts: 'w',
+  kw: 'kw',
+  j: 'j', joule: 'j', joules: 'j',
+  n: 'n', newton: 'n', newtons: 'n',
+  kn: 'kn',
+  pa: 'pa',
+  kpa: 'kpa',
+  knm: 'knm', 'kn/m': 'knm',
+  m3: 'm3', 'm^3': 'm3',
+  m2: 'm2', 'm^2': 'm2',
+  cms: 'cms', 'cm^3/s': 'cms', 'cm3/s': 'cms',
+  m3s: 'm3s', 'm^3/s': 'm3s', 'm3/s': 'm3s',
+  m3h: 'm3h', 'm^3/h': 'm3h', 'm3/h': 'm3h'
+};
+
+LSA.practiceNormUnit = function (u) {
+  u = String(u || '').toLowerCase().replace(/\s+/g, '').replace(/[°º]/g, 'deg').replace(/ω|ohm/g, 'ohm').replace(/[^a-z0-9/]/g, '');
+  if (!u) return '';
+  if (LSA.PRACTICE_UNIT_ALIAS[u]) return LSA.PRACTICE_UNIT_ALIAS[u];
+  u = u.replace(/meters?/g, 'm').replace(/seconds?/g, 's').replace(/hours?/g, 'h').replace(/degrees?/g, 'deg');
+  return LSA.PRACTICE_UNIT_ALIAS[u] || u;
+};
+
+LSA.practiceKeyParts = function (s) {
+  s = String(s || '');
+  var vis = LSA.practiceVis(s);
+  var lower = vis.toLowerCase();
+  var stop = LSA.PRACTICE_KEY_STOP;
+  var stems = [];
+  var wordRe = /[a-z][a-z0-9]*(?:-[a-z0-9]+)*/g, wm;
+  while ((wm = wordRe.exec(lower))) {
+    var w = wm[0];
+    if (w === 'not' || w === 'no' || (w.length > 2 && stop.indexOf(w) < 0)) {
+      stems.push(LSA.practiceStem(w));
+    }
+  }
+  // Isolated single-letter variables from math, ignoring \\mathrm{units}.
+  var mathRe = /\\\(([\s\S]*?)\\\)|\\\[([\s\S]*?)\\\]/g, mm;
+  while ((mm = mathRe.exec(s))) {
+    var tex = mm[1] != null ? mm[1] : mm[2];
+    tex = tex.replace(/\\mathrm\{[^}]*\}/g, ' ');
+    var visM = LSA.practiceVis('\\(' + tex + '\\)');
+    var symRe = /(^|[^A-Za-z0-9])([A-Za-z])(?=[^A-Za-z]|$)/g, sm;
+    while ((sm = symRe.exec(visM))) {
+      stems.push(LSA.practiceStem(sm[2].toLowerCase()));
+    }
+    var frac = /\\frac\{1\}\{2\}/g;
+    if (frac.test(tex)) {
+      /* recorded as 0.5 below */
+    }
+  }
+  var nums = [];
+  var t2 = vis.replace(/,/g, '').replace(/[\u2212\u2013]/g, '-').replace(/\$(?=\d)/g, '');
+  t2 = t2.replace(/½/g, '0.5');
+  // TeX 1/2 written in the visible string after frac flattening may be "12" if braces dropped.
+  var raw = s.replace(/\\frac\{1\}\{2\}/g, ' 0.5 ');
+  raw = LSA.practiceVis(raw).replace(/,/g, '').replace(/[\u2212\u2013]/g, '-').replace(/\$(?=\d)/g, '');
+  var numRe = /(^|[^A-Za-z0-9.])([+-]?\d+(?:\.\d+)?)(?:\s*([A-Za-z°ºµμΩ]+(?:\s*[\/^]\s*[A-Za-z0-9°ºµμΩ]+)*))?/g, nm;
+  while ((nm = numRe.exec(raw))) {
+    // groups: 1 prefix, 2 number, 3 unit
+    nm = [nm[0], nm[2], nm[3]];
+    var unit = LSA.practiceNormUnit(nm[2] || '');
+    if (unit && (stop.indexOf(String(nm[2] || '').toLowerCase()) >= 0)) unit = '';
+    nums.push({ n: nm[1].replace(/^\+/, ''), unit: unit });
+  }
+  return { stems: stems, nums: nums };
+};
+
+LSA.practiceNumMatch = function (keyNums, explNums) {
+  if (!keyNums.length) return true;
+  function sameNum(a, b) {
+    if (a === b) return true;
+    var fa = parseFloat(a), fb = parseFloat(b);
+    if (!isFinite(fa) || !isFinite(fb)) return false;
+    if (Math.abs(fa - fb) < 1e-9) return true;
+    if (Math.abs(Math.abs(fa) - 0.5) < 1e-9 && Math.abs(Math.abs(fb) - 0.5) < 1e-9) return fa * fb > 0 || Math.abs(fa - fb) < 1e-9;
+    var dec = (String(a).split('.')[1] || '').length;
+    var factor = Math.pow(10, dec);
+    return Math.round(fb * factor) / factor === fa;
+  }
+  function sameUnit(a, b) {
+    if (!a) return true;
+    if (!b) return false;
+    return LSA.practiceNormUnit(a) === LSA.practiceNormUnit(b);
+  }
+  return keyNums.every(function (k) {
+    return explNums.some(function (e) {
+      return sameNum(k.n, e.n) && sameUnit(k.unit, e.unit);
+    });
+  });
+};
+
 LSA.checkPracticeKey = function (c, p) {
   var errs = [];
   p = p || '';
   if (!c || !c.c || !c.c[1] || !c.f) return errs;
-  if (LSA.practiceKeyAllow[c.id] === true) return errs;
-  var keyPlain = LSA.practicePlain(c.c[1]);
-  var explPlain = LSA.practicePlain(c.f);
-  var knums = String(c.c[1]).replace(/,/g, '').match(/-?\d+(?:\.\d+)?/g) || [];
-  var words = (keyPlain.match(/[a-z0-9]+/g) || []).filter(function (w) {
-    return w.length > 2 && LSA.PRACTICE_KEY_STOP.indexOf(w) < 0;
-  });
+  var allow = LSA.practiceKeyAllow && LSA.practiceKeyAllow[c.id];
+  if (allow === true) return errs;
+  var key = LSA.practiceKeyParts(c.c[1]);
+  var expl = LSA.practiceKeyParts(c.f);
+  var explSet = {};
+  expl.stems.forEach(function (w) { explSet[w] = 1; });
+  var uniq = [];
+  key.stems.forEach(function (w) { if (uniq.indexOf(w) < 0) uniq.push(w); });
+  function stemHit(k) {
+    if (explSet[k]) return true;
+    var keys = Object.keys(explSet);
+    for (var i = 0; i < keys.length; i++) {
+      var e = keys[i];
+      if (e === k || e + 'e' === k || k + 'e' === e) return true;
+      if (k.length > 4 && e.length > 4 && (k.indexOf(e) === 0 || e.indexOf(k) === 0) && Math.abs(k.length - e.length) <= 3) return true;
+    }
+    return false;
+  }
   var hit = 0;
-  words.forEach(function (w) { if (explPlain.indexOf(w) >= 0) hit++; });
-  var numHit = knums.some(function (n) { return explPlain.indexOf(String(n).replace(/^\+/, '')) >= 0 || c.f.indexOf(n) >= 0; });
-  var need = words.length >= 3 ? Math.max(2, Math.ceil(words.length * 0.5)) : words.length;
-  var ok = words.length ? hit >= need : numHit;
-  if (!ok && numHit && words.length <= 2) ok = true;
-  var compact = function (s) { return String(s || '').replace(/[^a-z0-9=+./-]+/g, ''); };
-  if (!ok && compact(keyPlain) && compact(explPlain).indexOf(compact(keyPlain)) >= 0) ok = true;
-  var allow = LSA.practiceKeyAllow[c.id];
-  if (!ok && typeof allow === 'string' && explPlain.indexOf(LSA.practicePlain(allow).trim()) >= 0) ok = true;
-  if (allow === true) ok = true;
+  uniq.forEach(function (w) { if (stemHit(w)) hit++; });
+  var need = uniq.length <= 3 ? uniq.length : Math.ceil(uniq.length * 0.75);
+  var wordsOk = uniq.length ? hit >= need : true;
+  var numsOk = LSA.practiceNumMatch(key.nums, expl.nums);
+  var ok = wordsOk && numsOk;
+  if (!ok && typeof allow === 'string') {
+    var extra = LSA.practiceKeyParts(allow);
+    extra.stems.forEach(function (w) { explSet[w] = 1; });
+    hit = 0;
+    uniq.forEach(function (w) { if (stemHit(w)) hit++; });
+    wordsOk = uniq.length ? hit >= need : true;
+    numsOk = LSA.practiceNumMatch(key.nums, expl.nums.concat(extra.nums));
+    ok = wordsOk && numsOk;
+  }
   if (!ok) errs.push(p + 'key is not reflected in the explanation');
   return errs;
 };

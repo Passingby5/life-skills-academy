@@ -6,6 +6,13 @@ const ORDER = ENGINE.concat(['modes/gutcheck.js', 'modes/mythmatch.js', 'modes/r
 function load(files) {
   const ctx = vm.createContext({ console });
   (files || ORDER).forEach(f => vm.runInContext(fs.readFileSync((path.isAbsolute(f) ? f : path.join(__dirname, '../src', f)), 'utf8'), ctx, { filename: f }));
+  const ov = process.env.LSA_DECK_OVERRIDE;
+  if (ov) {
+    ov.split(',').map(s => s.trim()).filter(Boolean).forEach(f => {
+      const abs = path.isAbsolute(f) ? f : path.resolve(f);
+      vm.runInContext(fs.readFileSync(abs, 'utf8'), ctx, { filename: abs });
+    });
+  }
   return vm.runInContext('LSA', ctx);
 }
 module.exports = { ORDER, ENGINE, DECKS, load };

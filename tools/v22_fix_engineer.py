@@ -1,3 +1,5 @@
+"""DO NOT RE-RUN as a deck writer. v23 forbids whole-array or unscoped string patches; edits must be keyed by card id and verified against the current text.
+
 #!/usr/bin/env python3
 """v22 engineer deck repairs: math delimiters, sources, rewrites, typesetting."""
 import json, re, sys

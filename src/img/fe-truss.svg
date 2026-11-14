@@ -17,7 +17,7 @@
   <text x="28" y="220" font-family="Arial, sans-serif" font-size="14" fill="#111">A</text>
   <text x="168" y="56" font-family="Arial, sans-serif" font-size="14" fill="#111">C</text>
   <text x="268" y="220" font-family="Arial, sans-serif" font-size="14" fill="#111">B</text>
-  <text x="90" y="130" font-family="Arial, sans-serif" font-size="14" fill="#111">AC</text>
-  <text x="200" y="130" font-family="Arial, sans-serif" font-size="14" fill="#111">BC</text>
+  <text x="62" y="112" font-family="Arial, sans-serif" font-size="14" fill="#111">AC</text>
+  <text x="228" y="112" font-family="Arial, sans-serif" font-size="14" fill="#111">BC</text>
   <text x="150" y="200" font-family="Arial, sans-serif" font-size="14" fill="#111">AB</text>
 </svg>

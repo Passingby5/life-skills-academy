@@ -359,19 +359,28 @@ LSA.practiceLengthStats = function (d) {
   var n = 0, l = 0;
   d.cards.forEach(function (c) {
     if (!Array.isArray(c.c) || c.c.length !== 4) return; n++;
-    var r = c.c[1].length, o = Math.max(c.c[0].length, c.c[2].length, c.c[3].length);
-    if (r >= o) l++;
+    var lens = c.c.map(function (t) { return LSA.practiceVis(t).trim().length; });
+    var r = lens[1], o = Math.max(lens[0], lens[2], lens[3]);
+    if (r > o) l++;
   });
   return { cards: n, rightLongest: n ? l / n : 0 };
 };
 
-// Engineer Practice math must use \(...\) or \[...\]. A bare $ is money, and % inside math must be \%.
+// Practice math must use \(...\) or \[...\]. A bare $ is money only when it
+// introduces a currency amount, not a formula. TeX commands belong inside delimiters.
 LSA.checkPracticeMath = function (text, p) {
   var errs = [];
   p = p || '';
-  var stripped = String(text).replace(/\\\([\s\S]*?\\\)/g, ' ').replace(/\\\[[\s\S]*?\\\]/g, ' ');
+  text = String(text);
+  // Currency: $1,000 or -$490, then end, space, punctuation, or a letter (e.g. "$1,000 invested").
+  var money = /(^|[^\\A-Za-z])-?\$\d{1,3}(?:,\d{3})*(?:\.\d+)?(?=$|[\s,.;:?!)\]'"']|[A-Za-z])/g;
+  var noMoney = text.replace(money, '$1 ');
+  if (/(^|[^\\])\$\d/.test(noMoney) || /(?:^|[^\\])\$\(/.test(noMoney) || /(?:^|[^\\])\$/.test(noMoney)) {
+    errs.push(p + 'use \\( \\) for math, not $');
+  }
+  var stripped = text.replace(/\\\([\s\S]*?\\\)/g, ' ').replace(/\\\[[\s\S]*?\\\]/g, ' ');
   if (/\\[\(\)\[\]]/.test(stripped)) errs.push(p + 'unbalanced math delimiter');
-  if (/(^|[^\\])\$[A-Za-z\\{]/.test(text)) errs.push(p + 'use \\( \\) for math, not $');
+  if (/\\[A-Za-z]+/.test(stripped) || /[\^_]\{/.test(stripped)) errs.push(p + 'TeX command outside math delimiters');
   var re = /\\\(([\s\S]*?)\\\)|\\\[([\s\S]*?)\\\]/g, m;
   while ((m = re.exec(text))) {
     var tex = m[1] != null ? m[1] : m[2];
@@ -379,6 +388,57 @@ LSA.checkPracticeMath = function (text, p) {
   }
   return errs;
 };
+
+// The right answer's core words (or displayed number) must appear in the explanation.
+// A card may be listed in LSA.practiceKeyAllow if the match is spelled out there instead.
+LSA.practiceKeyAllow = LSA.practiceKeyAllow || {};
+LSA.PRACTICE_KEY_STOP = 'a an the of to in on for and or is are be by with as at from that this which what it its than into per if not no'.split(' ');
+LSA.practicePlain = function (s) {
+  return String(s || '')
+    .replace(/\\mathrm\{([^}]*)\}/g, '$1')
+    .replace(/\\[()\[\]]/g, ' ')
+    .replace(/\\([A-Za-z]+)/g, ' $1 ')
+    .replace(/[^A-Za-z0-9.\-]+/g, ' ')
+    .toLowerCase();
+};
+
+// Visible length for test-taker cues (TeX delimiters stripped; commands shown compactly).
+LSA.practiceVis = function (s) {
+  return String(s || '')
+    .replace(/\\mathrm\{([^}]*)\}/g, '$1')
+    .replace(/\\times/g, 'x')
+    .replace(/\\[,;!]/g, ' ')
+    .replace(/\\[()\[\]]/g, '')
+    .replace(/\\[A-Za-z]+/g, '#')
+    .replace(/[{}]/g, '');
+};
+
+LSA.checkPracticeKey = function (c, p) {
+  var errs = [];
+  p = p || '';
+  if (!c || !c.c || !c.c[1] || !c.f) return errs;
+  if (LSA.practiceKeyAllow[c.id] === true) return errs;
+  var keyPlain = LSA.practicePlain(c.c[1]);
+  var explPlain = LSA.practicePlain(c.f);
+  var knums = String(c.c[1]).replace(/,/g, '').match(/-?\d+(?:\.\d+)?/g) || [];
+  var words = (keyPlain.match(/[a-z0-9]+/g) || []).filter(function (w) {
+    return w.length > 2 && LSA.PRACTICE_KEY_STOP.indexOf(w) < 0;
+  });
+  var hit = 0;
+  words.forEach(function (w) { if (explPlain.indexOf(w) >= 0) hit++; });
+  var numHit = knums.some(function (n) { return explPlain.indexOf(String(n).replace(/^\+/, '')) >= 0 || c.f.indexOf(n) >= 0; });
+  var need = words.length >= 3 ? Math.max(2, Math.ceil(words.length * 0.5)) : words.length;
+  var ok = words.length ? hit >= need : numHit;
+  if (!ok && numHit && words.length <= 2) ok = true;
+  var compact = function (s) { return String(s || '').replace(/[^a-z0-9=+./-]+/g, ''); };
+  if (!ok && compact(keyPlain) && compact(explPlain).indexOf(compact(keyPlain)) >= 0) ok = true;
+  var allow = LSA.practiceKeyAllow[c.id];
+  if (!ok && typeof allow === 'string' && explPlain.indexOf(LSA.practicePlain(allow).trim()) >= 0) ok = true;
+  if (allow === true) ok = true;
+  if (!ok) errs.push(p + 'key is not reflected in the explanation');
+  return errs;
+};
+
 LSA.checkPracticeDeck = function (d) {
   var errs = [], seen = {};
   if (d.section !== 'Engineer Fundamentals') errs.push(d.id + ': practice decks belong in Engineer Fundamentals');
@@ -399,8 +459,13 @@ LSA.checkPracticeDeck = function (d) {
       var text = field.charAt(0) === 'c' ? (c.c && c.c[Number(field.slice(1))]) : c[field];
       LSA.checkPracticeMath(String(text || ''), p + field + ' ').forEach(function (e) { errs.push(e); });
     });
+    LSA.checkPracticeKey(c, p).forEach(function (e) { errs.push(e); });
+    if (/on this assignment|in this situation|for this case/i.test((c.c || []).join(' '))) {
+      errs.push(p + 'filler tail on a choice');
+    }
     if (Array.isArray(c.c) && c.c.length === 4) {
-      var r = c.c[1].length, o = Math.max(c.c[0].length, c.c[2].length, c.c[3].length);
+      var lens = c.c.map(function (t) { return LSA.practiceVis(t).trim().length; });
+      var r = lens[1], o = Math.max(lens[0], lens[2], lens[3]);
       if (r > LSA.MAX_RIGHT_RATIO * o) errs.push(p + 'right answer is ' + (r / o).toFixed(2) + 'x the next longest');
     }
   });

@@ -1,3 +1,5 @@
+"""DO NOT RE-RUN as a deck writer. v23 forbids whole-array or unscoped string patches; edits must be keyed by card id and verified against the current text.
+
 # Hand rewrites for v22: plausible same-register distractors, no self-refuting tails.
 REWRITES = {
 "fe010": {"c": [r"\(48\,\mathrm{m}^{2}\)", r"\(24\,\mathrm{m}^{2}\)", r"\(14\,\mathrm{m}^{2}\)", r"\(10\,\mathrm{m}^{2}\)"],

@@ -8,5 +8,5 @@
   <text x="166" y="36" font-family="Arial, sans-serif" font-size="14" fill="#111">shear</text>
   <circle cx="160" cy="120" r="70" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="4 3"/>
   <circle cx="200" cy="90" r="4" fill="#111"/>
-  <text x="206" y="86" font-family="Arial, sans-serif" font-size="14" fill="#111">X-face</text>
+  <text x="220" y="72" font-family="Arial, sans-serif" font-size="14" fill="#111">X-face</text>
 </svg>

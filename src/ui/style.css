@@ -95,3 +95,8 @@ input{width:100%;min-height:52px;font:inherit;padding:8px 12px;border-radius:12p
 .scene, .qtext, #why, .card, .pick, button.ans { max-width: 100%; overflow-wrap: anywhere; }
 .scene, .qtext, #why { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .katex-display, .mathd { overflow-x: auto; max-width: 100%; }
+
+/* v23: keep practice math from overlapping the next answer target. */
+.scene{margin-bottom:12px}
+button.ans, button.pick{margin-top:12px;overflow:hidden;isolation:isolate}
+button.ans .katex, button.pick .katex, button.ans .tex, button.pick .tex{pointer-events:none}

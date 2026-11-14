@@ -121,6 +121,12 @@ L.decks.fecivil.cards.concat(L.decks.cbet.cards).forEach(c => {
   assert(L.checkPracticeMath('\\(10%\\)').some(function (e) { return /unescaped %/.test(e); }), 'unescaped % should fail');
   assert.strictEqual(L.checkPracticeMath('\\(10\\%\\) of PW is used.').join(), '');
   assert(L.checkPracticeMath('\\(3x+2').some(function (e) { return /unbalanced/.test(e); }), 'unbalanced \\( should fail');
+  assert(L.checkPracticeMath('Squared deviations are $4+0+4=8$.').some(function (e) { return /not \$/.test(e); }), '$4+0 math should fail');
+  assert(L.checkPracticeMath('Distance from $(0,0)$ to (5,12).').some(function (e) { return /not \$/.test(e); }), '$(0,0) should fail');
+  assert.strictEqual(L.checkPracticeMath('A loss of -$490 is still a loss.').join(), '');
+  assert(L.checkPracticeMath('The factor is \\times 2 outside math.').some(function (e) { return /TeX command/.test(e); }), 'leftover TeX should fail');
+  assert.strictEqual(L.checkPracticeKey({ id: 't2', c: ['a', 'The farthest fiber from the neutral axis', 'c', 'd'], f: 'The farthest fiber from the neutral axis has the largest bending stress.' }).join(), '');
+  assert(L.checkPracticeKey({ id: 't1', c: ['a', 'The farthest fiber from the neutral axis', 'c', 'd'], f: 'Because stress grows with y, the extreme fiber is critical at the edge.' }).some(function (e) { return /key is not reflected/.test(e); }), 'paraphrase without core words should fail');
   console.log('ok practice math delimiter checker');
 })();
 

@@ -67,6 +67,27 @@ decks.forEach(id => {
   }
 });
 
+
+function withinCardCatch(cards) {
+  let pairs = 0, caught = 0;
+  cards.forEach(c => {
+    for (const i of [0, 2, 3]) {
+      pairs++;
+      const trial = { id: c.id, c: c.c.slice(), f: c.f };
+      trial.c[1] = c.c[i];
+      trial.c[i] = c.c[1];
+      if (L.checkPracticeKey(trial, '').length) caught++;
+    }
+  });
+  return { caught, pairs, rate: pairs ? caught / pairs : 1 };
+}
+
+decks.forEach(id => {
+  const w = withinCardCatch(L.decks[id].cards);
+  console.log(id + ' within-card swap-test catch ' + (w.rate * 100).toFixed(1) + '%  n=' + w.pairs);
+  if (w.rate < 0.95 - 1e-12) failed.push(id + ' within-card swap-test catch ' + (w.rate * 100).toFixed(1) + '% is under 95%');
+});
+
 Object.keys(V22_BAD).forEach(id => {
   const deck = id.slice(0, 2) === 'fe' ? 'fecivil' : 'cbet';
   const c = L.decks[deck].cards.find(x => x.id === id);
@@ -94,9 +115,31 @@ const run = spawnSync('node', ['tools/checkdecks.js'], {
 console.log('checkdecks on swapped fecivil file exit ' + run.status);
 if (run.status === 0) failed.push('checkdecks exited 0 on a swapped deck file');
 
+// cb033: swapping the key to "Atrial depolarization" must fail checkdecks.
+const tmp33 = path.join(os.tmpdir(), 'lsa-cb033-atrial.js');
+const src33 = L.decks.cbet;
+const rot33 = JSON.parse(JSON.stringify(src33));
+const card33 = rot33.cards.find(c => c.id === 'cb033');
+if (!card33) failed.push('missing cb033');
+else {
+  const atrial = 'Atrial depolarization';
+  const qi = card33.c.indexOf(atrial);
+  const oldKey = card33.c[1];
+  card33.c[1] = atrial;
+  if (qi >= 0 && qi !== 1) card33.c[qi] = oldKey;
+  fs.writeFileSync(tmp33, 'LSA.decks.cbet = ' + JSON.stringify(rot33) + ';\n');
+  const run33 = spawnSync('node', ['tools/checkdecks.js'], {
+    cwd: path.join(__dirname, '..'),
+    env: Object.assign({}, process.env, { LSA_DECK_OVERRIDE: tmp33 }),
+    encoding: 'utf8'
+  });
+  console.log('checkdecks on cb033 atrial-depolarization key exit ' + run33.status);
+  if (run33.status === 0) failed.push('checkdecks exited 0 when cb033 key was Atrial depolarization');
+}
+
 if (failed.length) {
   console.error('FAIL');
   failed.forEach(f => console.error('  ' + f));
   process.exit(1);
 }
-console.log('ok practice key swap test (95% catch, v22 bad keys, checkdecks rejects a swapped file)');
+console.log('ok practice key swap test (95% catch across and within cards, v22 bad keys, checkdecks rejects a swapped file and a cb033 atrial key)');

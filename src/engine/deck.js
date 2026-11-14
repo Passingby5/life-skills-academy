@@ -573,7 +573,53 @@ LSA.checkPracticeKey = function (c, p) {
   var need = uniq.length <= 3 ? uniq.length : Math.ceil(uniq.length * 0.75);
   var wordsOk = uniq.length ? hit >= need : true;
   var numsOk = LSA.practiceNumMatch(key.nums, expl.nums);
-  var ok = wordsOk && numsOk;
+  function distinctiveOk() {
+    var others = [];
+    for (var i = 0; i < c.c.length; i++) {
+      if (i === 1) continue;
+      others.push(LSA.practiceKeyParts(c.c[i]));
+    }
+    function hasStem(set, w) {
+      if (set[w]) return true;
+      var keys = Object.keys(set);
+      for (var i = 0; i < keys.length; i++) {
+        var e = keys[i];
+        if (e === w || e + 'e' === w || w + 'e' === e) return true;
+        if (w.length > 4 && e.length > 4 && (w.indexOf(e) === 0 || e.indexOf(w) === 0) && Math.abs(w.length - e.length) <= 3) return true;
+      }
+      return false;
+    }
+    var keySet = {};
+    uniq.forEach(function (w) { keySet[w] = 1; });
+    for (var j = 0; j < others.length; j++) {
+      var o = others[j];
+      var oSet = {};
+      var oUniq = [];
+      o.stems.forEach(function (w) {
+        if (!oSet[w]) { oSet[w] = 1; oUniq.push(w); }
+      });
+      var distinguish = uniq.filter(function (w) { return !hasStem(oSet, w); });
+      if (distinguish.length) {
+        var got = distinguish.some(function (w) { return stemHit(w); });
+        if (!got) return false;
+      } else {
+        // Same content stems: require a key-only number the other option lacks.
+        var oNums = o.nums || [];
+        var extra = (key.nums || []).filter(function (kn) {
+          return !oNums.some(function (en) {
+            return LSA.practiceNumMatch([kn], [en]);
+          });
+        });
+        if (extra.length && !LSA.practiceNumMatch(extra, expl.nums)) return false;
+        // No unique stem or number (key is a stem subset, or only word order differs):
+        // the supposed key is still allowed on this pair; a longer distractor used as
+        // a swapped key is caught because it does have unique stems.
+      }
+    }
+    return true;
+  }
+  var distOk = distinctiveOk();
+  var ok = wordsOk && numsOk && distOk;
   if (!ok && typeof allow === 'string') {
     var extra = LSA.practiceKeyParts(allow);
     extra.stems.forEach(function (w) { explSet[w] = 1; });
@@ -581,7 +627,8 @@ LSA.checkPracticeKey = function (c, p) {
     uniq.forEach(function (w) { if (stemHit(w)) hit++; });
     wordsOk = uniq.length ? hit >= need : true;
     numsOk = LSA.practiceNumMatch(key.nums, expl.nums.concat(extra.nums));
-    ok = wordsOk && numsOk;
+    distOk = distinctiveOk();
+    ok = wordsOk && numsOk && distOk;
   }
   if (!ok) errs.push(p + 'key is not reflected in the explanation');
   return errs;
@@ -638,7 +685,11 @@ LSA.checkPracticeDeck = function (d) {
     });
   });
   Object.keys(phraseHits).forEach(function (g) {
-    if (phraseHits[g].length > 3) errs.push(d.id + ': phrase "' + g + '" appears in ' + phraseHits[g].length + ' choices');
+    var ids = phraseHits[g];
+    if (ids.length <= 3) return;
+    var sameCard = ids.every(function (id) { return id === ids[0]; });
+    if (ids.length === 4 && sameCard) return;
+    errs.push(d.id + ': phrase "' + g + '" appears in ' + ids.length + ' choices');
   });
   ['ya', 'adult'].forEach(function (a) {
     var n = d.cards.filter(function (c) { return LSA.visible(c, a); }).length;

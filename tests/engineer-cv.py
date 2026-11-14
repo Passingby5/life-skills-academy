@@ -148,7 +148,7 @@ def load_cards():
 const L=require("./tests/load.js").load();
 const cards=[];
 ["fecivil","cbet"].forEach(deck => {
-  L.decks[deck].cards.forEach(c => cards.push({deck, id:c.id, s:c.s, c:c.c, f:c.f}));
+  L.decks[deck].cards.forEach(c => cards.push({deck, id:c.id, topic:c.topic, s:c.s, c:c.c, f:c.f}));
 });
 process.stdout.write(JSON.stringify(cards));
 '''
@@ -281,6 +281,127 @@ def tfidf_cv(cards, seeds=5):
     return _summarize_seeds(seed_scores)
 
 
+def _choice_tokens(t):
+    return re.findall(r"[a-z0-9']+", vis(t).lower())
+
+
+def _ngrams(ws, n):
+    return [tuple(ws[i:i + n]) for i in range(0, max(0, len(ws) - n + 1))]
+
+
+def f_bigram(choices):
+    B = [set(_ngrams(_choice_tokens(c), 2)) for c in choices]
+    sc = []
+    for i, b in enumerate(B):
+        if not b:
+            sc.append(0.0)
+            continue
+        sc.append(sum(len(b & B[j]) for j in range(4) if j != i) / len(b))
+    return sc
+
+
+def pick_min_share(scores):
+    m = min(scores)
+    hits = [i for i, s in enumerate(scores) if s == m]
+    return (1.0 / len(hits)) if 1 in hits else 0.0
+
+
+def missing_phrase_hit(choices):
+    """Return 1, 0, or 0.25: fire when exactly one option lacks a 3-gram the other three share."""
+    G = [set(_ngrams(_choice_tokens(c), 3)) for c in choices]
+    allg = {}
+    for i, gset in enumerate(G):
+        for g in gset:
+            allg.setdefault(g, set()).add(i)
+    missing = set()
+    for g, ids in allg.items():
+        if len(ids) == 3:
+            missing.add(({0, 1, 2, 3} - ids).pop())
+    if len(missing) == 1:
+        return 1.0 if missing.pop() == 1 else 0.0
+    return 0.25
+
+
+def rule_scores(cards):
+    """Fewest-shared-bigrams odd-one-out and missing-shared-phrase scores, overall and per topic."""
+    big, phr = [], []
+    by_t = {}
+    for c in cards:
+        b = pick_min_share(f_bigram(c['c']))
+        p = missing_phrase_hit(c['c'])
+        big.append(b)
+        phr.append(p)
+        rec = by_t.setdefault(c.get('topic') or 'unknown', {'big': [], 'phr': []})
+        rec['big'].append(b)
+        rec['phr'].append(p)
+    def pct(xs):
+        return 100.0 * sum(xs) / len(xs) if xs else 0.0
+    topics = {t: {'bigram': pct(v['big']), 'phrase': pct(v['phr']), 'n': len(v['big'])} for t, v in sorted(by_t.items())}
+    return {'bigram': pct(big), 'phrase': pct(phr), 'topics': topics}
+
+
+def shuffle_null_tfidf_logreg(cards, seeds=5):
+    """Train tf-idf logreg on label-shuffled options; report mean test accuracy (expect ~25%)."""
+    scores = []
+    for seed in range(seeds):
+        rng = np.random.default_rng(seed + 101)
+        idx = rng.permutation(len(cards))
+        folds = np.array_split(idx, min(10, len(cards)))
+        hits = []
+        for fold in folds:
+            te_set = set(fold.tolist())
+            tr = [cards[i] for i in idx if i not in te_set]
+            te = [cards[i] for i in fold]
+            txt = [vis(x) for c in tr for x in c['c']]
+            y = np.array([1 if i == 1 else 0 for c in tr for i in range(4)])
+            rng.shuffle(y)
+            vec = TfidfVectorizer(ngram_range=(1, 1), min_df=2, sublinear_tf=True, lowercase=True,
+                                  token_pattern=r'(?u)\b[a-zA-Z][a-zA-Z0-9\-]*\b')
+            T = vec.fit_transform(txt)
+            mdl = LogisticRegression(max_iter=3000, C=2)
+            mdl.fit(T, y)
+            for c in te:
+                pr = mdl.predict_proba(vec.transform([vis(x) for x in c['c']]))[:, 1]
+                hits.append(share_pred(pr))
+        scores.append(float(np.mean(hits)) if hits else 0.25)
+    arr = np.array(scores, dtype=float)
+    return {'mean': 100 * float(np.mean(arr)), 'min': 100 * float(np.min(arr)), 'max': 100 * float(np.max(arr))}
+
+
+def tfidf_logreg_by_topic(cards, seeds=5):
+    """Held-out tf-idf logreg share, averaged over seeds, overall and per topic."""
+    card_hits = {c['id']: [] for c in cards}
+    by_id = {c['id']: c for c in cards}
+    for seed in range(seeds):
+        rng = np.random.default_rng(seed)
+        idx = rng.permutation(len(cards))
+        folds = np.array_split(idx, min(10, len(cards)))
+        for fold in folds:
+            te_set = set(fold.tolist())
+            tr = [cards[i] for i in idx if i not in te_set]
+            te = [cards[i] for i in fold]
+            txt = [vis(x) for c in tr for x in c['c']]
+            y = np.array([1 if i == 1 else 0 for c in tr for i in range(4)])
+            vec = TfidfVectorizer(ngram_range=(1, 1), min_df=2, sublinear_tf=True, lowercase=True,
+                                  token_pattern=r'(?u)\b[a-zA-Z][a-zA-Z0-9\-]*\b')
+            T = vec.fit_transform(txt)
+            mdl = LogisticRegression(max_iter=3000, C=2)
+            mdl.fit(T, y)
+            for c in te:
+                pr = mdl.predict_proba(vec.transform([vis(x) for x in c['c']]))[:, 1]
+                card_hits[c['id']].append(share_pred(pr))
+    overall = [float(np.mean(v)) for v in card_hits.values() if v]
+    topics = {}
+    for cid, hits in card_hits.items():
+        if not hits:
+            continue
+        t = by_id[cid].get('topic') or 'unknown'
+        topics.setdefault(t, []).append(float(np.mean(hits)))
+    def pct(xs):
+        return 100.0 * float(np.mean(xs)) if xs else 0.0
+    return {'overall': pct(overall), 'topics': {t: pct(v) for t, v in sorted(topics.items())}}
+
+
 def main():
     cards = load_cards()
     failed = []
@@ -318,6 +439,29 @@ def main():
                 continue
             if v > 32.0 + 1e-9:
                 failed.append(f"{deck} cue {k} {v:.1f}% exceeds 32%")
+        rules = rule_scores(cs)
+        print(f"  fewest-shared-bigrams {rules['bigram']:.1f}%  missing-shared-phrase {rules['phrase']:.1f}%")
+        for t, rec in rules['topics'].items():
+            print(f"    topic {t} (n={rec['n']}): bigram {rec['bigram']:.1f}%  phrase {rec['phrase']:.1f}%")
+            if rec['bigram'] > 30.0 + 1e-9:
+                failed.append(f"{deck}/{t} fewest-shared-bigrams {rec['bigram']:.1f}% exceeds 30%")
+            if rec['phrase'] > 30.0 + 1e-9:
+                failed.append(f"{deck}/{t} missing-shared-phrase {rec['phrase']:.1f}% exceeds 30%")
+        if rules['bigram'] > 30.0 + 1e-9:
+            failed.append(f"{deck} fewest-shared-bigrams {rules['bigram']:.1f}% exceeds 30%")
+        if rules['phrase'] > 30.0 + 1e-9:
+            failed.append(f"{deck} missing-shared-phrase {rules['phrase']:.1f}% exceeds 30%")
+        if deck == 'cbet':
+            # Tighter 30% gate on CBET tf-idf logreg (5-seed mean already in tf).
+            if tf['tfidf_logreg']['mean'] > 30.0 + 1e-9:
+                failed.append(f"{deck} tfidf-logreg {tf['tfidf_logreg']['mean']:.1f}% exceeds 30%")
+            null = shuffle_null_tfidf_logreg(cs)
+            print(f"  cbet shuffle-null tfidf-logreg {null['mean']:.1f}% (range {null['min']:.1f}-{null['max']:.1f}%)")
+            by_t = tfidf_logreg_by_topic(cs)
+            for t, v in by_t['topics'].items():
+                print(f"    topic {t} tfidf-logreg {v:.1f}%")
+                if v > 30.0 + 1e-9:
+                    failed.append(f"{deck}/{t} tfidf-logreg {v:.1f}% exceeds 30%")
     if failed:
         print('FAIL')
         for f in failed:

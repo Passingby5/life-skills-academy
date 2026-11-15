@@ -40,7 +40,7 @@ function catchRate(cards, seed) {
   cards.forEach((c, i) => {
     if (keys[i] === c.c[1]) return;
     moved++;
-    const mutant = { id: c.id, c: [c.c[0], keys[i], c.c[2], c.c[3]], f: c.f };
+    const mutant = { id: c.id, keyTerm: c.keyTerm, c: [c.c[0], keys[i], c.c[2], c.c[3]], f: c.f };
     if (L.checkPracticeKey(mutant, '').length) caught++;
   });
   return { caught, moved, rate: moved ? caught / moved : 1 };
@@ -73,7 +73,7 @@ function withinCardCatch(cards) {
   cards.forEach(c => {
     for (const i of [0, 2, 3]) {
       pairs++;
-      const trial = { id: c.id, c: c.c.slice(), f: c.f };
+      const trial = { id: c.id, keyTerm: c.keyTerm, c: c.c.slice(), f: c.f };
       trial.c[1] = c.c[i];
       trial.c[i] = c.c[1];
       if (L.checkPracticeKey(trial, '').length) caught++;
@@ -92,7 +92,7 @@ Object.keys(V22_BAD).forEach(id => {
   const deck = id.slice(0, 2) === 'fe' ? 'fecivil' : 'cbet';
   const c = L.decks[deck].cards.find(x => x.id === id);
   if (!c) { failed.push('missing card ' + id); return; }
-  const mutant = { id: c.id, c: [c.c[0], V22_BAD[id], c.c[2], c.c[3]], f: c.f };
+  const mutant = { id: c.id, keyTerm: c.keyTerm, c: [c.c[0], V22_BAD[id], c.c[2], c.c[3]], f: c.f };
   const errs = L.checkPracticeKey(mutant, '');
   const okGood = L.checkPracticeKey(c, '').length === 0;
   console.log('replay v22 bad key ' + id + ' ' + JSON.stringify(V22_BAD[id]) + ': ' + (errs.length ? 'CAUGHT' : 'MISSED'));
@@ -137,9 +137,41 @@ else {
   if (run33.status === 0) failed.push('checkdecks exited 0 when cb033 key was Atrial depolarization');
 }
 
+// fe041: swapping the key to the base-edge formula bh^3/3 must fail
+// checkPracticeKey and checkdecks (the explanation also names that formula).
+const fe041 = L.decks.fecivil.cards.find(c => c.id === 'fe041');
+if (!fe041) failed.push('missing fe041');
+else {
+  const three = '\\(bh^{3}/3\\)';
+  const trial041 = { id: fe041.id, keyTerm: fe041.keyTerm, c: fe041.c.slice(), f: fe041.f };
+  const qi = trial041.c.indexOf(three);
+  const oldKey = trial041.c[1];
+  trial041.c[1] = three;
+  if (qi >= 0 && qi !== 1) trial041.c[qi] = oldKey;
+  const caught041 = L.checkPracticeKey(trial041, '').length > 0;
+  console.log('fe041 bh^3/3 swap: ' + (caught041 ? 'CAUGHT' : 'MISSED'));
+  if (!caught041) failed.push('fe041 bh^3/3 swap was not caught by checkPracticeKey');
+  const tmp041 = path.join(os.tmpdir(), 'lsa-fe041-base-edge.js');
+  const src041 = L.decks.fecivil;
+  const rot041 = JSON.parse(JSON.stringify(src041));
+  const card041 = rot041.cards.find(c => c.id === 'fe041');
+  const qj = card041.c.indexOf(three);
+  const old041 = card041.c[1];
+  card041.c[1] = three;
+  if (qj >= 0 && qj !== 1) card041.c[qj] = old041;
+  fs.writeFileSync(tmp041, 'LSA.decks.fecivil = ' + JSON.stringify(rot041) + ';\n');
+  const run041 = spawnSync('node', ['tools/checkdecks.js'], {
+    cwd: path.join(__dirname, '..'),
+    env: Object.assign({}, process.env, { LSA_DECK_OVERRIDE: tmp041 }),
+    encoding: 'utf8'
+  });
+  console.log('checkdecks on fe041 bh^3/3 key exit ' + run041.status);
+  if (run041.status === 0) failed.push('checkdecks exited 0 when fe041 key was bh^3/3');
+}
+
 if (failed.length) {
   console.error('FAIL');
   failed.forEach(f => console.error('  ' + f));
   process.exit(1);
 }
-console.log('ok practice key swap test (95% catch across and within cards, v22 bad keys, checkdecks rejects a swapped file and a cb033 atrial key)');
+console.log('ok practice key swap test (95% catch across and within cards, v22 bad keys, checkdecks rejects a swapped file, a cb033 atrial key, and a fe041 bh^3/3 key)');

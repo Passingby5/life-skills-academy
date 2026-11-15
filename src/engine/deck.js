@@ -413,7 +413,37 @@ LSA.practiceVis = function (s) {
     .replace(/[{}]/g, '');
 };
 
-// Compact stemmer used only to compare key and explanation content words.
+// Visible, case-folded text used to test whether a keyTerm appears in a field.
+LSA.practiceNormTerm = function (s) {
+  s = LSA.practiceVis(String(s || '')).toLowerCase();
+  s = s.replace(/[\u2212\u2013]/g, '-').replace(/\u00a0/g, ' ');
+  return s.replace(/\s+/g, ' ').trim();
+};
+
+// True if term appears in text. Pure alphanumeric terms (and optional % + - .)
+// use token boundaries so "12" does not match "12.68" or "112". Symbolic
+// terms such as bh^3/12 match as substrings of the visible or compact form.
+LSA.practiceHasTerm = function (text, term) {
+  var t = LSA.practiceNormTerm(term);
+  var h = LSA.practiceNormTerm(text);
+  if (!t || !h) return false;
+  function containsBounded(hay, needle) {
+    if (hay.indexOf(needle) < 0) return false;
+    if (!/^[a-z0-9.$%+\-]+$/i.test(needle)) return true;
+    var esc = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // Unsigned terms must not match inside a negative token ($4 is not in -$4).
+    var lead = needle.charAt(0) === '-' ? '(^|[^a-z0-9.$])' : '(^|[^a-z0-9.$\\-])';
+    // A following period is allowed (end of a sentence), but 12 must not match 12.68.
+    var trail = '(?![a-z0-9$]|(?:\\.[0-9]))';
+    return new RegExp(lead + esc + trail, 'i').test(hay);
+  }
+  if (containsBounded(h, t)) return true;
+  var tc = t.replace(/\s+/g, '');
+  var hc = h.replace(/\s+/g, '');
+  if (tc && hc !== h) return containsBounded(hc, tc);
+  return false;
+};
+
 LSA.practiceStem = function (w) {
   w = String(w || '').toLowerCase();
   if (w.indexOf('-') > 0) {
@@ -618,7 +648,29 @@ LSA.checkPracticeKey = function (c, p) {
     }
     return true;
   }
-  var distOk = distinctiveOk();
+  var term = c.keyTerm != null ? String(c.keyTerm).trim() : '';
+  var termOk = false;
+  if (term) {
+    if (!LSA.practiceHasTerm(c.c[1], term)) {
+      errs.push(p + 'keyTerm must appear in the key');
+      return errs;
+    }
+    if (!LSA.practiceHasTerm(c.f, term)) {
+      errs.push(p + 'keyTerm must appear in the explanation');
+      return errs;
+    }
+    for (var wi = 0; wi < c.c.length; wi++) {
+      if (wi === 1) continue;
+      if (LSA.practiceHasTerm(c.c[wi], term)) {
+        errs.push(p + 'keyTerm also appears in a distractor');
+        return errs;
+      }
+    }
+    termOk = true;
+  }
+  // When a card names a deciding keyTerm, that term carries the swap gate, so
+  // the explanation may discuss lookalike values without distinctiveOk.
+  var distOk = termOk ? true : distinctiveOk();
   var ok = wordsOk && numsOk && distOk;
   if (!ok && typeof allow === 'string') {
     var extra = LSA.practiceKeyParts(allow);
@@ -627,7 +679,7 @@ LSA.checkPracticeKey = function (c, p) {
     uniq.forEach(function (w) { if (stemHit(w)) hit++; });
     wordsOk = uniq.length ? hit >= need : true;
     numsOk = LSA.practiceNumMatch(key.nums, expl.nums.concat(extra.nums));
-    distOk = distinctiveOk();
+    distOk = termOk ? true : distinctiveOk();
     ok = wordsOk && numsOk && distOk;
   }
   if (!ok) errs.push(p + 'key is not reflected in the explanation');
@@ -641,6 +693,7 @@ LSA.checkPracticeDeck = function (d) {
   d.cards.forEach(function (c) {
     var p = d.id + '/' + c.id + ': ';
     ['id', 'deck', 'topic', 'ages', 's', 'c', 'f', 'src'].forEach(function (k) { if (!c[k]) errs.push(p + 'missing ' + k); });
+    if (!(c.keyTerm && String(c.keyTerm).trim())) errs.push(p + 'missing keyTerm');
     if (seen[c.id]) errs.push(p + 'duplicate id'); seen[c.id] = 1;
     if (['both', 'ya', 'adult'].indexOf(c.ages) < 0) errs.push(p + 'bad ages');
     if (!Array.isArray(c.c) || c.c.length !== 4 || new Set(c.c).size !== 4) errs.push(p + 'needs 4 different choices');

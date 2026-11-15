@@ -43,6 +43,9 @@ def parse_card(body, cid):
     also = re.search(r"also: (\[[^\]]+\])", body)
     if also:
         card["also"] = json.loads(also.group(1))
+    kt = parse_string_field(body, "keyTerm")
+    if kt is not None:
+        card["keyTerm"] = kt
     return card
 
 def load_file(path):
@@ -62,8 +65,10 @@ def emit_card(card):
         f's: {js_str(card["s"])}',
         "c: [" + ", ".join(js_str(x) for x in card["c"]) + "]",
         f'f: {js_str(card["f"])}',
-        f'src: "{card["src"]}"',
     ]
+    if card.get("keyTerm"):
+        bits.append(f'keyTerm: {js_str(card["keyTerm"])}')
+    bits.append(f'src: "{card["src"]}"')
     if card.get("also"):
         bits.append("also: " + json.dumps(card["also"]))
     if card.get("img"):

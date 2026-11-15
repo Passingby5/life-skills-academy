@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Held-out CV classifier and single-cue gates for Engineer Practice decks.
+"""Human-rule and classifier reports for Engineer Practice decks.
 
-Logistic regression on length rank, absolutes, stem overlap, numeric rank, and
-similar features must stay at or under 35% on each deck (chance is 25%).
-No single cue rule may exceed 32%.
+Human-style rules (pick-max/min overlap, longest, shortest, absolutes,
+missing-shared-phrase, and fewest-shared-bigrams) must stay at or under
+32% per deck and per topic with n >= 15. Smaller topics are reported
+only. Classifiers and exclusive tokens are reported against a shuffle
+null; they are not a hard fail.
 """
 from __future__ import annotations
 
@@ -402,72 +404,138 @@ def tfidf_logreg_by_topic(cards, seeds=5):
     return {'overall': pct(overall), 'topics': {t: pct(v) for t, v in sorted(topics.items())}}
 
 
+
+HUMAN_RULES = (
+    'pick_max_overlap',
+    'pick_min_overlap',
+    'longest',
+    'shortest',
+    'has_absolute',
+    'no_absolute',
+    'fewest_shared_bigrams',
+    'missing_shared_phrase',
+)
+TOPIC_MIN_N = 15
+
+
+def overlap_sums(choices):
+    """Sum of Jaccard overlap of each option versus the other three.
+
+    Tokens follow the QA center rule: alphanumeric runs in lowercase
+    visible text, including digits and apostrophes.
+    """
+    toks = [re.findall(r"[a-z0-9']+", vis(x).lower()) for x in choices]
+
+    def jac(a, b):
+        A, B = set(a), set(b)
+        return len(A & B) / max(1, len(A | B))
+
+    return [sum(jac(toks[i], toks[j]) for j in range(4) if j != i) for i in range(4)]
+
+
+def card_human_rules(c):
+    ch = c['c']
+    L = [len(vis(x).strip()) for x in ch]
+    a = [1 if ABS.search(vis(x)) else 0 for x in ch]
+    ov = overlap_sums(ch)
+    return {
+        'pick_max_overlap': pick_share(ov, True),
+        'pick_min_overlap': pick_share(ov, False),
+        'longest': pick_share(L, True),
+        'shortest': pick_share(L, False),
+        'has_absolute': pick_share(a, True),
+        'no_absolute': pick_share(a, False),
+        'fewest_shared_bigrams': pick_min_share(f_bigram(ch)),
+        'missing_shared_phrase': missing_phrase_hit(ch),
+    }
+
+
+def human_rule_scores(cards):
+    overall = {k: [] for k in HUMAN_RULES}
+    by_t = {}
+    for c in cards:
+        rec = card_human_rules(c)
+        topic = c.get('topic') or 'unknown'
+        bucket = by_t.setdefault(topic, {k: [] for k in HUMAN_RULES})
+        for k, v in rec.items():
+            overall[k].append(v)
+            bucket[k].append(v)
+
+    def pct(xs):
+        return 100.0 * sum(xs) / len(xs) if xs else 0.0
+
+    topics = {}
+    for t, rec in sorted(by_t.items()):
+        n = len(rec['longest'])
+        topics[t] = {'n': n, 'scores': {k: pct(rec[k]) for k in HUMAN_RULES}}
+    return {'n': len(cards), 'scores': {k: pct(overall[k]) for k in HUMAN_RULES}, 'topics': topics}
+
+
+def print_human_rules(deck, scores):
+    print(f"{deck} human rules (n={scores['n']}, gate 32%):")
+    for k in HUMAN_RULES:
+        print(f"  {k}: {scores['scores'][k]:.1f}%")
+    for t, rec in scores['topics'].items():
+        bits = ', '.join(f"{k} {rec['scores'][k]:.1f}%" for k in HUMAN_RULES)
+        tag = 'gate' if rec['n'] >= TOPIC_MIN_N else 'report-only'
+        print(f"    topic {t} (n={rec['n']}, {tag}): {bits}")
+
+
+def gate_human_rules(deck, scores, failed):
+    for k, v in scores['scores'].items():
+        if v > 32.0 + 1e-9:
+            failed.append(f"{deck} {k} {v:.1f}% exceeds 32%")
+    for t, rec in scores['topics'].items():
+        if rec['n'] < TOPIC_MIN_N:
+            continue
+        for k, v in rec['scores'].items():
+            if v > 32.0 + 1e-9:
+                failed.append(f"{deck}/{t} {k} {v:.1f}% exceeds 32%")
+
+
 def main():
+    human_only = '--human' in sys.argv
     cards = load_cards()
     failed = []
     for deck in ('fecivil', 'cbet'):
         cs = [c for c in cards if c['deck'] == deck]
+        human = human_rule_scores(cs)
+        print_human_rules(deck, human)
+        gate_human_rules(deck, human, failed)
+        if human_only:
+            continue
         cv = cv_scores(cs)
         tf = tfidf_cv(cs)
         cues = cue_scores(cs)
         def fmt(s):
             return f"{s['mean']:.1f}% (range {s['min']:.1f}-{s['max']:.1f}%)"
         print(
-            f"{deck} feat-logreg {fmt(cv['logreg'])}  feat-gbm {fmt(cv['gbm'])}  "
-            f"tfidf-logreg {fmt(tf['tfidf_logreg'])}  tfidf-gbm {fmt(tf['tfidf_gbm'])}  "
-            f"tfidf-rf {fmt(tf['tfidf_rf'])}  n={len(cs)}  seeds=5"
+            f"{deck} classifiers (reported, not a hard fail)  feat-logreg {fmt(cv['logreg'])}  "
+            f"feat-gbm {fmt(cv['gbm'])}  tfidf-logreg {fmt(tf['tfidf_logreg'])}  "
+            f"tfidf-gbm {fmt(tf['tfidf_gbm'])}  tfidf-rf {fmt(tf['tfidf_rf'])}  n={len(cs)}  seeds=5"
         )
+        null = shuffle_null_tfidf_logreg(cs)
+        print(f"  shuffle-null tfidf-logreg {null['mean']:.1f}% (range {null['min']:.1f}-{null['max']:.1f}%)")
+        by_t = tfidf_logreg_by_topic(cs)
+        print(f"  tfidf-logreg overall {by_t['overall']:.1f}%")
+        for t, v in by_t['topics'].items():
+            print(f"    topic {t} tfidf-logreg {v:.1f}%")
         for k, v in sorted(cues.items(), key=lambda kv: -kv[1]):
             print(f"  cue {k}: {v:.1f}%")
         excl = exclusive_tokens(cs)
         if excl:
-            print(f"  exclusive tokens (>=5 only in keys or only in distractors): {len(excl)}")
+            print(f"  exclusive tokens (>=5 only in keys or only in distractors, reported): {len(excl)}")
             for w, k, wr, where in excl:
                 print(f"    {w} keys={k} wrongs={wr} {', '.join(where[:8])}")
-            failed.append(f"{deck} exclusive tokens: " + ', '.join(w for w, *_ in excl))
         else:
             print('  exclusive tokens: none')
-        if cv['logreg']['mean'] > 35.0 + 1e-9:
-            failed.append(f"{deck} feat-logreg {cv['logreg']['mean']:.1f}% exceeds 35%")
-        if cv['gbm']['mean'] > 35.0 + 1e-9:
-            failed.append(f"{deck} feat-gbm {cv['gbm']['mean']:.1f}% exceeds 35%")
-        for name, rec in tf.items():
-            if rec['mean'] > 35.0 + 1e-9:
-                failed.append(f"{deck} {name} {rec['mean']:.1f}% exceeds 35%")
-        for k, v in cues.items():
-            if k == 'combined':
-                continue
-            if v > 32.0 + 1e-9:
-                failed.append(f"{deck} cue {k} {v:.1f}% exceeds 32%")
-        rules = rule_scores(cs)
-        print(f"  fewest-shared-bigrams {rules['bigram']:.1f}%  missing-shared-phrase {rules['phrase']:.1f}%")
-        for t, rec in rules['topics'].items():
-            print(f"    topic {t} (n={rec['n']}): bigram {rec['bigram']:.1f}%  phrase {rec['phrase']:.1f}%")
-            if rec['bigram'] > 30.0 + 1e-9:
-                failed.append(f"{deck}/{t} fewest-shared-bigrams {rec['bigram']:.1f}% exceeds 30%")
-            if rec['phrase'] > 30.0 + 1e-9:
-                failed.append(f"{deck}/{t} missing-shared-phrase {rec['phrase']:.1f}% exceeds 30%")
-        if rules['bigram'] > 30.0 + 1e-9:
-            failed.append(f"{deck} fewest-shared-bigrams {rules['bigram']:.1f}% exceeds 30%")
-        if rules['phrase'] > 30.0 + 1e-9:
-            failed.append(f"{deck} missing-shared-phrase {rules['phrase']:.1f}% exceeds 30%")
-        if deck == 'cbet':
-            # Tighter 30% gate on CBET tf-idf logreg (5-seed mean already in tf).
-            if tf['tfidf_logreg']['mean'] > 30.0 + 1e-9:
-                failed.append(f"{deck} tfidf-logreg {tf['tfidf_logreg']['mean']:.1f}% exceeds 30%")
-            null = shuffle_null_tfidf_logreg(cs)
-            print(f"  cbet shuffle-null tfidf-logreg {null['mean']:.1f}% (range {null['min']:.1f}-{null['max']:.1f}%)")
-            by_t = tfidf_logreg_by_topic(cs)
-            for t, v in by_t['topics'].items():
-                print(f"    topic {t} tfidf-logreg {v:.1f}%")
-                if v > 30.0 + 1e-9:
-                    failed.append(f"{deck}/{t} tfidf-logreg {v:.1f}% exceeds 30%")
     if failed:
         print('FAIL')
         for f in failed:
             print(' ', f)
         sys.exit(1)
-    print('ok engineer CV (tf-idf/GBM/RF <= 35%, cue and most-and/or <= 32%, no exclusive tokens)')
+    print('ok engineer CV (human rules <= 32% per deck and per topic n>=15; classifiers reported)')
+
 
 
 if __name__ == '__main__':

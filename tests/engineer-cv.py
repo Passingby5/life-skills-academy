@@ -3,7 +3,7 @@
 
 Human-style rules (pick-max/min overlap, longest, shortest, absolutes,
 missing-shared-phrase, fewest-shared-bigrams, most-list (commas+and/or),
-most-and/or, and second-longest) must stay at or under
+most-and/or, second-longest, and stem-overlap-max) must stay at or under
 32% per deck and per topic with n >= 15. Smaller topics are reported
 only. Classifiers and exclusive tokens are reported against a shuffle
 null; they are not a hard fail.
@@ -418,6 +418,7 @@ HUMAN_RULES = (
     'most_list',
     'most_and_or',
     'second_longest',
+    'stem_overlap_max',
 )
 TOPIC_MIN_N = 15
 
@@ -460,6 +461,8 @@ def card_human_rules(c):
     ov = overlap_sums(ch)
     lists = [list_score(x) for x in ch]
     ands = [len(re.findall(r'\b(and|or)\b', str(x), re.I)) for x in ch]
+    sw = set(words(c['s']))
+    ov_stem = [len(sw & set(words(x))) for x in ch]
     return {
         'pick_max_overlap': pick_share(ov, True),
         'pick_min_overlap': pick_share(ov, False),
@@ -472,6 +475,7 @@ def card_human_rules(c):
         'most_list': pick_share(lists, True),
         'most_and_or': pick_share(ands, True),
         'second_longest': second_longest_share(L),
+        'stem_overlap_max': pick_share(ov_stem, True),
     }
 
 

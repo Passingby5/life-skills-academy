@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240" role="img">
+<rect width="320" height="240" fill="#ffffff"/>
+
+  <path d="M60 60 L60 180 L260 180 L260 60" fill="none" stroke="#111" stroke-width="3"/>
+  <line x1="60" y1="100" x2="260" y2="100" stroke="#4a90c8" stroke-width="2"/>
+  <text x="130" y="90" font-family="Arial, sans-serif" font-size="14" fill="#111">water surface</text>
+  <line x1="70" y1="100" x2="70" y2="180" stroke="#111" stroke-width="1"/>
+  <text x="74" y="150" font-family="Arial, sans-serif" font-size="14" fill="#111">y</text>
+  <line x1="60" y1="200" x2="260" y2="200" stroke="#111" stroke-width="1"/>
+  <text x="150" y="220" font-family="Arial, sans-serif" font-size="14" fill="#111">width b</text>
+
+</svg>

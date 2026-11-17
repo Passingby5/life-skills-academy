@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240" role="img">
+<rect width="320" height="240" fill="#ffffff"/>
+
+  <line x1="40" y1="200" x2="120" y2="200" stroke="#111" stroke-width="3"/>
+  <line x1="200" y1="160" x2="280" y2="160" stroke="#111" stroke-width="3"/>
+  <rect x="150" y="90" width="20" height="40" fill="none" stroke="#111" stroke-width="2"/>
+  <line x1="80" y1="200" x2="80" y2="70" stroke="#111" stroke-width="2"/>
+  <line x1="240" y1="160" x2="240" y2="70" stroke="#111" stroke-width="2"/>
+  <line x1="80" y1="100" x2="240" y2="100" stroke="#4a90c8" stroke-width="1" stroke-dasharray="4 2"/>
+  <text x="50" y="60" font-family="Arial, sans-serif" font-size="14" fill="#111">BS</text>
+  <text x="230" y="60" font-family="Arial, sans-serif" font-size="14" fill="#111">FS</text>
+  <text x="50" y="220" font-family="Arial, sans-serif" font-size="14" fill="#111">A</text>
+  <text x="230" y="180" font-family="Arial, sans-serif" font-size="14" fill="#111">B</text>
+  <text x="130" y="80" font-family="Arial, sans-serif" font-size="14" fill="#111">level</text>
+
+</svg>

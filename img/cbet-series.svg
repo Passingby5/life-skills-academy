@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240" role="img">
+<rect width="320" height="240" fill="#ffffff"/>
+
+  <rect x="40" y="100" width="40" height="40" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="48" y="124" font-family="Arial, sans-serif" font-size="14" fill="#111">V</text>
+  <line x1="80" y1="120" x2="120" y2="120" stroke="#111" stroke-width="2"/>
+  <rect x="120" y="108" width="50" height="24" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="132" y="126" font-family="Arial, sans-serif" font-size="14" fill="#111">R1</text>
+  <line x1="170" y1="120" x2="200" y2="120" stroke="#111" stroke-width="2"/>
+  <rect x="200" y="108" width="50" height="24" fill="none" stroke="#111" stroke-width="2"/>
+  <text x="212" y="126" font-family="Arial, sans-serif" font-size="14" fill="#111">R2</text>
+  <line x1="250" y1="120" x2="280" y2="120" stroke="#111" stroke-width="2"/>
+  <line x1="280" y1="120" x2="280" y2="180" stroke="#111" stroke-width="2"/>
+  <line x1="280" y1="180" x2="60" y2="180" stroke="#111" stroke-width="2"/>
+  <line x1="60" y1="180" x2="60" y2="140" stroke="#111" stroke-width="2"/>
+  <text x="100" y="50" font-family="Arial, sans-serif" font-size="14" fill="#111">Series resistors</text>
+
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240" role="img">
+<rect width="320" height="240" fill="#ffffff"/>
+  <rect x="70" y="30" width="80" height="50" fill="none" stroke="#111" stroke-width="2"/>
+  <rect x="70" y="80" width="80" height="50" fill="#d9e8f5" stroke="#111" stroke-width="2"/>
+  <rect x="70" y="130" width="80" height="70" fill="#e8d7b8" stroke="#111" stroke-width="2"/>
+  <text x="90" y="60" font-family="Arial, sans-serif" font-size="14" fill="#111">air</text>
+  <text x="82" y="110" font-family="Arial, sans-serif" font-size="14" fill="#111">water</text>
+  <text x="86" y="170" font-family="Arial, sans-serif" font-size="14" fill="#111">solids</text>
+  <text x="158" y="48" font-family="Arial, sans-serif" font-size="14" fill="#111">Va</text>
+  <text x="158" y="110" font-family="Arial, sans-serif" font-size="14" fill="#111">Vw</text>
+  <text x="158" y="170" font-family="Arial, sans-serif" font-size="14" fill="#111">Vs</text>
+  <text x="220" y="48" font-family="Arial, sans-serif" font-size="14" fill="#111">W = 0</text>
+  <text x="220" y="110" font-family="Arial, sans-serif" font-size="14" fill="#111">Ww</text>
+  <text x="220" y="170" font-family="Arial, sans-serif" font-size="14" fill="#111">Ws</text>
+  <text x="24" y="40" font-family="Arial, sans-serif" font-size="14" fill="#111">V</text>
+  <text x="16" y="214" font-family="Arial, sans-serif" font-size="14" fill="#111">Volumes on the left.</text>
+  <text x="16" y="232" font-family="Arial, sans-serif" font-size="14" fill="#111">Weights on the right.</text>
+</svg>

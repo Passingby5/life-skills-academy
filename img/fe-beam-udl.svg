@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" width="320" height="240" role="img">
+<rect width="320" height="240" fill="#ffffff"/>
+
+  <line x1="40" y1="140" x2="280" y2="140" stroke="#111" stroke-width="3"/>
+  <polygon points="40,140 32,160 48,160" fill="none" stroke="#111" stroke-width="2"/>
+  <circle cx="280" cy="148" r="8" fill="none" stroke="#111" stroke-width="2"/>
+  <line x1="272" y1="156" x2="288" y2="156" stroke="#111" stroke-width="2"/>
+  <line x1="40" y1="80" x2="280" y2="80" stroke="#111" stroke-width="2"/>
+  <line x1="60" y1="80" x2="60" y2="138" stroke="#111" stroke-width="1"/>
+  <line x1="100" y1="80" x2="100" y2="138" stroke="#111" stroke-width="1"/>
+  <line x1="140" y1="80" x2="140" y2="138" stroke="#111" stroke-width="1"/>
+  <line x1="180" y1="80" x2="180" y2="138" stroke="#111" stroke-width="1"/>
+  <line x1="220" y1="80" x2="220" y2="138" stroke="#111" stroke-width="1"/>
+  <line x1="260" y1="80" x2="260" y2="138" stroke="#111" stroke-width="1"/>
+  <polygon points="60,138 54,124 66,124" fill="#111"/>
+  <polygon points="100,138 94,124 106,124" fill="#111"/>
+  <polygon points="140,138 134,124 146,124" fill="#111"/>
+  <polygon points="180,138 174,124 186,124" fill="#111"/>
+  <polygon points="220,138 214,124 226,124" fill="#111"/>
+  <polygon points="260,138 254,124 266,124" fill="#111"/>
+  <text x="150" y="70" font-family="Arial, sans-serif" font-size="14" fill="#111">w (force per length)</text>
+  <text x="32" y="180" font-family="Arial, sans-serif" font-size="14" fill="#111">A</text>
+  <text x="272" y="180" font-family="Arial, sans-serif" font-size="14" fill="#111">B</text>
+  <text x="150" y="210" font-family="Arial, sans-serif" font-size="14" fill="#111">span L</text>
+
+</svg>

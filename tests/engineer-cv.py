@@ -2,7 +2,8 @@
 """Human-rule and classifier reports for Engineer Practice decks.
 
 Human-style rules (pick-max/min overlap, longest, shortest, absolutes,
-missing-shared-phrase, and fewest-shared-bigrams) must stay at or under
+missing-shared-phrase, fewest-shared-bigrams, most-list (commas+and/or),
+most-and/or, and second-longest) must stay at or under
 32% per deck and per topic with n >= 15. Smaller topics are reported
 only. Classifiers and exclusive tokens are reported against a shuffle
 null; they are not a hard fail.
@@ -414,6 +415,9 @@ HUMAN_RULES = (
     'no_absolute',
     'fewest_shared_bigrams',
     'missing_shared_phrase',
+    'most_list',
+    'most_and_or',
+    'second_longest',
 )
 TOPIC_MIN_N = 15
 
@@ -433,11 +437,29 @@ def overlap_sums(choices):
     return [sum(jac(toks[i], toks[j]) for j in range(4) if j != i) for i in range(4)]
 
 
+def list_score(t):
+    """Commas plus and/or, matching QA batch.js list-form."""
+    s = str(t)
+    return len(re.findall(r',', s)) + len(re.findall(r'\b(and|or)\b', s, re.I))
+
+
+def second_longest_share(L):
+    """Pick the unique second-longest visible length, matching QA batch.js."""
+    mx = max(L)
+    rest = [x for x in L if x < mx]
+    if not rest:
+        return 0.0
+    val = max(rest)
+    return pick_share([1 if x == val else 0 for x in L], True)
+
+
 def card_human_rules(c):
     ch = c['c']
     L = [len(vis(x).strip()) for x in ch]
     a = [1 if ABS.search(vis(x)) else 0 for x in ch]
     ov = overlap_sums(ch)
+    lists = [list_score(x) for x in ch]
+    ands = [len(re.findall(r'\b(and|or)\b', str(x), re.I)) for x in ch]
     return {
         'pick_max_overlap': pick_share(ov, True),
         'pick_min_overlap': pick_share(ov, False),
@@ -447,6 +469,9 @@ def card_human_rules(c):
         'no_absolute': pick_share(a, False),
         'fewest_shared_bigrams': pick_min_share(f_bigram(ch)),
         'missing_shared_phrase': missing_phrase_hit(ch),
+        'most_list': pick_share(lists, True),
+        'most_and_or': pick_share(ands, True),
+        'second_longest': second_longest_share(L),
     }
 
 
